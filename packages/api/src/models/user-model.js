@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
-const { Schema } = require("mongoose");
-const { isEmail } = require("validator");
+const mongoose = require('mongoose');
+const { Schema } = require('mongoose');
+const { isEmail } = require('validator');
 
 const UserSchema = Schema(
   {
@@ -16,7 +16,7 @@ const UserSchema = Schema(
     },
     email: {
       type: String,
-      required: [true, "The email is required"],
+      required: [true, 'The email is required'],
       trim: true,
       unique: true,
       validate: {
@@ -30,6 +30,6 @@ const UserSchema = Schema(
   },
 );
 
-const User = mongoose.model("user", UserSchema);
+const User = mongoose.model('user', UserSchema);
 
 module.exports = User;

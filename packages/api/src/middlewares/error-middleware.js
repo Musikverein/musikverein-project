@@ -1,7 +1,7 @@
-const { config } = require("../config");
+const { config } = require('../config');
 
 function errorMiddleware(err, req, res, next) {
-  config.logger.debug("Error Handler Middleware: ");
+  config.logger.debug('Error Handler Middleware: ');
   config.logger.error(err);
 
   if (req.headersSent) {
@@ -13,7 +13,7 @@ function errorMiddleware(err, req, res, next) {
 
   res.status(500).send({
     data: null,
-    error: "Something went wrong",
+    error: 'Something went wrong',
   });
 }
 

@@ -1,6 +1,6 @@
-import * as AuthTypes from "./auth-types";
-import api from "../../api";
-import * as auth from "../../services/auth";
+import * as AuthTypes from './auth-types';
+import api from '../../api';
+import * as auth from '../../services/auth';
 
 export const resetStoreAndLogOut = () => ({
   type: AuthTypes.RESET_STORE_AND_LOG_OUT,

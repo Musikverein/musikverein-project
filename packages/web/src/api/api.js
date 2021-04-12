@@ -1,18 +1,18 @@
-import { makeRequest } from "./api-utils";
+import { makeRequest } from './api-utils';
 
 function makeApi(request = makeRequest()) {
   function signUp(headers) {
     return request({
-      url: "/sign-up",
-      requestMethod: "POST",
+      url: '/sign-up',
+      requestMethod: 'POST',
       headers: headers,
     });
   }
 
   function signOut(headers) {
     return request({
-      url: "/sign-out",
-      requestMethod: "POST",
+      url: '/sign-out',
+      requestMethod: 'POST',
       headers: headers,
     });
   }

@@ -1,15 +1,13 @@
-require("dotenv").config();
+require('dotenv').config();
+
+const { logger } = require('../services');
 
 const {
-  logger
-} = require("../services");
-
-const {
-  NODE_ENV = "development",
-    MONGO_DB_URL_PRODUCTION,
-    MONGO_DB_URL_DEVELOPMENT,
-    MONGO_DB_URL_TEST,
-    PORT,
+  NODE_ENV = 'development',
+  MONGO_DB_URL_PRODUCTION,
+  MONGO_DB_URL_DEVELOPMENT,
+  MONGO_DB_URL_TEST,
+  PORT,
 } = process.env;
 
 const baseConfig = {
@@ -17,7 +15,7 @@ const baseConfig = {
     port: PORT || 4000,
   },
   client: {
-    url: process.env.CLIENT_URL || "http://localhost:3000",
+    url: process.env.CLIENT_URL || 'http://localhost:3000',
   },
   logger: {
     warn: logger.warn,

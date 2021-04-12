@@ -1,9 +1,9 @@
-const { app } = require("./server");
-const { config } = require("./config");
-const { connect } = require("./db/connect");
+const { app } = require('./server');
+const { config } = require('./config');
+const { connect } = require('./db/connect');
 
 if (!config.app.port) {
-  throw new Error("App config is invalid");
+  throw new Error('App config is invalid');
 }
 
 connect().then(() => {

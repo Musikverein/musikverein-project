@@ -1,4 +1,4 @@
-const { UserRepo } = require("../repositories");
+const { UserRepo } = require('../repositories');
 
 async function signUp(req, res, next) {
   const { uid, email } = req.user;
@@ -15,7 +15,7 @@ async function signUp(req, res, next) {
 
     if (response.data) {
       return res.status(200).send({
-        data: "OK",
+        data: 'OK',
         error: null,
       });
     }
@@ -26,7 +26,7 @@ async function signUp(req, res, next) {
     });
 
     res.status(201).send({
-      data: "OK",
+      data: 'OK',
       error: null,
     });
   } catch (error) {
@@ -38,7 +38,7 @@ async function signOut(req, res) {
   req.signOut();
 
   res.status(200).send({
-    data: "OK",
+    data: 'OK',
     error: null,
   });
 }

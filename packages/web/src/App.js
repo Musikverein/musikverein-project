@@ -1,17 +1,17 @@
-import React, { useEffect } from "react";
-import { Switch, Route } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 
-import "./styles/App.scss";
+import './styles/App.scss';
 
-import * as ROUTES from "./routes";
-import Home from "./pages/Home";
-import SignUp from "./pages/SignUp";
-import Login from "./pages/Login";
-import ResetPassword from "./pages/ResetPassword";
+import * as ROUTES from './routes';
+import Home from './pages/Home';
+import SignUp from './pages/SignUp';
+import Login from './pages/Login';
+import ResetPassword from './pages/ResetPassword';
 
-import { onAuthStateChanged } from "./services/auth";
-import { syncSignIn, signOut } from "./redux/auth/auth-actions";
+import { onAuthStateChanged } from './services/auth';
+import { syncSignIn, signOut } from './redux/auth/auth-actions';
 
 function App() {
   const dispatch = useDispatch();

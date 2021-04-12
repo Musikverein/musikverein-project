@@ -1,5 +1,5 @@
 module.exports = {
-  testEnvironment: "node",
+  testEnvironment: 'node',
   /**
    * for: mongodb-memory-server
    * May require additional time for downloading MongoDB binaries

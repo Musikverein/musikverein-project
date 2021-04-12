@@ -1,4 +1,4 @@
-const logger = require("loglevel");
+const logger = require('loglevel');
 
 logger.enableAll();
 

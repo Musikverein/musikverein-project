@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 
-import "./SignUp.scss";
+import './SignUp.scss';
 
-import Header from "../../components/Header";
-import * as ROUTES from "../../routes";
+import Header from '../../components/Header';
+import * as ROUTES from '../../routes';
 
 import {
   resetAuthState,
   signUpWithEmailRequest,
   signUpWithGoogleRequest,
-} from "../../redux/auth/auth-actions";
+} from '../../redux/auth/auth-actions';
 
-import { authSelector } from "../../redux/auth/auth-selectors";
+import { authSelector } from '../../redux/auth/auth-selectors';
 
 function SignUp() {
   const dispatch = useDispatch();
@@ -21,8 +21,8 @@ function SignUp() {
     authSelector,
   );
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   useEffect(() => {
     dispatch(resetAuthState());
@@ -38,8 +38,8 @@ function SignUp() {
 
     dispatch(signUpWithEmailRequest(email, password));
 
-    setEmail("");
-    setPassword("");
+    setEmail('');
+    setPassword('');
   }
 
   function handleSetEmail(e) {

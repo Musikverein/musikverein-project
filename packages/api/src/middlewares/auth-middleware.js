@@ -1,4 +1,4 @@
-const { auth, logger } = require("../services");
+const { auth, logger } = require('../services');
 
 async function authMiddleware(req, res, next) {
   try {
@@ -13,7 +13,7 @@ async function authMiddleware(req, res, next) {
 
     res.status(401).send({
       data: null,
-      error: "Unauthorized",
+      error: 'Unauthorized',
     });
   }
 }

@@ -1,4 +1,4 @@
-import * as AuthTypes from "./auth-types";
+import * as AuthTypes from './auth-types';
 
 export const AuthInitialState = {
   isSigningUp: false,

@@ -1,6 +1,6 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const { config } = require("../config");
+const { config } = require('../config');
 
 function connect() {
   return mongoose.connect(config.db.url, {

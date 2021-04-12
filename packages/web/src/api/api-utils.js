@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 export function createDefaultResponse() {
   return {
@@ -26,12 +26,12 @@ export function makeRequest(
   httpClient = axios,
   baseURL = process.env.REACT_APP_API_BASE_URL,
   baseHeaders = {
-    Accept: "application/json",
+    Accept: 'application/json',
   },
 ) {
   return async function request({
-    url = "/",
-    requestMethod = "GET",
+    url = '/',
+    requestMethod = 'GET',
     body = {},
     headers = {},
   }) {

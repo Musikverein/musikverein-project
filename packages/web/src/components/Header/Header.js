@@ -1,10 +1,10 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
-import * as ROUTES from "../../routes";
-import { signOut } from "../../redux/auth/auth-actions";
-import { authSelector } from "../../redux/auth/auth-selectors";
+import * as ROUTES from '../../routes';
+import { signOut } from '../../redux/auth/auth-actions';
+import { authSelector } from '../../redux/auth/auth-selectors';
 
 function Header() {
   const dispatch = useDispatch();
