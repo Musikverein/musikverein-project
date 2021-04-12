@@ -1,0 +1,47 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .border-radius {
+    @apply rounded-md;
+  }
+
+  .form-label {
+    @apply text-gray-100 mb-2 block;
+  }
+
+  .form-select {
+    @apply block w-full shadow-sm mb-4 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+  }
+
+  .form-input {
+    @apply block w-full mb-4 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 text-gray-700;
+  }
+
+  .form-radio {
+    @apply shadow-sm mb-4 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+  }
+
+  .btn {
+    @apply mb-4 px-4 py-2;
+  }
+
+  .btn-primary {
+    @apply bg-blue-700 text-blue-50 hover:bg-blue-600 focus:bg-blue-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400 focus-visible:ring-opacity-50;
+  }
+
+  .icon-btn__small {
+    @apply block rounded-full focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-50 focus-visible:ring-opacity-50;
+  }
+
+  .icon-btn__medium {
+    @apply block rounded-full p-2 border border-gray-200 hover:border-white focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-opacity-50;
+  }
+
+  .form-checkbox {
+    /* enabled checked config in extend */
+    /* https://tailwindcss.com/docs/hover-focus-and-other-states#checked */
+    @apply w-6 h-6 mr-2 shadow-sm mb-4 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+  }
+}

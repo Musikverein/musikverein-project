@@ -1,0 +1,113 @@
+{
+  "name": "web",
+  "description": "apollofy music project web app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "start": "craco start",
+    "dev": "yarn run start",
+    "build": "craco build",
+    "test": "react-scripts test",
+    "test:watch": "react-scripts test --watchAll",
+    "test:ci:all": "cross-env CI=true react-scripts test --all --env=jsdom",
+    "test:related": "cross-env CI=true react-scripts test --bail --findRelatedTests --env=jsdom",
+    "eject": "react-scripts eject",
+    "lint:js": "eslint . --ext .js",
+    "lint:js:fix": "yarn run lint:js -- --fix",
+    "lint:format": "prettier --write .",
+    "lint:format:check": "prettier --check .",
+    "precommit": "lint-staged"
+  },
+  "contributors": [
+    {
+      "name": "Dani Lucaci",
+      "email": "danilucaci@gmail.com",
+      "url": "https://www.danilucaci.com/"
+    },
+    {
+      "name": "Joan Carrion",
+      "email": "joancarrion14@gmail.com"
+    }
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/assembler-school/apollofy-music-project.git"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "dependencies": {
+    "@craco/craco": "^6.1.0",
+    "@fullhuman/postcss-purgecss": "^4.0.0",
+    "@reach/menu-button": "^0.13.2",
+    "@tailwindcss/forms": "^0.2.1",
+    "@tailwindcss/postcss7-compat": "^2.0.2",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/react": "^11.2.3",
+    "@testing-library/user-event": "^12.6.2",
+    "autoprefixer": "^9",
+    "axios": "^0.21.1",
+    "clsx": "^1.1.1",
+    "dotenv": "^8.2.0",
+    "firebase": "^8.3.1",
+    "focus-visible": "^5.2.0",
+    "msw": "^0.26.2",
+    "node-sass": "^5.0.0",
+    "normalizr": "^3.6.1",
+    "postcss": "^7",
+    "postcss-focus-visible": "^5.0.0",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-helmet": "^6.1.0",
+    "react-intl": "^5.13.2",
+    "react-redux": "^7.2.2",
+    "react-router-dom": "^5.2.0",
+    "react-scripts": "^4.0.1",
+    "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-logger": "^3.0.6",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.3.0",
+    "reselect": "^4.0.0",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat",
+    "web-vitals": "^0.2.4"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^5.5.0",
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^7.0.3",
+    "eslint": "^7.19.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-react-app": "^6.0.0",
+    "eslint-plugin-flowtype": "^5.2.0",
+    "eslint-plugin-html": "^6.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.3",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-markdown": "^1.0.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "eslint-plugin-testing-library": "^3.10.1",
+    "history": "^5.0.0",
+    "prettier": "^2.2.1"
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "contributors": [
+    {
+      "name": "Ramón Soler Hernán",
+      "email": "rsolerhernan@gmail.com"
+    },
+    {
+      "name": "Jose Ramón Serralvo Rojo",
+      "email": "joseramonsr3@gmail.com"
+    },
+    {
+      "name": "Verónica Velázquez Calleja ",
+      "email": "veronicavelazquezcalleja@gmail.com"
+    },
+    {
+      "name": "Raúl Cátedra Martínez",
+      "email": "raulcabe3003@gmail.com"
+    }
+  ],
+  "scripts": {
+    "dev": "yarn workspaces run dev",
+    "dev:web": "yarn workspace web run start",
+    "dev:api": "yarn workspace api run dev",
+    "build": "yarn workspaces run build",
+    "test:web:watch": "yarn workspace web run test:watch",
+    "test:api:watch": "yarn workspace api run test:watch",
+    "test:ci:all": "yarn workspaces run test:ci:all",
+    "lint:js": "yarn workspaces run lint:js",
+    "lint:js:fix": "yarn workspaces run lint:js:fix",
+    "lint:format": "yarn workspaces run lint:format",
+    "lint:format:check": "yarn workspaces run lint:format:check",
+    "precommit": "yarn workspaces run precommit"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^11.0.0",
+    "@commitlint/config-conventional": "^11.0.0",
+    "commitlint": "^11.0.0",
+    "eslint": "^7.19.0",
+    "husky": "^4.3.8",
+    "lint-staged": "^10.5.3"
+  }
+}
