@@ -20,19 +20,26 @@
   },
   "contributors": [
     {
-      "name": "Dani Lucaci",
-      "email": "danilucaci@gmail.com",
-      "url": "https://www.danilucaci.com/"
+      "name": "Ramón Soler Hernán",
+      "email": "rsolerhernan@gmail.com"
     },
     {
-      "name": "Joan Carrion",
-      "email": "joancarrion14@gmail.com"
+      "name": "Jose Ramón Serralvo Rojo",
+      "email": "joseramonsr3@gmail.com"
+    },
+    {
+      "name": "Verónica Velázquez Calleja ",
+      "email": "veronicavelazquezcalleja@gmail.com"
+    },
+    {
+      "name": "Raúl Cátedra Martínez",
+      "email": "raulcabe3003@gmail.com"
     }
   ],
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/assembler-school/apollofy-music-project.git"
+    "url": "https://github.com/Musikverein/musikverein-project"
   },
   "eslintConfig": {
     "extends": [
