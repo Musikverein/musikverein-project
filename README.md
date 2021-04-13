@@ -15,7 +15,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
+    <td align="center"><a href="https://github.com/joserra-15"><img src="https://avatars.githubusercontent.com/u/72786719?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Jose Ramón Serralvo Rojo</b></sub></a><br /><a href="https://github.com/Musikverein/musikverein-project/commits?author=joserra-15" title="Code">💻</a> <a href="https://github.com/Musikverein/musikverein-project/commits?author=joserra-15" title="Tests">⚠️</a> <a href="#content-joserra-15" title="Content">🖋</a></td>
+
     <td align="center"><a href="https://github.com/vvelazquezc"><img src="https://avatars.githubusercontent.com/u/73468274?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vvelazquez</b></sub></a><br /><a href="https://github.com/Musikverein/musikverein-project/commits?author=vvelazquezc" title="Code">💻</a> <a href="#design-vvelazquezc" title="Design">🎨</a> <a href="#content-vvelazquezc" title="Content">🖋</a></td>
+
   </tr>
 </table>
 
