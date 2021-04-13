@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "joserra-15",
+      "name": "Jose Ramón Serralvo Rojo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/72786719?v=4",
+      "profile": "https://github.com/joserra-15",
+      "contributions": [
+        "code",
+        "test",
+        "content"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "musikverein-project",
+  "projectOwner": "Musikverein",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
