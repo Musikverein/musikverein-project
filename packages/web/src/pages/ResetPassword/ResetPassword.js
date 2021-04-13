@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import './ResetPassword.scss';
-
-import Header from '../../components/Header';
+import * as ROUTES from '../../routes';
 
 import {
   sendPasswordResetEmail,
   resetAuthState,
 } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
+import Logo from '../../components/Logo';
 
 function buttonText(loading, sent) {
   if (loading) {
@@ -50,24 +51,21 @@ function ResetPassword() {
   return (
     <>
       <main className="ResetPassword">
-        <Header />
         <section className="Login__wrapper">
-          <h1 className="text-2xl font-bold mb-6">Password Reset</h1>
-          <hr className="my-4" />
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
+          <Logo />
+          <form className="card mt-8" onSubmit={handleSubmit}>
             <input
               type="text"
               id="email"
-              className="form-input"
+              arial-label="Insert your email"
+              className="form-input rounded-md"
               value={email}
               onChange={handleSetEmail}
+              placeholder="Insert your email"
             />
             <button
               type="submit"
-              className="btn btn-primary w-full"
+              className="btn w-full rounded-md button__primary mt-4 mb-0"
               disabled={isSendingPasswordReset || passwordResetSent}
             >
               {buttonText(isSendingPasswordReset, passwordResetSent)}
@@ -77,6 +75,12 @@ function ResetPassword() {
             <section className="mt-4">{passwordResetError}</section>
           )}
         </section>
+        <Link
+          to={ROUTES.LOGIN}
+          className="underline text-blue-gray-200 w-full text-center block"
+        >
+          Go back to Log in
+        </Link>
       </main>
     </>
   );
