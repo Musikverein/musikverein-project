@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { Redirect, Switch } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './styles/App.scss';
 
@@ -12,9 +12,15 @@ import ResetPassword from './pages/ResetPassword';
 
 import { onAuthStateChanged } from './services/auth';
 import { syncSignIn, signOut } from './redux/auth/auth-actions';
+import { authSelector } from './redux/auth/auth-selectors';
+import { PublicRoute } from './components/PublicRoute/PublicRoute';
+import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
+import Profile from './pages/Profile';
 
 function App() {
   const dispatch = useDispatch();
+
+  const { isAuthenticated } = useSelector(authSelector);
 
   useEffect(() => {
     let unsubscribeFromAuth = null;
@@ -37,10 +43,37 @@ function App() {
   return (
     <div className="App__container">
       <Switch>
-        <Route path={ROUTES.SIGN_UP} component={SignUp} />
-        <Route path={ROUTES.LOGIN} component={Login} />
-        <Route path={ROUTES.RESET_PASSWORD} component={ResetPassword} />
-        <Route path={ROUTES.HOME} component={Home} exact />
+        <PublicRoute
+          isAuthenticated={isAuthenticated}
+          path={ROUTES.SIGN_UP}
+          component={SignUp}
+        />
+        <PublicRoute
+          isAuthenticated={isAuthenticated}
+          path={ROUTES.LOGIN}
+          component={Login}
+        />
+        <PublicRoute
+          isAuthenticated={isAuthenticated}
+          path={ROUTES.RESET_PASSWORD}
+          component={ResetPassword}
+        />
+
+        <ProtectedRoute
+          isAuthenticated={isAuthenticated}
+          path={ROUTES.PROFILE}
+          component={Profile}
+          exact
+        />
+
+        <ProtectedRoute
+          isAuthenticated={isAuthenticated}
+          path={ROUTES.HOME}
+          component={Home}
+          exact
+        />
+
+        <Redirect to="/" />
       </Switch>
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -9,21 +9,28 @@ import * as ROUTES from '../../routes';
 import {
   resetAuthState,
   signInWithEmailRequest,
+  signUpError,
   signUpWithGoogleRequest,
 } from '../../redux/auth/auth-actions';
 
 import { authSelector } from '../../redux/auth/auth-selectors';
 import InputPassword from '../../components/InputPassword';
 import Logo from '../../components/Logo';
+import { useForm } from '../../hooks/useForm';
+import { validationSchema } from '../../utils/validation/validationSchema';
 
 function Login() {
   const dispatch = useDispatch();
-  const { isSigningUp, signUpError, isAuthenticated } = useSelector(
+  const { isSigningUp, signUpErrorMsg, isAuthenticated } = useSelector(
     authSelector,
   );
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formValues, handleInputChange, resetForm] = useForm({
+    email: '',
+    password: '',
+  });
+
+  const { email, password } = formValues;
 
   useEffect(() => {
     dispatch(resetAuthState());
@@ -36,19 +43,13 @@ function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    dispatch(signInWithEmailRequest(email, password));
-
-    setEmail('');
-    setPassword('');
-  }
-
-  function handleSetEmail(e) {
-    setEmail(e.target.value);
-  }
-
-  function handleSetPassword(e) {
-    setPassword(e.target.value);
+    const { error } = validationSchema.login.validate(formValues);
+    if (error) {
+      dispatch(signUpError(error.message));
+    } else {
+      dispatch(signInWithEmailRequest(email, password));
+      resetForm();
+    }
   }
 
   if (isAuthenticated) {
@@ -59,30 +60,39 @@ function Login() {
     <>
       <main className="Login">
         <section className="Login__wrapper">
-          <Logo />
+          <Logo size="m" />
           <div className="text-center my-8">
-            <h2 className="text-xl font-bold">¿En busca de escuchar música?</h2>
-            <p className="text-xm">Guarda tus canciones</p>
+            <h2 className="text-xl font-bold">Looking to listen to music?</h2>
+            <p className="text-xm">Save your songs</p>
           </div>
           <div className="card">
             <form onSubmit={handleSubmit}>
               <input
                 type="text"
                 id="email"
+                name="email"
                 arial-label="Insert your email"
                 className="form-input rounded-md"
                 value={email}
-                onChange={handleSetEmail}
+                onChange={handleInputChange}
                 placeholder="Insert your email"
               />
               <InputPassword
                 className="form-input rounded-md"
                 id="password"
+                name="password"
                 arial-label="Insert your password"
                 value={password}
-                onChange={handleSetPassword}
+                onChange={handleInputChange}
                 placeholder="Insert your password"
               />
+              {signUpErrorMsg ? (
+                <section className="mt-4 p-3 text-center">
+                  {signUpErrorMsg}
+                </section>
+              ) : (
+                <div className="mt-4 p-3" />
+              )}
               <Link
                 to={ROUTES.RESET_PASSWORD}
                 className="underline text-blue-gray-200 w-full text-center block"
@@ -94,15 +104,15 @@ function Login() {
                 type="submit"
                 disabled={isSigningUp}
               >
-                Login
+                Log in
               </button>
             </form>
           </div>
 
-          {signUpError && <section className="mt-4">{signUpError}</section>}
           <section className="mt-4 text-center">
+            <p>Log in with:</p>
             <button
-              className="btn rounded-md button__secundary bx bxl-google"
+              className="btn mt-4 rounded-md button__secundary bx bxl-google"
               type="button"
               onClick={handleLoginWithGoogle}
               disabled={isSigningUp}

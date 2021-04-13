@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import * as ROUTES from '../../routes';
 
 import {
   resetAuthState,
+  signUpError,
   signUpWithEmailRequest,
   signUpWithGoogleRequest,
 } from '../../redux/auth/auth-actions';
@@ -15,16 +16,22 @@ import {
 import { authSelector } from '../../redux/auth/auth-selectors';
 import Logo from '../../components/Logo';
 import InputPassword from '../../components/InputPassword';
+import { useForm } from '../../hooks/useForm';
+import { validationSchema } from '../../utils/validation/validationSchema';
 
 function SignUp() {
   const dispatch = useDispatch();
-  const { isSigningUp, signUpError, isAuthenticated } = useSelector(
+  const { isSigningUp, signUpErrorMsg, isAuthenticated } = useSelector(
     authSelector,
   );
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formValues, handleInputChange, resetForm] = useForm({
+    email: '',
+    password: '',
+    confirmPassword: '',
+  });
 
+  const { email, password, confirmPassword } = formValues;
   useEffect(() => {
     dispatch(resetAuthState());
   }, [dispatch]);
@@ -37,18 +44,13 @@ function SignUp() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    dispatch(signUpWithEmailRequest(email, password));
-
-    setEmail('');
-    setPassword('');
-  }
-
-  function handleSetEmail(e) {
-    setEmail(e.target.value);
-  }
-
-  function handleSetPassword(e) {
-    setPassword(e.target.value);
+    const { error } = validationSchema.signup.validate(formValues);
+    if (error) {
+      dispatch(signUpError(error.message));
+    } else {
+      dispatch(signUpWithEmailRequest(email, password));
+      resetForm();
+    }
   }
 
   if (isAuthenticated) {
@@ -59,34 +61,44 @@ function SignUp() {
     <>
       <main className="SignUp">
         <section className="Login__wrapper">
-          <Logo />
+          <Logo size="m" />
           <form onSubmit={handleSubmit}>
             <div className="card mt-8">
               <input
                 type="text"
                 id="email"
+                name="email"
                 arial-label="Insert your email"
                 className="form-input rounded-md"
                 value={email}
-                onChange={handleSetEmail}
+                onChange={handleInputChange}
                 placeholder="Insert your email"
               />
               <InputPassword
                 className="form-input rounded-md"
                 id="password"
+                name="password"
                 arial-label="Insert your password"
                 value={password}
-                onChange={handleSetPassword}
+                onChange={handleInputChange}
                 placeholder="Insert your password"
               />
               <InputPassword
                 className="form-input rounded-md"
+                name="confirmPassword"
                 id="confirmPassword"
                 arial-label="Repeat your password"
-                value={password}
-                onChange={handleSetPassword}
+                value={confirmPassword}
+                onChange={handleInputChange}
                 placeholder="Repeat your password"
               />
+              {signUpErrorMsg ? (
+                <section className="mt-4 p-3 text-center">
+                  {signUpErrorMsg}
+                </section>
+              ) : (
+                <div className="mt-4 p-3" />
+              )}
               <button
                 className="btn w-full rounded-md button__primary mt-8 mb-0"
                 type="submit"
@@ -105,14 +117,13 @@ function SignUp() {
               />
             </section>
           </form>
-          {signUpError && <section className="mt-4">{signUpError}</section>}
         </section>
 
         <Link
           to={ROUTES.LOGIN}
           className="underline text-blue-gray-200 w-full text-center block"
         >
-          Go back to Log in
+          Have an account? Log in
         </Link>
       </main>
     </>
