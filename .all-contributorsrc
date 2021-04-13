@@ -1,0 +1,26 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "rshernan",
+      "name": "Ramon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42167693?v=4",
+      "profile": "https://github.com/rshernan",
+      "contributions": [
+        "code",
+        "test",
+        "content"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "musikverein-project",
+  "projectOwner": "Musikverein",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
