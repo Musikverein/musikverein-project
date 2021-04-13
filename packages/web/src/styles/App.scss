@@ -1,5 +1,25 @@
 @import './utils.scss';
 
 .App__container {
-  @apply h-screen bg-dark-dark text-white;
+  background-color: $background-color;
+}
+
+.img__logo {
+  &-m {
+    margin: 0 auto;
+    width: 150px;
+  }
+  &-s {
+    width: 50px;
+  }
+}
+.card {
+  background-color: $background-secundary-color;
+}
+
+.button__primary {
+  background-color: #f1446a;
+}
+.button__secundary {
+  background-color: #be255d;
 }

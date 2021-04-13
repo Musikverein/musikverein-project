@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer components {
+  .App__container {
+    @apply h-screen text-white;
+  }
   .border-radius {
     @apply rounded-md;
   }
@@ -28,7 +31,7 @@
   }
 
   .btn-primary {
-    @apply bg-blue-700 text-blue-50 hover:bg-blue-600 focus:bg-blue-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400 focus-visible:ring-opacity-50;
+    @apply text-blue-50 hover:bg-blue-600 focus:bg-blue-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400 focus-visible:ring-opacity-50;
   }
 
   .icon-btn__small {
@@ -43,5 +46,8 @@
     /* enabled checked config in extend */
     /* https://tailwindcss.com/docs/hover-focus-and-other-states#checked */
     @apply w-6 h-6 mr-2 shadow-sm mb-4 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
+  }
+  .card {
+    @apply rounded-xl overflow-hidden p-8;
   }
 }
