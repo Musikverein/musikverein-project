@@ -1,6 +1,6 @@
 # musikverein-project
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)]
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 - This project proposes the ideation and creation of a music web platform based on Spotify/SoundCloud. Developing a client-server system, employing NodeJS, Express, MongoDB, Firebase and
