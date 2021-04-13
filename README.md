@@ -16,6 +16,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/vvelazquezc"><img src="https://avatars.githubusercontent.com/u/73468274?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vvelazquez</b></sub></a><br /><a href="https://github.com/Musikverein/musikverein-project/commits?author=vvelazquezc" title="Code">💻</a> <a href="#design-vvelazquezc" title="Design">🎨</a> <a href="#content-vvelazquezc" title="Content">🖋</a> <a href="#ideas-vvelazquezc" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/RaulCatedra3003"><img src="https://avatars.githubusercontent.com/u/65410632?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Raúl Cátedra Martínez</b></sub></a><br /><a href="https://github.com/Musikverein/musikverein-project/commits?author=RaulCatedra3003" title="Code">💻</a> <a href="https://github.com/Musikverein/musikverein-project/commits?author=RaulCatedra3003" title="Tests">⚠️</a> <a href="#content-RaulCatedra3003" title="Content">🖋</a> <a href="#ideas-RaulCatedra3003" title="Ideas, Planning, & Feedback">🤔</a></td>
+    <td align="center"><a href="https://github.com/rshernan"><img src="https://avatars.githubusercontent.com/u/42167693?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ramon</b></sub></a><br /><a href="https://github.com/Musikverein/musikverein-project/commits?author=rshernan" title="Code">💻</a> <a href="https://github.com/Musikverein/musikverein-project/commits?author=rshernan" title="Tests">⚠️</a> <a href="#content-rshernan" title="Content">🖋</a> <a href="#ideas-rshernan" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 

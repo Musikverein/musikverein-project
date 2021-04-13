@@ -5,14 +5,39 @@
   "imageSize": 100,
   "commit": false,
   "contributors": [
-    {
-      "login": "vvelazquezc",
-      "name": "vvelazquez",
-      "avatar_url": "https://avatars.githubusercontent.com/u/73468274?v=4",
+    { 
+      "login": "RaulCatedra3003",
+      "name": "Raúl Cátedra Martínez",
+      "avatar_url": "https://avatars.githubusercontent.com/u/65410632?v=4",
+      "profile": "https://github.com/RaulCatedra3003",
+      "contributions": [
+        "code",
+        "test",
+        "content",
+        "ideas"
+      ]
+     },
+     { 
+      "login": "vvelazquez",
+      "name": "Verónica Velázquez Calleja",
+      "avatar_url": "https://avatars.githubusercontent.com/u/73468274?s=64&v=4",
       "profile": "https://github.com/vvelazquezc",
       "contributions": [
         "code",
         "design",
+        "test",
+        "content",
+        "ideas"
+      ]
+     },
+     {
+      "login": "rshernan",
+      "name": "Ramon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/42167693?v=4",
+      "profile": "https://github.com/rshernan",
+      "contributions": [
+        "code",
+        "test",
         "content",
         "ideas"
       ]
