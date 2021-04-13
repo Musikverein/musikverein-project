@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 
 import './Login.scss';
-import logo from '../../img/logo-M.svg';
 
 import * as ROUTES from '../../routes';
 
@@ -15,6 +14,7 @@ import {
 
 import { authSelector } from '../../redux/auth/auth-selectors';
 import InputPassword from '../../components/InputPassword';
+import Logo from '../../components/Logo';
 
 function Login() {
   const dispatch = useDispatch();
@@ -59,10 +59,7 @@ function Login() {
     <>
       <main className="Login">
         <section className="Login__wrapper">
-          <div>
-            <img className="img__logo-m mtb-6" src={logo} alt="logo-M" />
-            <h1 className="text-center text-2xl">Musikverein</h1>
-          </div>
+          <Logo />
           <div className="text-center my-8">
             <h2 className="text-xl font-bold">¿En busca de escuchar música?</h2>
             <p className="text-xm">Guarda tus canciones</p>
