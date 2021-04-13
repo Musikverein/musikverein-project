@@ -41,7 +41,19 @@
         "content",
         "ideas"
       ]
-    }
+    },
+    { 
+      "login": "joserra-15",
+      "name": "Jose Ramón Serralvo Rojo",
+      "avatar_url": "https://avatars.githubusercontent.com/u/72786719?v=4",
+      "profile": "https://github.com/joserra-15",
+      "contributions": [
+        "code",
+        "test",
+        "content",
+        "ideas"
+      ]
+     },
   ],
   "contributorsPerLine": 7,
   "projectName": "musikverein-project",
