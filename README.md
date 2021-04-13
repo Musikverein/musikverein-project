@@ -15,7 +15,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/rshernan"><img src="https://avatars.githubusercontent.com/u/42167693?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ramon</b></sub></a><br /><a href="https://github.com/Musikverein/musikverein-project/commits?author=rshernan" title="Code">💻</a> <a href="https://github.com/Musikverein/musikverein-project/commits?author=rshernan" title="Tests">⚠️</a> <a href="#content-rshernan" title="Content">🖋</a></td>
+    <td align="center"><a href="https://github.com/rshernan"><img src="https://avatars.githubusercontent.com/u/42167693?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Ramon</b></sub></a><br /><a href="https://github.com/Musikverein/musikverein-project/commits?author=rshernan" title="Code">💻</a> <a href="https://github.com/Musikverein/musikverein-project/commits?author=rshernan" title="Tests">⚠️</a> <a href="#content-rshernan" title="Content">🖋</a> <a href="#ideas-rshernan" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
