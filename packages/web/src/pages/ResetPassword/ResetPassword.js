@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import './ResetPassword.scss';
+import * as ROUTES from '../../routes';
 
 import {
   sendPasswordResetEmail,
@@ -51,10 +53,7 @@ function ResetPassword() {
       <main className="ResetPassword">
         <section className="Login__wrapper">
           <Logo />
-          <div className="text-center my-8">
-            <h2 className="text-xl font-bold">Password Reset?</h2>
-          </div>
-          <form className="card" onSubmit={handleSubmit}>
+          <form className="card mt-8" onSubmit={handleSubmit}>
             <input
               type="text"
               id="email"
@@ -76,6 +75,12 @@ function ResetPassword() {
             <section className="mt-4">{passwordResetError}</section>
           )}
         </section>
+        <Link
+          to={ROUTES.LOGIN}
+          className="underline text-blue-gray-200 w-full text-center block"
+        >
+          Go back to Log in
+        </Link>
       </main>
     </>
   );

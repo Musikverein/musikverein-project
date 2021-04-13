@@ -4,7 +4,6 @@ import { Link, Redirect } from 'react-router-dom';
 
 import './SignUp.scss';
 
-import Header from '../../components/Header';
 import * as ROUTES from '../../routes';
 
 import {
@@ -14,6 +13,8 @@ import {
 } from '../../redux/auth/auth-actions';
 
 import { authSelector } from '../../redux/auth/auth-selectors';
+import Logo from '../../components/Logo';
+import InputPassword from '../../components/InputPassword';
 
 function SignUp() {
   const dispatch = useDispatch();
@@ -57,59 +58,62 @@ function SignUp() {
   return (
     <>
       <main className="SignUp">
-        <Header />
         <section className="Login__wrapper">
-          <h1 className="text-2xl font-bold mb-6">SignUp</h1>
-          <hr className="my-4" />
-          <button
-            className="btn btn-primary w-full"
-            type="button"
-            onClick={handleLoginWithGoogle}
-            disabled={isSigningUp}
-          >
-            SignUp with Google
-          </button>
-          <hr className="mt-1 mb-4" />
+          <Logo />
           <form onSubmit={handleSubmit}>
-            <label htmlFor="email" className="form-label">
-              Email
-            </label>
-            <input
-              type="text"
-              id="email"
-              className="form-input"
-              value={email}
-              onChange={handleSetEmail}
-            />
-            <label htmlFor="password" className="form-label">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              className="form-input"
-              value={password}
-              onChange={handleSetPassword}
-            />
-            <button
-              className="btn btn-primary w-full"
-              type="submit"
-              disabled={isSigningUp}
-            >
-              Sign Up
-            </button>
+            <div className="card mt-8">
+              <input
+                type="text"
+                id="email"
+                arial-label="Insert your email"
+                className="form-input rounded-md"
+                value={email}
+                onChange={handleSetEmail}
+                placeholder="Insert your email"
+              />
+              <InputPassword
+                className="form-input rounded-md"
+                id="password"
+                arial-label="Insert your password"
+                value={password}
+                onChange={handleSetPassword}
+                placeholder="Insert your password"
+              />
+              <InputPassword
+                className="form-input rounded-md"
+                id="confirmPassword"
+                arial-label="Repeat your password"
+                value={password}
+                onChange={handleSetPassword}
+                placeholder="Repeat your password"
+              />
+              <button
+                className="btn w-full rounded-md button__primary mt-8 mb-0"
+                type="submit"
+                disabled={isSigningUp}
+              >
+                Sign up
+              </button>
+            </div>
+            <section className="mt-4 text-center">
+              <p>Sign up with:</p>
+              <button
+                className="btn mt-4 rounded-md button__secundary bx bxl-google"
+                type="button"
+                onClick={handleLoginWithGoogle}
+                disabled={isSigningUp}
+              />
+            </section>
           </form>
           {signUpError && <section className="mt-4">{signUpError}</section>}
-          <section className="mt-4">
-            <hr className="mt-1 mb-4" />
-            <Link
-              to={ROUTES.RESET_PASSWORD}
-              className="underline text-blue-gray-200 w-full text-center block"
-            >
-              Reset password
-            </Link>
-          </section>
         </section>
+
+        <Link
+          to={ROUTES.LOGIN}
+          className="underline text-blue-gray-200 w-full text-center block"
+        >
+          Go back to Log in
+        </Link>
       </main>
     </>
   );
