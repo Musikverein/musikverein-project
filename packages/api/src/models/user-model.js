@@ -32,7 +32,7 @@ const UserSchema = Schema(
     following: {
       type: [
         {
-          type: Schema.Types.ObjectId,
+          type: String,
           ref: 'user',
         },
       ],
@@ -41,7 +41,7 @@ const UserSchema = Schema(
     followedBy: {
       type: [
         {
-          type: Schema.Types.ObjectId,
+          type: String,
           ref: 'user',
         },
       ],
