@@ -15,18 +15,18 @@ async function signUp(req, res, next) {
 
     if (response.data) {
       return res.status(200).send({
-        data: 'OK',
+        data: response.data,
         error: null,
       });
     }
 
-    await UserRepo.create({
+    const newUser = await UserRepo.create({
       _id: uid,
       email: email,
     });
 
     res.status(201).send({
-      data: 'OK',
+      data: newUser.data,
       error: null,
     });
   } catch (error) {
