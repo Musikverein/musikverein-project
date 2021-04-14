@@ -2,9 +2,9 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './Home.scss';
-import Header from '../../components/Header';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import { signOut } from '../../redux/auth/auth-actions';
+import Header from '../../components/Header/Header';
 
 function Home() {
   const { isAuthenticated, currentUser } = useSelector(authSelector);
@@ -15,7 +15,7 @@ function Home() {
   };
 
   return (
-    <main className="p-4">
+    <main>
       <Header />
       <section className="p-4">
         {isAuthenticated ? (
@@ -24,9 +24,6 @@ function Home() {
           <h1 className="text-xl">Hello World</h1>
         )}
       </section>
-      <button type="button" onClick={handleLogOut}>
-        LogOut
-      </button>
     </main>
   );
 }

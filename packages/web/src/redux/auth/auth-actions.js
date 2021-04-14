@@ -64,7 +64,7 @@ export function syncSignIn() {
       return dispatch(signUpError(response.errorMessage));
     }
 
-    return dispatch(signUpSuccess(response.data));
+    return dispatch(signUpSuccess(response.data.data));
   };
 }
 

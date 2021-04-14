@@ -58,7 +58,7 @@ function ResetPassword() {
     <>
       <main className="ResetPassword">
         <section className="Login__wrapper">
-          <Logo size="m" />
+          <Logo size="m" titleLogo />
           <form className="card mt-8" onSubmit={handleSubmit}>
             <input
               type="text"

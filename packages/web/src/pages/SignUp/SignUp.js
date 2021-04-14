@@ -53,7 +53,7 @@ function SignUp() {
     <>
       <main className="SignUp">
         <section className="Login__wrapper">
-          <Logo size="m" />
+          <Logo size="m" titleLogo />
           <form onSubmit={handleSubmit}>
             <div className="card mt-8">
               <input

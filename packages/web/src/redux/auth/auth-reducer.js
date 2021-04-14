@@ -36,9 +36,7 @@ const AuthReducer = (state = AuthInitialState, action) => {
         isAuthenticated: true,
         isSigningUp: false,
         signUpErrorMsg: null,
-        currentUser: {
-          email: action.payload.email,
-        },
+        currentUser: action.payload,
       };
     }
     case AuthTypes.SIGN_OUT_REQUEST: {
