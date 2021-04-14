@@ -4,7 +4,7 @@
 
 @layer components {
   .header {
-    @apply flex justify-around items-center w-full;
+    @apply flex justify-between items-center w-full;
   }
   .profile_button {
     @apply w-10 h-10 rounded-full;

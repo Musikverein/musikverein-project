@@ -2,15 +2,13 @@ import React from 'react';
 
 import './Header.scss';
 
-import Logo from '../Logo';
 import ProfileButton from '../ProfileButton';
-import SearchButton from '../SearchButton';
+import MenuMobile from '../MenuMobile';
 
 function Header() {
   return (
     <header className="mobile header">
-      <SearchButton />
-      <Logo size="xm" titleLogo={false} />
+      <MenuMobile />
       <ProfileButton />
     </header>
   );

@@ -18,11 +18,11 @@ function Home() {
     <main>
       <Header />
       <section className="p-4">
-        {isAuthenticated ? (
+        {/* {isAuthenticated ? (
           <h1 className="text-xl">Hello {currentUser.email}</h1>
         ) : (
           <h1 className="text-xl">Hello World</h1>
-        )}
+        )} */}
       </section>
     </main>
   );
