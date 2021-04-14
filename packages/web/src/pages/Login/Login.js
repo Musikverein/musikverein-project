@@ -69,8 +69,8 @@ function Login() {
                 onChange={handleInputChange}
                 placeholder="Insert your email"
               />
-              <span className="m-3 block ">
-                {errors.email ? errors.email : ''}
+              <span className="mb-2 p-2 block text-error">
+                {errors.email ? errors.email : ' '}
               </span>
               <InputPassword
                 className="form-input rounded-md mb-0"
@@ -81,15 +81,15 @@ function Login() {
                 onChange={handleInputChange}
                 placeholder="Insert your password"
               />
-              <span className="m-3 block">
-                {errors.password ? errors.password : ''}
+              <span className="mb-2 p-2 block text-error">
+                {errors.password ? errors.password : ' '}
               </span>
               {signUpErrorMsg ? (
-                <section className="mt-4 p-3 text-center">
+                <section className="mt-4 p-3 text-center text-error">
                   {signUpErrorMsg}
                 </section>
               ) : (
-                <div className="mt-4 p-3" />
+                <div className="mt-4 p-3 text-error text-center" />
               )}
               <Link
                 to={ROUTES.RESET_PASSWORD}

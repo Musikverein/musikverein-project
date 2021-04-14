@@ -65,20 +65,20 @@ function ResetPassword() {
               id="email"
               name="email"
               arial-label="Insert your email"
-              className="form-input rounded-md"
+              className="form-input rounded-md mb-0"
               value={email}
               onChange={handleInputChange}
               placeholder="Insert your email"
             />
-            <span className="m-3 block ">
+            <span className="mb-2 p-2 block text-error">
               {errors.email ? errors.email : ''}
             </span>
             {passwordResetError ? (
-              <section className="mt-4 p-3 text-center">
+              <section className="mt-4 p-3 text-center text-error">
                 {passwordResetError}
               </section>
             ) : (
-              <div className="mt-4 p-3" />
+              <div className="m-2" />
             )}
             <button
               type="submit"

@@ -61,16 +61,16 @@ function SignUp() {
                 id="email"
                 name="email"
                 arial-label="Insert your email"
-                className="form-input rounded-md"
+                className="form-input rounded-md mb-0"
                 value={email}
                 onChange={handleInputChange}
                 placeholder="Insert your email"
               />
-              <span className="m-3 block ">
+              <span className="mb-2 p-2 block text-error">
                 {errors.email ? errors.email : ''}
               </span>
               <InputPassword
-                className="form-input rounded-md"
+                className="form-input rounded-md mb-0"
                 id="password"
                 name="password"
                 arial-label="Insert your password"
@@ -78,11 +78,11 @@ function SignUp() {
                 onChange={handleInputChange}
                 placeholder="Insert your password"
               />
-              <span className="m-3 block ">
+              <span className="mb-2 p-2 block text-error">
                 {errors.password ? errors.password : ''}
               </span>
               <InputPassword
-                className="form-input rounded-md"
+                className="form-input rounded-md mb-0"
                 name="confirmPassword"
                 id="confirmPassword"
                 arial-label="Repeat your password"
@@ -90,15 +90,15 @@ function SignUp() {
                 onChange={handleInputChange}
                 placeholder="Repeat your password"
               />
-              <span className="m-3 block ">
+              <span className="mb-2 p-2 block text-error">
                 {errors.confirmPassword ? errors.confirmPassword : ''}
               </span>
               {signUpErrorMsg ? (
-                <section className="mt-4 p-3 text-center">
+                <section className="mt-4 p-3 text-center text-error">
                   {signUpErrorMsg}
                 </section>
               ) : (
-                <div className="mt-4 p-3" />
+                <div className="m-2" />
               )}
               <button
                 className="btn w-full rounded-md button__primary mt-8 mb-0"
