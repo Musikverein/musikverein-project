@@ -60,7 +60,7 @@ function Login() {
           <div className="card">
             <form onSubmit={handleSubmit}>
               <input
-                type="text"
+                type="email"
                 id="email"
                 name="email"
                 arial-label="Insert your email"
