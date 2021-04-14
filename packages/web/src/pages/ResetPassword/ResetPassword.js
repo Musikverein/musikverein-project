@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -11,6 +11,8 @@ import {
 } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import Logo from '../../components/Logo';
+import { useForm } from '../../hooks/useForm';
+import { validationSchema } from '../../utils/validation/validationSchema';
 
 function buttonText(loading, sent) {
   if (loading) {
@@ -32,7 +34,13 @@ function ResetPassword() {
     passwordResetSent,
   } = useSelector(authSelector);
 
-  const [email, setEmail] = useState('');
+  const { formValues, handleInputChange, resetForm, errors, isValid } = useForm(
+    {
+      email: '',
+    },
+  );
+
+  const { email } = formValues;
 
   useEffect(() => {
     dispatch(resetAuthState());
@@ -40,29 +48,38 @@ function ResetPassword() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    dispatch(sendPasswordResetEmail(email));
-    setEmail('');
-  }
-
-  function handleSetEmail(e) {
-    setEmail(e.target.value);
+    if (isValid(validationSchema.resetPassword)) {
+      dispatch(sendPasswordResetEmail(email));
+      resetForm();
+    }
   }
 
   return (
     <>
       <main className="ResetPassword">
         <section className="Login__wrapper">
-          <Logo />
+          <Logo size="m" />
           <form className="card mt-8" onSubmit={handleSubmit}>
             <input
               type="text"
               id="email"
+              name="email"
               arial-label="Insert your email"
-              className="form-input rounded-md"
+              className="form-input rounded-md mb-0"
               value={email}
-              onChange={handleSetEmail}
+              onChange={handleInputChange}
               placeholder="Insert your email"
             />
+            <span className="mb-2 p-2 block text-error">
+              {errors.email ? errors.email : ''}
+            </span>
+            {passwordResetError ? (
+              <section className="mt-4 p-3 text-center text-error">
+                {passwordResetError}
+              </section>
+            ) : (
+              <div className="m-2" />
+            )}
             <button
               type="submit"
               className="btn w-full rounded-md button__primary mt-4 mb-0"
@@ -71,15 +88,12 @@ function ResetPassword() {
               {buttonText(isSendingPasswordReset, passwordResetSent)}
             </button>
           </form>
-          {passwordResetError && (
-            <section className="mt-4">{passwordResetError}</section>
-          )}
         </section>
         <Link
           to={ROUTES.LOGIN}
           className="underline text-blue-gray-200 w-full text-center block"
         >
-          Go back to Log in
+          Log in
         </Link>
       </main>
     </>

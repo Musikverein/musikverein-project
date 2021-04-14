@@ -4,7 +4,13 @@
 
 @layer components {
   .App__container {
-    @apply h-screen text-white;
+    @apply min-h-screen text-white;
+  }
+  .Login {
+    @apply h-full w-full p-1 flex flex-col align-middle mx-auto;
+  }
+  .Login__wrapper {
+    @apply p-4;
   }
   .border-radius {
     @apply rounded-md;

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './Logo.scss';
 import logo from '../../img/logo-M.svg';
 
-export const Logo = ({ size = 'm' }) => {
+export const Logo = ({ size }) => {
   return (
     <div>
       <img className={`img__logo-${size} mtb-6`} src={logo} alt="logo-M" />

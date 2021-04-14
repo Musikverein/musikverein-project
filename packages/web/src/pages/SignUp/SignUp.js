@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './SignUp.scss';
 
@@ -15,16 +15,22 @@ import {
 import { authSelector } from '../../redux/auth/auth-selectors';
 import Logo from '../../components/Logo';
 import InputPassword from '../../components/InputPassword';
+import { useForm } from '../../hooks/useForm';
+import { validationSchema } from '../../utils/validation/validationSchema';
 
 function SignUp() {
   const dispatch = useDispatch();
-  const { isSigningUp, signUpError, isAuthenticated } = useSelector(
-    authSelector,
+  const { isSigningUp, signUpErrorMsg } = useSelector(authSelector);
+
+  const { formValues, handleInputChange, resetForm, errors, isValid } = useForm(
+    {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
   );
 
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+  const { email, password, confirmPassword } = formValues;
   useEffect(() => {
     dispatch(resetAuthState());
   }, [dispatch]);
@@ -37,56 +43,63 @@ function SignUp() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    dispatch(signUpWithEmailRequest(email, password));
-
-    setEmail('');
-    setPassword('');
-  }
-
-  function handleSetEmail(e) {
-    setEmail(e.target.value);
-  }
-
-  function handleSetPassword(e) {
-    setPassword(e.target.value);
-  }
-
-  if (isAuthenticated) {
-    return <Redirect to={ROUTES.HOME} />;
+    if (isValid(validationSchema.signup)) {
+      dispatch(signUpWithEmailRequest(email, password));
+      resetForm();
+    }
   }
 
   return (
     <>
       <main className="SignUp">
         <section className="Login__wrapper">
-          <Logo />
+          <Logo size="m" />
           <form onSubmit={handleSubmit}>
             <div className="card mt-8">
               <input
                 type="text"
                 id="email"
+                name="email"
                 arial-label="Insert your email"
-                className="form-input rounded-md"
+                className="form-input rounded-md mb-0"
                 value={email}
-                onChange={handleSetEmail}
+                onChange={handleInputChange}
                 placeholder="Insert your email"
               />
+              <span className="mb-2 p-2 block text-error">
+                {errors.email ? errors.email : ''}
+              </span>
               <InputPassword
-                className="form-input rounded-md"
+                className="form-input rounded-md mb-0"
                 id="password"
+                name="password"
                 arial-label="Insert your password"
                 value={password}
-                onChange={handleSetPassword}
+                onChange={handleInputChange}
                 placeholder="Insert your password"
               />
+              <span className="mb-2 p-2 block text-error">
+                {errors.password ? errors.password : ''}
+              </span>
               <InputPassword
-                className="form-input rounded-md"
+                className="form-input rounded-md mb-0"
+                name="confirmPassword"
                 id="confirmPassword"
                 arial-label="Repeat your password"
-                value={password}
-                onChange={handleSetPassword}
+                value={confirmPassword}
+                onChange={handleInputChange}
                 placeholder="Repeat your password"
               />
+              <span className="mb-2 p-2 block text-error">
+                {errors.confirmPassword ? errors.confirmPassword : ''}
+              </span>
+              {signUpErrorMsg ? (
+                <section className="mt-4 p-3 text-center text-error">
+                  {signUpErrorMsg}
+                </section>
+              ) : (
+                <div className="m-2" />
+              )}
               <button
                 className="btn w-full rounded-md button__primary mt-8 mb-0"
                 type="submit"
@@ -105,14 +118,13 @@ function SignUp() {
               />
             </section>
           </form>
-          {signUpError && <section className="mt-4">{signUpError}</section>}
         </section>
 
         <Link
           to={ROUTES.LOGIN}
           className="underline text-blue-gray-200 w-full text-center block"
         >
-          Go back to Log in
+          Have an account? Log in
         </Link>
       </main>
     </>

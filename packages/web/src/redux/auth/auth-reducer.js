@@ -2,7 +2,7 @@ import * as AuthTypes from './auth-types';
 
 export const AuthInitialState = {
   isSigningUp: false,
-  signUpError: null,
+  signUpErrorMsg: null,
   isSigningOut: false,
   signOutError: null,
   isAuthenticated: false,
@@ -20,14 +20,14 @@ const AuthReducer = (state = AuthInitialState, action) => {
       return {
         ...state,
         isSigningUp: true,
-        signUpError: null,
+        signUpErrorMsg: null,
       };
     }
     case AuthTypes.SIGN_UP_ERROR: {
       return {
         ...state,
         isSigningUp: false,
-        signUpError: action.payload,
+        signUpErrorMsg: action.payload,
       };
     }
     case AuthTypes.SIGN_UP_SUCCESS: {
@@ -35,7 +35,7 @@ const AuthReducer = (state = AuthInitialState, action) => {
         ...state,
         isAuthenticated: true,
         isSigningUp: false,
-        signUpError: null,
+        signUpErrorMsg: null,
         currentUser: {
           email: action.payload.email,
         },
@@ -94,7 +94,7 @@ const AuthReducer = (state = AuthInitialState, action) => {
       return {
         ...state,
         isSigningUp: false,
-        signUpError: null,
+        signUpErrorMsg: null,
         isSigningOut: false,
         signOutError: null,
         isSendingPasswordReset: false,
