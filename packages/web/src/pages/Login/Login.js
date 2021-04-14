@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './Login.scss';
 
@@ -9,7 +9,6 @@ import * as ROUTES from '../../routes';
 import {
   resetAuthState,
   signInWithEmailRequest,
-  signUpError,
   signUpWithGoogleRequest,
 } from '../../redux/auth/auth-actions';
 
@@ -21,14 +20,14 @@ import { validationSchema } from '../../utils/validation/validationSchema';
 
 function Login() {
   const dispatch = useDispatch();
-  const { isSigningUp, signUpErrorMsg, isAuthenticated } = useSelector(
-    authSelector,
-  );
+  const { isSigningUp, signUpErrorMsg } = useSelector(authSelector);
 
-  const [formValues, handleInputChange, resetForm] = useForm({
-    email: '',
-    password: '',
-  });
+  const { formValues, handleInputChange, resetForm, errors, isValid } = useForm(
+    {
+      email: '',
+      password: '',
+    },
+  );
 
   const { email, password } = formValues;
 
@@ -43,17 +42,10 @@ function Login() {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const { error } = validationSchema.login.validate(formValues);
-    if (error) {
-      dispatch(signUpError(error.message));
-    } else {
+    if (isValid(validationSchema.login)) {
       dispatch(signInWithEmailRequest(email, password));
       resetForm();
     }
-  }
-
-  if (isAuthenticated) {
-    return <Redirect to={ROUTES.HOME} />;
   }
 
   return (
@@ -72,13 +64,16 @@ function Login() {
                 id="email"
                 name="email"
                 arial-label="Insert your email"
-                className="form-input rounded-md"
+                className="form-input rounded-md mb-0"
                 value={email}
                 onChange={handleInputChange}
                 placeholder="Insert your email"
               />
+              <span className="m-3 block ">
+                {errors.email ? errors.email : ''}
+              </span>
               <InputPassword
-                className="form-input rounded-md"
+                className="form-input rounded-md mb-0"
                 id="password"
                 name="password"
                 arial-label="Insert your password"
@@ -86,6 +81,9 @@ function Login() {
                 onChange={handleInputChange}
                 placeholder="Insert your password"
               />
+              <span className="m-3 block">
+                {errors.password ? errors.password : ''}
+              </span>
               {signUpErrorMsg ? (
                 <section className="mt-4 p-3 text-center">
                   {signUpErrorMsg}

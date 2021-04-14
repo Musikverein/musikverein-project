@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 import './SignUp.scss';
 
@@ -8,7 +8,6 @@ import * as ROUTES from '../../routes';
 
 import {
   resetAuthState,
-  signUpError,
   signUpWithEmailRequest,
   signUpWithGoogleRequest,
 } from '../../redux/auth/auth-actions';
@@ -21,15 +20,15 @@ import { validationSchema } from '../../utils/validation/validationSchema';
 
 function SignUp() {
   const dispatch = useDispatch();
-  const { isSigningUp, signUpErrorMsg, isAuthenticated } = useSelector(
-    authSelector,
-  );
+  const { isSigningUp, signUpErrorMsg } = useSelector(authSelector);
 
-  const [formValues, handleInputChange, resetForm] = useForm({
-    email: '',
-    password: '',
-    confirmPassword: '',
-  });
+  const { formValues, handleInputChange, resetForm, errors, isValid } = useForm(
+    {
+      email: '',
+      password: '',
+      confirmPassword: '',
+    },
+  );
 
   const { email, password, confirmPassword } = formValues;
   useEffect(() => {
@@ -44,17 +43,10 @@ function SignUp() {
   function handleSubmit(e) {
     e.preventDefault();
 
-    const { error } = validationSchema.signup.validate(formValues);
-    if (error) {
-      dispatch(signUpError(error.message));
-    } else {
+    if (isValid(validationSchema.signup)) {
       dispatch(signUpWithEmailRequest(email, password));
       resetForm();
     }
-  }
-
-  if (isAuthenticated) {
-    return <Redirect to={ROUTES.HOME} />;
   }
 
   return (
@@ -74,6 +66,9 @@ function SignUp() {
                 onChange={handleInputChange}
                 placeholder="Insert your email"
               />
+              <span className="m-3 block ">
+                {errors.email ? errors.email : ''}
+              </span>
               <InputPassword
                 className="form-input rounded-md"
                 id="password"
@@ -83,6 +78,9 @@ function SignUp() {
                 onChange={handleInputChange}
                 placeholder="Insert your password"
               />
+              <span className="m-3 block ">
+                {errors.password ? errors.password : ''}
+              </span>
               <InputPassword
                 className="form-input rounded-md"
                 name="confirmPassword"
@@ -92,6 +90,9 @@ function SignUp() {
                 onChange={handleInputChange}
                 placeholder="Repeat your password"
               />
+              <span className="m-3 block ">
+                {errors.confirmPassword ? errors.confirmPassword : ''}
+              </span>
               {signUpErrorMsg ? (
                 <section className="mt-4 p-3 text-center">
                   {signUpErrorMsg}

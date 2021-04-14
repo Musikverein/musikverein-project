@@ -8,7 +8,6 @@ import * as ROUTES from '../../routes';
 import {
   sendPasswordResetEmail,
   resetAuthState,
-  sendPasswordResetEmailError,
 } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import Logo from '../../components/Logo';
@@ -35,9 +34,11 @@ function ResetPassword() {
     passwordResetSent,
   } = useSelector(authSelector);
 
-  const [formValues, handleInputChange, resetForm] = useForm({
-    email: '',
-  });
+  const { formValues, handleInputChange, resetForm, errors, isValid } = useForm(
+    {
+      email: '',
+    },
+  );
 
   const { email } = formValues;
 
@@ -47,11 +48,7 @@ function ResetPassword() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    const { error } = validationSchema.resetPassword.validate(formValues);
-    if (error) {
-      dispatch(sendPasswordResetEmailError(error.message));
-    } else {
+    if (isValid(validationSchema.resetPassword)) {
       dispatch(sendPasswordResetEmail(email));
       resetForm();
     }
@@ -73,6 +70,9 @@ function ResetPassword() {
               onChange={handleInputChange}
               placeholder="Insert your email"
             />
+            <span className="m-3 block ">
+              {errors.email ? errors.email : ''}
+            </span>
             {passwordResetError ? (
               <section className="mt-4 p-3 text-center">
                 {passwordResetError}
