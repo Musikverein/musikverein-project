@@ -4,15 +4,16 @@ const { isEmail } = require('validator');
 
 const UserSchema = Schema(
   {
-    // we use the uid from firebase as the _id
     _id: String,
     firstName: {
       type: String,
       trim: true,
+      default: '',
     },
     lastName: {
       type: String,
       trim: true,
+      default: '',
     },
     email: {
       type: String,
@@ -23,6 +24,28 @@ const UserSchema = Schema(
         validator: (value) => isEmail(value),
         message: (props) => `The email ${props.value} is not valid`,
       },
+    },
+    image: {
+      type: String,
+      default: '',
+    },
+    following: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'user',
+        },
+      ],
+      default: [],
+    },
+    followedBy: {
+      type: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'user',
+        },
+      ],
+      default: [],
     },
   },
   {
