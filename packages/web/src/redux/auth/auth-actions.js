@@ -65,7 +65,7 @@ export function syncSignIn() {
       return dispatch(signUpError(response.errorMessage));
     }
 
-    return dispatch(signUpSuccess(response.data.data));
+    return dispatch(signUpSuccess(response.data));
   };
 }
 
@@ -167,7 +167,7 @@ export const updateProfile = ({ userName, firstName, lastName, file }) => {
         return dispatch(updateProfileError(response.errorMessage));
       }
 
-      return dispatch(updateProfileSuccess(response.data.data));
+      return dispatch(updateProfileSuccess(response.data));
     } catch (error) {
       return dispatch(updateProfileError(error.message));
     }

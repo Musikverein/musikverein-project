@@ -43,7 +43,40 @@ async function signOut(req, res) {
   });
 }
 
+async function update(req, res) {
+  const { uid } = req.user;
+  const { firstName, lastName, userName, image } = req.body;
+
+  try {
+    const response = await UserRepo.findOneAndUpdate(
+      { _id: uid },
+      { firstName, lastName, userName, image },
+      { new: true },
+    );
+
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      return res.status(202).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    return res.status(404).send({
+      data: null,
+      error: error.message,
+    });
+  }
+}
+
 module.exports = {
   signUp: signUp,
   signOut: signOut,
+  update: update,
 };
