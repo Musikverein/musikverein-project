@@ -3,12 +3,12 @@ import React from 'react';
 import './Header.scss';
 
 import ProfileButton from '../ProfileButton';
-import MenuMobile from '../MenuMobile';
+import Menu from '../Menu';
 
 function Header() {
   return (
     <header className="mobile header">
-      <MenuMobile />
+      <Menu />
       <ProfileButton />
     </header>
   );

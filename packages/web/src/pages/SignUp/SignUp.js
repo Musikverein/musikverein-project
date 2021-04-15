@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 
 import './SignUp.scss';
 
-import * as ROUTES from '../../routes';
-
 import {
   resetAuthState,
   signUpWithEmailRequest,
@@ -17,6 +15,7 @@ import Logo from '../../components/Logo';
 import InputPassword from '../../components/InputPassword';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
+import ROUTES from '../../routes';
 
 function SignUp() {
   const dispatch = useDispatch();

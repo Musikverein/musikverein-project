@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
-import * as ROUTES from '../../routes';
+import ROUTES from '../../routes';
 
 export const SearchButton = () => {
   return (

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 import './Logo.scss';
 import logo from '../../img/logo-M.svg';
-import * as ROUTES from '../../routes';
+import ROUTES from '../../routes';
 
 export const Logo = ({ size, titleLogo }) => {
   return (

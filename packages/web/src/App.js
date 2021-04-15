@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import './styles/App.scss';
 
-import * as ROUTES from './routes';
 import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
@@ -16,6 +15,7 @@ import { authSelector } from './redux/auth/auth-selectors';
 import { PublicRoute } from './components/PublicRoute/PublicRoute';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import Profile from './pages/Profile';
+import ROUTES from './routes';
 
 function App() {
   const dispatch = useDispatch();

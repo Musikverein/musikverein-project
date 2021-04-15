@@ -1,6 +1,9 @@
-export const HOME = '/';
-export const SIGN_UP = '/sign-up';
-export const LOGIN = '/login';
-export const RESET_PASSWORD = '/reset-password';
-export const PROFILE = '/profile';
-export const SEARCH = '/search';
+export const ROUTES = {
+  HOME: '/',
+  SIGN_UP: '/sign-up',
+  LOGIN: '/login',
+  RESET_PASSWORD: '/reset-password',
+  PROFILE: '/profile',
+  SEARCH: '/search',
+  LIBRARY: '/library',
+};

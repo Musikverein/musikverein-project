@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import Navigation from '../Navigation';
 
-export const MenuMobile = () => {
+export const Menu = () => {
   const [showMenu, setShowMenu] = useState(false);
 
   const handleShowMenu = () => {
@@ -14,7 +15,7 @@ export const MenuMobile = () => {
         className="bx bx-menu-alt-left text-4xl"
         onClick={handleShowMenu}
       />
-      {showMenu && '<nav></nav>'}
+      {showMenu && <Navigation />}
     </>
   );
 };
