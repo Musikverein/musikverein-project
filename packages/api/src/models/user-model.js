@@ -5,6 +5,11 @@ const { isEmail } = require('validator');
 const UserSchema = Schema(
   {
     _id: String,
+    userName: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     firstName: {
       type: String,
       trim: true,

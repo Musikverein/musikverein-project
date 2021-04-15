@@ -1,35 +1,36 @@
-import { makeRequest } from './api-utils';
+import axios from 'axios';
 
-function makeApi(request = makeRequest()) {
-  function signUp(headers) {
-    return request({
-      url: '/user/sign-up',
-      requestMethod: 'POST',
-      headers: headers,
-    });
-  }
+const baseURL = process.env.REACT_APP_API_BASE_URL;
 
-  function signOut(headers) {
-    return request({
-      url: '/user/sign-out',
-      requestMethod: 'POST',
-      headers: headers,
-    });
-  }
+export const api = {
+  signUp: (headers) => {
+    return axios.post(
+      `${baseURL}/user/sign-up`,
+      {},
+      {
+        headers: headers,
+      },
+    );
+  },
 
-  function updateProfile(headers, body) {
-    return request({
-      url: '/user/update',
-      requestMethod: 'PATCH',
-      headers: headers,
-      body: body,
-    });
-  }
-  return {
-    signUp: signUp,
-    signOut: signOut,
-    updateProfile: updateProfile,
-  };
-}
+  signOut: (headers) => {
+    return axios.post(
+      `${baseURL}/user/sign-out`,
+      {},
+      {
+        headers: headers,
+      },
+    );
+  },
 
-export default makeApi();
+  updateProfile: (headers, body) => {
+    return axios.patch(
+      `${baseURL}/user/update`,
+      {},
+      {
+        headers: headers,
+        body: body,
+      },
+    );
+  },
+};

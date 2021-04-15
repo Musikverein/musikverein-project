@@ -11,7 +11,11 @@ export const ProfileButton = () => {
     <div>
       <Link to={ROUTES.PROFILE}>
         {currentUser.image ? (
-          <img src={currentUser.image} alt="User profile" />
+          <img
+            src={currentUser.image}
+            alt="User profile"
+            className="w-10 h-10 rounded-full mx-auto border-2 border-mk-grey"
+          />
         ) : (
           <i className="bx bx-user text-4xl" />
         )}

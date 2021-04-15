@@ -26,7 +26,8 @@ export const ProfileEdit = () => {
   function handleSubmit(e) {
     e.preventDefault();
     if (isValid(validationSchema.userProfile)) {
-      dispatch(updateProfile({ userName, firstName, lastName, image: file }));
+      console.log({ userName, firstName, lastName, image: file });
+      /* dispatch(updateProfile({ userName, firstName, lastName, image: file })); */
     }
   }
 
