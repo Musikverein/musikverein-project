@@ -1,19 +1,19 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+/* import { useDispatch, useSelector } from 'react-redux'; */
 
 import './Home.scss';
-import { authSelector } from '../../redux/auth/auth-selectors';
-import { signOut } from '../../redux/auth/auth-actions';
+/* import { authSelector } from '../../redux/auth/auth-selectors';
+import { signOut } from '../../redux/auth/auth-actions'; */
 import Header from '../../components/Header/Header';
 
 function Home() {
-  const { isAuthenticated, currentUser } = useSelector(authSelector);
+  /* const { isAuthenticated, currentUser } = useSelector(authSelector);
   const dispatch = useDispatch();
 
   const handleLogOut = () => {
     dispatch(signOut());
   };
-
+ */
   return (
     <main>
       <Header />

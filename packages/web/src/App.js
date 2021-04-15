@@ -16,6 +16,7 @@ import { PublicRoute } from './components/PublicRoute/PublicRoute';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import Profile from './pages/Profile';
 import ROUTES from './routes';
+import ProfileEdit from './pages/ProfileEdit';
 
 function App() {
   const dispatch = useDispatch();
@@ -57,6 +58,13 @@ function App() {
           isAuthenticated={isAuthenticated}
           path={ROUTES.RESET_PASSWORD}
           component={ResetPassword}
+        />
+
+        <ProtectedRoute
+          isAuthenticated={isAuthenticated}
+          path={ROUTES.PROFILE_EDIT}
+          component={ProfileEdit}
+          exact
         />
 
         <ProtectedRoute

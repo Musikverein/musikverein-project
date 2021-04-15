@@ -12,10 +12,10 @@ export const Menu = () => {
     <>
       <button
         type="button"
-        className="bx bx-menu-alt-left text-4xl"
+        className="bx bx-menu-alt-left text-4xl relative"
         onClick={handleShowMenu}
       />
-      {showMenu && <Navigation />}
+      {showMenu && <Navigation showMenu={showMenu} />}
     </>
   );
 };

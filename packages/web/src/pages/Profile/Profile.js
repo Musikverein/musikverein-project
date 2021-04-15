@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import EditProfile from '../../components/EditProfile';
+import { Link } from 'react-router-dom';
 import InfoProfile from '../../components/InfoProfile';
 import Header from '../../components/Header/Header';
 
 import { signOut } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
+import ROUTES from '../../routes';
 
 export const Profile = () => {
   const { currentUser } = useSelector(authSelector);
-  const [showEditForm, setShowEditForm] = useState(false);
   const dispatch = useDispatch();
 
   function handleSignOut() {
@@ -34,17 +34,14 @@ export const Profile = () => {
             ? `${currentUser.firstName} ${currentUser.lastName}`
             : 'Your name'}
         </h3>
-        <button
+        <Link
+          to={ROUTES.PROFILE_EDIT}
           className="rounded-md px-4 border font-light text-sm border-mk-magenta mt-2"
-          type="button"
-          onClick={() => {
-            setShowEditForm(!showEditForm);
-          }}
         >
           Edit your profile
-        </button>
+        </Link>
       </div>
-      {showEditForm ? <EditProfile /> : <InfoProfile />}
+      <InfoProfile />
 
       <button type="button" onClick={handleSignOut}>
         LogOut

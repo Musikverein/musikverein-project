@@ -1,6 +1,7 @@
 import * as AuthTypes from './auth-types';
 import api from '../../api';
 import * as auth from '../../services/auth';
+import { imageUpload } from '../../services/cloudinary';
 
 export const resetStoreAndLogOut = () => ({
   type: AuthTypes.RESET_STORE_AND_LOG_OUT,
@@ -138,4 +139,51 @@ export const sendPasswordResetEmailSuccess = () => ({
 
 export const resetAuthState = () => ({
   type: AuthTypes.RESET_AUTH_STATE,
+});
+
+export const updateProfile = ({ userName, firstName, lastName, file }) => {
+  return async function updateProfileThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(updateProfileRequest());
+    try {
+      let image = null;
+      if (file) {
+        const fileUrl = await imageUpload(file);
+        image = fileUrl;
+      }
+
+      const response = await api.updateProfile(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { userName, firstName, lastName, image },
+      );
+      if (response.errorMessage) {
+        return dispatch(updateProfileError(response.errorMessage));
+      }
+
+      return dispatch(updateProfileSuccess(response.data.data));
+    } catch (error) {
+      return dispatch(updateProfileError(error.message));
+    }
+  };
+};
+
+export const updateProfileRequest = () => ({
+  type: AuthTypes.UPDATE_PROFILE_REQUEST,
+});
+
+export const updateProfileError = (errorMessage) => ({
+  type: AuthTypes.UPDATE_PROFILE_ERROR,
+  payload: errorMessage,
+});
+
+export const updateProfileSuccess = (user) => ({
+  type: AuthTypes.UPDATE_PROFILE_SUCCESS,
+  payload: user,
 });
