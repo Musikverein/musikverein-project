@@ -20,13 +20,27 @@ async function signUp(req, res, next) {
       });
     }
 
-    const newUser = await UserRepo.create({
+    const { data, error } = await UserRepo.create({
       _id: uid,
       email: email,
     });
 
+    if (error) {
+      return res.status(400).send({
+        data: null,
+        error: error,
+      });
+    }
+
     res.status(201).send({
-      data: newUser.data,
+      data: {
+        userName: data.userName,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        image: data.image,
+        following: data.following,
+        followedBy: data.followedBy,
+      },
       error: null,
     });
   } catch (error) {
@@ -48,11 +62,27 @@ async function update(req, res) {
   const { firstName, lastName, userName, image } = req.body;
 
   try {
-    const response = await UserRepo.findOneAndUpdate(
-      { _id: uid },
-      { firstName, lastName, userName, image },
-      { new: true },
-    );
+    let response = null;
+
+    if (image) {
+      response = await UserRepo.findOneAndUpdate(
+        { _id: uid },
+        { firstName, lastName, userName, image },
+        {
+          new: true,
+          select: 'firstName lastName userName image following followedBy',
+        },
+      );
+    } else {
+      response = await UserRepo.findOneAndUpdate(
+        { _id: uid },
+        { firstName, lastName, userName },
+        {
+          new: true,
+          select: 'firstName lastName userName image following followedBy',
+        },
+      );
+    }
 
     if (response.error) {
       return res.status(400).send({

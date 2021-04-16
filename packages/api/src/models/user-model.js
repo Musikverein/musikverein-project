@@ -32,7 +32,8 @@ const UserSchema = Schema(
     },
     image: {
       type: String,
-      default: '',
+      default:
+        'https://res.cloudinary.com/musikverein/image/upload/v1618564527/musikverein/profile-photo_hbkwnk.svg',
     },
     following: {
       type: [

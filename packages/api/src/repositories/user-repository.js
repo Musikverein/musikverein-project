@@ -9,8 +9,14 @@ class UserRepository {
   findOne(query) {
     return normalizeDBQuery(
       db.User.findOne(query).select(
-        'firstName lastName email image following followedBy',
+        'userName firstName lastName email image following followedBy',
       ),
+    );
+  }
+
+  findOneAndUpdate(queryFind, querySet, queryOptions) {
+    return normalizeDBQuery(
+      db.User.findOneAndUpdate(queryFind, querySet, queryOptions),
     );
   }
 }

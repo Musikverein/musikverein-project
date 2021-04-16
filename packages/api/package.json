@@ -53,6 +53,7 @@
     "express": "^4.17.1",
     "firebase-admin": "^9.5.0",
     "helmet": "^4.4.1",
+    "joi": "^17.4.0",
     "loglevel": "^1.7.1",
     "mongoose": "^5.11.14",
     "morgan": "^1.10.0",

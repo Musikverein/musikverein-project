@@ -21,11 +21,7 @@ export const Profile = () => {
       <Header />
       <div className="pt-16 text-center">
         <img
-          src={
-            currentUser.image
-              ? currentUser.image
-              : 'https://i.pinimg.com/originals/6e/ff/53/6eff53e82b80fb5dd7614d5ba054f144.jpg'
-          }
+          src={currentUser.image}
           className="w-32 h-32 rounded-full mx-auto border-2 border-mk-magenta"
           alt="profile"
         />

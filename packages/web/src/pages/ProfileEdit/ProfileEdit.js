@@ -26,8 +26,7 @@ export const ProfileEdit = () => {
   function handleSubmit(e) {
     e.preventDefault();
     if (isValid(validationSchema.userProfile)) {
-      console.log({ userName, firstName, lastName, image: file });
-      /* dispatch(updateProfile({ userName, firstName, lastName, image: file })); */
+      dispatch(updateProfile({ userName, firstName, lastName, file }));
     }
   }
 
@@ -54,11 +53,7 @@ export const ProfileEdit = () => {
       <Link to={ROUTES.PROFILE} className="bx bxs-chevron-left text-4xl" />
 
       <img
-        src={
-          urlPreview ||
-          currentUser.image ||
-          'https://i.pinimg.com/originals/6e/ff/53/6eff53e82b80fb5dd7614d5ba054f144.jpg'
-        }
+        src={urlPreview || currentUser.image}
         className="w-32 h-32 rounded-full mx-auto border-2 border-mk-magenta"
         alt="profile"
       />

@@ -24,13 +24,8 @@ export const api = {
   },
 
   updateProfile: (headers, body) => {
-    return axios.patch(
-      `${baseURL}/user/update`,
-      {},
-      {
-        headers: headers,
-        body: body,
-      },
-    );
+    return axios.patch(`${baseURL}/user/update`, body, {
+      headers: headers,
+    });
   },
 };

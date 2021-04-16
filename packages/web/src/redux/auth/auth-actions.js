@@ -152,6 +152,7 @@ export const updateProfile = ({ userName, firstName, lastName, file }) => {
     dispatch(updateProfileRequest());
     try {
       let image = null;
+
       if (file) {
         const fileUrl = await imageUpload(file);
         image = fileUrl;
