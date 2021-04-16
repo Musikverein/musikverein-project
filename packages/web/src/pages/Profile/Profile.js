@@ -26,13 +26,11 @@ export const Profile = () => {
           alt="profile"
         />
         <h3 className="font-medium mt-4 mb-2">
-          {currentUser.firstName && currentUser.lastName
-            ? `${currentUser.firstName} ${currentUser.lastName}`
-            : 'Your name'}
+          {currentUser.userName || 'Complete your profile'}
         </h3>
         <Link
           to={ROUTES.PROFILE_EDIT}
-          className="rounded-md px-4 border font-light text-sm border-mk-magenta mt-2"
+          className="rounded-md p-1.5 border font-light text-sm border-mk-magenta mt-2"
         >
           Edit your profile
         </Link>

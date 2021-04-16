@@ -7,6 +7,8 @@ import { authSelector } from '../../redux/auth/auth-selectors';
 import ROUTES from '../../routes';
 import { validationSchema } from '../../utils/validation/validationSchema';
 
+import './ProfileEdit.scss';
+
 export const ProfileEdit = () => {
   const { currentUser } = useSelector(authSelector);
   const { formValues, handleInputChange, errors, isValid } = useForm({
@@ -31,7 +33,12 @@ export const ProfileEdit = () => {
   }
 
   const handleProfileImage = () => {
-    document.querySelector('#imageProfile').click();
+    if (urlPreview) {
+      document.querySelector('#imageProfile').value = '';
+      setNewImageProfile({ file: null, urlPreview: null });
+    } else {
+      document.querySelector('#imageProfile').click();
+    }
   };
 
   const handleImageProfileChange = (e) => {
@@ -51,70 +58,84 @@ export const ProfileEdit = () => {
   return (
     <>
       <Link to={ROUTES.PROFILE} className="bx bxs-chevron-left text-4xl" />
+      <div className="animate__animated animate__slideInUp">
+        <div className="flex justify-center my-8 ">
+          <div className="relative w-32 h-32">
+            <button
+              className="absolute bottom-0 right-0"
+              type="button"
+              onClick={handleProfileImage}
+            >
+              <span
+                className={
+                  urlPreview ? 'bx bx-x icon_edit' : 'bx bxs-pencil icon_edit'
+                }
+              />
+            </button>
+            <img
+              src={urlPreview || currentUser.image}
+              className="w-32 h-32 rounded-full border-2 border-mk-magenta"
+              alt="profile"
+            />
+          </div>
+        </div>
 
-      <img
-        src={urlPreview || currentUser.image}
-        className="w-32 h-32 rounded-full mx-auto border-2 border-mk-magenta"
-        alt="profile"
-      />
-
-      <button
-        type="button"
-        className="rounded-md px-4 border font-light text-sm border-mk-magenta mt-2"
-        onClick={handleProfileImage}
-      >
-        Edit your profile image
-      </button>
-
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          id="userName"
-          name="userName"
-          arial-label="Insert your user name"
-          className="form-input rounded-md mb-0"
-          value={userName}
-          onChange={handleInputChange}
-          placeholder="Insert your user name"
-        />
-        <span className="mb-2 p-2 block text-error">
-          {errors.userName ? errors.userName : ' '}
-        </span>
-        <input
-          type="text"
-          id="firstName"
-          name="firstName"
-          arial-label="Insert your first name"
-          className="form-input rounded-md mb-0"
-          value={firstName}
-          onChange={handleInputChange}
-          placeholder="Insert your first name"
-        />
-        <span className="mb-2 p-2 block text-error">
-          {errors.firstName ? errors.firstName : ' '}
-        </span>
-        <input
-          type="text"
-          id="lastName"
-          name="lastName"
-          arial-label="Insert your last name"
-          className="form-input rounded-md mb-0"
-          value={lastName}
-          onChange={handleInputChange}
-          placeholder="Insert your last name"
-        />
-        <span className="mb-2 p-2 block text-error">
-          {errors.lastName ? errors.lastName : ' '}
-        </span>
-        <input
-          type="file"
-          name="imageProfile"
-          id="imageProfile"
-          className="hidden"
-          onChange={handleImageProfileChange}
-        />
-        <button type="submit">Update profile</button>
-      </form>
+        <form onSubmit={handleSubmit} className="px-4">
+          <input
+            type="text"
+            id="userName"
+            name="userName"
+            arial-label="Insert your user name"
+            className="input__edit"
+            value={userName}
+            onChange={handleInputChange}
+            placeholder="Insert your user name"
+          />
+          <span className="mb-2 p-2 block text-error">
+            {errors.userName ? errors.userName : ' '}
+          </span>
+          <input
+            type="text"
+            id="firstName"
+            name="firstName"
+            arial-label="Insert your first name"
+            className="input__edit"
+            value={firstName}
+            onChange={handleInputChange}
+            placeholder="Insert your first name"
+          />
+          <span className="mb-2 p-2 block text-error">
+            {errors.firstName ? errors.firstName : ' '}
+          </span>
+          <input
+            type="text"
+            id="lastName"
+            name="lastName"
+            arial-label="Insert your last name"
+            className="input__edit"
+            value={lastName}
+            onChange={handleInputChange}
+            placeholder="Insert your last name"
+          />
+          <span className="mb-2 p-2 block text-error">
+            {errors.lastName ? errors.lastName : ' '}
+          </span>
+          <input
+            type="file"
+            name="imageProfile"
+            id="imageProfile"
+            className="hidden"
+            onChange={handleImageProfileChange}
+            multiple={false}
+          />
+          <button
+            type="submit"
+            className="btn w-full rounded-md button__primary mt-8 mb-0"
+          >
+            Update profile
+          </button>
+        </form>
+      </div>
     </>
   );
 };

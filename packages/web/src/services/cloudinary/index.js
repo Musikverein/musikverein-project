@@ -1,1 +1,1 @@
-export {imageUpload} from './cloudinary'
+export { imageUpload } from './cloudinary';

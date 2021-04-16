@@ -57,15 +57,15 @@ export function syncSignIn() {
       return dispatch(signOutSuccess());
     }
 
-    const response = await api.signUp({
+    const { errorMessage, data: response } = await api.signUp({
       Authorization: `Bearer ${token}`,
     });
 
-    if (response.errorMessage) {
-      return dispatch(signUpError(response.errorMessage));
+    if (errorMessage) {
+      return dispatch(signUpError(errorMessage));
     }
 
-    return dispatch(signUpSuccess(response.data.data));
+    return dispatch(signUpSuccess(response.data));
   };
 }
 
@@ -88,12 +88,12 @@ export function signOut() {
       return dispatch(signOutSuccess());
     }
 
-    const response = await api.signOut({
+    const { errorMessage } = await api.signOut({
       Authorization: `Bearer ${token}`,
     });
 
-    if (response.errorMessage) {
-      return dispatch(signOutError(response.errorMessage));
+    if (errorMessage) {
+      return dispatch(signOutError(errorMessage));
     }
 
     auth.signOut();
@@ -158,17 +158,17 @@ export const updateProfile = ({ userName, firstName, lastName, file }) => {
         image = fileUrl;
       }
 
-      const response = await api.updateProfile(
+      const { errorMessage, data: response } = await api.updateProfile(
         {
           Authorization: `Bearer ${token}`,
         },
         { userName, firstName, lastName, image },
       );
-      if (response.errorMessage) {
-        return dispatch(updateProfileError(response.errorMessage));
+      if (errorMessage) {
+        return dispatch(updateProfileError(errorMessage));
       }
 
-      return dispatch(updateProfileSuccess(response.data.data));
+      return dispatch(updateProfileSuccess(response.data));
     } catch (error) {
       return dispatch(updateProfileError(error.message));
     }
