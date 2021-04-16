@@ -188,3 +188,7 @@ export const updateProfileSuccess = (user) => ({
   type: AuthTypes.UPDATE_PROFILE_SUCCESS,
   payload: user,
 });
+
+export const resetUpdate = () => ({
+  type: AuthTypes.RESET_UPDATE_PROFILE,
+});

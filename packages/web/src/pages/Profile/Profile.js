@@ -1,20 +1,14 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import InfoProfile from '../../components/InfoProfile';
-import Header from '../../components/Header/Header';
+import Header from '../../components/Header';
 
-import { signOut } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import ROUTES from '../../routes';
 
 export const Profile = () => {
   const { currentUser } = useSelector(authSelector);
-  const dispatch = useDispatch();
-
-  function handleSignOut() {
-    dispatch(signOut());
-  }
+  const { followedBy, following } = currentUser;
 
   return (
     <div>
@@ -35,11 +29,21 @@ export const Profile = () => {
           Edit your profile
         </Link>
       </div>
-      <InfoProfile />
 
-      <button type="button" onClick={handleSignOut}>
-        LogOut
-      </button>
+      <div className="flex justify-around text-center p-6">
+        <div>
+          <span className="font-medium">0</span>
+          <p className="font-light text-xs">SONGS</p>
+        </div>
+        <div>
+          <span className="font-medium">{followedBy.length}</span>
+          <p className="font-light text-xs">FOLLOWERS</p>
+        </div>
+        <div>
+          <span className="font-medium">{following.length}</span>
+          <p className="font-light text-xs">FOLLOWING</p>
+        </div>
+      </div>
     </div>
   );
 };

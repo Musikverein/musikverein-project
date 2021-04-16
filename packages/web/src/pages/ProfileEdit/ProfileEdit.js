@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
-import { updateProfile } from '../../redux/auth/auth-actions';
+import { resetUpdate, updateProfile } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import ROUTES from '../../routes';
 import { validationSchema } from '../../utils/validation/validationSchema';
@@ -10,20 +10,31 @@ import { validationSchema } from '../../utils/validation/validationSchema';
 import './ProfileEdit.scss';
 
 export const ProfileEdit = () => {
-  const { currentUser } = useSelector(authSelector);
+  const { currentUser, isUpdating, updatedSuccess } = useSelector(authSelector);
+
   const { formValues, handleInputChange, errors, isValid } = useForm({
     firstName: currentUser.firstName,
     lastName: currentUser.lastName,
     userName: currentUser.userName,
   });
+
   const [newImageProfile, setNewImageProfile] = useState({
     urlPreview: null,
     file: null,
   });
-  const dispatch = useDispatch();
 
   const { urlPreview, file } = newImageProfile;
   const { firstName, lastName, userName } = formValues;
+
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  useEffect(() => {
+    updatedSuccess && history.goBack();
+    return () => {
+      dispatch(resetUpdate());
+    };
+  }, [updatedSuccess, history, dispatch]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -131,6 +142,7 @@ export const ProfileEdit = () => {
           <button
             type="submit"
             className="btn w-full rounded-md button__primary mt-8 mb-0"
+            disabled={isUpdating}
           >
             Update profile
           </button>

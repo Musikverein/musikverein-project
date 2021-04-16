@@ -12,8 +12,9 @@ export const AuthInitialState = {
   currentUser: {
     email: null,
   },
-  isUpload: false,
-  isUploadError: null,
+  isUpdating: false,
+  updatedError: null,
+  updatedSuccess: false,
 };
 
 const AuthReducer = (state = AuthInitialState, action) => {
@@ -106,6 +107,7 @@ const AuthReducer = (state = AuthInitialState, action) => {
       return {
         ...state,
         isUpdating: true,
+        updatedSuccess: false,
         updatedError: null,
       };
     }
@@ -113,6 +115,7 @@ const AuthReducer = (state = AuthInitialState, action) => {
       return {
         ...state,
         isUpdating: false,
+        updatedSuccess: true,
         updatedError: null,
         currentUser: action.payload,
       };
@@ -121,7 +124,16 @@ const AuthReducer = (state = AuthInitialState, action) => {
       return {
         ...state,
         isUpdating: false,
+        updatedSuccess: false,
         updatedError: action.payload,
+      };
+    }
+    case AuthTypes.RESET_UPDATE_PROFILE: {
+      return {
+        ...state,
+        isUpdating: false,
+        updatedSuccess: false,
+        updatedError: null,
       };
     }
     default: {

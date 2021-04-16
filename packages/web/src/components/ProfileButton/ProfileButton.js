@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { signOut } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import ROUTES from '../../routes';
 
@@ -10,16 +11,36 @@ export const ProfileButton = () => {
   let idUser = currentUser._id;
   idUser = idUser.substring(0, 6).toUpperCase();
 
-  const handleShowProfileMenu = () => {};
+  const dispatch = useDispatch();
+
+  function handleSignOut() {
+    dispatch(signOut());
+  }
+
+  const handleShowProfileMenu = () => {
+    setProfileMenuActive(!profileMenuActive);
+  };
   return (
     <div>
-      <nav>
-        <button type="button" onClick={handleShowProfileMenu}>
-          <p className="flex items-center">
-            Hello&nbsp;
-            <span>{currentUser.userName ? currentUser.userName : idUser}</span>
-            <i className="bx bx-chevron-down text-2xl" />
-          </p>
+      <button
+        type="button"
+        onClick={handleShowProfileMenu}
+        className="relative"
+      >
+        <p className="flex items-center">
+          Hello&nbsp;
+          <span>{currentUser.userName ? currentUser.userName : idUser}</span>
+          <i className="bx bx-chevron-down text-2xl" />
+        </p>
+      </button>
+      <nav
+        className={
+          profileMenuActive ? 'absolute flex flex-col' : 'hidden absolute'
+        }
+      >
+        <Link to={ROUTES.PROFILE}>Profile</Link>
+        <button type="button" onClick={handleSignOut}>
+          LogOut
         </button>
       </nav>
     </div>
