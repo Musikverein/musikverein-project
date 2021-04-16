@@ -34,6 +34,7 @@ async function signUp(req, res, next) {
 
     res.status(201).send({
       data: {
+        _id: data._id,
         userName: data.userName,
         firstName: data.firstName,
         lastName: data.lastName,
