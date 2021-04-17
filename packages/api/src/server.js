@@ -19,7 +19,7 @@ app.use(
   }),
 );
 
-app.use(userRouter);
+app.use('/user', userRouter);
 
 app.get('/', (req, res) => {
   res.status(200).send({

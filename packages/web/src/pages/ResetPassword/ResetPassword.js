@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import './ResetPassword.scss';
-import * as ROUTES from '../../routes';
 
 import {
   sendPasswordResetEmail,
@@ -13,6 +12,7 @@ import { authSelector } from '../../redux/auth/auth-selectors';
 import Logo from '../../components/Logo';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
+import ROUTES from '../../routes';
 
 function buttonText(loading, sent) {
   if (loading) {
@@ -58,7 +58,7 @@ function ResetPassword() {
     <>
       <main className="ResetPassword">
         <section className="Login__wrapper">
-          <Logo size="m" />
+          <Logo size="m" titleLogo />
           <form className="card mt-8" onSubmit={handleSubmit}>
             <input
               type="text"

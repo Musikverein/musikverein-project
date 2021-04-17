@@ -3,18 +3,20 @@ const normalizeDBQuery = require('../utils/normalizeDBQuery');
 
 class UserRepository {
   create(options) {
-    return normalizeDBQuery(
-      db.User.create(options).select(
-        'firstName lastName email image following followedBy',
-      ),
-    );
+    return normalizeDBQuery(db.User.create(options));
   }
 
   findOne(query) {
     return normalizeDBQuery(
       db.User.findOne(query).select(
-        'firstName lastName email image following followedBy',
+        'userName firstName lastName email image following followedBy',
       ),
+    );
+  }
+
+  findOneAndUpdate(queryFind, querySet, queryOptions) {
+    return normalizeDBQuery(
+      db.User.findOneAndUpdate(queryFind, querySet, queryOptions),
     );
   }
 }

@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 
 import './Login.scss';
 
-import * as ROUTES from '../../routes';
-
 import {
   resetAuthState,
   signInWithEmailRequest,
@@ -17,6 +15,7 @@ import InputPassword from '../../components/InputPassword';
 import Logo from '../../components/Logo';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
+import ROUTES from '../../routes';
 
 function Login() {
   const dispatch = useDispatch();
@@ -52,7 +51,7 @@ function Login() {
     <>
       <main className="Login">
         <section className="Login__wrapper">
-          <Logo size="m" />
+          <Logo size="m" titleLogo />
           <div className="text-center my-8">
             <h2 className="text-xl font-bold">Looking to listen to music?</h2>
             <p className="text-xm">Save your songs</p>
@@ -60,7 +59,7 @@ function Login() {
           <div className="card">
             <form onSubmit={handleSubmit}>
               <input
-                type="text"
+                type="email"
                 id="email"
                 name="email"
                 arial-label="Insert your email"

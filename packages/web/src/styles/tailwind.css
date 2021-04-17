@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer components {
+  .header {
+    @apply flex justify-between items-center w-full;
+  }
+  .profile_button {
+    @apply w-10 h-10 rounded-full;
+  }
   .App__container {
     @apply min-h-screen text-white;
   }

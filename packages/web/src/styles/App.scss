@@ -9,6 +9,9 @@
     margin: 0 auto;
     width: 150px;
   }
+  &-xm {
+    width: 100px;
+  }
   &-s {
     width: 50px;
   }
@@ -18,8 +21,11 @@
 }
 
 .button__primary {
-  background-color: #f1446a;
+  background-color: $color-principal;
 }
 .button__secundary {
   background-color: #be255d;
+}
+.border-mk-magenta {
+  border-color: $color-principal;
 }

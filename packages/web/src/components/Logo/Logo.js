@@ -1,18 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import './Logo.scss';
-import logo from '../../img/logo-M.svg';
+import ROUTES from '../../routes';
 
-export const Logo = ({ size }) => {
+export const Logo = ({ size, titleLogo }) => {
   return (
     <div>
-      <img className={`img__logo-${size} mtb-6`} src={logo} alt="logo-M" />
-      <h1 className="text-center text-2xl">Musikverein</h1>
+      <Link to={ROUTES.HOME}>
+        <img
+          className={`img__logo-${size} mtb-6`}
+          src="https://res.cloudinary.com/musikverein/image/upload/v1618564580/musikverein/logo-M_qvyiea.svg"
+          alt="logo-M"
+        />
+        {titleLogo && <h1 className="text-center text-2xl">Musikverein</h1>}
+      </Link>
     </div>
   );
 };
 
 Logo.propTypes = {
   size: PropTypes.string.isRequired,
+  titleLogo: PropTypes.bool.isRequired,
 };
