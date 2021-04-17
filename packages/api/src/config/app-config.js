@@ -24,6 +24,9 @@ const baseConfig = {
     trace: logger.trace,
     debug: logger.debug,
   },
+  recaptcha: {
+    key: process.env.RECAPTCHA_KEY,
+  },
 };
 
 const config = {
