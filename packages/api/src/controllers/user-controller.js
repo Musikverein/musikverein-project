@@ -21,7 +21,7 @@ async function signUp(req, res, next) {
     }
 
     const { data, error } = await UserRepo.create({
-      _id: uid,
+      firebaseId: uid,
       email: email,
     });
 
@@ -67,7 +67,7 @@ async function update(req, res) {
 
     if (image) {
       response = await UserRepo.findOneAndUpdate(
-        { _id: uid },
+        { firebaseId: uid },
         { firstName, lastName, userName, image },
         {
           new: true,
@@ -76,7 +76,7 @@ async function update(req, res) {
       );
     } else {
       response = await UserRepo.findOneAndUpdate(
-        { _id: uid },
+        { firebaseId: uid },
         { firstName, lastName, userName },
         {
           new: true,
