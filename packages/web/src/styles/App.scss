@@ -20,11 +20,17 @@
   background-color: $background-secundary-color;
 }
 
-.button__primary {
+.bg__primary {
   background-color: $color-principal;
 }
-.button__secundary {
+.bg__secundary {
   background-color: #be255d;
+}
+.color__primary {
+  color: $color-principal;
+}
+.color__secundary {
+  color: #be255d;
 }
 .border-mk-magenta {
   border-color: $color-principal;

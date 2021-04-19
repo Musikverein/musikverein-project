@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Redirect, Switch } from 'react-router-dom';
+import { Redirect, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 import './styles/App.scss';
@@ -17,6 +17,7 @@ import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
 import Profile from './pages/Profile';
 import ROUTES from './routes';
 import ProfileEdit from './pages/ProfileEdit';
+import Tos from './pages/Tos';
 
 function App() {
   const dispatch = useDispatch();
@@ -80,6 +81,7 @@ function App() {
           component={Home}
           exact
         />
+        <Route path={ROUTES.TOS} component={Tos} exact />
 
         <Redirect to="/" />
       </Switch>

@@ -120,12 +120,18 @@ function SignUp() {
             <section className="mt-4 text-center">
               <p>Sign up with:</p>
               <button
-                className="btn mt-4 rounded-md button__secundary bx bxl-google"
+                className="btn mt-4 rounded-md bg__secundary bx bxl-google"
                 type="button"
                 onClick={handleLoginWithGoogle}
                 disabled={isSigningUp}
               />
             </section>
+            <p className="text-sm text-gray-200 text-center">
+              By clicking Sign Up, you agree to Musikverein&apos;s&nbsp;
+              <Link className="text-sm underline" to={ROUTES.TOS}>
+                Terms and Conditions of Use.
+              </Link>
+            </p>
           </form>
         </section>
 
