@@ -28,4 +28,8 @@ export const api = {
       headers: headers,
     });
   },
+
+  verifyRecaptchaToken: (recaptchaToken) => {
+    return axios.post(`${baseURL}/recaptcha`, { recaptchaToken }, {});
+  },
 };

@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 import './SignUp.scss';
 
@@ -20,6 +21,7 @@ import ROUTES from '../../routes';
 function SignUp() {
   const dispatch = useDispatch();
   const { isSigningUp, signUpErrorMsg } = useSelector(authSelector);
+  const reRef = useRef();
 
   const { formValues, handleInputChange, resetForm, errors, isValid } = useForm(
     {
@@ -39,11 +41,14 @@ function SignUp() {
     dispatch(signUpWithGoogleRequest());
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
 
     if (isValid(validationSchema.signup)) {
-      dispatch(signUpWithEmailRequest(email, password));
+      const recaptchaToken = await reRef.current.executeAsync();
+      reRef.current.reset();
+
+      dispatch(signUpWithEmailRequest(email, password, recaptchaToken));
       resetForm();
     }
   }
@@ -99,6 +104,11 @@ function SignUp() {
               ) : (
                 <div className="m-2" />
               )}
+              <ReCAPTCHA
+                sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
+                size="invisible"
+                ref={reRef}
+              />
               <button
                 className="btn w-full rounded-md button__primary mt-8 mb-0"
                 type="submit"

@@ -27,22 +27,40 @@ export function signUpWithGoogleRequest() {
   };
 }
 
-export function signUpWithEmailRequest(email, password) {
+export function signUpWithEmailRequest(email, password, recaptchaToken) {
   return async function signUpThunk(dispatch) {
     dispatch(signUpRequest());
+
     try {
-      await auth.singUpWithEmailAndPassword(email, password);
+      const { error, data: response } = await api.verifyRecaptchaToken(
+        recaptchaToken,
+      );
+
+      if (response.data) {
+        await auth.singUpWithEmailAndPassword(email, password);
+      } else {
+        dispatch(signUpError(error));
+      }
     } catch (error) {
       dispatch(signUpError(error.message));
     }
   };
 }
 
-export function signInWithEmailRequest(email, password) {
+export function signInWithEmailRequest(email, password, recaptchaToken) {
   return async function signUpThunk(dispatch) {
     dispatch(signUpRequest());
+
     try {
-      await auth.singInWithEmailAndPassword(email, password);
+      const { error, data: response } = await api.verifyRecaptchaToken(
+        recaptchaToken,
+      );
+
+      if (response.data) {
+        await auth.singInWithEmailAndPassword(email, password);
+      } else {
+        dispatch(signUpError(error));
+      }
     } catch (error) {
       dispatch(signUpError(error.message));
     }
@@ -111,12 +129,21 @@ export const signOutSuccess = () => ({
   type: AuthTypes.SIGN_OUT_SUCCESS,
 });
 
-export function sendPasswordResetEmail(email) {
+export function sendPasswordResetEmail(email, recaptchaToken) {
   return async function sendPasswordResetEmailRequestThunk(dispatch) {
     dispatch(sendPasswordResetEmailRequest());
+
     try {
-      await auth.sendPasswordResetEmail(email);
-      dispatch(sendPasswordResetEmailSuccess());
+      const { error, data: response } = await api.verifyRecaptchaToken(
+        recaptchaToken,
+      );
+
+      if (response.data) {
+        await auth.sendPasswordResetEmail(email);
+        dispatch(sendPasswordResetEmailSuccess());
+      } else {
+        dispatch(sendPasswordResetEmailError(error));
+      }
     } catch (error) {
       dispatch(sendPasswordResetEmailError(error.message));
     }

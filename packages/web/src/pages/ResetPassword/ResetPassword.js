@@ -1,6 +1,7 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 import './ResetPassword.scss';
 
@@ -33,6 +34,7 @@ function ResetPassword() {
     passwordResetError,
     passwordResetSent,
   } = useSelector(authSelector);
+  const reRef = useRef();
 
   const { formValues, handleInputChange, resetForm, errors, isValid } = useForm(
     {
@@ -46,10 +48,14 @@ function ResetPassword() {
     dispatch(resetAuthState());
   }, [dispatch]);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+
     if (isValid(validationSchema.resetPassword)) {
-      dispatch(sendPasswordResetEmail(email));
+      const recaptchaToken = await reRef.current.executeAsync();
+      reRef.current.reset();
+
+      dispatch(sendPasswordResetEmail(email, recaptchaToken));
       resetForm();
     }
   }
@@ -80,6 +86,11 @@ function ResetPassword() {
             ) : (
               <div className="m-2" />
             )}
+            <ReCAPTCHA
+              sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
+              size="invisible"
+              ref={reRef}
+            />
             <button
               type="submit"
               className="btn w-full rounded-md button__primary mt-4 mb-0"
