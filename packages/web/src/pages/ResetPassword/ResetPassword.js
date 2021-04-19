@@ -93,7 +93,7 @@ function ResetPassword() {
             />
             <button
               type="submit"
-              className="btn w-full rounded-md button__primary mt-4 mb-0"
+              className="btn w-full rounded-md bg__primary mt-4 mb-0"
               disabled={isSendingPasswordReset || passwordResetSent}
             >
               {buttonText(isSendingPasswordReset, passwordResetSent)}

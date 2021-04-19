@@ -108,7 +108,7 @@ function Login() {
                 ref={reRef}
               />
               <button
-                className="btn w-full rounded-md button__primary mt-8 mb-0"
+                className="btn w-full rounded-md bg__primary mt-8 mb-0"
                 type="submit"
                 disabled={isSigningUp}
               >
