@@ -120,7 +120,7 @@ function Login() {
           <section className="mt-4 text-center">
             <p>Log in with:</p>
             <button
-              className="btn mt-4 rounded-md button__secundary bx bxl-google"
+              className="btn mt-4 rounded-md bg__secundary bx bxl-google"
               type="button"
               onClick={handleLoginWithGoogle}
               disabled={isSigningUp}

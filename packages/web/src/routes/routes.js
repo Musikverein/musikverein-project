@@ -7,4 +7,5 @@ export const ROUTES = {
   PROFILE_EDIT: '/profile/edit',
   SEARCH: '/search',
   LIBRARY: '/library',
+  TOS: '/tos',
 };
