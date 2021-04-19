@@ -1,9 +1,27 @@
-.navbar {
-  position: absolute;
-  top: 62px;
-  left: 0;
-  right: 0;
-  bottom: 0;
+@import '../../styles/utils.scss';
+.menu-overlay {
+  background-color: $background-secundary-color;
+  color: white;
+  height: 100%;
   width: 100%;
-  min-height: 100vh;
+  position: fixed;
+  top: 50px;
+  left: 0;
+  text-align: center;
+  transition: opacity 0.2s ease-in-out;
+  z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  a {
+    padding: 10px 0;
+    &:first-child {
+      padding-top: 20px;
+    }
+  }
+}
+.menu-overlay.open {
+  opacity: 1;
+  visibility: visible;
 }

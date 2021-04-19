@@ -7,7 +7,7 @@ import './Navigation.scss';
 
 export const Navigation = ({ showMenu }) => {
   return (
-    <nav className="navbar bg-purple-600 flex flex-col align-center animate__animated animate__fadeInLeftBig">
+    <nav className={showMenu ? 'menu-overlay open' : 'menu-overlay'}>
       <Link to={ROUTES.PROFILE}>Profile</Link>
       <Link to={ROUTES.HOME}> Home </Link>
       <Link to={ROUTES.LIBRARY}> Library </Link>

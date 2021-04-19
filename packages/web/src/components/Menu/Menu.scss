@@ -1,0 +1,42 @@
+.menu-link {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 1002;
+  top: -5px;
+  left: 10px;
+}
+
+.menu-icon {
+  position: absolute;
+  width: 20px;
+  height: 14px;
+}
+
+/* ------------- */
+.menu-line {
+  background-color: rgb(255, 255, 255);
+  height: 2px;
+  width: 100%;
+  border-radius: 2px;
+  position: absolute;
+  left: 0;
+  transition: all 0.25s ease-in-out;
+}
+.menu-line-2 {
+  top: 0;
+  bottom: 0;
+  margin: auto;
+}
+.menu-line-3 {
+  bottom: 0;
+}
+.menu.open .menu-line-1 {
+  transform: translateY(7px) translateY(-50%) rotate(-45deg);
+}
+.menu.open .menu-line-2 {
+  opacity: 0;
+}
+.menu.open .menu-line-3 {
+  transform: translateY(-7px) translateY(50%) rotate(45deg);
+}
