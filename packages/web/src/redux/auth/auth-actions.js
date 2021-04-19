@@ -139,15 +139,19 @@ export function sendPasswordResetEmail(email, recaptchaToken) {
       );
 
       if (response.data) {
-        await auth.sendPasswordResetEmail(email);
-        dispatch(sendPasswordResetEmailSuccess());
+        const firebaseRespone = await auth.sendPasswordResetEmail(email);
+
+        if (firebaseRespone.error) {
+          dispatch(sendPasswordResetEmailError(firebaseRespone.error.message));
+        } else {
+          dispatch(sendPasswordResetEmailSuccess());
+        }
       } else {
         dispatch(sendPasswordResetEmailError(error));
       }
     } catch (error) {
       dispatch(sendPasswordResetEmailError(error.message));
     }
-    return dispatch(sendPasswordResetEmailSuccess());
   };
 }
 

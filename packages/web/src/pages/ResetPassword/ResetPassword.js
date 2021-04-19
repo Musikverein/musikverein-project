@@ -80,7 +80,7 @@ function ResetPassword() {
               {errors.email ? errors.email : ''}
             </span>
             {passwordResetError ? (
-              <section className="mt-4 p-3 text-center text-error">
+              <section className="p-3 text-center text-error">
                 {passwordResetError}
               </section>
             ) : (
