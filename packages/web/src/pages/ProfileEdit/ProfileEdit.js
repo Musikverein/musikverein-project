@@ -85,7 +85,7 @@ export const ProfileEdit = () => {
             </button>
             <img
               src={urlPreview || currentUser.image}
-              className="w-32 h-32 rounded-full border-2 border-mk-magenta"
+              className="w-32 h-32 rounded-full border-2 border-mk-magenta object-cover "
               alt="profile"
             />
           </div>

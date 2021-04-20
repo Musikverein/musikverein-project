@@ -57,8 +57,7 @@
     "joi": "^17.4.0",
     "loglevel": "^1.7.1",
     "mongoose": "^5.11.14",
-    "morgan": "^1.10.0",
-    "validator": "^13.5.2"
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@types/jest": "^26.0.20",

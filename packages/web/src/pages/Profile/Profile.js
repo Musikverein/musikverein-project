@@ -16,7 +16,7 @@ export const Profile = () => {
       <div className="pt-16 text-center">
         <img
           src={currentUser.image}
-          className="w-32 h-32 rounded-full mx-auto border-2 border-mk-magenta"
+          className="w-32 h-32 rounded-full mx-auto border-2 border-mk-magenta object-cover"
           alt="profile"
         />
         <h3 className="font-medium mt-4 mb-2">
