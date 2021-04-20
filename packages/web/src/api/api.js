@@ -32,4 +32,9 @@ export const api = {
   verifyRecaptchaToken: (recaptchaToken) => {
     return axios.post(`${baseURL}/recaptcha`, { recaptchaToken }, {});
   },
+  uploadSong: (headers, body) => {
+    return axios.post(`${baseURL}/song/upload`, body, {
+      headers: headers,
+    });
+  },
 };

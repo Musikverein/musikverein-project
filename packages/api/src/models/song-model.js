@@ -45,6 +45,10 @@ const SongSchema = Schema(
       ref: 'user',
       required: [true, 'The owner is required'],
     },
+    active: {
+      type: Schema.Types.Boolean,
+      default: true,
+    },
   },
   {
     timestamps: true,

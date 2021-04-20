@@ -1,7 +1,7 @@
 const Joi = require('joi');
 
 const createSongSchema = Joi.object({
-  title: Joi.string().min(3).max(20).required(),
+  title: Joi.string().min(3).max(200).required(),
   url: Joi.string().required(),
   duration: Joi.number().required(),
 });
