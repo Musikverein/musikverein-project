@@ -11,6 +11,7 @@ export const Navigation = ({ showMenu }) => {
       <NavLink to={ROUTES.PROFILE}>Profile</NavLink>
       <NavLink to={ROUTES.HOME}> Home </NavLink>
       <NavLink to={ROUTES.LIBRARY}> Library </NavLink>
+      <NavLink to={ROUTES.UPLOAD_SONG}> Upload Song </NavLink>
     </nav>
   );
 };
