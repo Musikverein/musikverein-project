@@ -6,7 +6,7 @@ const cors = require('cors');
 
 const { config } = require('./config');
 const { errorMiddleware } = require('./middlewares');
-const { userRouter, recaptchaRouter } = require('./routes');
+const { userRouter, recaptchaRouter, songRouter } = require('./routes');
 
 const app = express();
 
@@ -21,6 +21,7 @@ app.use(
 
 app.use('/user', userRouter);
 app.use('/recaptcha', recaptchaRouter);
+app.use('/song', songRouter);
 
 app.get('/', (req, res) => {
   res.status(200).send({

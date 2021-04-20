@@ -17,7 +17,7 @@ async function validateUpdateUser(req, res, next) {
     });
 
     if (error) {
-      res.status(401).send({ error: error, data: req.body });
+      res.status(401).send({ error: error, data: null });
     } else {
       next();
     }
