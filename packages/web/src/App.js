@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import './styles/App.scss';
 
-import Home from './pages/Home';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
 import ResetPassword from './pages/ResetPassword';
@@ -14,10 +13,9 @@ import { syncSignIn, signOut } from './redux/auth/auth-actions';
 import { authSelector } from './redux/auth/auth-selectors';
 import { PublicRoute } from './components/PublicRoute/PublicRoute';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
-import Profile from './pages/Profile';
 import ROUTES from './routes';
-import ProfileEdit from './pages/ProfileEdit';
 import Tos from './pages/Tos';
+import { AppRouter } from './routers/AppRouter';
 
 function App() {
   const dispatch = useDispatch();
@@ -63,27 +61,13 @@ function App() {
 
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
-          path={ROUTES.PROFILE_EDIT}
-          component={ProfileEdit}
-          exact
-        />
-
-        <ProtectedRoute
-          isAuthenticated={isAuthenticated}
-          path={ROUTES.PROFILE}
-          component={Profile}
-          exact
-        />
-
-        <ProtectedRoute
-          isAuthenticated={isAuthenticated}
           path={ROUTES.HOME}
-          component={Home}
-          exact
+          component={AppRouter}
         />
+
         <Route path={ROUTES.TOS} component={Tos} exact />
 
-        <Redirect to="/" />
+        <Redirect to={ROUTES.HOME} />
       </Switch>
     </div>
   );

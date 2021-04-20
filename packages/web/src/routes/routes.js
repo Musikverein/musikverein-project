@@ -7,5 +7,7 @@ export const ROUTES = {
   PROFILE_EDIT: '/profile/edit',
   SEARCH: '/search',
   LIBRARY: '/library',
+  LIBRARY_SONGS: '/library/songs',
+  LIBRARY_PLAYLISTS: '/library/playlists',
   TOS: '/tos',
 };
