@@ -59,13 +59,13 @@ export const App = () => {
           component={ResetPassword}
         />
 
+        <Route path={ROUTES.TOS} component={Tos} exact />
+
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
           path={ROUTES.HOME}
           component={AppRouter}
         />
-
-        <Route path={ROUTES.TOS} component={Tos} exact />
 
         <Redirect to={ROUTES.HOME} />
       </Switch>
