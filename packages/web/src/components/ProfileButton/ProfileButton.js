@@ -1,17 +1,18 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+
 import { signOut } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
-import ROUTES from '../../routes';
+import ROUTES from '../../routers/routes';
 
 export const ProfileButton = () => {
   const [profileMenuActive, setProfileMenuActive] = useState(false);
   const { currentUser } = useSelector(authSelector);
+  const dispatch = useDispatch();
+
   let idUser = currentUser._id;
   idUser = idUser.substring(0, 6).toUpperCase();
-
-  const dispatch = useDispatch();
 
   function handleSignOut() {
     dispatch(signOut());
@@ -20,6 +21,7 @@ export const ProfileButton = () => {
   const handleShowProfileMenu = () => {
     setProfileMenuActive(!profileMenuActive);
   };
+
   return (
     <div>
       <button

@@ -10,19 +10,17 @@ import {
   signUpWithEmailRequest,
   signUpWithGoogleRequest,
 } from '../../redux/auth/auth-actions';
-
 import { authSelector } from '../../redux/auth/auth-selectors';
 import Logo from '../../components/Logo';
 import InputPassword from '../../components/InputPassword';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
-import ROUTES from '../../routes';
+import ROUTES from '../../routers/routes';
 
-function SignUp() {
+export const SignUp = () => {
   const dispatch = useDispatch();
   const { isSigningUp, signUpErrorMsg } = useSelector(authSelector);
   const reRef = useRef();
-
   const { formValues, handleInputChange, resetForm, errors, isValid } = useForm(
     {
       email: '',
@@ -32,16 +30,17 @@ function SignUp() {
   );
 
   const { email, password, confirmPassword } = formValues;
+
   useEffect(() => {
     dispatch(resetAuthState());
   }, [dispatch]);
 
-  function handleLoginWithGoogle(e) {
+  const handleLoginWithGoogle = (e) => {
     e.preventDefault();
     dispatch(signUpWithGoogleRequest());
-  }
+  };
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (isValid(validationSchema.signup)) {
@@ -51,7 +50,7 @@ function SignUp() {
       dispatch(signUpWithEmailRequest(email, password, recaptchaToken));
       resetForm();
     }
-  }
+  };
 
   return (
     <>
@@ -144,6 +143,4 @@ function SignUp() {
       </main>
     </>
   );
-}
-
-export default SignUp;
+};

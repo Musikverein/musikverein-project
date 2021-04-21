@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import './Logo.scss';
-import ROUTES from '../../routes';
+import ROUTES from '../../routers/routes';
 
 export const Logo = ({ size, titleLogo }) => {
   return (

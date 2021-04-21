@@ -7,7 +7,7 @@ import Profile from '../pages/Profile';
 import ProfileEdit from '../pages/ProfileEdit';
 import UploadSong from '../pages/UploadSong';
 import { authSelector } from '../redux/auth/auth-selectors';
-import ROUTES from '../routes';
+import ROUTES from './routes';
 import { LibraryRouter } from './LibraryRouter';
 
 export const AppRouter = () => {

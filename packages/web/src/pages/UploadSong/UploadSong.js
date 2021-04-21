@@ -1,20 +1,20 @@
 import React, { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ReCAPTCHA from 'react-google-recaptcha';
+
 import Header from '../../components/Header';
 import Dropzone from '../../components/Dropzone';
-
 import { uploadSong } from '../../redux/song/song-actions';
 import { selectSongState } from '../../redux/song/song-selectors';
 
-export function UploadSong() {
+export const UploadSong = () => {
   const reRef = useRef();
   const dispatch = useDispatch();
   const { isUploadingSong, uploadSongSuccess, uploadSongError } = useSelector(
     selectSongState,
   );
 
-  async function handleSongUpload(file) {
+  const handleSongUpload = async (file) => {
     const recaptchaToken = await reRef.current.executeAsync();
     reRef.current.reset();
     dispatch(
@@ -24,7 +24,7 @@ export function UploadSong() {
         recaptchaToken: recaptchaToken,
       }),
     );
-  }
+  };
 
   return (
     <>
@@ -50,4 +50,4 @@ export function UploadSong() {
       </div>
     </>
   );
-}
+};

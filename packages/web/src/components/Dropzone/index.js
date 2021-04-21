@@ -1,1 +1,3 @@
-export { default } from './Dropzone';
+import { Dropzone } from './Dropzone';
+
+export default Dropzone;

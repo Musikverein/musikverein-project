@@ -13,7 +13,7 @@ import { syncSignIn, signOut } from './redux/auth/auth-actions';
 import { authSelector } from './redux/auth/auth-selectors';
 import { PublicRoute } from './components/PublicRoute/PublicRoute';
 import { ProtectedRoute } from './components/ProtectedRoute/ProtectedRoute';
-import ROUTES from './routes';
+import ROUTES from './routers/routes';
 import Tos from './pages/Tos';
 import { AppRouter } from './routers/AppRouter';
 

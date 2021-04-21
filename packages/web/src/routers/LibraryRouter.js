@@ -7,7 +7,7 @@ import ProtectedRoute from '../components/ProtectedRoute';
 import LibraryPlaylists from '../pages/LibraryPlaylists';
 import LibrarySongs from '../pages/LibrarySongs';
 import { authSelector } from '../redux/auth/auth-selectors';
-import ROUTES from '../routes';
+import ROUTES from './routes';
 
 export const LibraryRouter = () => {
   const { isAuthenticated } = useSelector(authSelector);
@@ -28,18 +28,6 @@ export const LibraryRouter = () => {
           component={LibraryPlaylists}
           exact
         />
-        {/*        <ProtectedRoute
-          isAuthenticated={isAuthenticated}
-          path={ROUTES.LIBRARY}
-          component={}
-          exact
-        />
-        <ProtectedRoute
-          isAuthenticated={isAuthenticated}
-          path={ROUTES.LIBRARY}
-          component={}
-          exact
-        /> */}
         <Redirect to={ROUTES.LIBRARY_SONGS} />
       </Switch>
     </div>
