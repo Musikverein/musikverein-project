@@ -1,10 +1,10 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import Header from '../../components/Header';
 
+import Header from '../../components/Header';
 import { authSelector } from '../../redux/auth/auth-selectors';
-import ROUTES from '../../routes';
+import ROUTES from '../../routers/routes';
 
 export const Profile = () => {
   const { currentUser } = useSelector(authSelector);

@@ -173,7 +173,7 @@ export const resetAuthState = () => ({
 });
 
 export const updateProfile = ({ userName, firstName, lastName, file }) => {
-  return async function updateProfileThunk(dispatch, getState) {
+  return async function updateProfileThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
@@ -185,10 +185,10 @@ export const updateProfile = ({ userName, firstName, lastName, file }) => {
       let image = null;
 
       if (file) {
-        const {
-          auth: { currentUser },
-        } = getState();
-        const fileUrl = await imageUpload(file, currentUser._id);
+        const fileUrl = await imageUpload(
+          file,
+          process.env.REACT_APP_CLOUDINARY_PRESET_PROFILE_IMG,
+        );
         image = fileUrl;
       }
 

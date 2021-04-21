@@ -1,33 +1,31 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
-import { useForm } from '../../hooks/useForm';
-import { resetUpdate, updateProfile } from '../../redux/auth/auth-actions';
-import { authSelector } from '../../redux/auth/auth-selectors';
-import ROUTES from '../../routes';
-import { validationSchema } from '../../utils/validation/validationSchema';
 
 import './ProfileEdit.scss';
 
+import { useForm } from '../../hooks/useForm';
+import { resetUpdate, updateProfile } from '../../redux/auth/auth-actions';
+import { authSelector } from '../../redux/auth/auth-selectors';
+import ROUTES from '../../routers/routes';
+import { validationSchema } from '../../utils/validation/validationSchema';
+
 export const ProfileEdit = () => {
   const { currentUser, isUpdating, updatedSuccess } = useSelector(authSelector);
-
   const { formValues, handleInputChange, errors, isValid } = useForm({
     firstName: currentUser.firstName,
     lastName: currentUser.lastName,
     userName: currentUser.userName,
   });
-
   const [newImageProfile, setNewImageProfile] = useState({
     urlPreview: null,
     file: null,
   });
+  const dispatch = useDispatch();
+  const history = useHistory();
 
   const { urlPreview, file } = newImageProfile;
   const { firstName, lastName, userName } = formValues;
-
-  const dispatch = useDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     updatedSuccess && history.goBack();
@@ -36,12 +34,12 @@ export const ProfileEdit = () => {
     };
   }, [updatedSuccess, history, dispatch]);
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
     if (isValid(validationSchema.userProfile)) {
       dispatch(updateProfile({ userName, firstName, lastName, file }));
     }
-  }
+  };
 
   const handleProfileImage = () => {
     if (urlPreview) {

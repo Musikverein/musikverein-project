@@ -1,9 +1,9 @@
 import React from 'react';
 
 import './Home.scss';
-import Header from '../../components/Header/Header';
+import Header from '../../components/Header';
 
-function Home() {
+export function Home() {
   return (
     <main>
       <Header />
@@ -11,5 +11,3 @@ function Home() {
     </main>
   );
 }
-
-export default Home;

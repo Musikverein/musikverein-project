@@ -16,9 +16,9 @@ import InputPassword from '../../components/InputPassword';
 import Logo from '../../components/Logo';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
-import ROUTES from '../../routes';
+import ROUTES from '../../routers/routes';
 
-function Login() {
+export const Login = () => {
   const dispatch = useDispatch();
   const { isSigningUp, signUpErrorMsg } = useSelector(authSelector);
   const reRef = useRef();
@@ -125,6 +125,12 @@ function Login() {
               onClick={handleLoginWithGoogle}
               disabled={isSigningUp}
             />
+            <p className="text-sm text-gray-200 text-center">
+              By clicking Log in, you agree to Musikverein&apos;s&nbsp;
+              <Link className="text-sm underline" to={ROUTES.TOS}>
+                Terms and Conditions of Use.
+              </Link>
+            </p>
             <Link
               to={ROUTES.SIGN_UP}
               className="underline text-blue-gray-200 w-full text-center block"
@@ -136,6 +142,4 @@ function Login() {
       </main>
     </>
   );
-}
-
-export default Login;
+};

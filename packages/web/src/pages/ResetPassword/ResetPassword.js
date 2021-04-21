@@ -13,7 +13,7 @@ import { authSelector } from '../../redux/auth/auth-selectors';
 import Logo from '../../components/Logo';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
-import ROUTES from '../../routes';
+import ROUTES from '../../routers/routes';
 
 function buttonText(loading, sent) {
   if (loading) {
@@ -27,7 +27,7 @@ function buttonText(loading, sent) {
   return 'Send password reset email';
 }
 
-function ResetPassword() {
+export const ResetPassword = () => {
   const dispatch = useDispatch();
   const {
     isSendingPasswordReset,
@@ -35,7 +35,6 @@ function ResetPassword() {
     passwordResetSent,
   } = useSelector(authSelector);
   const reRef = useRef();
-
   const { formValues, handleInputChange, resetForm, errors, isValid } = useForm(
     {
       email: '',
@@ -48,7 +47,7 @@ function ResetPassword() {
     dispatch(resetAuthState());
   }, [dispatch]);
 
-  async function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (isValid(validationSchema.resetPassword)) {
@@ -58,7 +57,7 @@ function ResetPassword() {
       dispatch(sendPasswordResetEmail(email, recaptchaToken));
       resetForm();
     }
-  }
+  };
 
   return (
     <>
@@ -109,6 +108,4 @@ function ResetPassword() {
       </main>
     </>
   );
-}
-
-export default ResetPassword;
+};

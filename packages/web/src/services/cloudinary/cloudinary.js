@@ -1,12 +1,9 @@
 import axios from 'axios';
 
-export async function imageUpload(file) {
+export async function imageUpload(file, preset) {
   const formData = new FormData();
   formData.append('file', file);
-  formData.append(
-    'upload_preset',
-    process.env.REACT_APP_CLOUDINARY_PRESET_PROFILE_IMG,
-  );
+  formData.append('upload_preset', preset);
   formData.append('resource_type', 'image');
 
   const response = await axios.post(

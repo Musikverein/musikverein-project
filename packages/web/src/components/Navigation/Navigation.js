@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import ROUTES from '../../routes';
+import ROUTES from '../../routers/routes';
 
 import './Navigation.scss';
 

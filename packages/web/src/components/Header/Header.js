@@ -5,13 +5,11 @@ import './Header.scss';
 import ProfileButton from '../ProfileButton';
 import Menu from '../Menu';
 
-function Header() {
+export const Header = () => {
   return (
     <header className="mobile header">
       <Menu />
       <ProfileButton />
     </header>
   );
-}
-
-export default Header;
+};
