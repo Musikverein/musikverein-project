@@ -1,20 +1,22 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ReCAPTCHA from 'react-google-recaptcha';
 
 import Header from '../../components/Header';
 import Dropzone from '../../components/Dropzone';
 import { uploadSong } from '../../redux/song/song-actions';
 import { selectSongState } from '../../redux/song/song-selectors';
+import { UploadSongForm } from '../../components/UploadSongForm/UploadSongForm';
+import { metaImgToBase64 } from '../../utils/utils';
 
 export const UploadSong = () => {
   const jsmediatags = window.jsmediatags;
-  const reRef = useRef();
+
   const dispatch = useDispatch();
   const { isUploadingSong, uploadSongSuccess, uploadSongError } = useSelector(
     selectSongState,
   );
   const [loadSong, setLoadSong] = useState(null);
+  const [metaSong, setMetaSong] = useState({});
 
   useEffect(() => {
     return () => {
@@ -24,19 +26,30 @@ export const UploadSong = () => {
 
   const handleSongLoad = async (file) => {
     jsmediatags.read(file, {
-      onSuccess: (tag) => {
+      onSuccess: ({ tags }) => {
+        const cover = metaImgToBase64(tags.picture?.data, tags.picture?.format);
+        setMetaSong({
+          metaTitle: tags.title || '',
+          metaArtist: tags.artist || '',
+          metaGenre: tags.genre || '',
+          defaultImg: cover,
+        });
         setLoadSong(file);
       },
     });
-    /* const recaptchaToken = await reRef.current.executeAsync();
-    reRef.current.reset();
+  };
+
+  const handleSubmit = ({ title, artist, genre, image, recaptchaToken }) => {
     dispatch(
       uploadSong({
-        song: file,
-        title: file.name,
+        song: loadSong,
+        title: title,
+        artist: artist,
+        genre: genre,
+        image: image,
         recaptchaToken: recaptchaToken,
       }),
-    ); */
+    );
   };
 
   return (
@@ -46,7 +59,7 @@ export const UploadSong = () => {
         <div className="h-full w-full flex flex-col justify-center items-center">
           <h4>Upload Audio File</h4>
           {loadSong ? (
-            <p>Aqui va el puto formulario de subida</p>
+            <UploadSongForm {...metaSong} handleSubmit={handleSubmit} />
           ) : (
             <Dropzone
               onFileSelected={(files) => {
@@ -59,11 +72,6 @@ export const UploadSong = () => {
           {uploadSongSuccess && <p>Upload successful!</p>}
           {uploadSongError && <p>Upload error!</p>}
         </div>
-        <ReCAPTCHA
-          sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
-          size="invisible"
-          ref={reRef}
-        />
       </div>
     </>
   );

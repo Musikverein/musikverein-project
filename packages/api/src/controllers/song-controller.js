@@ -1,16 +1,31 @@
 const { SongRepo } = require('../repositories');
 
 async function createSong(req, res, next) {
-  const { title, duration, url } = req.body;
+  const { title, duration, url, artist, genre, image } = req.body;
   const { _id } = req.user;
 
   try {
-    const response = await SongRepo.create({
-      title: title,
-      duration: duration,
-      url: url,
-      owner: _id,
-    });
+    const query = image
+      ? {
+          title: title,
+          duration: duration,
+          url: url,
+          owner: _id,
+          artist: artist,
+          genre: genre,
+          image: image,
+        }
+      : {
+          title: title,
+          duration: duration,
+          url: url,
+          owner: _id,
+          artist: artist,
+          genre: genre,
+        };
+
+    const response = await SongRepo.create(query);
+
     if (response.error) {
       return res.status(400).send({
         data: null,
