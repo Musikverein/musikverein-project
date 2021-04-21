@@ -5,24 +5,16 @@ async function createSong(req, res, next) {
   const { _id } = req.user;
 
   try {
-    const query = image
-      ? {
-          title: title,
-          duration: duration,
-          url: url,
-          owner: _id,
-          artist: artist,
-          genre: genre,
-          image: image,
-        }
-      : {
-          title: title,
-          duration: duration,
-          url: url,
-          owner: _id,
-          artist: artist,
-          genre: genre,
-        };
+    const query = {
+      title,
+      duration,
+      url,
+      artist,
+      genre,
+      owner: _id,
+
+      ...(image && { image }),
+    };
 
     const response = await SongRepo.create(query);
 
