@@ -36,4 +36,10 @@ export const validationSchema = {
     firstName: Joi.string().min(3).max(15).required(),
     lastName: Joi.string().min(3).max(20).required(),
   }).with('userName', ['firstName', 'lastName']),
+
+  song: Joi.object({
+    title: Joi.string().required(),
+    artist: Joi.string().required(),
+    genre: Joi.string().required(),
+  }).with('title', ['artist', 'genre']),
 };

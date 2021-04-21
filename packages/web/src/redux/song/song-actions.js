@@ -1,4 +1,4 @@
-import { songUpload } from '../../services/cloudinary';
+import { imageUpload, songUpload } from '../../services/cloudinary';
 import * as SongTypes from './song-types';
 import * as auth from '../../services/auth';
 import api from '../../api';
@@ -16,21 +16,46 @@ export const uploadSongError = (message) => ({
   payload: message,
 });
 
-export const uploadSong = ({ song, title, recaptchaToken }) => {
+export const uploadSong = ({
+  song,
+  title,
+  artist,
+  genre,
+  image,
+  recaptchaToken,
+}) => {
   return async function uploadSongThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
       return dispatch(signOutSuccess());
     }
+
     dispatch(uploadSongRequest());
     try {
-      const { secure_url: url, duration } = await songUpload(song);
+      let imgUrl = null;
+      if (image) {
+        imgUrl = await imageUpload(
+          image,
+          process.env.REACT_APP_CLOUDINARY_PRESET_COVERS,
+        );
+      }
+      const songResponse = await songUpload(song);
+      const songUrl = songResponse.secure_url;
+      const songDuration = songResponse.duration;
       const { errorMessage, data: response } = await api.uploadSong(
         {
           Authorization: `Bearer ${token}`,
         },
-        { recaptchaToken, title, duration, url },
+        {
+          recaptchaToken,
+          title,
+          duration: songDuration,
+          url: songUrl,
+          artist,
+          genre,
+          image: imgUrl,
+        },
       );
       if (errorMessage) {
         return dispatch(uploadSongError(errorMessage));
