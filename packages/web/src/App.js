@@ -17,7 +17,7 @@ import ROUTES from './routers/routes';
 import Tos from './pages/Tos';
 import { AppRouter } from './routers/AppRouter';
 
-function App() {
+export const App = () => {
   const dispatch = useDispatch();
 
   const { isAuthenticated } = useSelector(authSelector);
@@ -71,6 +71,4 @@ function App() {
       </Switch>
     </div>
   );
-}
-
-export default App;
+};
