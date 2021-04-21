@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
@@ -9,22 +9,23 @@ import { resetUpdate, updateProfile } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import ROUTES from '../../routers/routes';
 import { validationSchema } from '../../utils/validation/validationSchema';
+import { useImgPreview } from '../../hooks/useImgPreview';
+import ImgEdit from '../../components/ImgEdit';
 
 export const ProfileEdit = () => {
   const { currentUser, isUpdating, updatedSuccess } = useSelector(authSelector);
+  const dispatch = useDispatch();
+  const history = useHistory();
   const { formValues, handleInputChange, errors, isValid } = useForm({
     firstName: currentUser.firstName,
     lastName: currentUser.lastName,
     userName: currentUser.userName,
   });
-  const [newImageProfile, setNewImageProfile] = useState({
-    urlPreview: null,
-    file: null,
-  });
-  const dispatch = useDispatch();
-  const history = useHistory();
+  const { stateImg, handleImageChange, handleImage, refId } = useImgPreview(
+    'imageProfile',
+  );
 
-  const { urlPreview, file } = newImageProfile;
+  const { urlPreview, file } = stateImg;
   const { firstName, lastName, userName } = formValues;
 
   useEffect(() => {
@@ -41,52 +42,19 @@ export const ProfileEdit = () => {
     }
   };
 
-  const handleProfileImage = () => {
-    if (urlPreview) {
-      document.querySelector('#imageProfile').value = '';
-      setNewImageProfile({ file: null, urlPreview: null });
-    } else {
-      document.querySelector('#imageProfile').click();
-    }
-  };
-
-  const handleImageProfileChange = (e) => {
-    const currentFile = e.target.files[0];
-    if (currentFile) {
-      const reader = new FileReader();
-
-      reader.addEventListener('load', function readerFiles() {
-        setNewImageProfile({ file: currentFile, urlPreview: reader.result });
-      });
-      reader.readAsDataURL(currentFile);
-    } else {
-      setNewImageProfile({ file: null, urlPreview: null });
-    }
-  };
-
   return (
     <>
       <Link to={ROUTES.PROFILE} className="bx bxs-chevron-left text-4xl" />
       <div className="animate__animated animate__slideInUp">
         <div className="flex justify-center my-8 ">
-          <div className="relative w-32 h-32">
-            <button
-              className="absolute bottom-0 right-0"
-              type="button"
-              onClick={handleProfileImage}
-            >
-              <span
-                className={
-                  urlPreview ? 'bx bx-x icon_edit' : 'bx bxs-pencil icon_edit'
-                }
-              />
-            </button>
-            <img
-              src={urlPreview || currentUser.image}
-              className="w-32 h-32 rounded-full border-2 border-mk-magenta object-cover "
-              alt="profile"
-            />
-          </div>
+          <ImgEdit
+            handleImage={handleImage}
+            handleImageChange={handleImageChange}
+            urlPreview={urlPreview}
+            refId={refId}
+            defaultImg={currentUser.image}
+            rounded
+          />
         </div>
 
         <form onSubmit={handleSubmit} className="px-4">
@@ -129,14 +97,7 @@ export const ProfileEdit = () => {
           <span className="mb-2 p-2 block text-error">
             {errors.lastName ? errors.lastName : ' '}
           </span>
-          <input
-            type="file"
-            name="imageProfile"
-            id="imageProfile"
-            className="hidden"
-            onChange={handleImageProfileChange}
-            multiple={false}
-          />
+
           <button
             type="submit"
             className="btn w-full rounded-md button__primary mt-8 mb-0"
