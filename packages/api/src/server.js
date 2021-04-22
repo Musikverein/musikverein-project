@@ -21,7 +21,7 @@ app.use(
 
 app.use('/user', userRouter);
 app.use('/recaptcha', recaptchaRouter);
-app.use('/song', songRouter);
+app.use('/songs', songRouter);
 
 app.get('/', (req, res) => {
   res.status(200).send({

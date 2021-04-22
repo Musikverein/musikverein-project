@@ -4,6 +4,10 @@ export const SongInitialState = {
   isUploadingSong: false,
   uploadSongError: null,
   uploadSongSuccess: false,
+  isGettingSong: false,
+  getSongError: null,
+  getSongSuccess: false,
+  songs: [],
 };
 
 const SongReducer = (state = SongInitialState, action) => {
@@ -30,6 +34,32 @@ const SongReducer = (state = SongInitialState, action) => {
         isUploadingSong: false,
         uploadSongError: null,
         uploadSongSuccess: true,
+      };
+    }
+    case SongTypes.SONG_GET_REQUEST: {
+      return {
+        ...state,
+        isGettingSong: true,
+        getSongError: null,
+        getSongSuccess: false,
+        songs: [],
+      };
+    }
+    case SongTypes.SONG_GET_ERROR: {
+      return {
+        ...state,
+        isGettingSong: false,
+        getSongError: action.payload,
+        getSongSuccess: false,
+      };
+    }
+    case SongTypes.SONG_GET_SUCCESS: {
+      return {
+        ...state,
+        isGettingSong: false,
+        getSongError: null,
+        getSongSuccess: true,
+        songs: action.payload,
       };
     }
     default: {
