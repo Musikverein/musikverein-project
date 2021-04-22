@@ -51,6 +51,7 @@ module.exports = {
     'arrow-body-style': 'off',
     'no-underscore-dangle': 'off',
     'react/forbid-prop-types': 'off',
+    'jsx-a11y/no-onchange': 'off',
     'jsx-a11y/label-has-associated-control': [
       'error',
       {

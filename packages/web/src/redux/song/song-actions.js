@@ -66,3 +66,37 @@ export const uploadSong = ({
     }
   };
 };
+
+export const getSongsRequest = () => ({
+  type: SongTypes.SONG_GET_REQUEST,
+});
+export const getSongsSuccess = (songs) => ({
+  type: SongTypes.SONG_GET_SUCCESS,
+  payload: songs,
+});
+export const getSongsError = (message) => ({
+  type: SongTypes.SONG_GET_ERROR,
+  payload: message,
+});
+
+export const getSongs = () => {
+  return async function getSongsThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(getSongsError('Dont have a token'));
+    }
+    dispatch(getSongsRequest());
+    try {
+      const { errorMessage, data: response } = await api.getSongs({
+        Authorization: `Bearer ${token}`,
+      });
+      if (errorMessage) {
+        return dispatch(getSongsError(errorMessage));
+      }
+      return dispatch(getSongsSuccess(response.data));
+    } catch (error) {
+      return dispatch(getSongsError(error.message));
+    }
+  };
+};
