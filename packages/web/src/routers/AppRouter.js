@@ -9,9 +9,12 @@ import UploadSong from '../pages/UploadSong';
 import { authSelector } from '../redux/auth/auth-selectors';
 import ROUTES from './routes';
 import { LibraryRouter } from './LibraryRouter';
+import Player from '../components/Player';
+import { playerSelector } from '../redux/player/player-selectors';
 
 export const AppRouter = () => {
   const { isAuthenticated } = useSelector(authSelector);
+  const { songs } = useSelector(playerSelector);
   return (
     <div>
       <Switch>
@@ -48,6 +51,7 @@ export const AppRouter = () => {
           exact
         />
       </Switch>
+      <Player playList={songs} />
     </div>
   );
 };

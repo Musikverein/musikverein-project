@@ -1784,6 +1784,16 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@iconify/icons-mdi@^1.0.46":
+  version "1.1.14"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-mdi/-/icons-mdi-1.1.14.tgz#5aa603b5bff6329d516e3c4479f3d456e66e30a1"
+  integrity sha512-W5wRuSn0fn6jcfHEiE8o6CmCu/D/dzEvTlxmxlsgbt7l86Cgc7tZ0F8c+sAXs/LOhkYJejULiIMc5ve0bDylkQ==
+
+"@iconify/react@^1.1.3":
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/@iconify/react/-/react-1.1.4.tgz#c778eddbaf196e55705d0bedff00d039dc1de8d3"
+  integrity sha512-oxq8IMOq8q3nKGiDHbQPC8FcFuBsKve68JWBo140d5LRnj0bv5TB/FE/y01ZSvEZ7PlI2HIrnb2qivPN8kTDgw==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -11943,6 +11953,15 @@ react-google-recaptcha@^2.1.0:
   dependencies:
     prop-types "^15.5.0"
     react-async-script "^1.1.1"
+
+react-h5-audio-player@^3.7.0:
+  version "3.7.0"
+  resolved "https://registry.yarnpkg.com/react-h5-audio-player/-/react-h5-audio-player-3.7.0.tgz#756e6e2565ae4907ab4b0a44d6b3db5896720158"
+  integrity sha512-8uNknLpcQZYprDxxtUlWClXCMzObZVCt5pAVLicT53PLX69l1ZARYAJwLxX8MJtaJ8XSQS2I4h3ElURvh3DxJg==
+  dependencies:
+    "@babel/runtime" "^7.10.2"
+    "@iconify/icons-mdi" "^1.0.46"
+    "@iconify/react" "^1.1.3"
 
 react-helmet@^6.1.0:
   version "6.1.0"

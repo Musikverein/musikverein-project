@@ -29,9 +29,8 @@ export const LibrarySongs = () => {
       </select>
 
       <section>
-        {songs.map((song) => (
-          <SongCard key={song._id} {...song} />
-        ))}
+        {songs.length > 0 &&
+          songs.map((song) => <SongCard key={song._id} {...song} />)}
       </section>
     </>
   );
