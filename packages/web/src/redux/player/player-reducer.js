@@ -11,7 +11,7 @@ const playReducer = (state = playerInitialState, action) => {
       return {
         ...state,
         isPlayingSong: true,
-        songs: [action.payload],
+        songs: [...state.songs, action.payload],
       };
     }
     default: {

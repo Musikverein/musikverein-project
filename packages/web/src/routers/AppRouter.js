@@ -14,7 +14,7 @@ import { playerSelector } from '../redux/player/player-selectors';
 
 export const AppRouter = () => {
   const { isAuthenticated } = useSelector(authSelector);
-  const { songs } = useSelector(playerSelector);
+  const { songs, isPlayingSong } = useSelector(playerSelector);
   return (
     <div>
       <Switch>
@@ -51,7 +51,7 @@ export const AppRouter = () => {
           exact
         />
       </Switch>
-      <Player playList={songs} />
+      {isPlayingSong && <Player playList={songs} />}
     </div>
   );
 };
