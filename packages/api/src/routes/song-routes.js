@@ -19,6 +19,7 @@ songRouter.post(
   validateCreateSong,
   songController.createSong,
 );
+songRouter.post('/', songController.getSongs);
 
 module.exports = {
   songRouter: songRouter,
