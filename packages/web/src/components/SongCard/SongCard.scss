@@ -1,7 +1,6 @@
 .img-play {
   opacity: 0;
   transition: opacity 0.2s linear;
-  z-index: 33;
 
   &:hover {
     opacity: 1;

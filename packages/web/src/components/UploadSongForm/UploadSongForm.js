@@ -103,6 +103,7 @@ export const UploadSongForm = ({
         <button
           type="submit"
           className="rounded-4 w-full mb-4 button-secundary"
+          disabled={isUploadingSong}
         >
           Submit
         </button>

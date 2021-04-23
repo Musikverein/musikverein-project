@@ -10,6 +10,7 @@
   background-color: $background-main-color;
   display: flex;
   align-items: center;
+  z-index: 1;
 
   &__link {
     cursor: pointer;

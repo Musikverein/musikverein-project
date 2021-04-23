@@ -13,7 +13,7 @@ export const Dropzone = ({ onFileSelected }) => {
 
   return (
     <div>
-      <section className="dropzone h-56 flex items-center text-center">
+      <section className="dropzone h-56">
         <div
           {...getRootProps({ className: 'dropzone' })}
           className="dropzone_container"

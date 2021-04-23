@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 
 import Header from '../../components/Header';
 import Dropzone from '../../components/Dropzone';
-import { uploadSong } from '../../redux/song/song-actions';
+import { uploadSong, uploadSongReset } from '../../redux/song/song-actions';
 import { UploadSongForm } from '../../components/UploadSongForm/UploadSongForm';
 import { metaImgToBase64 } from '../../utils/utils';
 
@@ -16,10 +16,11 @@ export const UploadSong = () => {
   const [metaSong, setMetaSong] = useState({});
 
   useEffect(() => {
+    dispatch(uploadSongReset());
     return () => {
       setLoadSong(null);
     };
-  }, []);
+  }, [dispatch]);
 
   const handleSongLoad = async (file) => {
     jsmediatags.read(file, {

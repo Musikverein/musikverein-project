@@ -57,7 +57,7 @@
   }
 
   .dropzone_container {
-    @apply flex flex-col items-center p-4;
+    @apply flex flex-col items-center p-4 justify-center h-full w-full;
   }
 
   .ResetPassword {

@@ -25,7 +25,7 @@ export const Player = ({ playList }) => {
   const handleModalSong = () => {};
 
   return (
-    <section className="w-full flex flex-col items-center bg-black fixed bottom-0 pt-2 z-50 ">
+    <section className="w-full flex flex-col items-center bg-black fixed bottom-0 pt-2 z-10 ">
       <div className="w-full justify-center bg-black flex items-center">
         {/* <div className="w-full h-full">
           <img
@@ -43,7 +43,7 @@ export const Player = ({ playList }) => {
               &nbsp;{playList[indexPlayList].artist}
             </h3>
           </button>
-          <button type="button" key="x" className="bx bx-heart text-2xl" />
+          <button type="button" className="bx bx-heart text-2xl" />
         </div>
       </div>
       <div className="w-full">
