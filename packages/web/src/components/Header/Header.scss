@@ -2,4 +2,12 @@
   position: fixed;
   top: 0;
   padding: 10px;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  height: 60px;
+}
+
+.header {
+  background-color: black;
 }

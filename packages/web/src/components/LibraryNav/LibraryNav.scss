@@ -1,0 +1,23 @@
+@import '../../styles/utils.scss';
+
+.library-nav {
+  position: fixed;
+  top: 60px;
+  padding: 10px;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: $background-color;
+  display: inline-flex;
+  align-items: center;
+
+  &__link {
+    cursor: pointer;
+    margin: 0 10px;
+    color: rgba(255, 255, 255, 0.5);
+
+    &-active {
+      color: white;
+    }
+  }
+}

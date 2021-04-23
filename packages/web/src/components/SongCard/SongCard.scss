@@ -1,0 +1,15 @@
+.img-play {
+  opacity: 0;
+  transition: opacity 0.2s linear;
+  z-index: 33;
+
+  &:hover {
+    opacity: 1;
+    background-color: rgba(41, 41, 41, 0.357);
+  }
+}
+
+.time {
+  all: unset;
+  text-decoration: none !important;
+}

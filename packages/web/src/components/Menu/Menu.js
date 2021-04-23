@@ -11,19 +11,21 @@ export const Menu = () => {
   };
 
   return (
-    <button
-      type="button"
-      className={showMenu ? 'relative menu open' : 'relative menu'}
-      onClick={handleShowMenu}
-    >
-      <div className="menu-link">
-        <span className="menu-icon">
-          <span className="menu-line menu-line-1" />
-          <span className="menu-line menu-line-2" />
-          <span className="menu-line menu-line-3" />
-        </span>
-      </div>
+    <>
+      <button
+        type="button"
+        className={showMenu ? 'relative menu open' : 'relative menu'}
+        onClick={handleShowMenu}
+      >
+        <div className="menu-link">
+          <span className="menu-icon">
+            <span className="menu-line menu-line-1" />
+            <span className="menu-line menu-line-2" />
+            <span className="menu-line menu-line-3" />
+          </span>
+        </div>
+      </button>
       {showMenu && <Navigation showMenu={showMenu} />}
-    </button>
+    </>
   );
 };

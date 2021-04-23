@@ -2,6 +2,22 @@
 
 .App__container {
   background-color: $background-color;
+  width: 100%;
+  min-height: 100vh;
+  display: block;
+}
+
+.main-container {
+  padding-top: 60px;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 100px;
+
+  &-library {
+    padding-top: 180px;
+    padding-bottom: 100px;
+  }
 }
 
 .img__logo {
