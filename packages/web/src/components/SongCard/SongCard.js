@@ -31,7 +31,7 @@ export const SongCard = ({
         <div className="flex items-center justify-center absolute w-24 h-24 img-play">
           <i className="bx bx-play text-4xl" />
         </div>
-        <img src={image} alt="" className="w-24 h-24 rounded-lg object-cover" />
+        <img src={image} alt="" className="w-24 h-24 rounded-4 object-cover" />
       </button>
       <div className="min-w-0 flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
         <h2 className="text-lg font-semibold text-light mb-0.5">{title}</h2>

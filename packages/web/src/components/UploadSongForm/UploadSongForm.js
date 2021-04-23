@@ -1,11 +1,13 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReCAPTCHA from 'react-google-recaptcha';
+import { useSelector } from 'react-redux';
 
 import { useImgPreview } from '../../hooks/useImgPreview';
 import { ImgEdit } from '../ImgEdit/ImgEdit';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
+import { selectSongState } from '../../redux/song/song-selectors';
 
 export const UploadSongForm = ({
   metaTitle,
@@ -14,6 +16,9 @@ export const UploadSongForm = ({
   defaultImg,
   handleSubmit,
 }) => {
+  const { isUploadingSong, uploadSongSuccess, uploadSongError } = useSelector(
+    selectSongState,
+  );
   const { stateImg, handleImageChange, handleImage, refId } = useImgPreview(
     'coverImage',
   );
@@ -55,9 +60,9 @@ export const UploadSongForm = ({
         }
         rounded={false}
       />
-      <form onSubmit={handlePreSubmit}>
+      <form onSubmit={handlePreSubmit} className="w-2/3">
         <input
-          className="text-gray-500"
+          className="text-gray-500 w-full"
           placeholder="Title:"
           type="text"
           value={title}
@@ -70,7 +75,7 @@ export const UploadSongForm = ({
           {errors.title ? errors.title : ' '}
         </span>
         <input
-          className="text-gray-500"
+          className="text-gray-500 w-full"
           placeholder="Artist:"
           type="text"
           value={artist}
@@ -83,7 +88,7 @@ export const UploadSongForm = ({
           {errors.artist ? errors.artist : ' '}
         </span>
         <input
-          className="text-gray-500"
+          className="text-gray-500 w-full"
           placeholder="Genre:"
           type="text"
           value={genre}
@@ -97,7 +102,7 @@ export const UploadSongForm = ({
         </span>
         <button
           type="submit"
-          className="btn w-full rounded-md bg__primary mt-8 mb-0"
+          className="btn w-full rounded-4 bg__primary mt-8 mb-0"
         >
           Submit
         </button>
@@ -107,6 +112,9 @@ export const UploadSongForm = ({
         size="invisible"
         ref={reRef}
       />
+      {isUploadingSong && <p>Uploading song...</p>}
+      {uploadSongSuccess && <p>Upload successful!</p>}
+      {uploadSongError && <p>Upload error!</p>}
     </>
   );
 };

@@ -12,9 +12,7 @@ export const UploadSong = () => {
   const jsmediatags = window.jsmediatags;
 
   const dispatch = useDispatch();
-  const { isUploadingSong, uploadSongSuccess, uploadSongError } = useSelector(
-    selectSongState,
-  );
+
   const [loadSong, setLoadSong] = useState(null);
   const [metaSong, setMetaSong] = useState({});
 
@@ -55,8 +53,8 @@ export const UploadSong = () => {
   return (
     <>
       <Header />
-      <div className="h-full p-4">
-        <div className="h-full w-full flex flex-col justify-center items-center">
+      <main className="main-container">
+        <div className="h-full w-full flex flex-col justify-center items-center p-4">
           <h4>Upload Audio File</h4>
           {loadSong ? (
             <UploadSongForm {...metaSong} handleSubmit={handleSubmit} />
@@ -68,11 +66,8 @@ export const UploadSong = () => {
               }}
             />
           )}
-          {isUploadingSong && <p>Uploading song...</p>}
-          {uploadSongSuccess && <p>Upload successful!</p>}
-          {uploadSongError && <p>Upload error!</p>}
         </div>
-      </div>
+      </main>
     </>
   );
 };

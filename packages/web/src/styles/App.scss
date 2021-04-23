@@ -20,6 +20,10 @@
   }
 }
 
+.rounded-4 {
+  border-radius: 4px;
+}
+
 .img__logo {
   &-m {
     margin: 0 auto;
@@ -34,6 +38,7 @@
 }
 .card {
   background-color: $background-secundary-color;
+  border-radius: 4px;
 }
 
 .bg__primary {

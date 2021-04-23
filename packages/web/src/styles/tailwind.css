@@ -18,9 +18,6 @@
   .Login__wrapper {
     @apply p-4;
   }
-  .border-radius {
-    @apply rounded-md;
-  }
 
   .form-label {
     @apply text-gray-100 mb-2 block;
@@ -46,25 +43,17 @@
     @apply text-blue-50 hover:bg-blue-600 focus:bg-blue-800 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-400 focus-visible:ring-opacity-50;
   }
 
-  .icon-btn__small {
-    @apply block rounded-full focus:outline-none focus-visible:ring-1 focus-visible:ring-gray-50 focus-visible:ring-opacity-50;
-  }
-
-  .icon-btn__medium {
-    @apply block rounded-full p-2 border border-gray-200 hover:border-white focus-visible:ring-1 focus-visible:ring-white focus-visible:ring-opacity-50;
-  }
-
   .form-checkbox {
     /* enabled checked config in extend */
     /* https://tailwindcss.com/docs/hover-focus-and-other-states#checked */
     @apply w-6 h-6 mr-2 shadow-sm mb-4 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
   }
   .card {
-    @apply rounded-xl overflow-hidden p-8;
+    @apply overflow-hidden p-8;
   }
 
   .dropzone {
-    @apply mt-4 p-4 border-2 rounded-md bg-dark border-dark-light border-dashed outline-none;
+    @apply mt-4 p-4 border-2 border-dark-light border-dashed outline-none;
   }
 
   .dropzone_container {
@@ -77,5 +66,23 @@
 
   .ResetPassword__wrapper {
     @apply p-4;
+  }
+
+  [type='text'],
+  [type='email'],
+  [type='url'],
+  [type='password'],
+  [type='number'],
+  [type='date'],
+  [type='datetime-local'],
+  [type='month'],
+  [type='search'],
+  [type='tel'],
+  [type='time'],
+  [type='week'],
+  [multiple],
+  textarea,
+  select {
+    border-radius: 4px;
   }
 }

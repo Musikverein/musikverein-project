@@ -2,8 +2,6 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import './ProfileEdit.scss';
-
 import { useForm } from '../../hooks/useForm';
 import { resetUpdate, updateProfile } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
@@ -100,7 +98,7 @@ export const ProfileEdit = () => {
 
           <button
             type="submit"
-            className="btn w-full rounded-md button__primary mt-8 mb-0"
+            className="btn w-full rounded-4 button__primary mt-8 mb-0"
             disabled={isUpdating}
           >
             Update profile

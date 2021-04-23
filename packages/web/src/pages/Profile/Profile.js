@@ -25,7 +25,7 @@ export const Profile = () => {
           </h3>
           <Link
             to={ROUTES.PROFILE_EDIT}
-            className="rounded-md p-1.5 border font-light text-sm border-mk-magenta mt-2"
+            className="rounded-4 p-1.5 border font-light text-sm border-mk-magenta mt-2"
           >
             Edit your profile
           </Link>

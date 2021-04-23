@@ -32,7 +32,7 @@ export const LibrarySongs = () => {
       <LibraryNav />
       <main className="main-container-library">
         <div className="library-select">
-          <select value={filter} onChange={handleSelect}>
+          <select value={filter} onChange={handleSelect} className="rounded-4">
             <option value={OWN_SONGS}>My songs</option>
             <option value={LIKED_SONGS}>Liked songs</option>
           </select>

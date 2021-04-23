@@ -64,7 +64,7 @@ export const SignUp = () => {
                 id="email"
                 name="email"
                 arial-label="Insert your email"
-                className="form-input rounded-md mb-0"
+                className="form-input rounded-4 mb-0"
                 value={email}
                 onChange={handleInputChange}
                 placeholder="Insert your email"
@@ -73,7 +73,7 @@ export const SignUp = () => {
                 {errors.email ? errors.email : ''}
               </span>
               <InputPassword
-                className="form-input rounded-md mb-0"
+                className="form-input rounded-4 mb-0"
                 id="password"
                 name="password"
                 arial-label="Insert your password"
@@ -85,7 +85,7 @@ export const SignUp = () => {
                 {errors.password ? errors.password : ''}
               </span>
               <InputPassword
-                className="form-input rounded-md mb-0"
+                className="form-input rounded-4 mb-0"
                 name="confirmPassword"
                 id="confirmPassword"
                 arial-label="Repeat your password"
@@ -109,7 +109,7 @@ export const SignUp = () => {
                 ref={reRef}
               />
               <button
-                className="btn w-full rounded-md bg__primary mt-8 mb-0"
+                className="btn w-full rounded-4 bg__primary mt-8 mb-0"
                 type="submit"
                 disabled={isSigningUp}
               >
@@ -119,7 +119,7 @@ export const SignUp = () => {
             <section className="mt-4 text-center">
               <p>Sign up with:</p>
               <button
-                className="btn mt-4 rounded-md bg__secundary bx bxl-google"
+                className="btn mt-4 rounded-4 bg__secundary bx bxl-google"
                 type="button"
                 onClick={handleLoginWithGoogle}
                 disabled={isSigningUp}

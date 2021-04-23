@@ -2,19 +2,18 @@ import React from 'react';
 import { func } from 'prop-types';
 import { useDropzone } from 'react-dropzone';
 
+import './Dropzone.scss';
+
 export const Dropzone = ({ onFileSelected }) => {
-  const { acceptedFiles, getRootProps, getInputProps } = useDropzone({
+  const { getRootProps, getInputProps } = useDropzone({
     accept: 'audio/*',
     maxFiles: 1,
     onDropAccepted: onFileSelected,
   });
-  const files = acceptedFiles.map((file) => (
-    <li key={file.path}>{file.path}</li>
-  ));
 
   return (
     <div>
-      <section className="dropzone">
+      <section className="dropzone h-56 flex items-center text-center">
         <div
           {...getRootProps({ className: 'dropzone' })}
           className="dropzone_container"
@@ -23,10 +22,6 @@ export const Dropzone = ({ onFileSelected }) => {
           <p>Drag n drop some files here, or click to select files</p>
         </div>
       </section>
-      <aside>
-        <h4>Files</h4>
-        <ul>{files}</ul>
-      </aside>
     </div>
   );
 };

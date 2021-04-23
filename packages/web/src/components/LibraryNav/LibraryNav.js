@@ -21,6 +21,11 @@ export const LibraryNav = () => {
       >
         My Playlists
       </NavLink>
+      <NavLink
+        to={ROUTES.UPLOAD_SONG}
+        className="bx bx-cloud-upload text-3xl library-nav__link ml-auto"
+        activeClassName="library-nav__link-active"
+      />
     </nav>
   );
 };
