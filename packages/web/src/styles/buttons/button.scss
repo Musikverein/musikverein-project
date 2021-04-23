@@ -1,0 +1,20 @@
+@import '../utils.scss';
+
+.button-primary {
+  border: 1px solid $background-secundary-color;
+  padding: 10px 15px;
+  border-radius: 4px;
+  background-color: $color-principal;
+  &:hover {
+    border: 1px solid $color-principal;
+  }
+}
+
+.button-secundary {
+  border: 1px solid $background-secundary-color;
+  padding: 10px 15px;
+  border-radius: 4px;
+  &:hover {
+    border: 1px solid $color-principal;
+  }
+}

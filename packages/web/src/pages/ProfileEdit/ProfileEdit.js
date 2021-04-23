@@ -55,7 +55,7 @@ export const ProfileEdit = () => {
           />
         </div>
 
-        <form onSubmit={handleSubmit} className="px-4">
+        <form onSubmit={handleSubmit} className="px-8 text-center">
           <input
             type="text"
             id="userName"
@@ -98,7 +98,7 @@ export const ProfileEdit = () => {
 
           <button
             type="submit"
-            className="btn w-full rounded-4 button__primary mt-8 mb-0"
+            className="rounded-4 button-secundary"
             disabled={isUpdating}
           >
             Update profile

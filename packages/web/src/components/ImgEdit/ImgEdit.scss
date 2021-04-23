@@ -1,23 +1,23 @@
 @import '../../styles/utils.scss';
+
 .input__edit[type='text'] {
-  font-size: 18px;
-  background-color: transparent;
+  font-size: 14px;
   width: 100%;
-  color: $background-color;
-  padding: 10px 10px 10px 5px;
+  padding: 10px 15px;
   display: block;
-  color: rgb(200, 200, 200);
-  border: none;
-  border-bottom: 1px solid $color-error;
+  color: black;
+  border: 1px solid $background-terciary-color;
   &:hover,
   &:active {
-    border-bottom: 2px solid $color-principal;
-    color: white;
+    border: 1px solid $color-principal;
+  }
+  &::placeholder {
+    color: $background-secundary-color;
   }
 }
 .icon_edit {
-  color: #fff;
-  background-color: $background-secundary-color;
+  color: white;
+  background-color: $background-main-color;
   padding-top: calc(50% - 9px);
 
   border: 1px solid $color-principal;

@@ -4,8 +4,8 @@ const createSongSchema = Joi.object({
   title: Joi.string().min(3).max(200).required(),
   url: Joi.string().required(),
   duration: Joi.number().required(),
-  artist: Joi.string().required(),
-  genre: Joi.string().required(),
+  artist: Joi.string().min(3).max(150).required(),
+  genre: Joi.string().min(3).max(20).required(),
 });
 
 async function validateCreateSong(req, res, next) {

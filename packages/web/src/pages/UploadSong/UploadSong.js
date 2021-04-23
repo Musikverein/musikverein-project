@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import Header from '../../components/Header';
 import Dropzone from '../../components/Dropzone';
 import { uploadSong } from '../../redux/song/song-actions';
-import { selectSongState } from '../../redux/song/song-selectors';
 import { UploadSongForm } from '../../components/UploadSongForm/UploadSongForm';
 import { metaImgToBase64 } from '../../utils/utils';
 

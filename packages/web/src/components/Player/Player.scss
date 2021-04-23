@@ -1,0 +1,12 @@
+.rhap_volume-container {
+  visibility: hidden;
+  @media (min-width: 600px) {
+    visibility: visible;
+  }
+}
+.rhap_progress-indicator {
+  width: 10px;
+  height: 10px;
+  top: -3px;
+  margin-left: -6px;
+}

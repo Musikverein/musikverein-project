@@ -32,9 +32,9 @@ export const validationSchema = {
   }),
 
   userProfile: Joi.object({
-    userName: Joi.string().min(3).max(10).required(),
-    firstName: Joi.string().min(3).max(15).required(),
-    lastName: Joi.string().min(3).max(20).required(),
+    userName: Joi.string().min(3).max(20).required(),
+    firstName: Joi.string().min(3).max(40).required(),
+    lastName: Joi.string().min(3).max(80).required(),
   }).with('userName', ['firstName', 'lastName']),
 
   song: Joi.object({
