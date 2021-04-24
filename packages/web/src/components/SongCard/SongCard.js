@@ -6,6 +6,7 @@ import './SongCard.scss';
 
 import { secondsToString } from '../../utils/utils';
 import { play } from '../../redux/player/player-actions';
+import LikeButton from '../LikeButton';
 
 export const SongCard = ({
   title,
@@ -58,6 +59,7 @@ export const SongCard = ({
           <div className="pr-4">
             <dt className="sr-only">Likes</dt>
             <dd>{likedBy.length}</dd>
+            <LikeButton likedBy={likedBy} songId={_id} />
           </div>
         </dl>
       </div>

@@ -102,3 +102,41 @@ export const getSongs = () => {
     }
   };
 };
+
+export const likeSongRequest = () => ({
+  type: SongTypes.SONG_LIKE_REQUEST,
+});
+export const likeSongSuccess = (song) => ({
+  type: SongTypes.SONG_LIKE_SUCCESS,
+  payload: song,
+});
+export const likeSongError = (message) => ({
+  type: SongTypes.SONG_LIKE_ERROR,
+  payload: message,
+});
+
+export const likeSong = (songId) => {
+  return async function likeSongThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(likeSongError('Dont have a token'));
+    }
+    dispatch(likeSongRequest());
+
+    try {
+      const { errorMessage, data: response } = await api.likeSong(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { songId },
+      );
+      if (errorMessage) {
+        return dispatch(likeSongError(errorMessage));
+      }
+      return dispatch(likeSongSuccess(response.data));
+    } catch (error) {
+      return dispatch(likeSongError('Dont have a token'));
+    }
+  };
+};

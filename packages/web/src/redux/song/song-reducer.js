@@ -8,6 +8,9 @@ export const SongInitialState = {
   getSongError: null,
   getSongSuccess: false,
   songs: [],
+  isLikeSong: false,
+  likeSongError: null,
+  likeSongSuccess: false,
 };
 
 const SongReducer = (state = SongInitialState, action) => {
@@ -68,6 +71,38 @@ const SongReducer = (state = SongInitialState, action) => {
         getSongError: null,
         getSongSuccess: true,
         songs: action.payload,
+      };
+    }
+    case SongTypes.SONG_LIKE_REQUEST: {
+      return {
+        ...state,
+        isLikeSong: true,
+        likeSongError: null,
+        likeSongSuccess: false,
+      };
+    }
+    case SongTypes.SONG_LIKE_ERROR: {
+      return {
+        ...state,
+        isLikeSong: false,
+        likeSongError: action.payload,
+        likeSongSuccess: false,
+      };
+    }
+    case SongTypes.SONG_LIKE_SUCCESS: {
+      const newSongs = state.songs.map((song) => {
+        if (song._id === action.payload._id) {
+          return action.payload;
+        }
+        return song;
+      });
+
+      return {
+        ...state,
+        isLikeSong: false,
+        likeSongError: null,
+        likeSongSuccess: true,
+        songs: [...newSongs],
       };
     }
     default: {
