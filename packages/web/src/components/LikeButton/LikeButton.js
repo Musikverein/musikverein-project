@@ -20,8 +20,8 @@ export const LikeButton = ({ likedBy, songId }) => {
       onClick={handleLike}
       className={
         likedBy.includes(userId)
-          ? 'bx bxs-heart text-2xl'
-          : 'bx bx-heart text-2xl'
+          ? 'bx bxs-heart text-xl'
+          : 'bx bx-heart text-xl'
       }
     />
   );

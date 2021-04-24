@@ -27,20 +27,24 @@ export const SongCard = ({
   };
 
   return (
-    <div className="p-4 flex space-x-4">
-      <button type="button" className="w-24 h-24" onClick={handlePlaySong}>
+    <div className="p-4 flex space-x-4 w-full">
+      <button
+        type="button"
+        className="w-24 h-24 image-container"
+        onClick={handlePlaySong}
+      >
         <div className="flex items-center justify-center absolute w-24 h-24 img-play">
           <i className="bx bx-play text-4xl" />
         </div>
-        <img src={image} alt="" className="w-24 h-24 rounded-4 object-cover" />
+        <img src={image} alt="" className="w-24 h-24 rounded-4 object-cover " />
       </button>
-      <div className="min-w-0 flex-auto sm:pr-20 lg:pr-0 xl:pr-20">
-        <h2 className="text-lg font-semibold text-light mb-0.5">{title}</h2>
+      <div className="pr-20 info-container truncate">
+        <h2 className="text-lg font-semibold text-light mb-0.5 ">{title}</h2>
         <div className="flex-none w-full mt-0.5 font-normal">
           <dt className="sr-only">Artist</dt>
           <dd>{artist}</dd>
         </div>
-        <dl className="flex flex-wrap text-sm font-medium whitespace-pre">
+        <dl className="flex flex-wrap items-center text-sm font-medium whitespace-pre">
           <div className="pr-4">
             <dt className="sr-only">Genre</dt>
             <dd>{genre}</dd>
@@ -58,9 +62,9 @@ export const SongCard = ({
           </div>
           <div className="pr-4">
             <dt className="sr-only">Likes</dt>
-            <dd>{likedBy.length}</dd>
-            <LikeButton likedBy={likedBy} songId={_id} />
+            <dd>{likedBy.length} Likes</dd>
           </div>
+          <LikeButton likedBy={likedBy} songId={_id} />
         </dl>
       </div>
     </div>

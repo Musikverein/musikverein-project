@@ -16,6 +16,30 @@ export const uploadSongError = (message) => ({
   payload: message,
 });
 
+export const getSongsRequest = () => ({
+  type: SongTypes.SONG_GET_REQUEST,
+});
+export const getSongsSuccess = (songs) => ({
+  type: SongTypes.SONG_GET_SUCCESS,
+  payload: songs,
+});
+export const getSongsError = (message) => ({
+  type: SongTypes.SONG_GET_ERROR,
+  payload: message,
+});
+
+export const likeSongRequest = () => ({
+  type: SongTypes.SONG_LIKE_REQUEST,
+});
+export const likeSongSuccess = (song) => ({
+  type: SongTypes.SONG_LIKE_SUCCESS,
+  payload: song,
+});
+export const likeSongError = (message) => ({
+  type: SongTypes.SONG_LIKE_ERROR,
+  payload: message,
+});
+
 export const uploadSongReset = () => ({ type: SongTypes.SONG_UPLOAD_RESET });
 
 export const uploadSong = ({
@@ -69,25 +93,14 @@ export const uploadSong = ({
   };
 };
 
-export const getSongsRequest = () => ({
-  type: SongTypes.SONG_GET_REQUEST,
-});
-export const getSongsSuccess = (songs) => ({
-  type: SongTypes.SONG_GET_SUCCESS,
-  payload: songs,
-});
-export const getSongsError = (message) => ({
-  type: SongTypes.SONG_GET_ERROR,
-  payload: message,
-});
-
 export const getSongs = () => {
   return async function getSongsThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
-      return dispatch(getSongsError('Dont have a token'));
+      return dispatch(getSongsError(signOutSuccess()));
     }
+
     dispatch(getSongsRequest());
     try {
       const { errorMessage, data: response } = await api.getSongs({
@@ -103,27 +116,15 @@ export const getSongs = () => {
   };
 };
 
-export const likeSongRequest = () => ({
-  type: SongTypes.SONG_LIKE_REQUEST,
-});
-export const likeSongSuccess = (song) => ({
-  type: SongTypes.SONG_LIKE_SUCCESS,
-  payload: song,
-});
-export const likeSongError = (message) => ({
-  type: SongTypes.SONG_LIKE_ERROR,
-  payload: message,
-});
-
 export const likeSong = (songId) => {
   return async function likeSongThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
-      return dispatch(likeSongError('Dont have a token'));
+      return dispatch(likeSongError(signOutSuccess()));
     }
-    dispatch(likeSongRequest());
 
+    dispatch(likeSongRequest());
     try {
       const { errorMessage, data: response } = await api.likeSong(
         {
@@ -136,7 +137,7 @@ export const likeSong = (songId) => {
       }
       return dispatch(likeSongSuccess(response.data));
     } catch (error) {
-      return dispatch(likeSongError('Dont have a token'));
+      return dispatch(likeSongError(error.message));
     }
   };
 };

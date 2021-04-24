@@ -90,7 +90,6 @@ const SongReducer = (state = SongInitialState, action) => {
       };
     }
 
-    // TODO:
     case SongTypes.SONG_LIKE_SUCCESS: {
       const newSongs = state.songs.map((song) => {
         if (song._id === action.payload._id) {
