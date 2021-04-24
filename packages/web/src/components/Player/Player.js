@@ -68,7 +68,7 @@ export const Player = ({ playList }) => {
           onClickNext={handleNext}
           onClickPrevious={handlePrevious}
           onEnded={handleNext}
-          style={{ backgroundColor: 'black' }}
+          style={{ backgroundColor: 'black', color: 'white' }}
           customAdditionalControls={[
             RHAP_UI.LOOP,
             <button type="button" key="x" className="bx bx-list-ul text-4xl" />,

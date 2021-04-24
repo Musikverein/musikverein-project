@@ -36,10 +36,6 @@ export const Profile = () => {
 
         <div className="flex justify-around text-center p-6">
           <div>
-            <span className="font-medium">0</span>
-            <p className="font-light text-xs">SONGS</p>
-          </div>
-          <div>
             <span className="font-medium">{followedBy.length}</span>
             <p className="font-light text-xs">FOLLOWERS</p>
           </div>
