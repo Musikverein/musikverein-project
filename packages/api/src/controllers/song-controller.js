@@ -64,7 +64,7 @@ async function likeSong(req, res, next) {
   const { songId } = req.body;
 
   try {
-    const response = await SongRepo.findLike({ _id: songId, active: true });
+    const response = await SongRepo.findOne({ _id: songId, active: true });
     if (response.error) {
       return res.status(400).send({
         data: null,
@@ -73,11 +73,12 @@ async function likeSong(req, res, next) {
     }
 
     if (response.data) {
-      const { likedBy } = response.data[0];
+      const { likedBy } = response.data;
+      let updatedSong = null;
+
       if (likedBy.indexOf(_id) !== -1) {
-        const index = likedBy.indexOf(_id);
-        const newLikedBy = likedBy.splice(index - 1, index);
-        const updatedSong = await SongRepo.findOneAndUpdate(
+        const newLikedBy = likedBy.filter((id) => String(id) !== String(_id));
+        updatedSong = await SongRepo.findOneAndUpdate(
           { _id: songId, active: true },
           { likedBy: newLikedBy },
           {
@@ -85,22 +86,9 @@ async function likeSong(req, res, next) {
             select: 'genre image artist likedBy title duration url owner',
           },
         );
-        if (updatedSong.error) {
-          return res.status(400).send({
-            data: null,
-            error: updatedSong.error,
-          });
-        }
-
-        if (updatedSong.data) {
-          return res.status(200).send({
-            data: updatedSong.data,
-            error: null,
-          });
-        }
       } else {
-        const newLikedBy = [...response.data[0].likedBy, _id];
-        const updatedSong = await SongRepo.findOneAndUpdate(
+        const newLikedBy = [...likedBy, _id];
+        updatedSong = await SongRepo.findOneAndUpdate(
           { _id: songId, active: true },
           { likedBy: newLikedBy },
           {
@@ -108,19 +96,20 @@ async function likeSong(req, res, next) {
             select: 'genre image artist likedBy title duration url owner',
           },
         );
-        if (updatedSong.error) {
-          return res.status(400).send({
-            data: null,
-            error: updatedSong.error,
-          });
-        }
+      }
 
-        if (updatedSong.data) {
-          return res.status(200).send({
-            data: updatedSong.data,
-            error: null,
-          });
-        }
+      if (updatedSong.error) {
+        return res.status(400).send({
+          data: null,
+          error: updatedSong.error,
+        });
+      }
+
+      if (updatedSong.data) {
+        return res.status(200).send({
+          data: updatedSong.data,
+          error: null,
+        });
       }
     }
   } catch (error) {

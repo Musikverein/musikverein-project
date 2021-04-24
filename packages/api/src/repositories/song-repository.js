@@ -17,8 +17,8 @@ class SongRepository {
     );
   }
 
-  findLike(options) {
-    return normalizeDBQuery(db.Song.find(options));
+  findOne(options) {
+    return normalizeDBQuery(db.Song.findOne(options));
   }
 
   findOneAndUpdate(queryFind, querySet, queryOptions) {
