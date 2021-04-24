@@ -1,12 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player';
-import 'react-h5-audio-player/lib/styles.css';
 
+import { useDispatch, useSelector } from 'react-redux';
+import { saveIndexPlaylist } from '../../redux/player/player-actions';
+import { playerSelector } from '../../redux/player/player-selectors';
+
+import LikeButton from '../LikeButton';
+
+import 'react-h5-audio-player/lib/styles.css';
 import './Player.scss';
 
 export const Player = ({ playList }) => {
-  const [indexPlayList, setIndexPlayList] = useState(0);
+  const dispatch = useDispatch();
+  const { currentIndexPlaylist } = useSelector(playerSelector);
+  const [indexPlayList, setIndexPlayList] = useState(currentIndexPlaylist);
+
+  // TODO: player reset currentIndexPlaylist when change playlist
+
+  useEffect(() => {
+    dispatch(saveIndexPlaylist(indexPlayList));
+  }, [dispatch, indexPlayList]);
 
   const handleNext = () => {
     if (indexPlayList === playList.length - 1) {
@@ -43,7 +57,7 @@ export const Player = ({ playList }) => {
               &nbsp;{playList[indexPlayList].artist}
             </h3>
           </button>
-          <button type="button" className="bx bx-heart text-2xl" />
+          <LikeButton />
         </div>
       </div>
       <div className="w-full">

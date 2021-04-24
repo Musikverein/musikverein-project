@@ -1,9 +1,9 @@
 import React from 'react';
 
-import './Header.scss';
-
 import ProfileButton from '../ProfileButton';
 import Menu from '../Menu';
+
+import './Header.scss';
 
 export const Header = () => {
   return (

@@ -1,13 +1,17 @@
 import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReCAPTCHA from 'react-google-recaptcha';
+
 import { useSelector } from 'react-redux';
+import { songSelector } from '../../redux/song/song-selectors';
 
 import { useImgPreview } from '../../hooks/useImgPreview';
-import { ImgEdit } from '../ImgEdit/ImgEdit';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
-import { selectSongState } from '../../redux/song/song-selectors';
+
+import { ImgEdit } from '../ImgEdit/ImgEdit';
+
+import Spinner from '../Spinner';
 
 export const UploadSongForm = ({
   metaTitle,
@@ -17,7 +21,7 @@ export const UploadSongForm = ({
   handleSubmit,
 }) => {
   const { isUploadingSong, uploadSongSuccess, uploadSongError } = useSelector(
-    selectSongState,
+    songSelector,
   );
   const { stateImg, handleImageChange, handleImage, refId } = useImgPreview(
     'coverImage',
@@ -60,60 +64,64 @@ export const UploadSongForm = ({
         }
         rounded={false}
       />
-      <form onSubmit={handlePreSubmit} className="w-2/3">
-        <input
-          className="input__edit"
-          placeholder="Title:"
-          type="text"
-          value={title}
-          name="title"
-          id="title"
-          arial-label="Title"
-          onChange={handleInputChange}
-        />
-        <span className="mb-2 p-2 block text-error">
-          {errors.title ? errors.title : ' '}
-        </span>
-        <input
-          className="input__edit"
-          placeholder="Artist:"
-          type="text"
-          value={artist}
-          name="artist"
-          id="artist"
-          arial-label="Artist"
-          onChange={handleInputChange}
-        />
-        <span className="mb-2 p-2 block text-error">
-          {errors.artist ? errors.artist : ' '}
-        </span>
-        <input
-          className="input__edit"
-          placeholder="Genre:"
-          type="text"
-          value={genre}
-          name="genre"
-          id="genre"
-          aria-label="Genre"
-          onChange={handleInputChange}
-        />
-        <span className="mb-2 p-2 block text-error">
-          {errors.genre ? errors.genre : ' '}
-        </span>
-        <button
-          type="submit"
-          className="rounded-4 w-full mb-4 button-secundary"
-          disabled={isUploadingSong}
-        >
-          Submit
-        </button>
-      </form>
+      {isUploadingSong ? (
+        <Spinner />
+      ) : (
+        <form onSubmit={handlePreSubmit} className="w-2/3">
+          <input
+            className="input__edit"
+            placeholder="Title:"
+            type="text"
+            value={title}
+            name="title"
+            id="title"
+            arial-label="Title"
+            onChange={handleInputChange}
+          />
+          <span className="mb-2 p-2 block text-error">
+            {errors.title ? errors.title : ' '}
+          </span>
+          <input
+            className="input__edit"
+            placeholder="Artist:"
+            type="text"
+            value={artist}
+            name="artist"
+            id="artist"
+            arial-label="Artist"
+            onChange={handleInputChange}
+          />
+          <span className="mb-2 p-2 block text-error">
+            {errors.artist ? errors.artist : ' '}
+          </span>
+          <input
+            className="input__edit"
+            placeholder="Genre:"
+            type="text"
+            value={genre}
+            name="genre"
+            id="genre"
+            aria-label="Genre"
+            onChange={handleInputChange}
+          />
+          <span className="mb-2 p-2 block text-error">
+            {errors.genre ? errors.genre : ' '}
+          </span>
+          <button
+            type="submit"
+            className="rounded-4 w-full mb-4 button-secundary"
+            disabled={isUploadingSong}
+          >
+            Submit
+          </button>
+        </form>
+      )}
+
       <ReCAPTCHA
         sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
         size="invisible"
         ref={reRef}
       />
-      {isUploadingSong && <p>Uploading song...</p>}
       {uploadSongSuccess && <p>Upload successful!</p>}
       {uploadSongError && <p>Upload error!</p>}
     </>

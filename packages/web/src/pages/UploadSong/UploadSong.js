@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { uploadSong, uploadSongReset } from '../../redux/song/song-actions';
+import { songSelector } from '../../redux/song/song-selectors';
 
 import Header from '../../components/Header';
 import Dropzone from '../../components/Dropzone';
-import { uploadSong, uploadSongReset } from '../../redux/song/song-actions';
-import { UploadSongForm } from '../../components/UploadSongForm/UploadSongForm';
+import UploadSongForm from '../../components/UploadSongForm';
+
 import { metaImgToBase64 } from '../../utils/utils';
 
 export const UploadSong = () => {
   const jsmediatags = window.jsmediatags;
 
+  const { uploadSongSuccess } = useSelector(songSelector);
   const dispatch = useDispatch();
 
   const [loadSong, setLoadSong] = useState(null);
@@ -21,6 +25,12 @@ export const UploadSong = () => {
       setLoadSong(null);
     };
   }, [dispatch]);
+
+  useEffect(() => {
+    if (uploadSongSuccess) {
+      setLoadSong(null);
+    }
+  }, [uploadSongSuccess]);
 
   const handleSongLoad = async (file) => {
     jsmediatags.read(file, {

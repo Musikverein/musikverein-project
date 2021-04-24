@@ -8,14 +8,15 @@ import Header from '../../components/Header';
 import LibraryNav from '../../components/LibraryNav';
 import SongCard from '../../components/SongCard';
 import { getSongs } from '../../redux/song/song-actions';
-import { selectSongState } from '../../redux/song/song-selectors';
+import { songSelector } from '../../redux/song/song-selectors';
+import Spinner from '../../components/Spinner';
 
 const OWN_SONGS = 'ownSongs';
 const LIKED_SONGS = 'likedSongs';
 
 export const LibrarySongs = () => {
   const dispatch = useDispatch();
-  const { songs } = useSelector(selectSongState);
+  const { songs, isGettingSong } = useSelector(songSelector);
   const [filter, setFilter] = useState(OWN_SONGS);
 
   const handleSelect = ({ target }) => {
@@ -39,8 +40,12 @@ export const LibrarySongs = () => {
         </div>
 
         <section>
-          {songs.length > 0 &&
-            songs.map((song) => <SongCard key={song._id} {...song} />)}
+          {isGettingSong ? (
+            <Spinner />
+          ) : (
+            songs.length > 0 &&
+            songs.map((song) => <SongCard key={song._id} {...song} />)
+          )}
         </section>
       </main>
     </>

@@ -1,14 +1,16 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import { useForm } from '../../hooks/useForm';
+import { useDispatch, useSelector } from 'react-redux';
 import { resetUpdate, updateProfile } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
-import ROUTES from '../../routers/routes';
-import { validationSchema } from '../../utils/validation/validationSchema';
+
 import { useImgPreview } from '../../hooks/useImgPreview';
+import { useForm } from '../../hooks/useForm';
+import { validationSchema } from '../../utils/validation/validationSchema';
+
 import ImgEdit from '../../components/ImgEdit';
+import ROUTES from '../../routers/routes';
 
 export const ProfileEdit = () => {
   const { currentUser, isUpdating, updatedSuccess } = useSelector(authSelector);

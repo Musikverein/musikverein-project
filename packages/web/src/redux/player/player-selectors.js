@@ -1,8 +1,8 @@
 import { createSelector } from 'reselect';
 
-export const selectSongState = (state) => state.player;
+export const selectPlayerState = (state) => state.player;
 
 export const playerSelector = createSelector(
-  [selectSongState],
+  [selectPlayerState],
   (player) => player,
 );
