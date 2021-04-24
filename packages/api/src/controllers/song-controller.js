@@ -73,12 +73,13 @@ async function likeSong(req, res, next) {
     }
 
     if (response.data) {
-      if (response.data.likedBy.includes(_id)) {
-        const likeIndex = response.data.likeBy.findIndex((id) => id === _id);
-        const newLikesArray = response.data.likedBy.splice(likeIndex, 1);
+      const { likedBy } = response.data[0];
+      if (likedBy.indexOf(_id) !== -1) {
+        const index = likedBy.indexOf(_id);
+        const newLikedBy = likedBy.splice(index - 1, index);
         const updatedSong = await SongRepo.findOneAndUpdate(
           { _id: songId, active: true },
-          { likeBy: newLikesArray },
+          { likedBy: newLikedBy },
           {
             new: true,
             select: 'genre image artist likedBy title duration url owner',
@@ -98,10 +99,10 @@ async function likeSong(req, res, next) {
           });
         }
       } else {
-        const newLikeBy = [...response.data.likeBy, _id];
+        const newLikedBy = [...response.data[0].likedBy, _id];
         const updatedSong = await SongRepo.findOneAndUpdate(
           { _id: songId, active: true },
-          { likeBy: newLikeBy },
+          { likedBy: newLikedBy },
           {
             new: true,
             select: 'genre image artist likedBy title duration url owner',
