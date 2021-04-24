@@ -5,9 +5,9 @@ import Header from '../../components/Header';
 
 export function Home() {
   return (
-    <main>
+    <>
       <Header />
-      <section className="p-4">HOME</section>
-    </main>
+      <main className="main-container">Contenedor principal</main>
+    </>
   );
 }

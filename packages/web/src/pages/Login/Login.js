@@ -1,7 +1,8 @@
 import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
+
+import { useDispatch, useSelector } from 'react-redux';
 
 import './Login.scss';
 
@@ -17,6 +18,7 @@ import Logo from '../../components/Logo';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
 import ROUTES from '../../routers/routes';
+import Spinner from '../../components/Spinner';
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -63,64 +65,68 @@ export const Login = () => {
             <p className="text-xm">Save your songs</p>
           </div>
           <div className="card">
-            <form onSubmit={handleSubmit}>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                arial-label="Insert your email"
-                className="form-input rounded-md mb-0"
-                value={email}
-                onChange={handleInputChange}
-                placeholder="Insert your email"
-              />
-              <span className="mb-2 p-2 block text-error">
-                {errors.email ? errors.email : ' '}
-              </span>
-              <InputPassword
-                className="form-input rounded-md mb-0"
-                id="password"
-                name="password"
-                arial-label="Insert your password"
-                value={password}
-                onChange={handleInputChange}
-                placeholder="Insert your password"
-              />
-              <span className="mb-2 p-2 block text-error">
-                {errors.password ? errors.password : ' '}
-              </span>
-              {signUpErrorMsg ? (
-                <section className="mt-4 p-3 text-center text-error">
-                  {signUpErrorMsg}
-                </section>
-              ) : (
-                <div className="mt-4 p-3 text-error text-center" />
-              )}
-              <Link
-                to={ROUTES.RESET_PASSWORD}
-                className="underline text-blue-gray-200 w-full text-center block"
-              >
-                Forgot your password?
-              </Link>
-              <ReCAPTCHA
-                sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
-                size="invisible"
-                ref={reRef}
-              />
-              <button
-                className="btn w-full rounded-md bg__primary mt-8 mb-0"
-                type="submit"
-                disabled={isSigningUp}
-              >
-                Log in
-              </button>
-            </form>
+            {isSigningUp ? (
+              <Spinner />
+            ) : (
+              <form onSubmit={handleSubmit}>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  arial-label="Insert your email"
+                  className="form-input rounded-4 mb-0"
+                  value={email}
+                  onChange={handleInputChange}
+                  placeholder="Insert your email"
+                />
+                <span className="mb-2 p-2 block text-error">
+                  {errors.email ? errors.email : ' '}
+                </span>
+                <InputPassword
+                  className="form-input rounded-4 mb-0"
+                  id="password"
+                  name="password"
+                  arial-label="Insert your password"
+                  value={password}
+                  onChange={handleInputChange}
+                  placeholder="Insert your password"
+                />
+                <span className="mb-2 p-2 block text-error">
+                  {errors.password ? errors.password : ' '}
+                </span>
+                {signUpErrorMsg ? (
+                  <section className="mt-4 p-3 text-center text-error">
+                    {signUpErrorMsg}
+                  </section>
+                ) : (
+                  <div className="mt-4 p-3 text-error text-center" />
+                )}
+                <Link
+                  to={ROUTES.RESET_PASSWORD}
+                  className="underline text-blue-gray-200 w-full text-center block"
+                >
+                  Forgot your password?
+                </Link>
+                <ReCAPTCHA
+                  sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
+                  size="invisible"
+                  ref={reRef}
+                />
+                <button
+                  className="btn w-full rounded-4 bg__primary mt-8 mb-0"
+                  type="submit"
+                  disabled={isSigningUp}
+                >
+                  Log in
+                </button>
+              </form>
+            )}
           </div>
 
           <section className="mt-4 text-center">
             <p>Log in with:</p>
             <button
-              className="btn mt-4 rounded-md bg__secundary bx bxl-google"
+              className="btn mt-4 rounded-4 bg__secundary bx bxl-google"
               type="button"
               onClick={handleLoginWithGoogle}
               disabled={isSigningUp}

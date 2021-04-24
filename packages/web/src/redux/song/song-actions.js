@@ -16,6 +16,8 @@ export const uploadSongError = (message) => ({
   payload: message,
 });
 
+export const uploadSongReset = () => ({ type: SongTypes.SONG_UPLOAD_RESET });
+
 export const uploadSong = ({
   song,
   title,

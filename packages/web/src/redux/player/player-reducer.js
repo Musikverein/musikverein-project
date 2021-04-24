@@ -3,6 +3,7 @@ import * as PlayerTypes from './player-types';
 export const playerInitialState = {
   isPlayingSong: false,
   songs: [],
+  currentIndexPlaylist: 0,
 };
 
 const playReducer = (state = playerInitialState, action) => {
@@ -13,6 +14,9 @@ const playReducer = (state = playerInitialState, action) => {
         isPlayingSong: true,
         songs: [...state.songs, action.payload],
       };
+    }
+    case PlayerTypes.PLAYER_CURRENT_INDEX_PLAYLIST: {
+      return { ...state, currentIndexPlaylist: action.payload };
     }
     default: {
       return state;

@@ -1,28 +1,36 @@
 import React, { useEffect, useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
+import { uploadSong, uploadSongReset } from '../../redux/song/song-actions';
+import { songSelector } from '../../redux/song/song-selectors';
 
 import Header from '../../components/Header';
 import Dropzone from '../../components/Dropzone';
-import { uploadSong } from '../../redux/song/song-actions';
-import { selectSongState } from '../../redux/song/song-selectors';
-import { UploadSongForm } from '../../components/UploadSongForm/UploadSongForm';
+import UploadSongForm from '../../components/UploadSongForm';
+
 import { metaImgToBase64 } from '../../utils/utils';
 
 export const UploadSong = () => {
   const jsmediatags = window.jsmediatags;
 
+  const { uploadSongSuccess } = useSelector(songSelector);
   const dispatch = useDispatch();
-  const { isUploadingSong, uploadSongSuccess, uploadSongError } = useSelector(
-    selectSongState,
-  );
+
   const [loadSong, setLoadSong] = useState(null);
   const [metaSong, setMetaSong] = useState({});
 
   useEffect(() => {
+    dispatch(uploadSongReset());
     return () => {
       setLoadSong(null);
     };
-  }, []);
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (uploadSongSuccess) {
+      setLoadSong(null);
+    }
+  }, [uploadSongSuccess]);
 
   const handleSongLoad = async (file) => {
     jsmediatags.read(file, {
@@ -55,8 +63,8 @@ export const UploadSong = () => {
   return (
     <>
       <Header />
-      <div className="h-full p-4">
-        <div className="h-full w-full flex flex-col justify-center items-center">
+      <main className="main-container">
+        <div className="h-full w-full flex flex-col justify-center items-center p-4">
           <h4>Upload Audio File</h4>
           {loadSong ? (
             <UploadSongForm {...metaSong} handleSubmit={handleSubmit} />
@@ -68,11 +76,8 @@ export const UploadSong = () => {
               }}
             />
           )}
-          {isUploadingSong && <p>Uploading song...</p>}
-          {uploadSongSuccess && <p>Upload successful!</p>}
-          {uploadSongError && <p>Upload error!</p>}
         </div>
-      </div>
+      </main>
     </>
   );
 };

@@ -1,16 +1,17 @@
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { Link, useHistory } from 'react-router-dom';
 
-import './ProfileEdit.scss';
-
-import { useForm } from '../../hooks/useForm';
+import { useDispatch, useSelector } from 'react-redux';
 import { resetUpdate, updateProfile } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
-import ROUTES from '../../routers/routes';
-import { validationSchema } from '../../utils/validation/validationSchema';
+
 import { useImgPreview } from '../../hooks/useImgPreview';
+import { useForm } from '../../hooks/useForm';
+import { validationSchema } from '../../utils/validation/validationSchema';
+
 import ImgEdit from '../../components/ImgEdit';
+import ROUTES from '../../routers/routes';
+import Spinner from '../../components/Spinner';
 
 export const ProfileEdit = () => {
   const { currentUser, isUpdating, updatedSuccess } = useSelector(authSelector);
@@ -57,55 +58,59 @@ export const ProfileEdit = () => {
           />
         </div>
 
-        <form onSubmit={handleSubmit} className="px-4">
-          <input
-            type="text"
-            id="userName"
-            name="userName"
-            arial-label="Insert your user name"
-            className="input__edit"
-            value={userName}
-            onChange={handleInputChange}
-            placeholder="Insert your user name"
-          />
-          <span className="mb-2 p-2 block text-error">
-            {errors.userName ? errors.userName : ' '}
-          </span>
-          <input
-            type="text"
-            id="firstName"
-            name="firstName"
-            arial-label="Insert your first name"
-            className="input__edit"
-            value={firstName}
-            onChange={handleInputChange}
-            placeholder="Insert your first name"
-          />
-          <span className="mb-2 p-2 block text-error">
-            {errors.firstName ? errors.firstName : ' '}
-          </span>
-          <input
-            type="text"
-            id="lastName"
-            name="lastName"
-            arial-label="Insert your last name"
-            className="input__edit"
-            value={lastName}
-            onChange={handleInputChange}
-            placeholder="Insert your last name"
-          />
-          <span className="mb-2 p-2 block text-error">
-            {errors.lastName ? errors.lastName : ' '}
-          </span>
+        {isUpdating ? (
+          <Spinner />
+        ) : (
+          <form onSubmit={handleSubmit} className="px-8 text-center">
+            <input
+              type="text"
+              id="userName"
+              name="userName"
+              arial-label="Insert your user name"
+              className="input__edit"
+              value={userName}
+              onChange={handleInputChange}
+              placeholder="Insert your user name"
+            />
+            <span className="mb-2 p-2 block text-error">
+              {errors.userName ? errors.userName : ' '}
+            </span>
+            <input
+              type="text"
+              id="firstName"
+              name="firstName"
+              arial-label="Insert your first name"
+              className="input__edit"
+              value={firstName}
+              onChange={handleInputChange}
+              placeholder="Insert your first name"
+            />
+            <span className="mb-2 p-2 block text-error">
+              {errors.firstName ? errors.firstName : ' '}
+            </span>
+            <input
+              type="text"
+              id="lastName"
+              name="lastName"
+              arial-label="Insert your last name"
+              className="input__edit"
+              value={lastName}
+              onChange={handleInputChange}
+              placeholder="Insert your last name"
+            />
+            <span className="mb-2 p-2 block text-error">
+              {errors.lastName ? errors.lastName : ' '}
+            </span>
 
-          <button
-            type="submit"
-            className="btn w-full rounded-md button__primary mt-8 mb-0"
-            disabled={isUpdating}
-          >
-            Update profile
-          </button>
-        </form>
+            <button
+              type="submit"
+              className="rounded-4 button-secundary"
+              disabled={isUpdating}
+            >
+              Update profile
+            </button>
+          </form>
+        )}
       </div>
     </>
   );

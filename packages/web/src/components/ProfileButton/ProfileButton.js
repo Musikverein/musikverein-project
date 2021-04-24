@@ -6,6 +6,8 @@ import { signOut } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import ROUTES from '../../routers/routes';
 
+import './ProfileButton.scss';
+
 export const ProfileButton = () => {
   const [profileMenuActive, setProfileMenuActive] = useState(false);
   const { currentUser } = useSelector(authSelector);
@@ -29,15 +31,19 @@ export const ProfileButton = () => {
         onClick={handleShowProfileMenu}
         className="relative"
       >
-        <p className="flex items-center">
+        <p className="flex items-center font-normal">
           Hello&nbsp;
-          <span>{currentUser.userName ? currentUser.userName : idUser}</span>
+          <span className="font-semibold">
+            {currentUser.userName ? currentUser.userName : idUser}
+          </span>
           <i className="bx bx-chevron-down text-2xl" />
         </p>
       </button>
       <nav
         className={
-          profileMenuActive ? 'absolute flex flex-col' : 'hidden absolute'
+          profileMenuActive
+            ? 'absolute flex flex-col nav-profile shadow-xl'
+            : 'hidden absolute'
         }
       >
         <Link to={ROUTES.PROFILE}>Profile</Link>

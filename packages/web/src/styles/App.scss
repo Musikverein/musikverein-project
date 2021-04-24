@@ -1,7 +1,27 @@
 @import './utils.scss';
-
+@import './buttons/button.scss';
 .App__container {
-  background-color: $background-color;
+  background-color: $background-main-color;
+  width: 100%;
+  min-height: 100vh;
+  display: block;
+}
+
+.main-container {
+  padding-top: 60px;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto;
+  padding-bottom: 120px;
+
+  &-library {
+    padding-top: 180px;
+    padding-bottom: 120px;
+  }
+}
+
+.rounded-4 {
+  border-radius: 4px;
 }
 
 .img__logo {
@@ -18,11 +38,9 @@
 }
 .card {
   background-color: $background-secundary-color;
+  border-radius: 4px;
 }
 
-.bg__primary {
-  background-color: $color-principal;
-}
 .bg__secundary {
   background-color: #be255d;
 }

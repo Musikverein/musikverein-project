@@ -1,15 +1,15 @@
 @import '../../styles/utils.scss';
 .menu-overlay {
-  background-color: $background-secundary-color;
+  background-color: $background-main-color;
   color: white;
   height: 100%;
   width: 100%;
   position: fixed;
-  top: 50px;
+  top: 60px;
   left: 0;
+  bottom: 0;
   text-align: center;
   transition: opacity 0.2s ease-in-out;
-  z-index: 1001;
   opacity: 0;
   visibility: hidden;
   display: flex;
@@ -21,7 +21,9 @@
     }
   }
 }
-.menu-overlay.open {
+
+.open {
   opacity: 1;
   visibility: visible;
+  z-index: 5;
 }
