@@ -6,7 +6,7 @@ class SongRepository {
     return normalizeDBQuery(db.Song.create(options));
   }
 
-  findOwnSongs(options) {
+  findOwned(options) {
     return normalizeDBQuery(
       db.Song.find(options).select({
         __v: 0,
@@ -14,6 +14,16 @@ class SongRepository {
         createdAt: 0,
         updatedAt: 0,
       }),
+    );
+  }
+
+  findLike(options) {
+    return db.Song.find(options);
+  }
+
+  findOneAndUpdate(queryFind, querySet, queryOptions) {
+    return normalizeDBQuery(
+      db.Song.findOneAndUpdate(queryFind, querySet, queryOptions),
     );
   }
 }

@@ -20,6 +20,7 @@ songRouter.post(
   songController.createSong,
 );
 songRouter.post('/', songController.getSongs);
+songRouter.post('/like', songController.likeSong);
 
 module.exports = {
   songRouter: songRouter,
