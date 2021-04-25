@@ -39,7 +39,7 @@ export const LibrarySongs = () => {
           </select>
         </div>
 
-        <section>
+        <section className="bg__primary">
           {isGettingSong ? (
             <Spinner />
           ) : (

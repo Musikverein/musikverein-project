@@ -1,20 +1,26 @@
 @import '../utils.scss';
 
-.button-primary {
-  border: 1px solid $background-secundary-color;
+.button {
   padding: 10px 15px;
   border-radius: 4px;
-  background-color: $color-principal;
-  &:hover {
-    border: 1px solid $color-principal;
+  height: 50px;
+  &-primary {
+    border: 1px solid $color-bg-secundary;
+    background-color: $color-principal;
+    &:hover,
+    :focus,
+    :active {
+      border: 1px solid $color-principal;
+    }
   }
-}
+  &-secundary {
+    border: 1px solid $color-bg-secundary;
+    background-color: $color-bg-main;
 
-.button-secundary {
-  border: 1px solid $background-secundary-color;
-  padding: 10px 15px;
-  border-radius: 4px;
-  &:hover {
-    border: 1px solid $color-principal;
+    &:hover,
+    :focus,
+    :active {
+      border: 1px solid $color-bg-terciary;
+    }
   }
 }

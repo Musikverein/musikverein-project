@@ -57,7 +57,7 @@ export const SignUp = () => {
     <>
       <main className="SignUp">
         <section className="Login__wrapper">
-          <Logo size="m" titleLogo />
+          <Logo size="xm" titleLogo={false} />
           {isSigningUp ? (
             <Spinner />
           ) : (
@@ -68,7 +68,7 @@ export const SignUp = () => {
                   id="email"
                   name="email"
                   arial-label="Insert your email"
-                  className="form-input rounded-4 mb-0"
+                  className="form__input mb-0"
                   value={email}
                   onChange={handleInputChange}
                   placeholder="Insert your email"
@@ -77,7 +77,7 @@ export const SignUp = () => {
                   {errors.email ? errors.email : ''}
                 </span>
                 <InputPassword
-                  className="form-input rounded-4 mb-0"
+                  className="form__input mb-0"
                   id="password"
                   name="password"
                   arial-label="Insert your password"
@@ -89,7 +89,7 @@ export const SignUp = () => {
                   {errors.password ? errors.password : ''}
                 </span>
                 <InputPassword
-                  className="form-input rounded-4 mb-0"
+                  className="form__input mb-0"
                   name="confirmPassword"
                   id="confirmPassword"
                   arial-label="Repeat your password"
@@ -113,7 +113,7 @@ export const SignUp = () => {
                   ref={reRef}
                 />
                 <button
-                  className="btn w-full rounded-4 bg__primary mt-8 mb-0"
+                  className="btn w-full button-secundary rounded-4 mt-4 mb-0"
                   type="submit"
                   disabled={isSigningUp}
                 >

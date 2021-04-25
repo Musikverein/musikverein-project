@@ -9,8 +9,8 @@ export const Logo = ({ size, titleLogo }) => {
     <div>
       <Link to={ROUTES.HOME}>
         <img
-          className={`img__logo-${size} mtb-6`}
-          src="https://res.cloudinary.com/musikverein/image/upload/v1618842646/logo-M_jtjwyj.svg"
+          className={`img__logo-${size}`}
+          src="https://res.cloudinary.com/musikverein/image/upload/v1619342803/logo-M2_bnwhux.svg"
           alt="logo-M"
         />
         {titleLogo && <h1 className="text-center text-2xl">Musikverein</h1>}
