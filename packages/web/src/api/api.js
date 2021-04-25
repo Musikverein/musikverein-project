@@ -36,4 +36,16 @@ export const api = {
       headers: headers,
     });
   },
+
+  likeSong: (headers, body = {}) => {
+    return axios.post(`${baseURL}/songs/like`, body, {
+      headers: headers,
+    });
+  },
+
+  deleteSong: (headers, body = {}) => {
+    return axios.post(`${baseURL}/songs/delete`, body, {
+      headers: headers,
+    });
+  },
 };

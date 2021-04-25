@@ -46,7 +46,7 @@ export const AppRouter = () => {
 
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
-          path={ROUTES.UPLOAD_SONG}
+          path={ROUTES.SONG_UPLOAD}
           component={UploadSong}
           exact
         />

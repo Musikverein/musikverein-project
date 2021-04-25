@@ -9,6 +9,7 @@ export const ROUTES = {
   LIBRARY: '/library',
   LIBRARY_SONGS: '/library/songs',
   LIBRARY_PLAYLISTS: '/library/playlists',
-  UPLOAD_SONG: '/song/upload',
+  SONG_UPLOAD: '/song/upload',
+  SONG_EDIT: '/song/upload',
   TOS: '/tos',
 };

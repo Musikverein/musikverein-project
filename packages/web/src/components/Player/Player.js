@@ -57,7 +57,10 @@ export const Player = ({ playList }) => {
               &nbsp;{playList[indexPlayList].artist}
             </h3>
           </button>
-          <LikeButton />
+          <LikeButton
+            likedBy={playList[indexPlayList].likedBy}
+            songId={playList[indexPlayList]._id}
+          />
         </div>
       </div>
       <div className="w-full">

@@ -8,6 +8,12 @@ export const SongInitialState = {
   getSongError: null,
   getSongSuccess: false,
   songs: [],
+  isLikeSong: false,
+  likeSongError: null,
+  likeSongSuccess: false,
+  isDeleteSong: false,
+  deleteSongError: null,
+  deleteSongSuccess: false,
 };
 
 const SongReducer = (state = SongInitialState, action) => {
@@ -68,6 +74,69 @@ const SongReducer = (state = SongInitialState, action) => {
         getSongError: null,
         getSongSuccess: true,
         songs: action.payload,
+      };
+    }
+    case SongTypes.SONG_LIKE_REQUEST: {
+      return {
+        ...state,
+        isLikeSong: true,
+        likeSongError: null,
+        likeSongSuccess: false,
+      };
+    }
+    case SongTypes.SONG_LIKE_ERROR: {
+      return {
+        ...state,
+        isLikeSong: false,
+        likeSongError: action.payload,
+        likeSongSuccess: false,
+      };
+    }
+
+    case SongTypes.SONG_LIKE_SUCCESS: {
+      const newSongs = state.songs.map((song) => {
+        if (song._id === action.payload._id) {
+          return action.payload;
+        }
+        return song;
+      });
+
+      return {
+        ...state,
+        isLikeSong: false,
+        likeSongError: null,
+        likeSongSuccess: true,
+        songs: [...newSongs],
+      };
+    }
+    case SongTypes.SONG_DELETE_REQUEST: {
+      return {
+        ...state,
+        isDelelteSong: true,
+        delelteSongError: null,
+        delelteSongSuccess: false,
+      };
+    }
+    case SongTypes.SONG_DELETE_ERROR: {
+      return {
+        ...state,
+        isDelelteSong: false,
+        delelteSongError: action.payload,
+        delelteSongSuccess: false,
+      };
+    }
+
+    case SongTypes.SONG_DELETE_SUCCESS: {
+      const newSongs = state.songs.filter(
+        (song) => song._id !== action.payload._id,
+      );
+
+      return {
+        ...state,
+        isDelelteSong: false,
+        delelteSongError: null,
+        delelteSongSuccess: true,
+        songs: [...newSongs],
       };
     }
     default: {
