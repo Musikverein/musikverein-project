@@ -59,7 +59,7 @@ export const Login = () => {
     <>
       <main className="Login">
         <section className="Login__wrapper">
-          <Logo size="m" titleLogo />
+          <Logo size="xm" titleLogo={false} />
           <div className="text-center my-8">
             <h2 className="text-xl font-bold">Looking to listen to music?</h2>
             <p className="text-xm">Save your songs</p>
@@ -74,7 +74,7 @@ export const Login = () => {
                   id="email"
                   name="email"
                   arial-label="Insert your email"
-                  className="form-input rounded-4 mb-0"
+                  className="form__input mb-2"
                   value={email}
                   onChange={handleInputChange}
                   placeholder="Insert your email"
@@ -83,7 +83,7 @@ export const Login = () => {
                   {errors.email ? errors.email : ' '}
                 </span>
                 <InputPassword
-                  className="form-input rounded-4 mb-0"
+                  className="form__input mb-0"
                   id="password"
                   name="password"
                   arial-label="Insert your password"
@@ -113,7 +113,7 @@ export const Login = () => {
                   ref={reRef}
                 />
                 <button
-                  className="btn w-full rounded-4 bg__primary mt-8 mb-0"
+                  className="btn w-full button-secundary rounded-4 mt-4 mb-0"
                   type="submit"
                   disabled={isSigningUp}
                 >
@@ -139,7 +139,7 @@ export const Login = () => {
             </p>
             <Link
               to={ROUTES.SIGN_UP}
-              className="underline text-blue-gray-200 w-full text-center block"
+              className="underline text-blue-gray-200 w-full text-center block  mt-2"
             >
               Don&#8216;t have an account? Sign Up
             </Link>

@@ -74,7 +74,7 @@ export const ResetPassword = () => {
                 id="email"
                 name="email"
                 arial-label="Insert your email"
-                className="form-input rounded-4 mb-0"
+                className="form__input"
                 value={email}
                 onChange={handleInputChange}
                 placeholder="Insert your email"
@@ -96,7 +96,7 @@ export const ResetPassword = () => {
               />
               <button
                 type="submit"
-                className="btn w-full rounded-4 bg__primary mt-4 mb-0"
+                className="btn w-full button-secundary rounded-4 mt-4 mb-0"
                 disabled={isSendingPasswordReset || passwordResetSent}
               >
                 {buttonText(isSendingPasswordReset, passwordResetSent)}
@@ -108,7 +108,7 @@ export const ResetPassword = () => {
           to={ROUTES.LOGIN}
           className="underline text-blue-gray-200 w-full text-center block"
         >
-          Log in
+          Back to Log in
         </Link>
       </main>
     </>
