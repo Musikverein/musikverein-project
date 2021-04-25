@@ -93,6 +93,7 @@ export const SongCard = ({
         <button type="button" onClick={handleRemoveSong}>
           Remove
         </button>
+        <LikeButton likedBy={likedBy} songId={_id} />
         <button type="button">Add to queqe</button>
       </nav>
     </div>
