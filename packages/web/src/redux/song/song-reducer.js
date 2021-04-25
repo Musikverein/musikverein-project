@@ -11,6 +11,9 @@ export const SongInitialState = {
   isLikeSong: false,
   likeSongError: null,
   likeSongSuccess: false,
+  isDeleteSong: false,
+  deleteSongError: null,
+  deleteSongSuccess: false,
 };
 
 const SongReducer = (state = SongInitialState, action) => {
@@ -103,6 +106,36 @@ const SongReducer = (state = SongInitialState, action) => {
         isLikeSong: false,
         likeSongError: null,
         likeSongSuccess: true,
+        songs: [...newSongs],
+      };
+    }
+    case SongTypes.SONG_DELETE_REQUEST: {
+      return {
+        ...state,
+        isDelelteSong: true,
+        delelteSongError: null,
+        delelteSongSuccess: false,
+      };
+    }
+    case SongTypes.SONG_DELETE_ERROR: {
+      return {
+        ...state,
+        isDelelteSong: false,
+        delelteSongError: action.payload,
+        delelteSongSuccess: false,
+      };
+    }
+
+    case SongTypes.SONG_DELETE_SUCCESS: {
+      const newSongs = state.songs.filter(
+        (song) => song._id !== action.payload._id,
+      );
+
+      return {
+        ...state,
+        isDelelteSong: false,
+        delelteSongError: null,
+        delelteSongSuccess: true,
         songs: [...newSongs],
       };
     }

@@ -40,6 +40,18 @@ export const likeSongError = (message) => ({
   payload: message,
 });
 
+export const deleteSongRequest = () => ({
+  type: SongTypes.SONG_DELETE_REQUEST,
+});
+export const deleteSongSuccess = (song) => ({
+  type: SongTypes.SONG_DELETE_SUCCESS,
+  payload: song,
+});
+export const deleteSongError = (message) => ({
+  type: SongTypes.SONG_DELETE_ERROR,
+  payload: message,
+});
+
 export const uploadSongReset = () => ({ type: SongTypes.SONG_UPLOAD_RESET });
 
 export const uploadSong = ({
@@ -98,7 +110,7 @@ export const getSongs = () => {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
-      return dispatch(getSongsError(signOutSuccess()));
+      return dispatch(signOutSuccess());
     }
 
     dispatch(getSongsRequest());
@@ -121,7 +133,7 @@ export const likeSong = (songId) => {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
-      return dispatch(likeSongError(signOutSuccess()));
+      return dispatch(signOutSuccess());
     }
 
     dispatch(likeSongRequest());
@@ -138,6 +150,32 @@ export const likeSong = (songId) => {
       return dispatch(likeSongSuccess(response.data));
     } catch (error) {
       return dispatch(likeSongError(error.message));
+    }
+  };
+};
+
+export const deleteSong = (songId) => {
+  return async function deleteSongThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(deleteSongRequest());
+    try {
+      const { errorMessage, data: response } = await api.deleteSong(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { songId },
+      );
+      if (errorMessage) {
+        return dispatch(deleteSongError(errorMessage));
+      }
+      return dispatch(deleteSongSuccess(response.data));
+    } catch (error) {
+      return dispatch(deleteSongError(error.message));
     }
   };
 };

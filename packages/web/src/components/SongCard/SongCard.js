@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import './SongCard.scss';
 
 import { secondsToString } from '../../utils/utils';
 import { play } from '../../redux/player/player-actions';
+
+import { deleteSong } from '../../redux/song/song-actions';
 import LikeButton from '../LikeButton';
+import ROUTES from '../../routers/routes';
 
 export const SongCard = ({
   title,
@@ -19,11 +23,19 @@ export const SongCard = ({
   _id,
 }) => {
   const dispatch = useDispatch();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handlePlaySong = () => {
     dispatch(
       play({ title, artist, duration, genre, image, likedBy, url, _id }),
     );
+  };
+
+  const handleSongMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
+  const handleRemoveSong = () => {
+    dispatch(deleteSong(_id));
   };
 
   return (
@@ -67,6 +79,22 @@ export const SongCard = ({
           <LikeButton likedBy={likedBy} songId={_id} />
         </dl>
       </div>
+      <button type="button" onClick={handleSongMenu}>
+        <i className="bx bx-dots-vertical-rounded text-2xl" />
+      </button>
+      <nav
+        className={
+          menuOpen
+            ? 'absolute flex flex-col nav-song shadow-xl'
+            : 'hidden absolute'
+        }
+      >
+        <Link to={ROUTES.SONG_EDIT}>Edit</Link>
+        <button type="button" onClick={handleRemoveSong}>
+          Remove
+        </button>
+        <button type="button">Add to queqe</button>
+      </nav>
     </div>
   );
 };

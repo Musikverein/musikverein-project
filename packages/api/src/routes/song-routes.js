@@ -21,6 +21,7 @@ songRouter.post(
 );
 songRouter.post('/', songController.getSongs);
 songRouter.post('/like', songController.likeSong);
+songRouter.post('/delete', songController.deleteSong);
 
 module.exports = {
   songRouter: songRouter,

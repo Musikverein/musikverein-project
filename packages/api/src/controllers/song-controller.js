@@ -116,8 +116,40 @@ async function likeSong(req, res, next) {
     next(error);
   }
 }
+
+async function deleteSong(req, res, next) {
+  const { _id } = req.user;
+  const { songId } = req.body;
+  try {
+    const response = await SongRepo.findOneAndUpdate(
+      { _id: songId, owner: _id },
+      { active: false },
+      {
+        new: true,
+        select: '_id',
+      },
+    );
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      return res.status(202).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   createSong: createSong,
   getSongs: getSongs,
   likeSong: likeSong,
+  deleteSong: deleteSong,
 };
