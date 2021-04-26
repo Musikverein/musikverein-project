@@ -104,19 +104,19 @@ export const SongForm = ({
             {errors.genre ? errors.genre : ' '}
           </span>
           <button
+            type="submit"
+            className="rounded-4 w-full mb-4 button-secundary"
+            disabled={isLoading}
+          >
+            Submit
+          </button>
+          <button
             type="button"
             className="rounded-4 w-full mb-4 button-secundary"
             onClick={handleCancel}
             disabled={isLoading}
           >
             Cancel
-          </button>
-          <button
-            type="submit"
-            className="rounded-4 w-full mb-4 button-secundary"
-            disabled={isLoading}
-          >
-            Submit
           </button>
         </form>
       )}

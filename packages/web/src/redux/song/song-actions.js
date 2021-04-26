@@ -4,6 +4,18 @@ import * as auth from '../../services/auth';
 import api from '../../api';
 import { signOutSuccess } from '../auth/auth-actions';
 
+export const editSongRequest = () => ({
+  type: SongTypes.SONG_EDIT_REQUEST,
+});
+export const editSongSuccess = (song) => ({
+  type: SongTypes.SONG_EDIT_SUCCESS,
+  payload: song,
+});
+export const editSongError = (message) => ({
+  type: SongTypes.SONG_EDIT_ERROR,
+  payload: message,
+});
+
 export const uploadSongRequest = () => ({
   type: SongTypes.SONG_UPLOAD_REQUEST,
 });
@@ -176,6 +188,41 @@ export const deleteSong = (songId) => {
       return dispatch(deleteSongSuccess(response.data));
     } catch (error) {
       return dispatch(deleteSongError(error.message));
+    }
+  };
+};
+
+export const editSong = ({ title, artist, genre, image, songId }) => {
+  return async function editSongThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+    dispatch(editSongRequest());
+
+    try {
+      let imgUrl = null;
+      if (typeof image !== 'string') {
+        imgUrl = await imageUpload(
+          image,
+          process.env.REACT_APP_CLOUDINARY_PRESET_COVERS,
+        );
+      } else {
+        imgUrl = image;
+      }
+      const { errorMessage, data: response } = await api.editSong(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { title, artist, genre, image: imgUrl, songId },
+      );
+      if (errorMessage) {
+        return dispatch(editSongError(errorMessage));
+      }
+      return dispatch(editSongSuccess(response.data));
+    } catch (error) {
+      return dispatch(editSongError(error.message));
     }
   };
 };

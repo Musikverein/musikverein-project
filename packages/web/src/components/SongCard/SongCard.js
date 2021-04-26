@@ -6,7 +6,7 @@ import './SongCard.scss';
 
 import { play } from '../../redux/player/player-actions';
 
-import { deleteSong } from '../../redux/song/song-actions';
+import { deleteSong, editSong } from '../../redux/song/song-actions';
 import LikeButton from '../LikeButton';
 import SongForm from '../SongForm';
 
@@ -22,7 +22,7 @@ export const SongCard = ({
 }) => {
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [editSong, setEditSong] = useState(false);
+  const [isEditSong, setIsEditSong] = useState(false);
 
   const handlePlaySong = () => {
     dispatch(
@@ -31,14 +31,17 @@ export const SongCard = ({
   };
 
   const handleSongEdit = () => {
-    setEditSong(!editSong);
+    setIsEditSong(!isEditSong);
     setMenuOpen(!menuOpen);
   };
   const handleRemoveSong = () => {
     dispatch(deleteSong(_id));
   };
 
-  const handleSubmitEditForm = (formValues) => console.log(formValues);
+  const handleSubmitEditForm = (formValues) => {
+    dispatch(editSong({ ...formValues, songId: _id }));
+    setIsEditSong(false);
+  };
 
   return (
     <section className="p-2">
@@ -97,14 +100,14 @@ export const SongCard = ({
           <button type="button">Add to queqe</button>
         </nav>
       </div>
-      {editSong && (
+      {isEditSong && (
         <SongForm
           songTitle={title}
           songArtist={artist}
           songGenre={genre}
           defaultImg={image}
           handleSubmit={handleSubmitEditForm}
-          handleCancel={() => setEditSong(false)}
+          handleCancel={() => setIsEditSong(false)}
           isLoading={false}
         />
       )}
