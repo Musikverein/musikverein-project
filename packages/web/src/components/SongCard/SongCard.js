@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import './SongCard.scss';
 
@@ -9,7 +8,7 @@ import { play } from '../../redux/player/player-actions';
 
 import { deleteSong } from '../../redux/song/song-actions';
 import LikeButton from '../LikeButton';
-import ROUTES from '../../routers/routes';
+import SongForm from '../SongForm';
 
 export const SongCard = ({
   title,
@@ -23,6 +22,7 @@ export const SongCard = ({
 }) => {
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [editSong, setEditSong] = useState(false);
 
   const handlePlaySong = () => {
     dispatch(
@@ -30,12 +30,15 @@ export const SongCard = ({
     );
   };
 
-  const handleSongMenu = () => {
+  const handleSongEdit = () => {
+    setEditSong(!editSong);
     setMenuOpen(!menuOpen);
   };
   const handleRemoveSong = () => {
     dispatch(deleteSong(_id));
   };
+
+  const handleSubmitEditForm = (formValues) => console.log(formValues);
 
   return (
     <section className="p-2">
@@ -74,7 +77,7 @@ export const SongCard = ({
           </dl>
         </div>
 
-        <button type="button" onClick={handleSongMenu}>
+        <button type="button" onClick={() => setMenuOpen(!menuOpen)}>
           <i className="bx bx-dots-vertical-rounded text-2xl" />
         </button>
         <nav
@@ -84,7 +87,9 @@ export const SongCard = ({
               : 'hidden absolute'
           }
         >
-          <Link to={ROUTES.SONG_EDIT}>Edit</Link>
+          <button type="button" onClick={handleSongEdit}>
+            Edit
+          </button>
           <button type="button" onClick={handleRemoveSong}>
             Remove
           </button>
@@ -92,6 +97,17 @@ export const SongCard = ({
           <button type="button">Add to queqe</button>
         </nav>
       </div>
+      {editSong && (
+        <SongForm
+          songTitle={title}
+          songArtist={artist}
+          songGenre={genre}
+          defaultImg={image}
+          handleSubmit={handleSubmitEditForm}
+          handleCancel={() => setEditSong(false)}
+          isLoading={false}
+        />
+      )}
     </section>
   );
 };
