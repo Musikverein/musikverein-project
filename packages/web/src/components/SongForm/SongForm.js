@@ -2,9 +2,6 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-import { useSelector } from 'react-redux';
-import { songSelector } from '../../redux/song/song-selectors';
-
 import { useImgPreview } from '../../hooks/useImgPreview';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
@@ -13,23 +10,22 @@ import { ImgEdit } from '../ImgEdit/ImgEdit';
 
 import Spinner from '../Spinner';
 
-export const UploadSongForm = ({
-  metaTitle,
-  metaArtist,
-  metaGenre,
+export const SongForm = ({
+  songTitle,
+  songArtist,
+  songGenre,
   defaultImg,
   handleSubmit,
+  handleCancel,
+  isLoading,
 }) => {
-  const { isUploadingSong, uploadSongSuccess, uploadSongError } = useSelector(
-    songSelector,
-  );
   const { stateImg, handleImageChange, handleImage, refId } = useImgPreview(
     'coverImage',
   );
   const { formValues, handleInputChange, errors, isValid } = useForm({
-    title: metaTitle,
-    artist: metaArtist,
-    genre: metaGenre,
+    title: songTitle,
+    artist: songArtist,
+    genre: songGenre,
   });
   const reRef = useRef();
 
@@ -64,7 +60,7 @@ export const UploadSongForm = ({
         }
         rounded={false}
       />
-      {isUploadingSong ? (
+      {isLoading ? (
         <Spinner />
       ) : (
         <form onSubmit={handlePreSubmit} className="w-2/3">
@@ -110,9 +106,17 @@ export const UploadSongForm = ({
           <button
             type="submit"
             className="rounded-4 w-full mb-4 button-secundary"
-            disabled={isUploadingSong}
+            disabled={isLoading}
           >
             Submit
+          </button>
+          <button
+            type="button"
+            className="rounded-4 w-full mb-4 button-secundary"
+            onClick={handleCancel}
+            disabled={isLoading}
+          >
+            Cancel
           </button>
         </form>
       )}
@@ -122,16 +126,16 @@ export const UploadSongForm = ({
         size="invisible"
         ref={reRef}
       />
-      {uploadSongSuccess && <p>Upload successful!</p>}
-      {uploadSongError && <p>Upload error!</p>}
     </>
   );
 };
 
-UploadSongForm.propTypes = {
-  metaTitle: PropTypes.string.isRequired,
-  metaArtist: PropTypes.string.isRequired,
-  metaGenre: PropTypes.string.isRequired,
+SongForm.propTypes = {
+  songTitle: PropTypes.string.isRequired,
+  songArtist: PropTypes.string.isRequired,
+  songGenre: PropTypes.string.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  handleCancel: PropTypes.func.isRequired,
   defaultImg: PropTypes.string.isRequired,
+  isLoading: PropTypes.bool.isRequired,
 };

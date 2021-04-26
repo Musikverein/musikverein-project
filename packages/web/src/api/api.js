@@ -48,4 +48,10 @@ export const api = {
       headers: headers,
     });
   },
+
+  editSong: (headers, body = {}) => {
+    return axios.post(`${baseURL}/songs/edit`, body, {
+      headers: headers,
+    });
+  },
 };

@@ -14,10 +14,44 @@ export const SongInitialState = {
   isDeleteSong: false,
   deleteSongError: null,
   deleteSongSuccess: false,
+  isEditSong: false,
+  editSongError: null,
+  editSongSuccess: false,
 };
 
 const SongReducer = (state = SongInitialState, action) => {
   switch (action.type) {
+    case SongTypes.SONG_EDIT_REQUEST: {
+      return {
+        ...state,
+        isEditSong: true,
+        editSongError: null,
+        editSongSuccess: false,
+      };
+    }
+    case SongTypes.SONG_EDIT_ERROR: {
+      return {
+        ...state,
+        isEditSong: false,
+        editSongSuccess: false,
+        editSongError: action.payload,
+      };
+    }
+    case SongTypes.SONG_EDIT_SUCCESS: {
+      const newSongs = state.songs.map((song) => {
+        if (song._id === action.payload._id) {
+          return action.payload;
+        }
+        return song;
+      });
+      return {
+        ...state,
+        isEditSong: false,
+        editSongError: null,
+        editSongSuccess: true,
+        songs: [...newSongs],
+      };
+    }
     case SongTypes.SONG_UPLOAD_REQUEST: {
       return {
         ...state,

@@ -6,14 +6,14 @@ import { songSelector } from '../../redux/song/song-selectors';
 
 import Header from '../../components/Header';
 import Dropzone from '../../components/Dropzone';
-import UploadSongForm from '../../components/UploadSongForm';
+import SongForm from '../../components/SongForm';
 
 import { metaImgToBase64 } from '../../utils/utils';
 
 export const UploadSong = () => {
   const jsmediatags = window.jsmediatags;
 
-  const { uploadSongSuccess } = useSelector(songSelector);
+  const { isUploadingSong, uploadSongSuccess } = useSelector(songSelector);
   const dispatch = useDispatch();
 
   const [loadSong, setLoadSong] = useState(null);
@@ -37,9 +37,9 @@ export const UploadSong = () => {
       onSuccess: ({ tags }) => {
         const cover = metaImgToBase64(tags.picture?.data, tags.picture?.format);
         setMetaSong({
-          metaTitle: tags.title || '',
-          metaArtist: tags.artist || '',
-          metaGenre: tags.genre || '',
+          songTitle: tags.title || '',
+          songArtist: tags.artist || '',
+          songGenre: tags.genre || '',
           defaultImg: cover,
         });
         setLoadSong(file);
@@ -67,7 +67,12 @@ export const UploadSong = () => {
         <div className="h-full w-full flex flex-col justify-center items-center p-4">
           <h4>Upload Audio File</h4>
           {loadSong ? (
-            <UploadSongForm {...metaSong} handleSubmit={handleSubmit} />
+            <SongForm
+              {...metaSong}
+              handleSubmit={handleSubmit}
+              isLoading={isUploadingSong}
+              handleCancel={() => setLoadSong(null)}
+            />
           ) : (
             <Dropzone
               onFileSelected={(files) => {
