@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadSong, uploadSongReset } from '../../redux/song/song-actions';
+import {
+  uploadSong,
+  uploadSongReset,
+} from '../../redux/mySongs/mySong-actions';
 import { songSelector } from '../../redux/song/song-selectors';
 
 import Header from '../../components/Header';

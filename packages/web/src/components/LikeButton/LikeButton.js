@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { authSelector } from '../../redux/auth/auth-selectors';
-import { likeSong } from '../../redux/song/song-actions';
+import { likeSong } from '../../redux/mySongs/mySong-actions';
 
 export const LikeButton = ({ likedBy, songId }) => {
   const {

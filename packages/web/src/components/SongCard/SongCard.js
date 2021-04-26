@@ -1,28 +1,25 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './SongCard.scss';
 
 import { play } from '../../redux/player/player-actions';
 
-import { deleteSong, editSong } from '../../redux/song/song-actions';
+import { deleteSong, editMySong } from '../../redux/mySongs/mySong-actions';
 import LikeButton from '../LikeButton';
 import SongForm from '../SongForm';
+import { songSelector } from '../../redux/song/song-selectors';
 
-export const SongCard = ({
-  title,
-  artist,
-  duration,
-  genre,
-  image,
-  likedBy,
-  url,
-  _id,
-}) => {
+export const SongCard = ({ songId }) => {
+  const { songs } = useSelector(songSelector);
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
+
+  const { title, artist, duration, genre, image, likedBy, url, _id } = songs[
+    songId
+  ];
 
   const handlePlaySong = () => {
     dispatch(
@@ -39,7 +36,7 @@ export const SongCard = ({
   };
 
   const handleSubmitEditForm = (formValues) => {
-    dispatch(editSong({ ...formValues, songId: _id }));
+    dispatch(editMySong({ ...formValues, songId: _id }));
     setIsEditSong(false);
   };
 
@@ -116,12 +113,5 @@ export const SongCard = ({
 };
 
 SongCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  artist: PropTypes.string.isRequired,
-  duration: PropTypes.number.isRequired,
-  genre: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  likedBy: PropTypes.array.isRequired,
-  url: PropTypes.string.isRequired,
-  _id: PropTypes.string.isRequired,
+  songId: PropTypes.string.isRequired,
 };
