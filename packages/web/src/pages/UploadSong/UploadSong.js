@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadSong, uploadSongReset } from '../../redux/song/song-actions';
-import { songSelector } from '../../redux/song/song-selectors';
+import {
+  uploadSong,
+  uploadSongReset,
+} from '../../redux/mySongs/mySong-actions';
 
 import Header from '../../components/Header';
 import Dropzone from '../../components/Dropzone';
 import SongForm from '../../components/SongForm';
 
 import { metaImgToBase64 } from '../../utils/utils';
+import { mySongSelector } from '../../redux/mySongs/mySong-selectors';
 
 export const UploadSong = () => {
   const jsmediatags = window.jsmediatags;
 
-  const { isUploadingSong, uploadSongSuccess } = useSelector(songSelector);
+  const { isUploadingSong, uploadSongSuccess } = useSelector(mySongSelector);
   const dispatch = useDispatch();
 
   const [loadSong, setLoadSong] = useState(null);

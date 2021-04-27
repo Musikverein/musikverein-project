@@ -1,33 +1,33 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import './SongCard.scss';
 
-import { play } from '../../redux/player/player-actions';
+import { addToQueque, play } from '../../redux/player/player-actions';
 
-import { deleteSong, editSong } from '../../redux/song/song-actions';
+import { deleteSong, editMySong } from '../../redux/mySongs/mySong-actions';
 import LikeButton from '../LikeButton';
 import SongForm from '../SongForm';
+import { songSelector } from '../../redux/song/song-selectors';
+import { authSelector } from '../../redux/auth/auth-selectors';
 
-export const SongCard = ({
-  title,
-  artist,
-  duration,
-  genre,
-  image,
-  likedBy,
-  url,
-  _id,
-}) => {
+export const SongCard = ({ songId }) => {
+  const { songs } = useSelector(songSelector);
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
+  const {
+    currentUser: { _id: userId },
+  } = useSelector(authSelector);
+  const { title, artist, genre, image, likedBy, _id, owner } = songs[songId];
 
   const handlePlaySong = () => {
-    dispatch(
-      play({ title, artist, duration, genre, image, likedBy, url, _id }),
-    );
+    dispatch(play(_id));
+  };
+
+  const handleAddToQueque = () => {
+    dispatch(addToQueque(_id));
   };
 
   const handleSongEdit = () => {
@@ -39,7 +39,7 @@ export const SongCard = ({
   };
 
   const handleSubmitEditForm = (formValues) => {
-    dispatch(editSong({ ...formValues, songId: _id }));
+    dispatch(editMySong({ ...formValues, songId: _id }));
     setIsEditSong(false);
   };
 
@@ -90,14 +90,21 @@ export const SongCard = ({
               : 'hidden absolute'
           }
         >
-          <button type="button" onClick={handleSongEdit}>
-            Edit
-          </button>
-          <button type="button" onClick={handleRemoveSong}>
-            Remove
-          </button>
+          {owner === userId && (
+            <button type="button" onClick={handleSongEdit}>
+              Edit
+            </button>
+          )}
+
+          {owner === userId && (
+            <button type="button" onClick={handleRemoveSong}>
+              Remove
+            </button>
+          )}
           <LikeButton likedBy={likedBy} songId={_id} />
-          <button type="button">Add to queqe</button>
+          <button type="button" onClick={handleAddToQueque}>
+            Add to queqe
+          </button>
         </nav>
       </div>
       {isEditSong && (
@@ -116,12 +123,5 @@ export const SongCard = ({
 };
 
 SongCard.propTypes = {
-  title: PropTypes.string.isRequired,
-  artist: PropTypes.string.isRequired,
-  duration: PropTypes.number.isRequired,
-  genre: PropTypes.string.isRequired,
-  image: PropTypes.string.isRequired,
-  likedBy: PropTypes.array.isRequired,
-  url: PropTypes.string.isRequired,
-  _id: PropTypes.string.isRequired,
+  songId: PropTypes.string.isRequired,
 };

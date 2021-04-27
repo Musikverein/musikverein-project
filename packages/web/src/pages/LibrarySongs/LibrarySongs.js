@@ -1,14 +1,14 @@
 /* eslint-disable react/jsx-no-comment-textnodes */
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { mySongSelector } from '../../redux/mySongs/mySong-selectors';
+import { getMySongs } from '../../redux/mySongs/mySong-actions';
 
 import './LibrarySongs.scss';
 
 import Header from '../../components/Header';
 import LibraryNav from '../../components/LibraryNav';
 import SongCard from '../../components/SongCard';
-import { getSongs } from '../../redux/song/song-actions';
-import { songSelector } from '../../redux/song/song-selectors';
 import Spinner from '../../components/Spinner';
 
 const OWN_SONGS = 'ownSongs';
@@ -16,7 +16,7 @@ const LIKED_SONGS = 'likedSongs';
 
 export const LibrarySongs = () => {
   const dispatch = useDispatch();
-  const { songs, isGettingSong } = useSelector(songSelector);
+  const { isGettingSong, mySongs } = useSelector(mySongSelector);
   const [filter, setFilter] = useState(OWN_SONGS);
 
   const handleSelect = ({ target }) => {
@@ -24,7 +24,7 @@ export const LibrarySongs = () => {
   };
 
   useEffect(() => {
-    dispatch(getSongs());
+    dispatch(getMySongs(filter));
   }, [filter, dispatch]);
 
   return (
@@ -43,8 +43,8 @@ export const LibrarySongs = () => {
           {isGettingSong ? (
             <Spinner />
           ) : (
-            songs.length > 0 &&
-            songs.map((song) => <SongCard key={song._id} {...song} />)
+            mySongs.length > 0 &&
+            mySongs.map((songId) => <SongCard key={songId} songId={songId} />)
           )}
         </section>
       </main>

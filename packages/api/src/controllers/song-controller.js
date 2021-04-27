@@ -36,11 +36,34 @@ async function createSong(req, res, next) {
   }
 }
 
-async function getSongs(req, res, next) {
+async function getMySongs(req, res, next) {
   const { _id } = req.user;
 
   try {
     const response = await SongRepo.findOwned({ owner: _id, active: true });
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      return res.status(200).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getLikedSongs(req, res, next) {
+  const { _id } = req.user;
+
+  try {
+    const response = await SongRepo.findOwned({ likedBy: _id, active: true });
     if (response.error) {
       return res.status(400).send({
         data: null,
@@ -178,7 +201,8 @@ async function editSong(req, res, next) {
 
 module.exports = {
   createSong: createSong,
-  getSongs: getSongs,
+  getMySongs: getMySongs,
+  getLikedSongs: getLikedSongs,
   likeSong: likeSong,
   deleteSong: deleteSong,
   editSong: editSong,

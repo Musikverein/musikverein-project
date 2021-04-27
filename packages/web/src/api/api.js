@@ -31,8 +31,14 @@ export const api = {
     });
   },
 
-  getSongs: (headers, body = {}) => {
-    return axios.post(`${baseURL}/songs`, body, {
+  getMySongs: (headers, body = {}) => {
+    return axios.post(`${baseURL}/songs/mySongs`, body, {
+      headers: headers,
+    });
+  },
+
+  getLikedSongs: (headers, body = {}) => {
+    return axios.post(`${baseURL}/songs/mySongs/liked`, body, {
       headers: headers,
     });
   },
