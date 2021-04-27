@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   uploadSong,
@@ -12,6 +12,7 @@ import SongForm from '../../components/SongForm';
 
 import { metaImgToBase64 } from '../../utils/utils';
 import { librarySongSelector } from '../../redux/librarySongs/librarySong-selectors';
+import ROUTES from '../../routers/routes';
 
 export const UploadSong = () => {
   const jsmediatags = window.jsmediatags;
@@ -87,6 +88,12 @@ export const UploadSong = () => {
             />
           )}
         </div>
+        <p className="text-sm text-gray-200 text-center">
+          Uploading a song, you agree to Musikverein&apos;s&nbsp;
+          <Link className="text-sm underline" to={ROUTES.TOS}>
+            Terms and Conditions of Use.
+          </Link>
+        </p>
       </main>
     </>
   );

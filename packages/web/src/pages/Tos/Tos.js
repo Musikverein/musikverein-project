@@ -1,15 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-
-import ROUTES from '../../routers/routes';
+import { useHistory } from 'react-router-dom';
 
 export const Tos = () => {
+  const history = useHistory();
   return (
     <>
-      <Link to={ROUTES.SIGN_UP} className="flex items-center">
+      <button
+        type="button"
+        onClick={() => history.goBack()}
+        className="flex items-center"
+      >
         <span className="bx bxs-chevron-left text-4xl" />
         <span className="text-sm text-gray-500">Go back</span>
-      </Link>
+      </button>
       <h1 className="pt-4 px-4 color__secundary text-xl font-semibold">
         Musikverein Terms and Conditions of Use
       </h1>
