@@ -5,18 +5,18 @@ import {
   uploadSong,
   uploadSongReset,
 } from '../../redux/mySongs/mySong-actions';
-import { songSelector } from '../../redux/song/song-selectors';
 
 import Header from '../../components/Header';
 import Dropzone from '../../components/Dropzone';
 import SongForm from '../../components/SongForm';
 
 import { metaImgToBase64 } from '../../utils/utils';
+import { mySongSelector } from '../../redux/mySongs/mySong-selectors';
 
 export const UploadSong = () => {
   const jsmediatags = window.jsmediatags;
 
-  const { isUploadingSong, uploadSongSuccess } = useSelector(songSelector);
+  const { isUploadingSong, uploadSongSuccess } = useSelector(mySongSelector);
   const dispatch = useDispatch();
 
   const [loadSong, setLoadSong] = useState(null);

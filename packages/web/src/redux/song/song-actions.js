@@ -7,5 +7,5 @@ export const loadSongs = (songs) => ({
 
 export const removeSong = (songId) => ({
   type: SongTypes.REMOVE_SONG,
-  payload: songId,
+  payload: songId._id,
 });

@@ -145,11 +145,15 @@ const MySongReducer = (state = mySongInitialState, action) => {
     }
 
     case MySongTypes.MY_SONG_DELETE_SUCCESS: {
+      const newMySongs = [...state.mySongs];
+      const index = newMySongs.findIndex((song) => song === action.payload);
+      newMySongs.splice(index, 1);
       return {
         ...state,
         isDelelteSong: false,
         delelteSongError: null,
         delelteSongSuccess: true,
+        mySongs: [...newMySongs],
       };
     }
 

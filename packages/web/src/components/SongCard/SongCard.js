@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import './SongCard.scss';
 
-import { play } from '../../redux/player/player-actions';
+import { addToQueque, play } from '../../redux/player/player-actions';
 
 import { deleteSong, editMySong } from '../../redux/mySongs/mySong-actions';
 import LikeButton from '../LikeButton';
@@ -17,14 +17,14 @@ export const SongCard = ({ songId }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
 
-  const { title, artist, duration, genre, image, likedBy, url, _id } = songs[
-    songId
-  ];
+  const { title, artist, genre, image, likedBy, _id } = songs[songId];
 
   const handlePlaySong = () => {
-    dispatch(
-      play({ title, artist, duration, genre, image, likedBy, url, _id }),
-    );
+    dispatch(play(_id));
+  };
+
+  const handleAddToQueque = () => {
+    dispatch(addToQueque(_id));
   };
 
   const handleSongEdit = () => {
@@ -94,7 +94,9 @@ export const SongCard = ({ songId }) => {
             Remove
           </button>
           <LikeButton likedBy={likedBy} songId={_id} />
-          <button type="button">Add to queqe</button>
+          <button type="button" onClick={handleAddToQueque}>
+            Add to queqe
+          </button>
         </nav>
       </div>
       {isEditSong && (

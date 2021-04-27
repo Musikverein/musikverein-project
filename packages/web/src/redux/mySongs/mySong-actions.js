@@ -84,9 +84,8 @@ export const editMySong = ({ title, artist, genre, image, songId }) => {
       if (errorMessage) {
         return dispatch(editMySongError(errorMessage));
       }
-      const { entities } = normalizeSongs(response.data);
-
-      dispatch(loadSongs(entities));
+      const { entities } = normalizeSongs([response.data]);
+      dispatch(loadSongs(entities.songs));
       return dispatch(editMySongSuccess());
     } catch (error) {
       return dispatch(editMySongError(error.message));
@@ -212,7 +211,7 @@ export const deleteSongRequest = () => ({
 });
 export const deleteSongSuccess = (song) => ({
   type: MySongTypes.MY_SONG_DELETE_SUCCESS,
-  payload: song,
+  payload: song._id,
 });
 export const deleteSongError = (message) => ({
   type: MySongTypes.MY_SONG_DELETE_ERROR,
@@ -238,10 +237,9 @@ export const deleteSong = (songId) => {
       if (errorMessage) {
         return dispatch(deleteSongError(errorMessage));
       }
-
-      dispatch(removeSong(response.data));
-
-      return dispatch(deleteSongSuccess());
+      console.log(response.data);
+      dispatch(deleteSongSuccess(response.data));
+      return dispatch(removeSong(response.data));
     } catch (error) {
       return dispatch(deleteSongError(error.message));
     }
