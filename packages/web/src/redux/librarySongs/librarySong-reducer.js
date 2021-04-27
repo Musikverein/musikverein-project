@@ -1,4 +1,4 @@
-import { deleteInArrayById } from '../../utils/utils';
+import { toggleInArrayById } from '../../utils/utils';
 import * as LibrarySongTypes from './librarySong-types';
 
 const mySongInitialState = {
@@ -146,7 +146,7 @@ const LibrarySongReducer = (state = mySongInitialState, action) => {
       };
     }
     case LibrarySongTypes.USER_SONG_DELETE_SUCCESS: {
-      const newUserSongs = deleteInArrayById(state.userSongs, action.payload);
+      const newUserSongs = toggleInArrayById(state.userSongs, action.payload);
       return {
         ...state,
         isDelelteSong: false,
@@ -162,7 +162,7 @@ const LibrarySongReducer = (state = mySongInitialState, action) => {
       };
     }
     case LibrarySongTypes.USER_SONG_SYNC_LIKE: {
-      const newUserSongs = deleteInArrayById(state.userSongs, action.payload);
+      const newUserSongs = toggleInArrayById(state.userSongs, action.payload);
       return {
         ...state,
         userSongs: [...newUserSongs],

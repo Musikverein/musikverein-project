@@ -4,6 +4,7 @@ const {
   authMiddleware,
   validateUpdateUser,
   validateCreateUser,
+  recaptchaMiddleware,
 } = require('../middlewares');
 const { userController } = require('../controllers');
 
@@ -13,7 +14,12 @@ userRouter.use(authMiddleware);
 
 userRouter.post('/sign-up', validateCreateUser, userController.signUp);
 userRouter.post('/sign-out', userController.signOut);
-userRouter.patch('/update', validateUpdateUser, userController.update);
+userRouter.patch(
+  '/update',
+  recaptchaMiddleware,
+  validateUpdateUser,
+  userController.update,
+);
 
 module.exports = {
   userRouter: userRouter,

@@ -172,7 +172,13 @@ export const resetAuthState = () => ({
   type: AuthTypes.RESET_AUTH_STATE,
 });
 
-export const updateProfile = ({ userName, firstName, lastName, file }) => {
+export const updateProfile = ({
+  userName,
+  firstName,
+  lastName,
+  file,
+  recaptchaToken,
+}) => {
   return async function updateProfileThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
@@ -196,7 +202,7 @@ export const updateProfile = ({ userName, firstName, lastName, file }) => {
         {
           Authorization: `Bearer ${token}`,
         },
-        { userName, firstName, lastName, image },
+        { userName, firstName, lastName, image, recaptchaToken },
       );
       if (errorMessage) {
         return dispatch(updateProfileError(errorMessage));

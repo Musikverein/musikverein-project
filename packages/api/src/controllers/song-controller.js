@@ -27,7 +27,7 @@ async function createSong(req, res, next) {
 
     if (response.data) {
       return res.status(201).send({
-        data: response.data,
+        data: 'OK',
         error: null,
       });
     }

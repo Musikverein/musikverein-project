@@ -15,9 +15,13 @@ export const secondsToString = (seconds) => {
   return `${minute}:${second}`;
 };
 
-export const deleteInArrayById = (array, id) => {
+export const toggleInArrayById = (array, id) => {
   const newArray = [...array];
   const index = newArray.findIndex((element) => element === id);
-  newArray.splice(index, 1);
+  if (index !== -1) {
+    newArray.splice(index, 1);
+  } else {
+    newArray.push(id);
+  }
   return newArray;
 };

@@ -5,6 +5,7 @@ const {
   validateCreateSong,
   findIdMiddleware,
   recaptchaMiddleware,
+  validateUpdateSong,
 } = require('../middlewares');
 const { songController } = require('../controllers');
 
@@ -21,9 +22,14 @@ songRouter.post(
 );
 songRouter.post('/userSongs', songController.getUserSongs);
 songRouter.post('/userSongs/liked', songController.getLikedSongs);
-songRouter.post('/like', songController.likeSong);
-songRouter.post('/delete', songController.deleteSong);
-songRouter.post('/edit', songController.editSong);
+songRouter.patch('/like', songController.likeSong);
+songRouter.delete('/delete', songController.deleteSong);
+songRouter.patch(
+  '/edit',
+  recaptchaMiddleware,
+  validateUpdateSong,
+  songController.editSong,
+);
 
 module.exports = {
   songRouter: songRouter,
