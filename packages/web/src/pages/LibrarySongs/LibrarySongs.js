@@ -24,7 +24,7 @@ export const LibrarySongs = () => {
   };
 
   useEffect(() => {
-    dispatch(getMySongs());
+    dispatch(getMySongs(filter));
   }, [filter, dispatch]);
 
   return (

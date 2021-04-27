@@ -14,3 +14,10 @@ export const secondsToString = (seconds) => {
   second = second < 10 ? `0${second}` : second;
   return `${minute}:${second}`;
 };
+
+export const deleteInArrayById = (array, id) => {
+  const newArray = [...array];
+  const index = newArray.findIndex((element) => element === id);
+  newArray.splice(index, 1);
+  return newArray;
+};

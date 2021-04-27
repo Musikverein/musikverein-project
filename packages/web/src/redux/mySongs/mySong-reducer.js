@@ -1,3 +1,4 @@
+import { deleteInArrayById } from '../../utils/utils';
 import * as MySongTypes from './mySong-types';
 
 const mySongInitialState = {
@@ -145,9 +146,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
     }
 
     case MySongTypes.MY_SONG_DELETE_SUCCESS: {
-      const newMySongs = [...state.mySongs];
-      const index = newMySongs.findIndex((song) => song === action.payload);
-      newMySongs.splice(index, 1);
+      const newMySongs = deleteInArrayById(state.mySongs, action.payload);
       return {
         ...state,
         isDelelteSong: false,
