@@ -1,5 +1,5 @@
 import * as auth from '../../services/auth';
-import * as MySongTypes from './mySong-types';
+import * as LibrarySongTypes from './librarySong-types';
 import { signOutSuccess } from '../auth/auth-actions';
 import api from '../../api';
 import { normalizeSongs } from '../../utils/normalizrSchema/schema';
@@ -7,58 +7,58 @@ import { loadSongs, removeSong } from '../song/song-actions';
 import { imageUpload, songUpload } from '../../services/cloudinary';
 import { syncDelete } from '../player/player-actions';
 
-export const getMySongsRequest = () => ({
-  type: MySongTypes.MY_SONG_GET_REQUEST,
+export const getUserSongsRequest = () => ({
+  type: LibrarySongTypes.USER_SONG_GET_REQUEST,
 });
-export const getMySongsSuccess = (songs) => ({
-  type: MySongTypes.MY_SONG_GET_SUCCESS,
+export const getUserSongsSuccess = (songs) => ({
+  type: LibrarySongTypes.USER_SONG_GET_SUCCESS,
   payload: songs,
 });
-export const getMySongsError = (message) => ({
-  type: MySongTypes.MY_SONG_GET_ERROR,
+export const getUserSongsError = (message) => ({
+  type: LibrarySongTypes.USER_SONG_GET_ERROR,
   payload: message,
 });
 
-export const getMySongs = (filter) => {
-  return async function getMySongsThunk(dispatch) {
+export const getUserSongs = (filter) => {
+  return async function getUserSongsThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
       return dispatch(signOutSuccess());
     }
 
-    dispatch(getMySongsRequest());
+    dispatch(getUserSongsRequest());
     try {
       const { errorMessage, data: response } =
         filter === 'ownSongs'
-          ? await api.getMySongs({
+          ? await api.getUserSongs({
               Authorization: `Bearer ${token}`,
             })
           : await api.getLikedSongs({
               Authorization: `Bearer ${token}`,
             });
       if (errorMessage) {
-        return dispatch(getMySongsError(errorMessage));
+        return dispatch(getUserSongsError(errorMessage));
       }
 
       const { result, entities } = normalizeSongs(response.data);
 
       dispatch(loadSongs(entities.songs));
-      return dispatch(getMySongsSuccess(result));
+      return dispatch(getUserSongsSuccess(result));
     } catch (error) {
-      return dispatch(getMySongsError(error.message));
+      return dispatch(getUserSongsError(error.message));
     }
   };
 };
 
 export const editMySongRequest = () => ({
-  type: MySongTypes.MY_SONG_EDIT_REQUEST,
+  type: LibrarySongTypes.USER_SONG_EDIT_REQUEST,
 });
-export const editMySongSuccess = () => ({
-  type: MySongTypes.MY_SONG_EDIT_SUCCESS,
+export const editUserSongsuccess = () => ({
+  type: LibrarySongTypes.USER_SONG_EDIT_SUCCESS,
 });
 export const editMySongError = (message) => ({
-  type: MySongTypes.MY_SONG_EDIT_ERROR,
+  type: LibrarySongTypes.USER_SONG_EDIT_ERROR,
   payload: message,
 });
 
@@ -92,7 +92,7 @@ export const editMySong = ({ title, artist, genre, image, songId }) => {
       }
       const { entities } = normalizeSongs([response.data]);
       dispatch(loadSongs(entities.songs));
-      return dispatch(editMySongSuccess());
+      return dispatch(editUserSongsuccess());
     } catch (error) {
       return dispatch(editMySongError(error.message));
     }
@@ -100,18 +100,18 @@ export const editMySong = ({ title, artist, genre, image, songId }) => {
 };
 
 export const uploadSongRequest = () => ({
-  type: MySongTypes.MY_SONG_UPLOAD_REQUEST,
+  type: LibrarySongTypes.USER_SONG_UPLOAD_REQUEST,
 });
 export const uploadSongSuccess = () => ({
-  type: MySongTypes.MY_SONG_UPLOAD_SUCCESS,
+  type: LibrarySongTypes.USER_SONG_UPLOAD_SUCCESS,
 });
 export const uploadSongError = (message) => ({
-  type: MySongTypes.MY_SONG_UPLOAD_ERROR,
+  type: LibrarySongTypes.USER_SONG_UPLOAD_ERROR,
   payload: message,
 });
 
 export const uploadSongReset = () => ({
-  type: MySongTypes.MY_SONG_UPLOAD_RESET,
+  type: LibrarySongTypes.USER_SONG_UPLOAD_RESET,
 });
 
 export const uploadSong = ({
@@ -168,18 +168,18 @@ export const uploadSong = ({
 };
 
 export const likeSongRequest = () => ({
-  type: MySongTypes.MY_SONG_LIKE_REQUEST,
+  type: LibrarySongTypes.USER_SONG_LIKE_REQUEST,
 });
 export const likeSongSuccess = (song) => ({
-  type: MySongTypes.MY_SONG_LIKE_SUCCESS,
+  type: LibrarySongTypes.USER_SONG_LIKE_SUCCESS,
   payload: song,
 });
 export const likeSongError = (message) => ({
-  type: MySongTypes.MY_SONG_LIKE_ERROR,
+  type: LibrarySongTypes.USER_SONG_LIKE_ERROR,
   payload: message,
 });
-export const syncLikeMySongs = (songId) => ({
-  type: MySongTypes.MY_SONG_SYNC_LIKE,
+export const syncLikeUserSongs = (songId) => ({
+  type: LibrarySongTypes.USER_SONG_SYNC_LIKE,
   payload: songId,
 });
 
@@ -205,9 +205,9 @@ export const likeSong = (songId) => {
       const { entities, result } = normalizeSongs([response.data]);
 
       dispatch(loadSongs(entities.songs));
-      const { currentPath } = getState().ui.mySongs;
-      if (currentPath === MySongTypes.MY_SONG_PATH_LIKED_SONGS) {
-        dispatch(syncLikeMySongs(result[0]));
+      const { currentPath } = getState().ui.librarySongs;
+      if (currentPath === LibrarySongTypes.USER_SONG_PATH_LIKED_SONGS) {
+        dispatch(syncLikeUserSongs(result[0]));
       }
       return dispatch(likeSongSuccess());
     } catch (error) {
@@ -217,14 +217,14 @@ export const likeSong = (songId) => {
 };
 
 export const deleteSongRequest = () => ({
-  type: MySongTypes.MY_SONG_DELETE_REQUEST,
+  type: LibrarySongTypes.USER_SONG_DELETE_REQUEST,
 });
 export const deleteSongSuccess = (song) => ({
-  type: MySongTypes.MY_SONG_DELETE_SUCCESS,
+  type: LibrarySongTypes.USER_SONG_DELETE_SUCCESS,
   payload: song._id,
 });
 export const deleteSongError = (message) => ({
-  type: MySongTypes.MY_SONG_DELETE_ERROR,
+  type: LibrarySongTypes.USER_SONG_DELETE_ERROR,
   payload: message,
 });
 
@@ -257,6 +257,6 @@ export const deleteSong = (songId) => {
 };
 
 export const setCurrentPath = (path) => ({
-  type: MySongTypes.MY_SONG_SET_CURRENT_PATH,
+  type: LibrarySongTypes.USER_SONG_SET_CURRENT_PATH,
   payload: path,
 });

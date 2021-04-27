@@ -36,7 +36,7 @@ async function createSong(req, res, next) {
   }
 }
 
-async function getMySongs(req, res, next) {
+async function getUserSongs(req, res, next) {
   const { _id } = req.user;
 
   try {
@@ -201,7 +201,7 @@ async function editSong(req, res, next) {
 
 module.exports = {
   createSong: createSong,
-  getMySongs: getMySongs,
+  getUserSongs: getUserSongs,
   getLikedSongs: getLikedSongs,
   likeSong: likeSong,
   deleteSong: deleteSong,

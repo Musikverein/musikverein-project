@@ -1,5 +1,5 @@
 import { deleteInArrayById } from '../../utils/utils';
-import * as MySongTypes from './mySong-types';
+import * as LibrarySongTypes from './librarySong-types';
 
 const mySongInitialState = {
   isGettingSong: false,
@@ -17,13 +17,13 @@ const mySongInitialState = {
   isEditSong: false,
   editSongError: null,
   editSongSuccess: false,
-  currentPath: MySongTypes.MY_SONG_PATH_OWN_SONGS,
-  mySongs: [],
+  currentPath: LibrarySongTypes.USER_SONG_PATH_OWN_SONGS,
+  userSongs: [],
 };
 
-const MySongReducer = (state = mySongInitialState, action) => {
+const LibrarySongReducer = (state = mySongInitialState, action) => {
   switch (action.type) {
-    case MySongTypes.MY_SONG_GET_REQUEST: {
+    case LibrarySongTypes.USER_SONG_GET_REQUEST: {
       return {
         ...state,
         isGettingSong: true,
@@ -31,7 +31,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         getSongSuccess: false,
       };
     }
-    case MySongTypes.MY_SONG_GET_ERROR: {
+    case LibrarySongTypes.USER_SONG_GET_ERROR: {
       return {
         ...state,
         isGettingSong: false,
@@ -39,16 +39,16 @@ const MySongReducer = (state = mySongInitialState, action) => {
         getSongSuccess: false,
       };
     }
-    case MySongTypes.MY_SONG_GET_SUCCESS: {
+    case LibrarySongTypes.USER_SONG_GET_SUCCESS: {
       return {
         ...state,
         isGettingSong: false,
         getSongError: null,
         getSongSuccess: true,
-        mySongs: action.payload,
+        userSongs: action.payload,
       };
     }
-    case MySongTypes.MY_SONG_EDIT_REQUEST: {
+    case LibrarySongTypes.USER_SONG_EDIT_REQUEST: {
       return {
         ...state,
         isEditSong: true,
@@ -56,7 +56,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         editSongSuccess: false,
       };
     }
-    case MySongTypes.MY_SONG_EDIT_ERROR: {
+    case LibrarySongTypes.USER_SONG_EDIT_ERROR: {
       return {
         ...state,
         isEditSong: false,
@@ -64,7 +64,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         editSongError: action.payload,
       };
     }
-    case MySongTypes.MY_SONG_EDIT_SUCCESS: {
+    case LibrarySongTypes.USER_SONG_EDIT_SUCCESS: {
       return {
         ...state,
         isEditSong: false,
@@ -72,7 +72,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         editSongSuccess: true,
       };
     }
-    case MySongTypes.MY_SONG_UPLOAD_REQUEST: {
+    case LibrarySongTypes.USER_SONG_UPLOAD_REQUEST: {
       return {
         ...state,
         isUploadingSong: true,
@@ -80,7 +80,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         uploadSongSuccess: false,
       };
     }
-    case MySongTypes.MY_SONG_UPLOAD_ERROR: {
+    case LibrarySongTypes.USER_SONG_UPLOAD_ERROR: {
       return {
         ...state,
         isUploadingSong: false,
@@ -88,7 +88,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         uploadSongError: action.payload,
       };
     }
-    case MySongTypes.MY_SONG_UPLOAD_SUCCESS: {
+    case LibrarySongTypes.USER_SONG_UPLOAD_SUCCESS: {
       return {
         ...state,
         isUploadingSong: false,
@@ -96,7 +96,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         uploadSongSuccess: true,
       };
     }
-    case MySongTypes.MY_SONG_UPLOAD_RESET: {
+    case LibrarySongTypes.USER_SONG_UPLOAD_RESET: {
       return {
         ...state,
         isUploadingSong: false,
@@ -104,7 +104,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         uploadSongSuccess: false,
       };
     }
-    case MySongTypes.MY_SONG_LIKE_REQUEST: {
+    case LibrarySongTypes.USER_SONG_LIKE_REQUEST: {
       return {
         ...state,
         isLikeSong: true,
@@ -112,7 +112,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         likeSongSuccess: false,
       };
     }
-    case MySongTypes.MY_SONG_LIKE_ERROR: {
+    case LibrarySongTypes.USER_SONG_LIKE_ERROR: {
       return {
         ...state,
         isLikeSong: false,
@@ -121,7 +121,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
       };
     }
 
-    case MySongTypes.MY_SONG_LIKE_SUCCESS: {
+    case LibrarySongTypes.USER_SONG_LIKE_SUCCESS: {
       return {
         ...state,
         isLikeSong: false,
@@ -129,7 +129,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         likeSongSuccess: true,
       };
     }
-    case MySongTypes.MY_SONG_DELETE_REQUEST: {
+    case LibrarySongTypes.USER_SONG_DELETE_REQUEST: {
       return {
         ...state,
         isDelelteSong: true,
@@ -137,7 +137,7 @@ const MySongReducer = (state = mySongInitialState, action) => {
         delelteSongSuccess: false,
       };
     }
-    case MySongTypes.MY_SONG_DELETE_ERROR: {
+    case LibrarySongTypes.USER_SONG_DELETE_ERROR: {
       return {
         ...state,
         isDelelteSong: false,
@@ -145,27 +145,27 @@ const MySongReducer = (state = mySongInitialState, action) => {
         delelteSongSuccess: false,
       };
     }
-    case MySongTypes.MY_SONG_DELETE_SUCCESS: {
-      const newMySongs = deleteInArrayById(state.mySongs, action.payload);
+    case LibrarySongTypes.USER_SONG_DELETE_SUCCESS: {
+      const newUserSongs = deleteInArrayById(state.userSongs, action.payload);
       return {
         ...state,
         isDelelteSong: false,
         delelteSongError: null,
         delelteSongSuccess: true,
-        mySongs: [...newMySongs],
+        userSongs: [...newUserSongs],
       };
     }
-    case MySongTypes.MY_SONG_SET_CURRENT_PATH: {
+    case LibrarySongTypes.USER_SONG_SET_CURRENT_PATH: {
       return {
         ...state,
         currentPath: action.payload,
       };
     }
-    case MySongTypes.MY_SONG_SYNC_LIKE: {
-      const newMySongs = deleteInArrayById(state.mySongs, action.payload);
+    case LibrarySongTypes.USER_SONG_SYNC_LIKE: {
+      const newUserSongs = deleteInArrayById(state.userSongs, action.payload);
       return {
         ...state,
-        mySongs: [...newMySongs],
+        userSongs: [...newUserSongs],
       };
     }
     default:
@@ -173,4 +173,4 @@ const MySongReducer = (state = mySongInitialState, action) => {
   }
 };
 
-export default MySongReducer;
+export default LibrarySongReducer;

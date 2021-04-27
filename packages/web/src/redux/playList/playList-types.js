@@ -1,0 +1,2 @@
+export const LOAD_PLAYLIST = 'LOAD_PLAYLIST';
+export const REMOVE_PLAYLIST = 'REMOVE_PLAYLIST';

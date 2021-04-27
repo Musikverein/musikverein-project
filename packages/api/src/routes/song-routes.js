@@ -19,8 +19,8 @@ songRouter.post(
   validateCreateSong,
   songController.createSong,
 );
-songRouter.post('/mySongs', songController.getMySongs);
-songRouter.post('/mySongs/liked', songController.getLikedSongs);
+songRouter.post('/userSongs', songController.getUserSongs);
+songRouter.post('/userSongs/liked', songController.getLikedSongs);
 songRouter.post('/like', songController.likeSong);
 songRouter.post('/delete', songController.deleteSong);
 songRouter.post('/edit', songController.editSong);
