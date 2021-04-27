@@ -6,7 +6,10 @@ import './SongCard.scss';
 
 import { addToQueque, play } from '../../redux/player/player-actions';
 
-import { deleteSong, editMySong } from '../../redux/mySongs/mySong-actions';
+import {
+  deleteSong,
+  editMySong,
+} from '../../redux/librarySongs/librarySong-actions';
 import LikeButton from '../LikeButton';
 import SongForm from '../SongForm';
 import { songSelector } from '../../redux/song/song-selectors';

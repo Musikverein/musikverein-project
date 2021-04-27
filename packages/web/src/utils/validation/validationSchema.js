@@ -42,4 +42,10 @@ export const validationSchema = {
     artist: Joi.string().required(),
     genre: Joi.string().required(),
   }).with('title', ['artist', 'genre']),
+
+  playList: Joi.object({
+    title: Joi.string().required(),
+    type: Joi.string().valid('Album', 'PlayList').required(),
+    publicPlayList: Joi.bool().required(),
+  }).with('title', ['type', 'publicPlayList']),
 };

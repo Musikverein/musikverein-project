@@ -31,14 +31,14 @@ export const api = {
     });
   },
 
-  getMySongs: (headers, body = {}) => {
-    return axios.post(`${baseURL}/songs/mySongs`, body, {
+  getUserSongs: (headers, body = {}) => {
+    return axios.post(`${baseURL}/songs/userSongs`, body, {
       headers: headers,
     });
   },
 
   getLikedSongs: (headers, body = {}) => {
-    return axios.post(`${baseURL}/songs/mySongs/liked`, body, {
+    return axios.post(`${baseURL}/songs/userSongs/liked`, body, {
       headers: headers,
     });
   },
@@ -57,6 +57,12 @@ export const api = {
 
   editSong: (headers, body = {}) => {
     return axios.post(`${baseURL}/songs/edit`, body, {
+      headers: headers,
+    });
+  },
+
+  createPlayList: (headers, body = {}) => {
+    return axios.post(`${baseURL}/playlist/create`, body, {
       headers: headers,
     });
   },
