@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { useForm } from '../../hooks/useForm';
 
 import Header from '../../components/Header';
@@ -52,38 +52,47 @@ export const PlayListCreate = () => {
         {isCreatingPlayList ? (
           <Spinner />
         ) : (
-          <form className="w-full p-4 flex flex-col" onSubmit={handleSubmit}>
-            <input
-              className="form__input rounded-4 "
-              placeholder="Insert the name"
-              name="title"
-              onChange={handleInputChange}
-              value={title}
+          <>
+            <Link
+              to={ROUTES.LIBRARY_PLAYLISTS}
+              className="bx bxs-chevron-left text-4xl"
             />
-            <label htmlFor="Type" className="my-4">
-              Public
+            <form className="w-full p-4 flex flex-col" onSubmit={handleSubmit}>
               <input
-                value={publicPlayList}
-                name="publicPlayList"
-                className="mx-2"
-                type="checkbox"
+                className="form__input rounded-4 "
+                placeholder="Insert the name"
+                name="title"
                 onChange={handleInputChange}
+                value={title}
               />
-            </label>
-            <select
-              className="playlist-select mb-4"
-              name="type"
-              value={type}
-              onChange={handleInputChange}
-            >
-              <option value="Album">Album</option>
-              <option value="PlayList">PlayList</option>
-            </select>
+              <span className="mb-2 p-2 block text-error">
+                {errors.title ? errors.title : ' '}
+              </span>
+              <label htmlFor="Type" className="my-4">
+                Public
+                <input
+                  value={publicPlayList}
+                  name="publicPlayList"
+                  className="mx-2"
+                  type="checkbox"
+                  onChange={handleInputChange}
+                />
+              </label>
+              <select
+                className="playlist-select mb-4"
+                name="type"
+                value={type}
+                onChange={handleInputChange}
+              >
+                <option value="Album">Album</option>
+                <option value="PlayList">PlayList</option>
+              </select>
 
-            <button type="submit" className="button-primary rounded-4">
-              Create
-            </button>
-          </form>
+              <button type="submit" className="button-primary rounded-4">
+                Create
+              </button>
+            </form>
+          </>
         )}
         <ReCAPTCHA
           sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
