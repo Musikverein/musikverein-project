@@ -26,6 +26,14 @@ const playReducer = (state = playerInitialState, action) => {
     case PlayerTypes.PLAYER_CURRENT_INDEX_PLAYLIST: {
       return { ...state, currentIndexPlaylist: action.payload };
     }
+    case PlayerTypes.PLAYER_SYNC_DELETE: {
+      const newCurrentPlaylist = [...state.currentPlaylist];
+      const index = newCurrentPlaylist.findIndex(
+        (song) => song === action.payload,
+      );
+      newCurrentPlaylist.splice(index, 1);
+      return { ...state, currentPlaylist: [...newCurrentPlaylist] };
+    }
     default: {
       return state;
     }

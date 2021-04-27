@@ -10,14 +10,17 @@ import { deleteSong, editMySong } from '../../redux/mySongs/mySong-actions';
 import LikeButton from '../LikeButton';
 import SongForm from '../SongForm';
 import { songSelector } from '../../redux/song/song-selectors';
+import { authSelector } from '../../redux/auth/auth-selectors';
 
 export const SongCard = ({ songId }) => {
   const { songs } = useSelector(songSelector);
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
-
-  const { title, artist, genre, image, likedBy, _id } = songs[songId];
+  const {
+    currentUser: { _id: userId },
+  } = useSelector(authSelector);
+  const { title, artist, genre, image, likedBy, _id, owner } = songs[songId];
 
   const handlePlaySong = () => {
     dispatch(play(_id));
@@ -87,12 +90,17 @@ export const SongCard = ({ songId }) => {
               : 'hidden absolute'
           }
         >
-          <button type="button" onClick={handleSongEdit}>
-            Edit
-          </button>
-          <button type="button" onClick={handleRemoveSong}>
-            Remove
-          </button>
+          {owner === userId && (
+            <button type="button" onClick={handleSongEdit}>
+              Edit
+            </button>
+          )}
+
+          {owner === userId && (
+            <button type="button" onClick={handleRemoveSong}>
+              Remove
+            </button>
+          )}
           <LikeButton likedBy={likedBy} songId={_id} />
           <button type="button" onClick={handleAddToQueque}>
             Add to queqe

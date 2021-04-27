@@ -5,6 +5,7 @@ import api from '../../api';
 import { normalizeSongs } from '../../utils/normalizrSchema/schema';
 import { loadSongs, removeSong } from '../song/song-actions';
 import { imageUpload, songUpload } from '../../services/cloudinary';
+import { syncDelete } from '../player/player-actions';
 
 export const getMySongsRequest = () => ({
   type: MySongTypes.MY_SONG_GET_REQUEST,
@@ -18,7 +19,7 @@ export const getMySongsError = (message) => ({
   payload: message,
 });
 
-export const getMySongs = () => {
+export const getMySongs = (filter) => {
   return async function getMySongsThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
@@ -28,9 +29,14 @@ export const getMySongs = () => {
 
     dispatch(getMySongsRequest());
     try {
-      const { errorMessage, data: response } = await api.getSongs({
-        Authorization: `Bearer ${token}`,
-      });
+      const { errorMessage, data: response } =
+        filter === 'ownSongs'
+          ? await api.getMySongs({
+              Authorization: `Bearer ${token}`,
+            })
+          : await api.getLikedSongs({
+              Authorization: `Bearer ${token}`,
+            });
       if (errorMessage) {
         return dispatch(getMySongsError(errorMessage));
       }
@@ -135,7 +141,7 @@ export const uploadSong = ({
       const songResponse = await songUpload(song);
       const songUrl = songResponse.secure_url;
       const songDuration = songResponse.duration;
-      const { errorMessage, data: response } = await api.uploadSong(
+      const { errorMessage } = await api.uploadSong(
         {
           Authorization: `Bearer ${token}`,
         },
@@ -149,13 +155,9 @@ export const uploadSong = ({
           image: imgUrl,
         },
       );
-      // TODO: check error message and request fail
 
       if (errorMessage) {
         return dispatch(uploadSongError(errorMessage));
-      }
-      if (response.error) {
-        return dispatch(uploadSongError(response.error));
       }
 
       return dispatch(uploadSongSuccess());
@@ -237,8 +239,8 @@ export const deleteSong = (songId) => {
       if (errorMessage) {
         return dispatch(deleteSongError(errorMessage));
       }
-      console.log(response.data);
       dispatch(deleteSongSuccess(response.data));
+      dispatch(syncDelete(response.data));
       return dispatch(removeSong(response.data));
     } catch (error) {
       return dispatch(deleteSongError(error.message));

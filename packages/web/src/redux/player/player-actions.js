@@ -14,3 +14,8 @@ export const saveIndexPlaylist = (index) => ({
   type: PlayerTypes.PLAYER_CURRENT_INDEX_PLAYLIST,
   payload: index,
 });
+
+export const syncDelete = (song) => ({
+  type: PlayerTypes.PLAYER_SYNC_DELETE,
+  payload: song._id,
+});
