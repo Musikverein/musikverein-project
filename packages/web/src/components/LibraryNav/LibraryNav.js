@@ -1,10 +1,11 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import ROUTES from '../../routers/routes';
 
 import './LibraryNav.scss';
 
 export const LibraryNav = () => {
+  const location = useLocation();
   return (
     <nav className="library-nav">
       <NavLink
@@ -21,11 +22,20 @@ export const LibraryNav = () => {
       >
         My Playlists
       </NavLink>
-      <NavLink
-        to={ROUTES.SONG_UPLOAD}
-        className="bx bx-cloud-upload text-3xl library-nav__link ml-auto"
-        activeClassName="library-nav__link-active"
-      />
+      <div className="ml-auto">
+        {location.pathname === ROUTES.LIBRARY_PLAYLISTS && (
+          <NavLink
+            to={ROUTES.PLAYLIST_CREATE}
+            className="bx bx-plus-circle text-3xl library-nav__link"
+            activeClassName="library-nav__link-active"
+          />
+        )}
+        <NavLink
+          to={ROUTES.SONG_UPLOAD}
+          className="bx bx-cloud-upload text-3xl library-nav__link"
+          activeClassName="library-nav__link-active"
+        />
+      </div>
     </nav>
   );
 };

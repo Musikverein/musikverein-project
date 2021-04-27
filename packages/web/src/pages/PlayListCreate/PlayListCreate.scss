@@ -1,13 +1,20 @@
 @import '../../styles/utils.scss';
 
-.playlist-select {
+.library-select {
   width: 100%;
   height: 60px;
   background-color: $color-bg-secundary;
+  position: fixed;
+  top: 120px;
+  left: 0;
+  right: 0;
+  display: flex;
   align-items: center;
+  z-index: 1;
 
   select {
     color: rgb(130, 130, 130);
+    margin: 0 10px;
     display: block;
     width: 160px;
     min-height: 40px;

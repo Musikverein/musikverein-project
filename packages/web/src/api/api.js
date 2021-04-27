@@ -60,4 +60,10 @@ export const api = {
       headers: headers,
     });
   },
+
+  createPlayList: (headers, body = {}) => {
+    return axios.post(`${baseURL}/playlist/create`, body, {
+      headers: headers,
+    });
+  },
 };
