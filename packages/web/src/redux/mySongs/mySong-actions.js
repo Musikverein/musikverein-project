@@ -178,9 +178,13 @@ export const likeSongError = (message) => ({
   type: MySongTypes.MY_SONG_LIKE_ERROR,
   payload: message,
 });
+export const syncLikeMySongs = (songId) => ({
+  type: MySongTypes.MY_SONG_SYNC_LIKE,
+  payload: songId,
+});
 
 export const likeSong = (songId) => {
-  return async function likeSongThunk(dispatch) {
+  return async function likeSongThunk(dispatch, getState) {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
@@ -198,9 +202,13 @@ export const likeSong = (songId) => {
       if (errorMessage) {
         return dispatch(likeSongError(errorMessage));
       }
-      const { entities } = normalizeSongs([response.data]);
+      const { entities, result } = normalizeSongs([response.data]);
 
       dispatch(loadSongs(entities.songs));
+      const { currentPath } = getState().ui.mySongs;
+      if (currentPath === MySongTypes.MY_SONG_PATH_LIKED_SONGS) {
+        dispatch(syncLikeMySongs(result[0]));
+      }
       return dispatch(likeSongSuccess());
     } catch (error) {
       return dispatch(likeSongError(error.message));
@@ -247,3 +255,8 @@ export const deleteSong = (songId) => {
     }
   };
 };
+
+export const setCurrentPath = (path) => ({
+  type: MySongTypes.MY_SONG_SET_CURRENT_PATH,
+  payload: path,
+});

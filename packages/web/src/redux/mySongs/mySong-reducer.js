@@ -17,6 +17,7 @@ const mySongInitialState = {
   isEditSong: false,
   editSongError: null,
   editSongSuccess: false,
+  currentPath: MySongTypes.MY_SONG_PATH_OWN_SONGS,
   mySongs: [],
 };
 
@@ -144,7 +145,6 @@ const MySongReducer = (state = mySongInitialState, action) => {
         delelteSongSuccess: false,
       };
     }
-
     case MySongTypes.MY_SONG_DELETE_SUCCESS: {
       const newMySongs = deleteInArrayById(state.mySongs, action.payload);
       return {
@@ -155,7 +155,19 @@ const MySongReducer = (state = mySongInitialState, action) => {
         mySongs: [...newMySongs],
       };
     }
-
+    case MySongTypes.MY_SONG_SET_CURRENT_PATH: {
+      return {
+        ...state,
+        currentPath: action.payload,
+      };
+    }
+    case MySongTypes.MY_SONG_SYNC_LIKE: {
+      const newMySongs = deleteInArrayById(state.mySongs, action.payload);
+      return {
+        ...state,
+        mySongs: [...newMySongs],
+      };
+    }
     default:
       return state;
   }

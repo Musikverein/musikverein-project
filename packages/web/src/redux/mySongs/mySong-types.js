@@ -18,3 +18,10 @@ export const MY_SONG_DELETE_ERROR = 'MY_SONG_DELETE_ERROR';
 export const MY_SONG_LIKE_REQUEST = 'MY_SONG_LIKE_REQUEST';
 export const MY_SONG_LIKE_SUCCESS = 'MY_SONG_LIKE_SUCCESS';
 export const MY_SONG_LIKE_ERROR = 'MY_SONG_LIKE_ERROR';
+export const MY_SONG_SYNC_LIKE = 'MY_SONG_SYNC_LIKE';
+
+export const MY_SONG_SET_CURRENT_PATH = 'MY_SONG_SET_CURRENT_PATH';
+
+// This are the values of current path.
+export const MY_SONG_PATH_OWN_SONGS = 'ownSongs';
+export const MY_SONG_PATH_LIKED_SONGS = 'likedSongs';
