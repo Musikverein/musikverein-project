@@ -1,4 +1,4 @@
-import { deleteInArrayById } from '../../utils/utils';
+import { toggleInArrayById } from '../../utils/utils';
 import * as PlayerTypes from './player-types';
 
 export const playerInitialState = {
@@ -25,7 +25,7 @@ const playReducer = (state = playerInitialState, action) => {
       return { ...state, currentIndexPlaylist: action.payload };
     }
     case PlayerTypes.PLAYER_SYNC_DELETE: {
-      const newCurrentPlaylist = deleteInArrayById(
+      const newCurrentPlaylist = toggleInArrayById(
         state.currentPlaylist,
         action.payload,
       );

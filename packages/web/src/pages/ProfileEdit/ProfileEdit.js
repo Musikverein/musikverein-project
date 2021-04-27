@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Link, useHistory } from 'react-router-dom';
+import ReCAPTCHA from 'react-google-recaptcha';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { resetUpdate, updateProfile } from '../../redux/auth/auth-actions';
@@ -25,6 +26,7 @@ export const ProfileEdit = () => {
   const { stateImg, handleImageChange, handleImage, refId } = useImgPreview(
     'imageProfile',
   );
+  const reRef = useRef();
 
   const { urlPreview, file } = stateImg;
   const { firstName, lastName, userName } = formValues;
@@ -36,10 +38,15 @@ export const ProfileEdit = () => {
     };
   }, [updatedSuccess, history, dispatch]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
     if (isValid(validationSchema.userProfile)) {
-      dispatch(updateProfile({ userName, firstName, lastName, file }));
+      const recaptchaToken = await reRef.current.executeAsync();
+      reRef.current.reset();
+      dispatch(
+        updateProfile({ userName, firstName, lastName, file, recaptchaToken }),
+      );
     }
   };
 
@@ -111,6 +118,11 @@ export const ProfileEdit = () => {
             </button>
           </form>
         )}
+        <ReCAPTCHA
+          sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
+          size="invisible"
+          ref={reRef}
+        />
       </div>
     </>
   );

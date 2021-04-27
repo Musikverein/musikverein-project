@@ -44,19 +44,19 @@ export const api = {
   },
 
   likeSong: (headers, body = {}) => {
-    return axios.post(`${baseURL}/songs/like`, body, {
+    return axios.patch(`${baseURL}/songs/like`, body, {
       headers: headers,
     });
   },
 
   deleteSong: (headers, body = {}) => {
-    return axios.post(`${baseURL}/songs/delete`, body, {
+    return axios.delete(`${baseURL}/songs/delete`, body, {
       headers: headers,
     });
   },
 
   editSong: (headers, body = {}) => {
-    return axios.post(`${baseURL}/songs/edit`, body, {
+    return axios.patch(`${baseURL}/songs/edit`, body, {
       headers: headers,
     });
   },
