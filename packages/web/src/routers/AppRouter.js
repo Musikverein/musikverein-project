@@ -15,7 +15,7 @@ import PlayListCreate from '../pages/PlayListCreate';
 
 export const AppRouter = () => {
   const { isAuthenticated } = useSelector(authSelector);
-  const { currentPlaylist } = useSelector(playerSelector);
+  const { currentPlayList } = useSelector(playerSelector);
   return (
     <>
       <Switch>
@@ -59,7 +59,7 @@ export const AppRouter = () => {
           exact
         />
       </Switch>
-      {currentPlaylist.length > 0 && <Player />}
+      {currentPlayList.length > 0 && <Player />}
     </>
   );
 };
