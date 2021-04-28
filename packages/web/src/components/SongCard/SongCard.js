@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import Modal from 'react-modal';
+import { addToQueque, play } from '../../redux/player/player-actions';
 
 import './SongCard.scss';
-
-import { addToQueque, play } from '../../redux/player/player-actions';
 
 import {
   deleteSong,
@@ -15,11 +15,14 @@ import SongForm from '../SongForm';
 import { selectSongByIdState } from '../../redux/song/song-selectors';
 import { authSelector } from '../../redux/auth/auth-selectors';
 
+Modal.setAppElement('#root');
+
 export const SongCard = ({ songId }) => {
   const song = useSelector(selectSongByIdState(songId));
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
+  const [isDeleteSong, setIsDeleteSong] = useState(false);
   const {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
@@ -45,6 +48,10 @@ export const SongCard = ({ songId }) => {
     dispatch(editMySong({ ...formValues, songId: _id }));
     setIsEditSong(false);
   };
+
+  function closeModal() {
+    setIsEditSong(false);
+  }
 
   return (
     <section className="p-2">
@@ -100,7 +107,12 @@ export const SongCard = ({ songId }) => {
           )}
 
           {owner === userId && (
-            <button type="button" onClick={handleRemoveSong}>
+            <button
+              type="button"
+              onClick={() => {
+                setIsDeleteSong(true);
+              }}
+            >
               Remove
             </button>
           )}
@@ -110,7 +122,12 @@ export const SongCard = ({ songId }) => {
           </button>
         </nav>
       </div>
-      {isEditSong && (
+      <Modal
+        isOpen={isEditSong}
+        onRequestClose={closeModal}
+        overlayClassName="Overlay"
+        className="Modal"
+      >
         <SongForm
           songTitle={title}
           songArtist={artist}
@@ -120,7 +137,29 @@ export const SongCard = ({ songId }) => {
           handleCancel={() => setIsEditSong(false)}
           isLoading={false}
         />
-      )}
+      </Modal>
+      <Modal
+        isOpen={isDeleteSong}
+        onRequestClose={() => {
+          setIsDeleteSong(false);
+        }}
+        overlayClassName="Overlay"
+        className="Modal"
+      >
+        <p className="text-white">Are you sure?</p>
+        <button className="text-white" type="button" onClick={handleRemoveSong}>
+          Yes
+        </button>
+        <button
+          className="text-white"
+          type="button"
+          onClick={() => {
+            setIsDeleteSong(false);
+          }}
+        >
+          No
+        </button>
+      </Modal>
     </section>
   );
 };

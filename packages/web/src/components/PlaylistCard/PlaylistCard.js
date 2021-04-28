@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { playListSelector } from '../../redux/playList/playList-selectors';
 import { authSelector } from '../../redux/auth/auth-selectors';
@@ -94,8 +95,8 @@ export const PlayListCard = ({ playListId }) => {
           <button type="button">Add to queqe</button>
         </nav>
       </div>
-      {/* {isEditSong && (
-        <SongForm
+      <Modal>
+        {/*       <SongForm
           songTitle={title}
           songArtist={artist}
           songGenre={genre}
@@ -103,8 +104,8 @@ export const PlayListCard = ({ playListId }) => {
           handleSubmit={handleSubmitEditForm}
           handleCancel={() => setIsEditSong(false)}
           isLoading={false}
-        />
-      )} */}
+        /> */}
+      </Modal>
     </section>
   );
 };
