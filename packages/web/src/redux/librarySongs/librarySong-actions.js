@@ -5,7 +5,7 @@ import api from '../../api';
 import { normalizeSongs } from '../../utils/normalizrSchema/schema';
 import { loadSongs, removeSong } from '../song/song-actions';
 import { imageUpload, songUpload } from '../../services/cloudinary';
-import { syncDelete } from '../player/player-actions';
+import { syncSongDelete } from '../player/player-actions';
 
 export const getUserSongsRequest = () => ({
   type: LibrarySongTypes.USER_SONG_GET_REQUEST,
@@ -30,7 +30,7 @@ export const getUserSongs = (filter) => {
     dispatch(getUserSongsRequest());
     try {
       const { errorMessage, data: response } =
-        filter === 'ownSongs'
+        filter === LibrarySongTypes.USER_SONG_PATH_OWN_SONGS
           ? await api.getUserSongs({
               Authorization: `Bearer ${token}`,
             })
@@ -248,7 +248,7 @@ export const deleteSong = (songId) => {
         return dispatch(deleteSongError(errorMessage));
       }
       dispatch(deleteSongSuccess(response.data));
-      dispatch(syncDelete(response.data));
+      dispatch(syncSongDelete(response.data));
       return dispatch(removeSong(response.data));
     } catch (error) {
       return dispatch(deleteSongError(error.message));

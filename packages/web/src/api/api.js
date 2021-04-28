@@ -50,7 +50,7 @@ export const api = {
   },
 
   deleteSong: (headers, body = {}) => {
-    return axios.delete(`${baseURL}/songs/delete`, body, {
+    return axios.patch(`${baseURL}/songs/delete`, body, {
       headers: headers,
     });
   },
@@ -64,6 +64,25 @@ export const api = {
   createPlayList: (headers, body = {}) => {
     return axios.post(`${baseURL}/playlist/create`, body, {
       headers: headers,
+    });
+  },
+
+  getUserPlayLists: (headers, body = {}) => {
+    return axios.post(`${baseURL}/playlist/userPlaylists`, body, {
+      headers: headers,
+    });
+  },
+
+  getFollowedPlayLists: (headers, body = {}) => {
+    return axios.post(`${baseURL}/playlist/userPlaylists/follow`, body, {
+      headers: headers,
+    });
+  },
+
+  deletePlayList: (headers, body = {}) => {
+    return axios.delete(`${baseURL}/playlist/userPlaylists/delete`, {
+      headers: headers,
+      data: body,
     });
   },
 };

@@ -64,7 +64,7 @@ export const ResetPassword = () => {
     <>
       <main className="ResetPassword">
         <section className="Login__wrapper">
-          <Logo size="m" titleLogo />
+          <Logo size="xm" titleLogo />
           {isSendingPasswordReset ? (
             <Spinner />
           ) : (

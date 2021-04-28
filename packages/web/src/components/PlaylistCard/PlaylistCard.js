@@ -1,58 +1,46 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-
-import './SongCard.scss';
-
-import { addToQueque, play } from '../../redux/player/player-actions';
-
-import {
-  deleteSong,
-  editMySong,
-} from '../../redux/librarySongs/librarySong-actions';
-import LikeButton from '../LikeButton';
-import SongForm from '../SongForm';
-import { selectSongByIdState } from '../../redux/song/song-selectors';
+import { playListSelector } from '../../redux/playList/playList-selectors';
 import { authSelector } from '../../redux/auth/auth-selectors';
+import { deletePlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
 
-export const SongCard = ({ songId }) => {
-  const song = useSelector(selectSongByIdState(songId));
+export const PlayListCard = ({ playListId }) => {
+  const { playLists } = useSelector(playListSelector);
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isEditSong, setIsEditSong] = useState(false);
+  // const [isEditSong, setIsEditSong] = useState(false);
   const {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
-  const { title, artist, genre, image, likedBy, _id, owner } = song;
+  // Falta mostrar si es publica
+  const { title, followedBy, owner, type, _id } = playLists[playListId];
 
-  const handlePlaySong = () => {
-    dispatch(play(_id));
-  };
+  // const handlePlayPlayList = () => {
+  //   dispatch(playPlayList(_id));
+  // };
 
-  const handleAddToQueque = () => {
-    dispatch(addToQueque(_id));
-  };
+  // const handlePlayListEdit = () => {
+  //   setIsEditSong(!isEditSong);
+  //   setMenuOpen(!menuOpen);
+  // };
 
-  const handleSongEdit = () => {
-    setIsEditSong(!isEditSong);
-    setMenuOpen(!menuOpen);
-  };
-  const handleRemoveSong = () => {
-    dispatch(deleteSong(_id));
+  const handleRemovePlayList = () => {
+    dispatch(deletePlayList(_id));
   };
 
-  const handleSubmitEditForm = (formValues) => {
-    dispatch(editMySong({ ...formValues, songId: _id }));
-    setIsEditSong(false);
-  };
+  // const handleSubmitEditForm = (formValues) => {
+  //   dispatch(editMySong({ ...formValues, songId: _id }));
+  //   setIsEditSong(false);
+  // };
 
   return (
     <section className="p-2">
       <div className="p-4 flex space-x-4 card-song">
-        <button
+        {/* <button
           type="button"
           className="w-24 h-24 image-container"
-          onClick={handlePlaySong}
+          onClick={handlePlayPlayList}
         >
           <div className="flex items-center justify-center absolute w-24 h-24 img-play">
             <i className="bx bx-play text-4xl" />
@@ -62,24 +50,26 @@ export const SongCard = ({ songId }) => {
             alt=""
             className="w-24 h-24 rounded-4 object-cover "
           />
-        </button>
+        </button> */}
         <div className="pr-20 info-container truncate">
           <h2 className="text-lg font-semibold text-light mb-0.5 ">{title}</h2>
           <div className="flex-none w-full mt-0.5 font-normal">
-            <dt className="sr-only">Artist</dt>
-            <dd>{artist}</dd>
+            <dt className="sr-only">Owner</dt>
+            <dd>{owner}</dd>
           </div>
           <dl className="flex flex-wrap items-center text-sm font-medium whitespace-pre">
             <div className="pr-4">
-              <dt className="sr-only">Genre</dt>
-              <dd>{genre}</dd>
+              <dt className="sr-only">Type</dt>
+              <dd>{type}</dd>
             </div>
-
             <div className="pr-4">
-              <dt className="sr-only">Likes</dt>
-              <dd>{likedBy.length} Likes</dd>
+              <dt className="sr-only">Public</dt>
+              <dd>Public</dd>
             </div>
-            <LikeButton likedBy={likedBy} songId={_id} />
+            <div className="pr-4">
+              <dt className="sr-only">Follow</dt>
+              <dd>{followedBy.length} Followed</dd>
+            </div>
           </dl>
         </div>
 
@@ -93,24 +83,18 @@ export const SongCard = ({ songId }) => {
               : 'hidden absolute'
           }
         >
-          {owner === userId && (
-            <button type="button" onClick={handleSongEdit}>
-              Edit
-            </button>
-          )}
+          {owner === userId && <button type="button">Edit</button>}
 
           {owner === userId && (
-            <button type="button" onClick={handleRemoveSong}>
+            <button type="button" onClick={handleRemovePlayList}>
               Remove
             </button>
           )}
-          <LikeButton likedBy={likedBy} songId={_id} />
-          <button type="button" onClick={handleAddToQueque}>
-            Add to queqe
-          </button>
+          <button type="button">Follow</button>
+          <button type="button">Add to queqe</button>
         </nav>
       </div>
-      {isEditSong && (
+      {/* {isEditSong && (
         <SongForm
           songTitle={title}
           songArtist={artist}
@@ -120,11 +104,11 @@ export const SongCard = ({ songId }) => {
           handleCancel={() => setIsEditSong(false)}
           isLoading={false}
         />
-      )}
+      )} */}
     </section>
   );
 };
 
-SongCard.propTypes = {
-  songId: PropTypes.string.isRequired,
+PlayListCard.propTypes = {
+  playListId: PropTypes.string.isRequired,
 };

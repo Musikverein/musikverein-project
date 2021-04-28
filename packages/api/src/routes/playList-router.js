@@ -19,6 +19,15 @@ playListRouter.post(
   validateCreatePlayList,
   playListController.create,
 );
+playListRouter.post('/userPlaylists', playListController.getPlaylist);
+playListRouter.post(
+  '/userPlaylists/follow',
+  playListController.getFollowPlaylist,
+);
+playListRouter.delete(
+  '/userPlaylists/delete',
+  playListController.deletePlaylist,
+);
 
 module.exports = {
   playListRouter: playListRouter,

@@ -10,12 +10,17 @@ export const addToQueque = (song) => ({
   payload: song,
 });
 
-export const saveIndexPlaylist = (index) => ({
+export const saveIndexPlayList = (index) => ({
   type: PlayerTypes.PLAYER_CURRENT_INDEX_PLAYLIST,
   payload: index,
 });
 
-export const syncDelete = (song) => ({
-  type: PlayerTypes.PLAYER_SYNC_DELETE,
+export const syncSongDelete = (song) => ({
+  type: PlayerTypes.PLAYER_SYNC_SONG_DELETE,
+  payload: song._id,
+});
+
+export const syncPlayListDelete = (song) => ({
+  type: PlayerTypes.PLAYER_SYNC_PLAYLIST_DELETE,
   payload: song._id,
 });
