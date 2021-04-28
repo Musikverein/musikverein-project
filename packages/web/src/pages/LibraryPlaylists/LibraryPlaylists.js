@@ -1,17 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Header from '../../components/Header';
 import LibraryNav from '../../components/LibraryNav';
 import { LibrarySelect } from '../../components/LibrarySelect/LibrarySelect';
 import * as LibraryPlayListTypes from '../../redux/libraryPlayList/libraryPlayList-types';
-import { setCurrentPath } from '../../redux/libraryPlayList/libraryPlayList-actions';
+import {
+  getUserPlayLists,
+  setCurrentPath,
+} from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { userPlayListSelector } from '../../redux/libraryPlayList/libraryPlayList-selectors';
 import { Spinner } from '../../components/Spinner/Spinner';
-import PlaylistCard from '../../components/PlaylistCard';
+import PlayListCard from '../../components/PlayListCard';
 
-export const LibraryPlaylists = () => {
-  const { currentPath, userPlaylists, isGettingPlaylist } = useSelector(
+export const LibraryPlayLists = () => {
+  const { currentPath, userPlayLists, isGettingPlayList } = useSelector(
     userPlayListSelector,
   );
   const dispatch = useDispatch();
@@ -19,14 +22,19 @@ export const LibraryPlaylists = () => {
   const handleSelect = ({ target }) => {
     dispatch(setCurrentPath(target.value));
   };
+
+  useEffect(() => {
+    dispatch(getUserPlayLists(currentPath));
+  }, [dispatch, currentPath]);
+
   return (
     <>
       <Header />
       <LibraryNav />
       <main className="main-container-library">
         <LibrarySelect
-          value={currentPath}
-          title="Playlist"
+          selectValue={currentPath}
+          title="PlayList"
           optionMyValue={LibraryPlayListTypes.USER_PLAYLIST_PATH_OWN_PLAYLIST}
           optionLikeValue={
             LibraryPlayListTypes.USER_PLAYLIST_PATH_FOLLOW_PLAYLIST
@@ -34,16 +42,16 @@ export const LibraryPlaylists = () => {
           handleSelect={handleSelect}
         />
 
-        {/*       <section className="bg__primary">
-          {isGettingPlaylist ? (
+        <section className="bg__primary">
+          {isGettingPlayList ? (
             <Spinner />
           ) : (
-            userPlaylists.length > 0 &&
-            userPlaylists.map((playlistId) => (
-              <PlaylistCard key={playlistId} playlistId={playlistId} />
+            userPlayLists.length > 0 &&
+            userPlayLists.map((playListId) => (
+              <PlayListCard key={playListId} playListId={playListId} />
             ))
           )}
-        </section> */}
+        </section>
       </main>
     </>
   );

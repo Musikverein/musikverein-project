@@ -1,3 +1,3 @@
-import { PlaylistCard } from "./PlaylistCard";
+import { PlayListCard } from './PlayListCard';
 
-export default PlaylistCard
+export default PlayListCard;

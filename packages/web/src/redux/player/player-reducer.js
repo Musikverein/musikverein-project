@@ -2,8 +2,8 @@ import { toggleInArrayById } from '../../utils/utils';
 import * as PlayerTypes from './player-types';
 
 export const playerInitialState = {
-  currentPlaylist: [],
-  currentIndexPlaylist: 0,
+  currentPlayList: [],
+  currentIndexPlayList: 0,
 };
 
 const playReducer = (state = playerInitialState, action) => {
@@ -11,25 +11,29 @@ const playReducer = (state = playerInitialState, action) => {
     case PlayerTypes.PLAYER_PLAY: {
       return {
         ...state,
-        currentPlaylist: [action.payload],
-        currentIndexPlaylist: 0,
+        currentPlayList: [action.payload],
+        currentIndexPlayList: 0,
       };
     }
     case PlayerTypes.PLAYER_ADD_TO_QUEQUE: {
       return {
         ...state,
-        currentPlaylist: [...state.currentPlaylist, action.payload],
+        currentPlayList: [...state.currentPlayList, action.payload],
       };
     }
     case PlayerTypes.PLAYER_CURRENT_INDEX_PLAYLIST: {
-      return { ...state, currentIndexPlaylist: action.payload };
+      return { ...state, currentIndexPlayList: action.payload };
     }
-    case PlayerTypes.PLAYER_SYNC_DELETE: {
-      const newCurrentPlaylist = toggleInArrayById(
-        state.currentPlaylist,
+    case PlayerTypes.PLAYER_SYNC_SONG_DELETE: {
+      const newCurrentPlayList = toggleInArrayById(
+        state.currentPlayList,
         action.payload,
       );
-      return { ...state, currentPlaylist: [...newCurrentPlaylist] };
+      return { ...state, currentPlayList: [...newCurrentPlayList] };
+    }
+    case PlayerTypes.PLAYER_SYNC_PLAYLIST_DELETE: {
+      // TODO: Eliminar la playlist actual, si la playlist es eliminada.
+      return { ...state };
     }
     default: {
       return state;

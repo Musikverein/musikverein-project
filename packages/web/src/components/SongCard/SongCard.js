@@ -12,18 +12,18 @@ import {
 } from '../../redux/librarySongs/librarySong-actions';
 import LikeButton from '../LikeButton';
 import SongForm from '../SongForm';
-import { songSelector } from '../../redux/song/song-selectors';
+import { selectSongByIdState } from '../../redux/song/song-selectors';
 import { authSelector } from '../../redux/auth/auth-selectors';
 
 export const SongCard = ({ songId }) => {
-  const { songs } = useSelector(songSelector);
+  const song = useSelector(selectSongByIdState(songId));
   const dispatch = useDispatch();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
   const {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
-  const { title, artist, genre, image, likedBy, _id, owner } = songs[songId];
+  const { title, artist, genre, image, likedBy, _id, owner } = song;
 
   const handlePlaySong = () => {
     dispatch(play(_id));

@@ -1,14 +1,18 @@
+import { toggleInArrayById } from '../../utils/utils';
 import * as LibraryPlayListTypes from './libraryPlayList-types';
 
 const userPlayListInitialState = {
   isCreatingPlayList: false,
   createPlayListSuccess: false,
   createPlayListError: null,
-  isGettingPlaylist: false,
-  getPlaylistError: null,
-  getPlaylistSuccess: false,
+  isGettingPlayList: false,
+  getPlayListError: null,
+  getPlayListSuccess: false,
+  isDeletePlayList: false,
+  deletePlayListError: null,
+  deletePlayListSuccess: false,
   currentPath: LibraryPlayListTypes.USER_PLAYLIST_PATH_OWN_PLAYLIST,
-  userPlaylists: [],
+  userPlayLists: [],
 };
 
 const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
@@ -37,35 +41,72 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
         createPlayListError: null,
       };
     }
+    case LibraryPlayListTypes.USER_PLAYLIST_CREATE_RESET: {
+      return {
+        ...state,
+        isCreatingPlayList: false,
+        createPlayListSuccess: false,
+        createPlayListError: null,
+      };
+    }
     case LibraryPlayListTypes.USER_PLAYLIST_GET_REQUEST: {
       return {
         ...state,
-        isGettingPlaylist: true,
-        getPlaylistError: null,
-        getPlaylistSuccess: false,
+        isGettingPlayList: true,
+        getPlayListError: null,
+        getPlayListSuccess: false,
       };
     }
     case LibraryPlayListTypes.USER_PLAYLIST_GET_ERROR: {
       return {
         ...state,
-        isGettingPlaylist: false,
-        getPlaylistError: action.payload,
-        getPlaylistSuccess: false,
+        isGettingPlayList: false,
+        getPlayListError: action.payload,
+        getPlayListSuccess: false,
       };
     }
     case LibraryPlayListTypes.USER_PLAYLIST_GET_SUCCESS: {
       return {
         ...state,
-        isGettingPlaylist: false,
-        getPlaylistError: null,
-        getPlaylistSuccess: true,
-        userPlaylists: [...action.payload],
+        isGettingPlayList: false,
+        getPlayListError: null,
+        getPlayListSuccess: true,
+        userPlayLists: [...action.payload],
       };
     }
     case LibraryPlayListTypes.USER_PLAYLIST_SET_CURRENT_PATH: {
       return {
         ...state,
         currentPath: action.payload,
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_DELETE_REQUEST: {
+      return {
+        ...state,
+        isDeleltePlayList: true,
+        deleltePlayListError: null,
+        deleltePlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_DELETE_ERROR: {
+      return {
+        ...state,
+        isDeleltePlayList: false,
+        deleltePlayListError: action.payload,
+        deleltePlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_DELETE_SUCCESS: {
+      const newUserPlayLists = toggleInArrayById(
+        state.userPlayLists,
+        action.payload,
+      );
+      return {
+        ...state,
+        isDeleltePlayList: false,
+        deleltePlayListError: null,
+        deleltePlayListSuccess: true,
+        userPlayLists: [...newUserPlayLists],
       };
     }
     default:

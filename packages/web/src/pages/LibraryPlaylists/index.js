@@ -1,3 +1,3 @@
-const { LibraryPlaylists } = require('./LibraryPlaylists');
+const { LibraryPlayLists } = require('./LibraryPlayLists');
 
-export default LibraryPlaylists;
+export default LibraryPlayLists;

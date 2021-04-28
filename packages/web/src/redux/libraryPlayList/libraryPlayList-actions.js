@@ -1,8 +1,9 @@
 import api from '../../api';
 import * as auth from '../../services/auth';
-import { normalizePlaylists } from '../../utils/normalizrSchema/schema';
+import { normalizePlayLists } from '../../utils/normalizrSchema/schema';
 import { signOutSuccess } from '../auth/auth-actions';
-import { loadPlayList } from '../playList/playList-actions';
+import { syncPlayListDelete } from '../player/player-actions';
+import { loadPlayList, removePlayList } from '../playList/playList-actions';
 import * as LibraryPlayListTypes from './libraryPlayList-types';
 
 export const createPlayListRequest = () => ({
@@ -26,7 +27,7 @@ export const createPlayList = ({
   publicPlayList,
   recaptchaToken,
 }) => {
-  return async function createPlaylistThunk(dispatch) {
+  return async function createPlayListThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
@@ -58,46 +59,46 @@ export const createPlayList = ({
   };
 };
 
-export const getUserPlaylistsRequest = () => ({
+export const getUserPlayListsRequest = () => ({
   type: LibraryPlayListTypes.USER_PLAYLIST_GET_REQUEST,
 });
-export const getUserPlaylistsSuccess = (playlists) => ({
+export const getUserPlayListsSuccess = (playLists) => ({
   type: LibraryPlayListTypes.USER_PLAYLIST_GET_SUCCESS,
-  payload: playlists,
+  payload: playLists,
 });
-export const getUserPlaylistsError = (message) => ({
+export const getUserPlayListsError = (message) => ({
   type: LibraryPlayListTypes.USER_PLAYLIST_GET_ERROR,
   payload: message,
 });
 
-export const getUserPlaylists = (filter) => {
-  return async function getUserPlaylistsThunk(dispatch) {
+export const getUserPlayLists = (filter) => {
+  return async function getUserPlayListsThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
       return dispatch(signOutSuccess());
     }
 
-    dispatch(getUserPlaylistsRequest());
+    dispatch(getUserPlayListsRequest());
     try {
       const { errorMessage, data: response } =
         filter === LibraryPlayListTypes.USER_PLAYLIST_PATH_OWN_PLAYLIST
-          ? await api.getUserPlaylists({
+          ? await api.getUserPlayLists({
               Authorization: `Bearer ${token}`,
             })
-          : await api.getFollowPlaylists({
+          : await api.getFollowedPlayLists({
               Authorization: `Bearer ${token}`,
             });
       if (errorMessage) {
-        return dispatch(getUserPlaylistsError(errorMessage));
+        return dispatch(getUserPlayListsError(errorMessage));
       }
 
-      const { result, entities } = normalizePlaylists(response.data);
+      const { result, entities } = normalizePlayLists(response.data);
 
-      dispatch(loadPlayList(entities.playlists));
-      return dispatch(getUserPlaylistsSuccess(result));
+      dispatch(loadPlayList(entities.playLists));
+      return dispatch(getUserPlayListsSuccess(result));
     } catch (error) {
-      return dispatch(getUserPlaylistsError(error.message));
+      return dispatch(getUserPlayListsError(error.message));
     }
   };
 };
@@ -106,3 +107,43 @@ export const setCurrentPath = (path) => ({
   type: LibraryPlayListTypes.USER_PLAYLIST_SET_CURRENT_PATH,
   payload: path,
 });
+
+export const deletePlayListRequest = () => ({
+  type: LibraryPlayListTypes.USER_PLAYLIST_DELETE_REQUEST,
+});
+export const deletePlayListSuccess = (song) => ({
+  type: LibraryPlayListTypes.USER_PLAYLIST_DELETE_SUCCESS,
+  payload: song._id,
+});
+export const deletePlayListError = (message) => ({
+  type: LibraryPlayListTypes.USER_PLAYLIST_DELETE_ERROR,
+  payload: message,
+});
+
+export const deletePlayList = (playListId) => {
+  return async function deletePlayListThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(deletePlayListRequest());
+    try {
+      const { errorMessage, data: response } = await api.deletePlayList(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { playListId },
+      );
+      if (errorMessage) {
+        return dispatch(deletePlayListError(errorMessage));
+      }
+      dispatch(deletePlayListSuccess(response.data));
+      dispatch(syncPlayListDelete(response.data));
+      return dispatch(removePlayList(response.data));
+    } catch (error) {
+      return dispatch(deletePlayListError(error.message));
+    }
+  };
+};
