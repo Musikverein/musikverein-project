@@ -30,7 +30,7 @@ export const getUserSongs = (filter) => {
     dispatch(getUserSongsRequest());
     try {
       const { errorMessage, data: response } =
-        filter === 'ownSongs'
+        filter === LibrarySongTypes.USER_SONG_PATH_OWN_SONGS
           ? await api.getUserSongs({
               Authorization: `Bearer ${token}`,
             })

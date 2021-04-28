@@ -66,4 +66,16 @@ export const api = {
       headers: headers,
     });
   },
+
+  getUserPlaylists: (headers, body = {}) => {
+    return axios.post(`${baseURL}/playlists/userPlaylists`, body, {
+      headers: headers,
+    });
+  },
+
+  getLikedPlaylists: (headers, body = {}) => {
+    return axios.post(`${baseURL}/playlists/userPlaylists/follow`, body, {
+      headers: headers,
+    });
+  },
 };
