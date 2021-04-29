@@ -10,42 +10,41 @@ import DropdownItem from '../DropdownItem';
 import ModalLayout from '../ModalLayout';
 import ConfirmText from '../ConfirmText';
 import { FollowButton } from '../FollowButton/FollowButton';
+import { PlayListForm } from '../PlayListForm/PlayListForm';
 
 export const PlayListCard = ({ playListId }) => {
   const { playLists } = useSelector(playListSelector);
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isDeletePlayList, setIsDeletePlayList] = useState(false);
-  // const [isEditSong, setIsEditSong] = useState(false);
+  const [isEditPlayList, setIsEditPlayList] = useState(false);
   const {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
   // Falta mostrar si es publica
-  const { title, followedBy, owner, type, _id } = playLists[playListId];
+  const { title, followedBy, owner, type, _id, isPublic } = playLists[
+    playListId
+  ];
 
   // const handlePlayPlayList = () => {
   //   dispatch(playPlayList(_id));
   // };
 
-  // const handlePlayListEdit = () => {
-  //   setIsEditSong(!isEditSong);
-  //   setMenuOpen(!menuOpen);
-  // };
+  const handlePlayListEdit = () => {
+    setIsEditPlayList(!isEditPlayList);
+  };
 
   const handleRemovePlayList = () => {
     dispatch(deletePlayList(_id));
   };
 
-  // const handleSubmitEditForm = (formValues) => {
-  //   dispatch(editMySong({ ...formValues, songId: _id }));
-  //   setIsEditSong(false);
-  // };
+  const handleSubmitEditForm = (formValues) => {
+    dispatch(editMySong({ ...formValues, playListId: _id }));
+  };
 
   const handleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
-  const handlePlayListEdit = () => {};
 
   const handleConfirmDeletePlayList = () => {
     setIsDeletePlayList(!isDeletePlayList);
@@ -130,6 +129,14 @@ export const PlayListCard = ({ playListId }) => {
           </Dropdown>
         )}
       </div>
+      <ModalLayout isOpen={isEditPlayList} handleClose={handlePlayListEdit}>
+        <PlayListForm
+          handleSubmit={handleSubmitEditForm}
+          playListTitle={title}
+          playistType={type}
+          playListPublic={isPublic}
+        />
+      </ModalLayout>
       <ModalLayout
         isOpen={isDeletePlayList}
         handleClose={handleConfirmDeletePlayList}
