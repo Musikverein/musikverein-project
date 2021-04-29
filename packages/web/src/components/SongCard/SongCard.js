@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import Modal from 'react-modal';
 import { addToQueque, play } from '../../redux/player/player-actions';
 
 import './SongCard.scss';
@@ -14,8 +13,8 @@ import LikeButton from '../LikeButton';
 import SongForm from '../SongForm';
 import { selectSongByIdState } from '../../redux/song/song-selectors';
 import { authSelector } from '../../redux/auth/auth-selectors';
-
-Modal.setAppElement('#root');
+import ModalLayout from '../ModalLayout';
+import ConfirmText from '../ConfirmText';
 
 export const SongCard = ({ songId }) => {
   const song = useSelector(selectSongByIdState(songId));
@@ -122,12 +121,7 @@ export const SongCard = ({ songId }) => {
           </button>
         </nav>
       </div>
-      <Modal
-        isOpen={isEditSong}
-        onRequestClose={closeModal}
-        overlayClassName="Overlay"
-        className="Modal"
-      >
+      <ModalLayout isOpen={isEditSong} handleClose={closeModal}>
         <SongForm
           songTitle={title}
           songArtist={artist}
@@ -137,29 +131,19 @@ export const SongCard = ({ songId }) => {
           handleCancel={() => setIsEditSong(false)}
           isLoading={false}
         />
-      </Modal>
-      <Modal
+      </ModalLayout>
+      <ModalLayout
         isOpen={isDeleteSong}
-        onRequestClose={() => {
+        handleClose={() => {
           setIsDeleteSong(false);
         }}
-        overlayClassName="Overlay"
-        className="Modal"
       >
-        <p className="text-white">Are you sure?</p>
-        <button className="text-white" type="button" onClick={handleRemoveSong}>
-          Yes
-        </button>
-        <button
-          className="text-white"
-          type="button"
-          onClick={() => {
-            setIsDeleteSong(false);
-          }}
-        >
-          No
-        </button>
-      </Modal>
+        <ConfirmText
+          handleRemoveSong={handleRemoveSong}
+          onCancel={() => setIsDeleteSong(false)}
+          title={title}
+        />
+      </ModalLayout>
     </section>
   );
 };

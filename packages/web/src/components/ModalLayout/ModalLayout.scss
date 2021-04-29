@@ -1,0 +1,41 @@
+.Modal {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(10, 10, 10);
+}
+
+.Overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 999;
+}
+
+.modal {
+  &-button-close {
+    position: absolute;
+    left: 1.5rem;
+    top: 1.5rem;
+    color: white;
+  }
+  &-wrapper {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+  }
+}
