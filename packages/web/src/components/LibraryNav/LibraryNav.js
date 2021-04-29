@@ -30,11 +30,6 @@ export const LibraryNav = ({ handleShowCreatePlayListModal }) => {
             className="bx bx-plus-circle text-3xl library-nav__link"
             onClick={handleShowCreatePlayListModal}
           />
-          /*   <NavLink
-            to={ROUTES.PLAYLIST_CREATE}
-            className="bx bx-plus-circle text-3xl library-nav__link"
-            activeClassName="library-nav__link-active"
-          /> */
         )}
         <NavLink
           to={ROUTES.SONG_UPLOAD}

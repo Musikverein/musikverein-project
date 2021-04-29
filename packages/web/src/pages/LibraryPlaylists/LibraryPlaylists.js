@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Header from '../../components/Header';
@@ -7,6 +7,7 @@ import { LibrarySelect } from '../../components/LibrarySelect/LibrarySelect';
 import * as LibraryPlayListTypes from '../../redux/libraryPlayList/libraryPlayList-types';
 import {
   createPlayList,
+  playListReset,
   getUserPlayLists,
   setCurrentPath,
 } from '../../redux/libraryPlayList/libraryPlayList-actions';
@@ -17,9 +18,13 @@ import ModalLayout from '../../components/ModalLayout';
 import { PlayListForm } from '../../components/PlayListForm/PlayListForm';
 
 export const LibraryPlayLists = () => {
-  const { currentPath, userPlayLists, isGettingPlayList } = useSelector(
-    userPlayListSelector,
-  );
+  const {
+    currentPath,
+    userPlayLists,
+    isGettingPlayList,
+    editPlayListSuccess,
+    createPlayListSuccess,
+  } = useSelector(userPlayListSelector);
   const [isCreatePlaylist, setIsCreatePlaylist] = useState(false);
   const dispatch = useDispatch();
 
@@ -27,9 +32,9 @@ export const LibraryPlayLists = () => {
     dispatch(setCurrentPath(target.value));
   };
 
-  const handleShowCreatePlayListModal = () => {
+  const handleShowCreatePlayListModal = useCallback(() => {
     setIsCreatePlaylist(!isCreatePlaylist);
-  };
+  }, [setIsCreatePlaylist, isCreatePlaylist]);
 
   const handleCreatePlayList = async (formValues) => {
     dispatch(createPlayList({ ...formValues }));
@@ -37,6 +42,18 @@ export const LibraryPlayLists = () => {
   useEffect(() => {
     dispatch(getUserPlayLists(currentPath));
   }, [dispatch, currentPath]);
+
+  useEffect(() => {
+    if (editPlayListSuccess || createPlayListSuccess) {
+      dispatch(playListReset());
+      handleShowCreatePlayListModal();
+    }
+  }, [
+    editPlayListSuccess,
+    createPlayListSuccess,
+    dispatch,
+    handleShowCreatePlayListModal,
+  ]);
 
   return (
     <>
@@ -74,6 +91,7 @@ export const LibraryPlayLists = () => {
             playListTitle=""
             playistType="PlayList"
             playListPublic
+            defaultImg=""
           />
         </ModalLayout>
       </main>

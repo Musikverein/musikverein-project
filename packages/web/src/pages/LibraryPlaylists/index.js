@@ -1,3 +1,3 @@
-import { LibraryPlayLists } from './LibraryPlayLists';
+import { LibraryPlayLists } from './LibraryPlaylists';
 
 export default LibraryPlayLists;

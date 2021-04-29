@@ -1,5 +1,6 @@
 import api from '../../api';
 import * as auth from '../../services/auth';
+import { imageUpload } from '../../services/cloudinary';
 import { normalizePlayLists } from '../../utils/normalizrSchema/schema';
 import { signOutSuccess } from '../auth/auth-actions';
 import { syncPlayListDelete } from '../player/player-actions';
@@ -9,22 +10,24 @@ import * as LibraryPlayListTypes from './libraryPlayList-types';
 export const createPlayListRequest = () => ({
   type: LibraryPlayListTypes.USER_PLAYLIST_CREATE_REQUEST,
 });
-export const createPlayListSuccess = () => ({
+export const createPlayListSuccess = (playListId) => ({
   type: LibraryPlayListTypes.USER_PLAYLIST_CREATE_SUCCESS,
+  payload: playListId,
 });
 export const createPlayListError = (message) => ({
   type: LibraryPlayListTypes.USER_PLAYLIST_CREATE_ERROR,
   payload: message,
 });
-export const createPlayListReset = () => ({
+export const playListReset = () => ({
   type: LibraryPlayListTypes.USER_PLAYLIST_CREATE_RESET,
 });
 
 export const createPlayList = ({
   title,
   type,
-  publicPlayList,
+  isPublic,
   recaptchaToken,
+  image,
 }) => {
   return async function createPlayListThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
@@ -35,14 +38,24 @@ export const createPlayList = ({
 
     dispatch(createPlayListRequest());
     try {
-      const { errorMessage } = await api.createPlayList(
+      let imgUrl = null;
+      if (typeof image !== 'string') {
+        imgUrl = await imageUpload(
+          image,
+          process.env.REACT_APP_CLOUDINARY_PRESET_PLAYLIST,
+        );
+      } else {
+        imgUrl = image;
+      }
+      const { errorMessage, data: response } = await api.createPlayList(
         {
           Authorization: `Bearer ${token}`,
         },
         {
           title,
           type,
-          public: publicPlayList,
+          isPublic,
+          image: imgUrl,
           recaptchaToken,
         },
       );
@@ -51,7 +64,9 @@ export const createPlayList = ({
         return dispatch(createPlayListError(errorMessage));
       }
 
-      return dispatch(createPlayListSuccess());
+      const { entities, result } = normalizePlayLists([response.data]);
+      dispatch(loadPlayList(entities.playLists));
+      return dispatch(createPlayListSuccess(result[0]));
     } catch (error) {
       return dispatch(createPlayListError(error.message));
     }
@@ -193,6 +208,61 @@ export const followPlayList = (playListId) => {
       return dispatch(followPlayListSuccess());
     } catch (error) {
       return dispatch(followPlayListError(error.message));
+    }
+  };
+};
+
+export const editUserPlayListRequest = () => ({
+  type: LibraryPlayListTypes.USER_PLAYLIST_EDIT_REQUEST,
+});
+export const editUserPlayListSuccess = () => ({
+  type: LibraryPlayListTypes.USER_PLAYLIST_EDIT_SUCCESS,
+});
+export const editUserPlayListError = (message) => ({
+  type: LibraryPlayListTypes.USER_PLAYLIST_EDIT_ERROR,
+  payload: message,
+});
+
+export const editUserPlayList = ({
+  title,
+  isPublic,
+  type,
+  playListId,
+  image,
+  recaptchaToken,
+}) => {
+  return async function editUserPlaylistThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+    dispatch(editUserPlayListRequest());
+
+    try {
+      let imgUrl = null;
+      if (typeof image !== 'string') {
+        imgUrl = await imageUpload(
+          image,
+          process.env.REACT_APP_CLOUDINARY_PRESET_PLAYLIST,
+        );
+      } else {
+        imgUrl = image;
+      }
+      const { errorMessage, data: response } = await api.editPlayList(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { title, isPublic, type, playListId, recaptchaToken, image: imgUrl },
+      );
+      if (errorMessage) {
+        return dispatch(editUserPlayListError(errorMessage));
+      }
+      const { entities } = normalizePlayLists([response.data]);
+      dispatch(loadPlayList(entities.playLists));
+      return dispatch(editUserPlayListSuccess());
+    } catch (error) {
+      return dispatch(editUserPlayListError(error.message));
     }
   };
 };

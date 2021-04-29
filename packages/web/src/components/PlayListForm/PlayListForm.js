@@ -6,25 +6,32 @@ import { userPlayListSelector } from '../../redux/libraryPlayList/libraryPlayLis
 import Spinner from '../Spinner';
 import { validationSchema } from '../../utils/validation/validationSchema';
 import { useForm } from '../../hooks/useForm';
+import { ImgEdit } from '../ImgEdit/ImgEdit';
+import { useImgPreview } from '../../hooks/useImgPreview';
 
 export const PlayListForm = ({
   handleSubmit,
   playListTitle,
   playistType,
   playListPublic,
+  defaultImg,
 }) => {
   const { formValues, handleInputChange, errors, isValid } = useForm({
     title: playListTitle,
     type: playistType,
     isPublic: playListPublic,
   });
+  const { stateImg, handleImageChange, handleImage, refId } = useImgPreview(
+    'playListImage',
+  );
 
   const reRef = useRef();
-  const { isCreatingPlayList, isEditingPlaylist } = useSelector(
+  const { isCreatingPlayList, isEditPlayList } = useSelector(
     userPlayListSelector,
   );
 
   const { title, type, isPublic } = formValues;
+  const { urlPreview, file } = stateImg;
 
   const handlePreSubmit = async (e) => {
     e.preventDefault();
@@ -35,6 +42,7 @@ export const PlayListForm = ({
         title,
         type,
         isPublic,
+        image: file || defaultImg,
         recaptchaToken,
       });
     }
@@ -42,10 +50,21 @@ export const PlayListForm = ({
 
   return (
     <>
-      {isCreatingPlayList || isEditingPlaylist ? (
+      {isCreatingPlayList || isEditPlayList ? (
         <Spinner />
       ) : (
         <>
+          <ImgEdit
+            handleImage={handleImage}
+            handleImageChange={handleImageChange}
+            urlPreview={urlPreview}
+            refId={refId}
+            defaultImg={
+              defaultImg ||
+              'https://res.cloudinary.com/musikverein/image/upload/v1618918279/playlist-photo_htrvf3.svg'
+            }
+            rounded={false}
+          />
           <form className="w-full p-4 flex flex-col" onSubmit={handlePreSubmit}>
             <input
               className="form__input rounded-4 "
@@ -60,11 +79,11 @@ export const PlayListForm = ({
             <label htmlFor="Type" className="my-4">
               Public
               <input
-                value={isPublic}
                 name="isPublic"
                 className="mx-2"
                 type="checkbox"
                 onChange={handleInputChange}
+                checked={isPublic}
               />
             </label>
             <select
@@ -97,4 +116,5 @@ PlayListForm.propTypes = {
   playListTitle: PropTypes.string.isRequired,
   playistType: PropTypes.string.isRequired,
   playListPublic: PropTypes.bool.isRequired,
+  defaultImg: PropTypes.string.isRequired,
 };

@@ -9,7 +9,7 @@ class PlayListRepository {
   find(options) {
     return normalizeDBQuery(
       db.PlayList.find(options).select(
-        'title owner type songs followedBy public',
+        'title owner type songs followedBy isPublic image',
       ),
     );
   }

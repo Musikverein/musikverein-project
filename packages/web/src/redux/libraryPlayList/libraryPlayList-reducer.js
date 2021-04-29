@@ -14,6 +14,9 @@ const userPlayListInitialState = {
   isLikePlayList: false,
   likePlayListError: null,
   likePlayListSuccess: false,
+  isEditPlayList: false,
+  editPlayListError: null,
+  editPlayListSuccess: false,
   currentPath: LibraryPlayListTypes.USER_PLAYLIST_PATH_OWN_PLAYLIST,
   userPlayLists: [],
 };
@@ -42,6 +45,7 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
         isCreatingPlayList: false,
         createPlayListSuccess: true,
         createPlayListError: null,
+        userPlayLists: [...state.userPlayLists, action.payload],
       };
     }
     case LibraryPlayListTypes.USER_PLAYLIST_CREATE_RESET: {
@@ -50,6 +54,9 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
         isCreatingPlayList: false,
         createPlayListSuccess: false,
         createPlayListError: null,
+        isEditPlayList: false,
+        editPlayListError: null,
+        editPlayListSuccess: false,
       };
     }
     case LibraryPlayListTypes.USER_PLAYLIST_GET_REQUEST: {
@@ -144,6 +151,30 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
       return {
         ...state,
         userPlayLists: [...newUserPlayLists],
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_EDIT_REQUEST: {
+      return {
+        ...state,
+        isEditPlayList: true,
+        editPlayListError: null,
+        editPlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_EDIT_ERROR: {
+      return {
+        ...state,
+        isEditPlayList: false,
+        editPlayListSuccess: false,
+        editPlayListError: action.payload,
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_EDIT_SUCCESS: {
+      return {
+        ...state,
+        isEditPlayList: false,
+        editPlayListError: null,
+        editPlayListSuccess: true,
       };
     }
     default:

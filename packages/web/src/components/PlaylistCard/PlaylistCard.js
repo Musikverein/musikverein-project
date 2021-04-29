@@ -4,13 +4,18 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { playListSelector } from '../../redux/playList/playList-selectors';
 import { authSelector } from '../../redux/auth/auth-selectors';
-import { deletePlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
+import {
+  deletePlayList,
+  editUserPlayList,
+  playListReset,
+} from '../../redux/libraryPlayList/libraryPlayList-actions';
 import Dropdown from '../Dropdown';
 import DropdownItem from '../DropdownItem';
 import ModalLayout from '../ModalLayout';
 import ConfirmText from '../ConfirmText';
 import { FollowButton } from '../FollowButton/FollowButton';
 import { PlayListForm } from '../PlayListForm/PlayListForm';
+import { userPlayListSelector } from '../../redux/libraryPlayList/libraryPlayList-selectors';
 
 export const PlayListCard = ({ playListId }) => {
   const { playLists } = useSelector(playListSelector);
@@ -21,8 +26,11 @@ export const PlayListCard = ({ playListId }) => {
   const {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
+  const { editPlayListSuccess, createPlayListSuccess } = useSelector(
+    userPlayListSelector,
+  );
   // Falta mostrar si es publica
-  const { title, followedBy, owner, type, _id, isPublic } = playLists[
+  const { title, followedBy, owner, type, _id, isPublic, image } = playLists[
     playListId
   ];
 
@@ -39,7 +47,7 @@ export const PlayListCard = ({ playListId }) => {
   };
 
   const handleSubmitEditForm = (formValues) => {
-    dispatch(editMySong({ ...formValues, playListId: _id }));
+    dispatch(editUserPlayList({ ...formValues, playListId: _id }));
   };
 
   const handleDropdown = () => {
@@ -51,6 +59,11 @@ export const PlayListCard = ({ playListId }) => {
   };
 
   const handleAddToQueque = () => {};
+
+  if (editPlayListSuccess || createPlayListSuccess) {
+    dispatch(playListReset());
+    handlePlayListEdit();
+  }
 
   return (
     <section className="p-2">
@@ -135,6 +148,7 @@ export const PlayListCard = ({ playListId }) => {
           playListTitle={title}
           playistType={type}
           playListPublic={isPublic}
+          defaultImg={image}
         />
       </ModalLayout>
       <ModalLayout

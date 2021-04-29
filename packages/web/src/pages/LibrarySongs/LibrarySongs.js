@@ -31,7 +31,7 @@ export const LibrarySongs = () => {
   return (
     <>
       <Header />
-      <LibraryNav handleCreatePlaylist />
+      <LibraryNav handleShowCreatePlayListModal />
       <main className="main-container-library">
         <LibrarySelect
           selectValue={currentPath}

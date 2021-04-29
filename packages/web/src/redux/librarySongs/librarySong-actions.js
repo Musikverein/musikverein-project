@@ -51,25 +51,32 @@ export const getUserSongs = (filter) => {
   };
 };
 
-export const editMySongRequest = () => ({
+export const editUserSongRequest = () => ({
   type: LibrarySongTypes.USER_SONG_EDIT_REQUEST,
 });
-export const editUserSongsuccess = () => ({
+export const editUserSongSuccess = () => ({
   type: LibrarySongTypes.USER_SONG_EDIT_SUCCESS,
 });
-export const editMySongError = (message) => ({
+export const editUserSongError = (message) => ({
   type: LibrarySongTypes.USER_SONG_EDIT_ERROR,
   payload: message,
 });
 
-export const editMySong = ({ title, artist, genre, image, songId }) => {
-  return async function editMySongThunk(dispatch) {
+export const editUserSong = ({
+  title,
+  artist,
+  genre,
+  image,
+  songId,
+  recaptchaToken,
+}) => {
+  return async function editUserSongThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
       return dispatch(signOutSuccess());
     }
-    dispatch(editMySongRequest());
+    dispatch(editUserSongRequest());
 
     try {
       let imgUrl = null;
@@ -85,16 +92,16 @@ export const editMySong = ({ title, artist, genre, image, songId }) => {
         {
           Authorization: `Bearer ${token}`,
         },
-        { title, artist, genre, image: imgUrl, songId },
+        { title, artist, genre, image: imgUrl, songId, recaptchaToken },
       );
       if (errorMessage) {
-        return dispatch(editMySongError(errorMessage));
+        return dispatch(editUserSongError(errorMessage));
       }
       const { entities } = normalizeSongs([response.data]);
       dispatch(loadSongs(entities.songs));
-      return dispatch(editUserSongsuccess());
+      return dispatch(editUserSongSuccess());
     } catch (error) {
-      return dispatch(editMySongError(error.message));
+      return dispatch(editUserSongError(error.message));
     }
   };
 };

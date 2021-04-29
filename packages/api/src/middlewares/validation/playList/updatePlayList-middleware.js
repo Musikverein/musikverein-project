@@ -4,16 +4,18 @@ const createPlayListSchema = Joi.object({
   title: Joi.string().min(3).max(200).required(),
   type: Joi.string().valid('PlayList', 'Album').required(),
   isPublic: Joi.bool().required(),
+  image: Joi.string().required(),
 });
 
-async function validateCreatePlayList(req, res, next) {
-  const { title, type, isPublic } = req.body;
+async function validateUpdatePlayList(req, res, next) {
+  const { title, type, isPublic, image } = req.body;
 
   try {
     const { error } = createPlayListSchema.validate({
       title,
       type,
       isPublic,
+      image,
     });
 
     if (error) {
@@ -26,4 +28,4 @@ async function validateCreatePlayList(req, res, next) {
   }
 }
 
-module.exports = { validateCreatePlayList };
+module.exports = { validateUpdatePlayList };
