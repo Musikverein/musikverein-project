@@ -65,7 +65,7 @@ export const SongForm = ({
       ) : (
         <form onSubmit={handlePreSubmit} className="w-2/3">
           <input
-            className="input__edit"
+            className="form__input"
             placeholder="Title:"
             type="text"
             value={title}
@@ -78,7 +78,7 @@ export const SongForm = ({
             {errors.title ? errors.title : ' '}
           </span>
           <input
-            className="input__edit"
+            className="form__input"
             placeholder="Artist:"
             type="text"
             value={artist}
@@ -91,7 +91,7 @@ export const SongForm = ({
             {errors.artist ? errors.artist : ' '}
           </span>
           <input
-            className="input__edit"
+            className="form__input"
             placeholder="Genre:"
             type="text"
             value={genre}
@@ -105,7 +105,7 @@ export const SongForm = ({
           </span>
           <button
             type="submit"
-            className="rounded-4 w-full mb-4 button-secundary"
+            className="rounded-4 w-full mb-4 button-secundary "
             disabled={isLoading}
           >
             Submit

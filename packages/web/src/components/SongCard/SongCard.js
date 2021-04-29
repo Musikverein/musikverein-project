@@ -1,41 +1,42 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { useDispatch, useSelector } from 'react-redux';
-
-import './SongCard.scss';
-
 import { addToQueque, play } from '../../redux/player/player-actions';
-
+import { authSelector } from '../../redux/auth/auth-selectors';
+import { selectSongByIdState } from '../../redux/song/song-selectors';
 import {
   deleteSong,
   editMySong,
 } from '../../redux/librarySongs/librarySong-actions';
-import LikeButton from '../LikeButton';
+
 import SongForm from '../SongForm';
-import { selectSongByIdState } from '../../redux/song/song-selectors';
-import { authSelector } from '../../redux/auth/auth-selectors';
+import LikeButton from '../LikeButton';
+import ModalLayout from '../ModalLayout';
+import ConfirmText from '../ConfirmText';
+import Dropdown from '../Dropdown';
+
+import './SongCard.scss';
+import DropdownItem from '../DropdownItem';
 
 export const SongCard = ({ songId }) => {
   const song = useSelector(selectSongByIdState(songId));
   const dispatch = useDispatch();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
+  const [isDeleteSong, setIsDeleteSong] = useState(false);
   const {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
+
   const { title, artist, genre, image, likedBy, _id, owner } = song;
 
   const handlePlaySong = () => {
     dispatch(play(_id));
   };
 
-  const handleAddToQueque = () => {
-    dispatch(addToQueque(_id));
-  };
-
   const handleSongEdit = () => {
     setIsEditSong(!isEditSong);
-    setMenuOpen(!menuOpen);
   };
   const handleRemoveSong = () => {
     dispatch(deleteSong(_id));
@@ -44,6 +45,17 @@ export const SongCard = ({ songId }) => {
   const handleSubmitEditForm = (formValues) => {
     dispatch(editMySong({ ...formValues, songId: _id }));
     setIsEditSong(false);
+  };
+  const handleConfirmDeleteSong = () => {
+    setIsDeleteSong(!isDeleteSong);
+  };
+
+  const handleAddToQueque = () => {
+    dispatch(addToQueque(_id));
+  };
+
+  const handleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
   };
 
   return (
@@ -79,48 +91,61 @@ export const SongCard = ({ songId }) => {
               <dt className="sr-only">Likes</dt>
               <dd>{likedBy.length} Likes</dd>
             </div>
-            <LikeButton likedBy={likedBy} songId={_id} />
+            <LikeButton likedBy={likedBy} songId={_id} text={false} />
           </dl>
         </div>
+        {dropdownOpen && (
+          <Dropdown handleClose={handleDropdown} styleNav="dropdown">
+            <>
+              {owner === userId && (
+                <DropdownItem
+                  isButton
+                  icon="bx-edit-alt"
+                  text="Edit"
+                  action={handleSongEdit}
+                />
+              )}
+              {owner === userId && (
+                <DropdownItem
+                  isButton
+                  icon="bx-trash"
+                  text="Remove"
+                  action={handleConfirmDeleteSong}
+                />
+              )}
+              <LikeButton likedBy={likedBy} songId={_id} text />
+              <DropdownItem
+                isButton
+                icon="bx-list-plus"
+                text="Add to queqe"
+                action={handleAddToQueque}
+              />
+            </>
+          </Dropdown>
+        )}
 
-        <button type="button" onClick={() => setMenuOpen(!menuOpen)}>
+        <button type="button" onClick={handleDropdown}>
           <i className="bx bx-dots-vertical-rounded text-2xl" />
         </button>
-        <nav
-          className={
-            menuOpen
-              ? 'absolute flex flex-col nav-song shadow-xl'
-              : 'hidden absolute'
-          }
-        >
-          {owner === userId && (
-            <button type="button" onClick={handleSongEdit}>
-              Edit
-            </button>
-          )}
-
-          {owner === userId && (
-            <button type="button" onClick={handleRemoveSong}>
-              Remove
-            </button>
-          )}
-          <LikeButton likedBy={likedBy} songId={_id} />
-          <button type="button" onClick={handleAddToQueque}>
-            Add to queqe
-          </button>
-        </nav>
       </div>
-      {isEditSong && (
+      <ModalLayout isOpen={isEditSong} handleClose={handleSongEdit}>
         <SongForm
           songTitle={title}
           songArtist={artist}
           songGenre={genre}
           defaultImg={image}
           handleSubmit={handleSubmitEditForm}
-          handleCancel={() => setIsEditSong(false)}
+          handleCancel={handleSongEdit}
           isLoading={false}
         />
-      )}
+      </ModalLayout>
+      <ModalLayout isOpen={isDeleteSong} handleClose={handleConfirmDeleteSong}>
+        <ConfirmText
+          handleRemoveSong={handleRemoveSong}
+          onCancel={handleConfirmDeleteSong}
+          title={title}
+        />
+      </ModalLayout>
     </section>
   );
 };

@@ -3,7 +3,7 @@
 .button {
   padding: 10px 15px;
   border-radius: 4px;
-  height: 50px;
+
   &-primary {
     border: 1px solid $color-bg-secundary;
     background-color: $color-principal;
@@ -16,6 +16,7 @@
   &-secundary {
     border: 1px solid $color-bg-secundary;
     background-color: $color-bg-main;
+    color: white;
 
     &:hover,
     :focus,

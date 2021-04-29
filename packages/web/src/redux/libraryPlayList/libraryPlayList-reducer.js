@@ -11,6 +11,9 @@ const userPlayListInitialState = {
   isDeletePlayList: false,
   deletePlayListError: null,
   deletePlayListSuccess: false,
+  isLikePlayList: false,
+  likePlayListError: null,
+  likePlayListSuccess: false,
   currentPath: LibraryPlayListTypes.USER_PLAYLIST_PATH_OWN_PLAYLIST,
   userPlayLists: [],
 };
@@ -106,6 +109,40 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
         isDeleltePlayList: false,
         deleltePlayListError: null,
         deleltePlayListSuccess: true,
+        userPlayLists: [...newUserPlayLists],
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_FOLLOW_REQUEST: {
+      return {
+        ...state,
+        isLikePlayList: true,
+        likePlayListError: null,
+        likePlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_FOLLOW_ERROR: {
+      return {
+        ...state,
+        isLikePlayList: false,
+        likePlayListError: action.payload,
+        likePlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_FOLLOW_SUCCESS: {
+      return {
+        ...state,
+        isLikePlayList: false,
+        likePlayListError: null,
+        likePlayListSuccess: true,
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_SYNC_FOLLOW: {
+      const newUserPlayLists = toggleInArrayById(
+        state.userPlayList,
+        action.payload,
+      );
+      return {
+        ...state,
         userPlayLists: [...newUserPlayLists],
       };
     }
