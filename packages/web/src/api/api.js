@@ -50,8 +50,9 @@ export const api = {
   },
 
   deleteSong: (headers, body = {}) => {
-    return axios.patch(`${baseURL}/songs/delete`, body, {
+    return axios.delete(`${baseURL}/songs/delete`, {
       headers: headers,
+      data: body,
     });
   },
 
