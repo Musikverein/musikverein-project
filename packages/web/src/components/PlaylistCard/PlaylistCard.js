@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -7,7 +7,6 @@ import { authSelector } from '../../redux/auth/auth-selectors';
 import {
   deletePlayList,
   editUserPlayList,
-  playListReset,
 } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import Dropdown from '../Dropdown';
 import DropdownItem from '../DropdownItem';
@@ -15,7 +14,6 @@ import ModalLayout from '../ModalLayout';
 import ConfirmText from '../ConfirmText';
 import { FollowButton } from '../FollowButton/FollowButton';
 import { PlayListForm } from '../PlayListForm/PlayListForm';
-import { userPlayListSelector } from '../../redux/libraryPlayList/libraryPlayList-selectors';
 
 export const PlayListCard = ({ playListId }) => {
   const { playLists } = useSelector(playListSelector);
@@ -26,9 +24,6 @@ export const PlayListCard = ({ playListId }) => {
   const {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
-  const { editPlayListSuccess, createPlayListSuccess } = useSelector(
-    userPlayListSelector,
-  );
   // Falta mostrar si es publica
   const { title, followedBy, owner, type, _id, isPublic, image } = playLists[
     playListId
@@ -38,9 +33,9 @@ export const PlayListCard = ({ playListId }) => {
   //   dispatch(playPlayList(_id));
   // };
 
-  const handlePlayListEdit = () => {
-    setIsEditPlayList(!isEditPlayList);
-  };
+  const handlePlayListEdit = useCallback(() => {
+    setIsEditPlayList((prevState) => !prevState);
+  }, [setIsEditPlayList]);
 
   const handleRemovePlayList = () => {
     dispatch(deletePlayList(_id));
@@ -59,11 +54,6 @@ export const PlayListCard = ({ playListId }) => {
   };
 
   const handleAddToQueque = () => {};
-
-  if (editPlayListSuccess || createPlayListSuccess) {
-    dispatch(playListReset());
-    handlePlayListEdit();
-  }
 
   return (
     <section className="p-2">
@@ -149,6 +139,7 @@ export const PlayListCard = ({ playListId }) => {
           playistType={type}
           playListPublic={isPublic}
           defaultImg={image}
+          handleClose={handlePlayListEdit}
         />
       </ModalLayout>
       <ModalLayout

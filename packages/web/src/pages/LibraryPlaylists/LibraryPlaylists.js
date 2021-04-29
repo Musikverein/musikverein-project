@@ -7,7 +7,6 @@ import { LibrarySelect } from '../../components/LibrarySelect/LibrarySelect';
 import * as LibraryPlayListTypes from '../../redux/libraryPlayList/libraryPlayList-types';
 import {
   createPlayList,
-  playListReset,
   getUserPlayLists,
   setCurrentPath,
 } from '../../redux/libraryPlayList/libraryPlayList-actions';
@@ -18,13 +17,9 @@ import ModalLayout from '../../components/ModalLayout';
 import { PlayListForm } from '../../components/PlayListForm/PlayListForm';
 
 export const LibraryPlayLists = () => {
-  const {
-    currentPath,
-    userPlayLists,
-    isGettingPlayList,
-    editPlayListSuccess,
-    createPlayListSuccess,
-  } = useSelector(userPlayListSelector);
+  const { currentPath, userPlayLists, isGettingPlayList } = useSelector(
+    userPlayListSelector,
+  );
   const [isCreatePlaylist, setIsCreatePlaylist] = useState(false);
   const dispatch = useDispatch();
 
@@ -33,8 +28,8 @@ export const LibraryPlayLists = () => {
   };
 
   const handleShowCreatePlayListModal = useCallback(() => {
-    setIsCreatePlaylist(!isCreatePlaylist);
-  }, [setIsCreatePlaylist, isCreatePlaylist]);
+    setIsCreatePlaylist((prevState) => !prevState);
+  }, [setIsCreatePlaylist]);
 
   const handleCreatePlayList = async (formValues) => {
     dispatch(createPlayList({ ...formValues }));
@@ -42,18 +37,6 @@ export const LibraryPlayLists = () => {
   useEffect(() => {
     dispatch(getUserPlayLists(currentPath));
   }, [dispatch, currentPath]);
-
-  useEffect(() => {
-    if (editPlayListSuccess || createPlayListSuccess) {
-      dispatch(playListReset());
-      handleShowCreatePlayListModal();
-    }
-  }, [
-    editPlayListSuccess,
-    createPlayListSuccess,
-    dispatch,
-    handleShowCreatePlayListModal,
-  ]);
 
   return (
     <>
@@ -92,6 +75,7 @@ export const LibraryPlayLists = () => {
             playistType="PlayList"
             playListPublic
             defaultImg=""
+            handleClose={handleShowCreatePlayListModal}
           />
         </ModalLayout>
       </main>

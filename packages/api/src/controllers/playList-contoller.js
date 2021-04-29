@@ -30,9 +30,10 @@ async function create(req, res, next) {
         songs,
         followedBy,
         isPublic,
+        _id,
       } = response.data;
       return res.status(201).send({
-        data: { title, owner, type, image, songs, followedBy, isPublic },
+        data: { title, owner, type, image, songs, followedBy, isPublic, _id },
         error: null,
       });
     }

@@ -1,6 +1,6 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import ReCAPTCHA from 'react-google-recaptcha';
 import { userPlayListSelector } from '../../redux/libraryPlayList/libraryPlayList-selectors';
 import Spinner from '../Spinner';
@@ -8,6 +8,7 @@ import { validationSchema } from '../../utils/validation/validationSchema';
 import { useForm } from '../../hooks/useForm';
 import { ImgEdit } from '../ImgEdit/ImgEdit';
 import { useImgPreview } from '../../hooks/useImgPreview';
+import { playListReset } from '../../redux/libraryPlayList/libraryPlayList-actions';
 
 export const PlayListForm = ({
   handleSubmit,
@@ -15,7 +16,9 @@ export const PlayListForm = ({
   playistType,
   playListPublic,
   defaultImg,
+  handleClose,
 }) => {
+  const dispatch = useDispatch();
   const { formValues, handleInputChange, errors, isValid } = useForm({
     title: playListTitle,
     type: playistType,
@@ -26,9 +29,12 @@ export const PlayListForm = ({
   );
 
   const reRef = useRef();
-  const { isCreatingPlayList, isEditPlayList } = useSelector(
-    userPlayListSelector,
-  );
+  const {
+    isCreatingPlayList,
+    isEditPlayList,
+    editPlayListSuccess,
+    createPlayListSuccess,
+  } = useSelector(userPlayListSelector);
 
   const { title, type, isPublic } = formValues;
   const { urlPreview, file } = stateImg;
@@ -47,6 +53,12 @@ export const PlayListForm = ({
       });
     }
   };
+  useEffect(() => {
+    if (editPlayListSuccess || createPlayListSuccess) {
+      handleClose();
+      dispatch(playListReset());
+    }
+  }, [createPlayListSuccess, dispatch, editPlayListSuccess, handleClose]);
 
   return (
     <>
@@ -113,6 +125,7 @@ export const PlayListForm = ({
 
 PlayListForm.propTypes = {
   handleSubmit: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
   playListTitle: PropTypes.string.isRequired,
   playistType: PropTypes.string.isRequired,
   playListPublic: PropTypes.bool.isRequired,
