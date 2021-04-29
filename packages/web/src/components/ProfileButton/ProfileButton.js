@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 import { signOut } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import ROUTES from '../../routers/routes';
-
-import './ProfileButton.scss';
+import Dropdown from '../Dropdown';
+import DropdownItem from '../DropdownItem';
 
 export const ProfileButton = () => {
   const [profileMenuActive, setProfileMenuActive] = useState(false);
@@ -39,18 +38,22 @@ export const ProfileButton = () => {
           <i className="bx bx-chevron-down text-2xl" />
         </p>
       </button>
-      <nav
-        className={
-          profileMenuActive
-            ? 'absolute flex flex-col nav-profile shadow-xl'
-            : 'hidden absolute'
-        }
-      >
-        <Link to={ROUTES.PROFILE}>Profile</Link>
-        <button type="button" onClick={handleSignOut}>
-          LogOut
-        </button>
-      </nav>
+      {profileMenuActive && (
+        <Dropdown handleClose={handleShowProfileMenu} styleNav="nav-profile">
+          <DropdownItem
+            isButton={false}
+            icon="bx-user"
+            text="Profile"
+            action={ROUTES.PROFILE}
+          />
+          <DropdownItem
+            isButton
+            icon="bx-log-out-circle"
+            text="LogOut"
+            action={handleSignOut}
+          />
+        </Dropdown>
+      )}
     </div>
   );
 };

@@ -8,23 +8,7 @@
     background-color: rgba(41, 41, 41, 0.357);
   }
 }
-.nav-song {
-  width: 200px;
-  margin-top: 75px;
-  right: 15px;
-  border-radius: 4px;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: black;
-  border-bottom: 0.5px solid $color-bg-secundary;
-  a,
-  button {
-    padding: 10px 15px;
-    text-align: left;
-    &:hover {
-      color: white;
-    }
-  }
-}
+
 .time {
   all: unset;
   text-decoration: none !important;

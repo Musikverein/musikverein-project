@@ -2,6 +2,7 @@
   position: absolute;
   height: 100%;
   width: 100%;
+  max-width: 750px;
   top: 0;
   left: 0;
   right: 0;
@@ -13,6 +14,12 @@
   align-items: center;
   flex-direction: column;
   background-color: rgb(10, 10, 10);
+  @media (min-width: 750px) {
+    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.3),
+      0 0 20px rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    max-height: 85vh;
+  }
 }
 
 .Overlay {

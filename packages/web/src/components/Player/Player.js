@@ -42,7 +42,7 @@ export const Player = () => {
             <h2 className="text-l font-semibold text-light">{title} -</h2>
             <h3 className="text-m font-normal text-light">&nbsp;{artist}</h3>
           </button>
-          <LikeButton likedBy={likedBy} songId={_id} />
+          <LikeButton likedBy={likedBy} songId={_id} text={false} />
         </div>
       </div>
       <div className="w-full">
