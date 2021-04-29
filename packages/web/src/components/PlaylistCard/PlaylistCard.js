@@ -1,15 +1,21 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import Modal from 'react-modal';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { playListSelector } from '../../redux/playList/playList-selectors';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import { deletePlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
+import Dropdown from '../Dropdown';
+import DropdownItem from '../DropdownItem';
+import ModalLayout from '../ModalLayout';
+import ConfirmText from '../ConfirmText';
+import { FollowButton } from '../FollowButton/FollowButton';
 
 export const PlayListCard = ({ playListId }) => {
   const { playLists } = useSelector(playListSelector);
   const dispatch = useDispatch();
-  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [isDeletePlayList, setIsDeletePlayList] = useState(false);
   // const [isEditSong, setIsEditSong] = useState(false);
   const {
     currentUser: { _id: userId },
@@ -34,6 +40,18 @@ export const PlayListCard = ({ playListId }) => {
   //   dispatch(editMySong({ ...formValues, songId: _id }));
   //   setIsEditSong(false);
   // };
+
+  const handleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const handlePlayListEdit = () => {};
+
+  const handleConfirmDeletePlayList = () => {
+    setIsDeletePlayList(!isDeletePlayList);
+  };
+
+  const handleAddToQueque = () => {};
 
   return (
     <section className="p-2">
@@ -71,41 +89,57 @@ export const PlayListCard = ({ playListId }) => {
               <dt className="sr-only">Follow</dt>
               <dd>{followedBy.length} Followed</dd>
             </div>
+            <FollowButton
+              followedBy={followedBy}
+              playListId={_id}
+              text={false}
+            />
           </dl>
         </div>
 
-        <button type="button" onClick={() => setMenuOpen(!menuOpen)}>
+        <button type="button" onClick={handleDropdown}>
           <i className="bx bx-dots-vertical-rounded text-2xl" />
         </button>
-        <nav
-          className={
-            menuOpen
-              ? 'absolute flex flex-col nav-song shadow-xl'
-              : 'hidden absolute'
-          }
-        >
-          {owner === userId && <button type="button">Edit</button>}
-
-          {owner === userId && (
-            <button type="button" onClick={handleRemovePlayList}>
-              Remove
-            </button>
-          )}
-          <button type="button">Follow</button>
-          <button type="button">Add to queqe</button>
-        </nav>
+        {dropdownOpen && (
+          <Dropdown handleClose={handleDropdown} styleNav="dropdown">
+            <>
+              {owner === userId && (
+                <DropdownItem
+                  isButton
+                  icon="bx-edit-alt"
+                  text="Edit"
+                  action={handlePlayListEdit}
+                />
+              )}
+              {owner === userId && (
+                <DropdownItem
+                  isButton
+                  icon="bx-trash"
+                  text="Remove"
+                  action={handleConfirmDeletePlayList}
+                />
+              )}
+              <FollowButton followedBy={followedBy} playListId={_id} text />
+              <DropdownItem
+                isButton
+                icon="bx-list-plus"
+                text="Add to queqe"
+                action={handleAddToQueque}
+              />
+            </>
+          </Dropdown>
+        )}
       </div>
-      <Modal>
-        {/*       <SongForm
-          songTitle={title}
-          songArtist={artist}
-          songGenre={genre}
-          defaultImg={image}
-          handleSubmit={handleSubmitEditForm}
-          handleCancel={() => setIsEditSong(false)}
-          isLoading={false}
-        /> */}
-      </Modal>
+      <ModalLayout
+        isOpen={isDeletePlayList}
+        handleClose={handleConfirmDeletePlayList}
+      >
+        <ConfirmText
+          handleRemoveSong={handleRemovePlayList}
+          onCancel={handleConfirmDeletePlayList}
+          title={title}
+        />
+      </ModalLayout>
     </section>
   );
 };

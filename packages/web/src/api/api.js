@@ -86,4 +86,10 @@ export const api = {
       data: body,
     });
   },
+
+  followPlayList: (headers, body = {}) => {
+    return axios.patch(`${baseURL}/playlist/follow`, body, {
+      headers: headers,
+    });
+  },
 };

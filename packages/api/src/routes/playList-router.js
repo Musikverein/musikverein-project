@@ -28,6 +28,7 @@ playListRouter.delete(
   '/userPlaylists/delete',
   playListController.deletePlaylist,
 );
+playListRouter.patch('/follow', playListController.followPlayList);
 
 module.exports = {
   playListRouter: playListRouter,

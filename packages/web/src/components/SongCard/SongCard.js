@@ -22,7 +22,7 @@ import DropdownItem from '../DropdownItem';
 export const SongCard = ({ songId }) => {
   const song = useSelector(selectSongByIdState(songId));
   const dispatch = useDispatch();
-  const [dropdownOpen, setdropdownOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
   const [isDeleteSong, setIsDeleteSong] = useState(false);
   const {
@@ -55,7 +55,7 @@ export const SongCard = ({ songId }) => {
   };
 
   const handleDropdown = () => {
-    setdropdownOpen(!dropdownOpen);
+    setDropdownOpen(!dropdownOpen);
   };
 
   return (
@@ -105,7 +105,6 @@ export const SongCard = ({ songId }) => {
                   action={handleSongEdit}
                 />
               )}
-
               {owner === userId && (
                 <DropdownItem
                   isButton

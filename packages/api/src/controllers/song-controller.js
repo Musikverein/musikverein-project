@@ -97,29 +97,19 @@ async function likeSong(req, res, next) {
 
     if (response.data) {
       const { likedBy } = response.data;
-      let updatedSong = null;
+      let newLikedBy =
+        likedBy.indexOf(_id) !== -1
+          ? likedBy.filter((id) => String(id) !== String(_id))
+          : [...likedBy, _id];
 
-      if (likedBy.indexOf(_id) !== -1) {
-        const newLikedBy = likedBy.filter((id) => String(id) !== String(_id));
-        updatedSong = await SongRepo.findOneAndUpdate(
-          { _id: songId, active: true },
-          { likedBy: newLikedBy },
-          {
-            new: true,
-            select: 'genre image artist likedBy title duration url owner',
-          },
-        );
-      } else {
-        const newLikedBy = [...likedBy, _id];
-        updatedSong = await SongRepo.findOneAndUpdate(
-          { _id: songId, active: true },
-          { likedBy: newLikedBy },
-          {
-            new: true,
-            select: 'genre image artist likedBy title duration url owner',
-          },
-        );
-      }
+      const updatedSong = await SongRepo.findOneAndUpdate(
+        { _id: songId, active: true },
+        { likedBy: newLikedBy },
+        {
+          new: true,
+          select: 'genre image artist likedBy title duration url owner',
+        },
+      );
 
       if (updatedSong.error) {
         return res.status(400).send({

@@ -40,18 +40,20 @@ export const ProfileButton = () => {
       </button>
       {profileMenuActive && (
         <Dropdown handleClose={handleShowProfileMenu} styleNav="nav-profile">
-          <DropdownItem
-            isButton={false}
-            icon="bx-user"
-            text="Profile"
-            action={ROUTES.PROFILE}
-          />
-          <DropdownItem
-            isButton
-            icon="bx-log-out-circle"
-            text="LogOut"
-            action={handleSignOut}
-          />
+          <>
+            <DropdownItem
+              isButton={false}
+              icon="bx-user"
+              text="Profile"
+              action={ROUTES.PROFILE}
+            />
+            <DropdownItem
+              isButton
+              icon="bx-log-out-circle"
+              text="LogOut"
+              action={handleSignOut}
+            />
+          </>
         </Dropdown>
       )}
     </div>

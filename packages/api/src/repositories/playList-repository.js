@@ -5,6 +5,7 @@ class PlayListRepository {
   create(options) {
     return normalizeDBQuery(db.PlayList.create(options));
   }
+
   find(options) {
     return normalizeDBQuery(
       db.PlayList.find(options).select(
@@ -12,9 +13,20 @@ class PlayListRepository {
       ),
     );
   }
+
   findOneAndDelete(options) {
     return normalizeDBQuery(
       db.PlayList.findOneAndDelete(options).select('_id'),
+    );
+  }
+
+  findOne(options) {
+    return normalizeDBQuery(db.PlayList.findOne(options));
+  }
+
+  findOneAndUpdate(queryFind, querySet, queryOptions) {
+    return normalizeDBQuery(
+      db.PlayList.findOneAndUpdate(queryFind, querySet, queryOptions),
     );
   }
 }
