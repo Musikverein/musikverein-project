@@ -84,8 +84,8 @@ export const PlayListCard = ({ playListId }) => {
               <dd>{type}</dd>
             </div>
             <div className="pr-4">
-              <dt className="sr-only">Public</dt>
-              <dd>Public</dd>
+              <dt className="sr-only">Privacity</dt>
+              <dd>{isPublic ? 'Public' : 'Private'}</dd>
             </div>
             <div className="pr-4">
               <dt className="sr-only">Follow</dt>
