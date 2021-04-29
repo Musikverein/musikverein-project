@@ -166,10 +166,10 @@ async function editSong(req, res, next) {
   try {
     const response = await SongRepo.findOneAndUpdate(
       { _id: songId, owner: _id },
-      { title, artist, genre, image, songId },
+      { title, artist, genre, image },
       {
         new: true,
-        select: 'title artist duration owner likedBy url genre image _id',
+        select: 'title artist duration owner likedBy url genre image',
       },
     );
     if (response.error) {

@@ -1,10 +1,11 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { NavLink, useLocation } from 'react-router-dom';
 import ROUTES from '../../routers/routes';
 
 import './LibraryNav.scss';
 
-export const LibraryNav = () => {
+export const LibraryNav = ({ handleShowCreatePlayListModal }) => {
   const location = useLocation();
   return (
     <nav className="library-nav">
@@ -24,10 +25,10 @@ export const LibraryNav = () => {
       </NavLink>
       <div className="ml-auto">
         {location.pathname === ROUTES.LIBRARY_PLAYLISTS && (
-          <NavLink
-            to={ROUTES.PLAYLIST_CREATE}
+          <button
+            type="button"
             className="bx bx-plus-circle text-3xl library-nav__link"
-            activeClassName="library-nav__link-active"
+            onClick={handleShowCreatePlayListModal}
           />
         )}
         <NavLink
@@ -38,4 +39,11 @@ export const LibraryNav = () => {
       </div>
     </nav>
   );
+};
+
+LibraryNav.propTypes = {
+  handleShowCreatePlayListModal: PropTypes.oneOfType([
+    PropTypes.bool,
+    PropTypes.func,
+  ]).isRequired,
 };

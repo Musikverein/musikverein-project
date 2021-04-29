@@ -17,6 +17,9 @@ const {
 const {
   validateUpdateSong,
 } = require('./validation/song/updateSong-middleware');
+const {
+  validateUpdatePlayList,
+} = require('./validation/playList/updatePlayList-middleware');
 
 module.exports = {
   authMiddleware: authMiddleware,
@@ -28,4 +31,5 @@ module.exports = {
   validateCreateSong: validateCreateSong,
   validateCreatePlayList: validateCreatePlayList,
   validateUpdateSong: validateUpdateSong,
+  validateUpdatePlayList: validateUpdatePlayList,
 };

@@ -5,6 +5,7 @@ const {
   findIdMiddleware,
   recaptchaMiddleware,
   validateCreatePlayList,
+  validateUpdatePlayList,
 } = require('../middlewares');
 const { playListController } = require('../controllers');
 
@@ -29,6 +30,12 @@ playListRouter.delete(
   playListController.deletePlaylist,
 );
 playListRouter.patch('/follow', playListController.followPlayList);
+playListRouter.patch(
+  '/edit',
+  recaptchaMiddleware,
+  validateUpdatePlayList,
+  playListController.editPlayList,
+);
 
 module.exports = {
   playListRouter: playListRouter,

@@ -2,13 +2,15 @@ const { PlayListRepo } = require('../repositories');
 
 async function create(req, res, next) {
   const { _id } = req.user;
-  const { title, type, songs } = req.body;
+  const { title, type, songs, isPublic, image } = req.body;
 
   try {
     const response = await PlayListRepo.create({
       title,
       type,
       owner: _id,
+      isPublic,
+      ...(image && { image }),
       ...(songs && { songs }),
     });
 
@@ -20,8 +22,18 @@ async function create(req, res, next) {
     }
 
     if (response.data) {
+      const {
+        title,
+        owner,
+        type,
+        image,
+        songs,
+        followedBy,
+        isPublic,
+        _id,
+      } = response.data;
       return res.status(201).send({
-        data: response.data,
+        data: { title, owner, type, image, songs, followedBy, isPublic, _id },
         error: null,
       });
     }
@@ -134,7 +146,7 @@ async function followPlayList(req, res, next) {
         { followedBy: newFollowedBy },
         {
           new: true,
-          select: 'title owner type songs followedBy public',
+          select: 'title owner type songs followedBy isPublic image',
         },
       );
 
@@ -157,10 +169,40 @@ async function followPlayList(req, res, next) {
   }
 }
 
+async function editPlayList(req, res, next) {
+  const { _id } = req.user;
+  const { title, type, isPublic, playListId, image } = req.body;
+  try {
+    const response = await PlayListRepo.findOneAndUpdate(
+      { _id: playListId, owner: _id },
+      { title, type, isPublic, image },
+      {
+        new: true,
+        select: 'title owner type isPublic followedBy songs image',
+      },
+    );
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+    if (response.data) {
+      return res.status(202).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   create: create,
   getPlaylist: getPlaylist,
   getFollowPlaylist: getFollowPlaylist,
   deletePlaylist: deletePlaylist,
   followPlayList: followPlayList,
+  editPlayList: editPlayList,
 };

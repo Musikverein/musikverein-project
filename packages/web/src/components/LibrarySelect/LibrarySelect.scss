@@ -1,10 +1,11 @@
 @import '../../styles/utils.scss';
 
-.playlist-select {
+.library-select {
   width: 100%;
   height: 60px;
   background-color: $color-bg-secundary;
-  align-items: center;
+  display: flex;
+  place-items: center stretch;
 
   select {
     color: rgb(130, 130, 130);
@@ -15,5 +16,6 @@
     border: none;
     background-color: black;
     padding: 10px;
+    margin-left: 10px;
   }
 }

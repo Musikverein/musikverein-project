@@ -92,4 +92,10 @@ export const api = {
       headers: headers,
     });
   },
+
+  editPlayList: (headers, body = {}) => {
+    return axios.patch(`${baseURL}/playlist/edit`, body, {
+      headers: headers,
+    });
+  },
 };

@@ -7,7 +7,7 @@ import { authSelector } from '../../redux/auth/auth-selectors';
 import { selectSongByIdState } from '../../redux/song/song-selectors';
 import {
   deleteSong,
-  editMySong,
+  editUserSong,
 } from '../../redux/librarySongs/librarySong-actions';
 
 import SongForm from '../SongForm';
@@ -43,7 +43,7 @@ export const SongCard = ({ songId }) => {
   };
 
   const handleSubmitEditForm = (formValues) => {
-    dispatch(editMySong({ ...formValues, songId: _id }));
+    dispatch(editUserSong({ ...formValues, songId: _id }));
     setIsEditSong(false);
   };
   const handleConfirmDeleteSong = () => {

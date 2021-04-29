@@ -18,6 +18,11 @@ const PlayListSchema = Schema(
       enum: ['Album', 'PlayList'],
       required: [true, 'The type is required'],
     },
+    image: {
+      type: String,
+      default:
+        'https://res.cloudinary.com/musikverein/image/upload/v1618918279/playlist-photo_htrvf3.svg',
+    },
     songs: {
       type: [
         {
@@ -36,7 +41,7 @@ const PlayListSchema = Schema(
       ],
       default: [],
     },
-    public: {
+    isPublic: {
       type: Schema.Types.Boolean,
       default: true,
     },
