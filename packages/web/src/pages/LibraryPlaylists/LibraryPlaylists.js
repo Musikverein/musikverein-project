@@ -11,7 +11,7 @@ import {
 } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { userPlayListSelector } from '../../redux/libraryPlayList/libraryPlayList-selectors';
 import { Spinner } from '../../components/Spinner/Spinner';
-import PlayListCard from '../../components/PlaylistCard';
+import PlayListCard from '../../components/PlayListCard';
 
 export const LibraryPlayLists = () => {
   const { currentPath, userPlayLists, isGettingPlayList } = useSelector(
