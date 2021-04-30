@@ -198,6 +198,59 @@ async function editPlayList(req, res, next) {
   }
 }
 
+async function addSongToPlayList(req, res, next) {
+  const { _id } = req.user;
+  const { playListId, songId } = req.body;
+
+  try {
+    const response = await PlayListRepo.findOne({
+      _id: playListId,
+      owner: _id,
+    });
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      const { songs } = response.data;
+      if (songs.indexOf(songId) !== -1) {
+        return res.status(400).send({
+          data: null,
+          error: 'This song is already in this playlist ',
+        });
+      }
+
+      const updatedPlayList = await PlayListRepo.findOneAndUpdate(
+        { _id: playListId },
+        { $push: { songs: songId } },
+        {
+          new: true,
+          select: 'title owner type songs followedBy isPublic image',
+        },
+      );
+
+      if (updatedPlayList.error) {
+        return res.status(400).send({
+          data: null,
+          error: updatedPlayList.error,
+        });
+      }
+
+      if (updatedPlayList.data) {
+        return res.status(200).send({
+          data: updatedPlayList.data,
+          error: null,
+        });
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   create: create,
   getPlaylist: getPlaylist,
@@ -205,4 +258,5 @@ module.exports = {
   deletePlaylist: deletePlaylist,
   followPlayList: followPlayList,
   editPlayList: editPlayList,
+  addSongToPlayList: addSongToPlayList,
 };
