@@ -5,9 +5,9 @@ const searchInitialState = {
   searchSongError: null,
   searchSongSuccess: false,
   songs: [],
-  isSearchingPlaylist: false,
-  searchPlaylistError: null,
-  searchPlaylistSuccess: false,
+  isSearchingPlayList: false,
+  searchPlayListError: null,
+  searchPlayListSuccess: false,
   playlists: [],
 };
 
@@ -41,25 +41,25 @@ const SearchReducer = (state = searchInitialState, action) => {
     case SearchTypes.SEARCH_PLAYLIST_REQUEST: {
       return {
         ...state,
-        isSearchingPlaylist: true,
-        searchPlaylistError: null,
-        searchPlaylistSuccess: false,
+        isSearchingPlayList: true,
+        searchPlayListError: null,
+        searchPlayListSuccess: false,
       };
     }
     case SearchTypes.SEARCH_PLAYLIST_ERROR: {
       return {
         ...state,
-        isSearchingPlaylist: false,
-        searchPlaylistError: action.payload,
-        searchPlaylistSuccess: false,
+        isSearchingPlayList: false,
+        searchPlayListError: action.payload,
+        searchPlayListSuccess: false,
       };
     }
     case SearchTypes.SEARCH_PLAYLIST_SUCCESS: {
       return {
         ...state,
-        isSearchingPlaylist: false,
-        searchPlaylistError: null,
-        searchPlaylistSuccess: true,
+        isSearchingPlayList: false,
+        searchPlayListError: null,
+        searchPlayListSuccess: true,
         playlists: [...action.payload],
       };
     }

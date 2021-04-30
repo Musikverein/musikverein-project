@@ -30,6 +30,7 @@ songRouter.patch(
   validateUpdateSong,
   songController.editSong,
 );
+songRouter.post('/search', songController.searchSongs);
 
 module.exports = {
   songRouter: songRouter,

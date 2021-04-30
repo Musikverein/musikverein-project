@@ -189,6 +189,34 @@ async function editSong(req, res, next) {
   }
 }
 
+async function searchSongs(req, res, next) {
+  const { value } = req.body;
+
+  try {
+    const response = await SongRepo.find({
+      $text: { $search: value },
+      active: true,
+      isPublic: true,
+    });
+    console.log(response);
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      return res.status(200).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   createSong: createSong,
   getUserSongs: getUserSongs,
@@ -196,4 +224,5 @@ module.exports = {
   likeSong: likeSong,
   deleteSong: deleteSong,
   editSong: editSong,
+  searchSongs: searchSongs,
 };

@@ -5,6 +5,7 @@ const SongSchema = Schema(
   {
     title: {
       type: String,
+      text: true,
       trim: true,
       required: [true, 'The title is required'],
     },
@@ -55,6 +56,7 @@ const SongSchema = Schema(
   },
 );
 
+SongSchema.index({ title: 'text' });
 const Song = mongoose.model('song', SongSchema);
 
 module.exports = Song;
