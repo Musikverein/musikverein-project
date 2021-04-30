@@ -4,9 +4,9 @@ export const play = (song) => ({
   type: PlayerTypes.PLAYER_PLAY,
   payload: song,
 });
-export const playPlayList = (playList) => ({
-  type: PlayerTypes.PLAYER_PLAY,
-  payload: playList,
+export const playPlayList = ({ songs, songIndex }) => ({
+  type: PlayerTypes.PLAYER_PLAY_PLAYLIST,
+  payload: { songs, songIndex },
 });
 
 export const addToQueque = (song) => ({

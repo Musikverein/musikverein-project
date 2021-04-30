@@ -11,6 +11,7 @@ import ROUTES from './routes';
 import { LibraryRouter } from './LibraryRouter';
 import Player from '../components/Player';
 import { playerSelector } from '../redux/player/player-selectors';
+import PlayList from '../pages/PlayList';
 
 export const AppRouter = () => {
   const { isAuthenticated } = useSelector(authSelector);
@@ -48,6 +49,13 @@ export const AppRouter = () => {
           isAuthenticated={isAuthenticated}
           path={ROUTES.SONG_UPLOAD}
           component={UploadSong}
+          exact
+        />
+
+        <ProtectedRoute
+          isAuthenticated={isAuthenticated}
+          path={ROUTES.PLAYLIST}
+          component={PlayList}
           exact
         />
       </Switch>

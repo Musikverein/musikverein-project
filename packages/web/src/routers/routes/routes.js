@@ -11,4 +11,6 @@ export const ROUTES = {
   LIBRARY_PLAYLISTS: '/library/playlists',
   SONG_UPLOAD: '/song/upload',
   TOS: '/tos',
+  PLAYLIST: '/playlist/:playListId',
+  PLAYLIST_WITHOUT_PARAM: '/playlist/',
 };

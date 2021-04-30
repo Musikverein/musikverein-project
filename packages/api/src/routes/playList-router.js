@@ -20,7 +20,7 @@ playListRouter.post(
   validateCreatePlayList,
   playListController.create,
 );
-playListRouter.post('/userPlaylists', playListController.getPlaylist);
+playListRouter.post('/userPlaylists', playListController.getUserPlaylist);
 playListRouter.post(
   '/userPlaylists/follow',
   playListController.getFollowPlaylist,
@@ -37,6 +37,7 @@ playListRouter.patch(
   playListController.editPlayList,
 );
 playListRouter.patch('/addsong', playListController.addSongToPlayList);
+playListRouter.post('/', playListController.getPlaylist);
 
 module.exports = {
   playListRouter: playListRouter,

@@ -75,7 +75,7 @@ export const api = {
   },
 
   getPlayList: (headers, body = {}) => {
-    return axios.post(`${baseURL}/playlist/`, body, {
+    return axios.post(`${baseURL}/playlist`, body, {
       headers: headers,
     });
   },

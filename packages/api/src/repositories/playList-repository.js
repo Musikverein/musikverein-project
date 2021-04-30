@@ -29,6 +29,17 @@ class PlayListRepository {
       db.PlayList.findOneAndUpdate(queryFind, querySet, queryOptions),
     );
   }
+
+  findOneAndPopulate(options) {
+    return normalizeDBQuery(
+      db.PlayList.findOne(options)
+        .populate({
+          path: 'songs',
+          select: { __v: 0, active: 0, createdAt: 0, updatedAt: 0 },
+        })
+        .select('title owner type followedBy isPublic image'),
+    );
+  }
 }
 
 module.exports = new PlayListRepository();

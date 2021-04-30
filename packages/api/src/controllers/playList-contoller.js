@@ -42,7 +42,7 @@ async function create(req, res, next) {
   }
 }
 
-async function getPlaylist(req, res, next) {
+async function getUserPlaylist(req, res, next) {
   const { _id } = req.user;
 
   try {
@@ -251,12 +251,39 @@ async function addSongToPlayList(req, res, next) {
   }
 }
 
+async function getPlaylist(req, res, next) {
+  const { playListId } = req.body;
+
+  try {
+    const response = await PlayListRepo.findOneAndPopulate({
+      _id: playListId,
+    });
+
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      return res.status(202).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   create: create,
-  getPlaylist: getPlaylist,
+  getUserPlaylist: getUserPlaylist,
   getFollowPlaylist: getFollowPlaylist,
   deletePlaylist: deletePlaylist,
   followPlayList: followPlayList,
   editPlayList: editPlayList,
   addSongToPlayList: addSongToPlayList,
+  getPlaylist: getPlaylist,
 };
