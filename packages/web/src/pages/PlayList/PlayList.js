@@ -183,7 +183,11 @@ export const PlayList = () => {
               />
             </ModalLayout>
             <ModalLayout isOpen={isSearching} handleClose={handleSearch}>
-              <Search isSearchSong isSearchPlayList={false} />
+              <Search
+                isSearchSong
+                isSearchPlayList={false}
+                playListId={playListId}
+              />
             </ModalLayout>
           </>
         )}
