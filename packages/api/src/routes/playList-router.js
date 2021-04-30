@@ -36,6 +36,7 @@ playListRouter.patch(
   validateUpdatePlayList,
   playListController.editPlayList,
 );
+playListRouter.patch('/addsong', playListController.addSongToPlayList);
 
 module.exports = {
   playListRouter: playListRouter,

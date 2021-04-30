@@ -1,10 +1,14 @@
 import api from '../../api';
 import * as auth from '../../services/auth';
 import { imageUpload } from '../../services/cloudinary';
-import { normalizePlayLists } from '../../utils/normalizrSchema/schema';
+import {
+  normalizePlayLists,
+  normalizeSongs,
+} from '../../utils/normalizrSchema/schema';
 import { signOutSuccess } from '../auth/auth-actions';
 import { syncPlayListDelete } from '../player/player-actions';
 import { loadPlayList, removePlayList } from '../playList/playList-actions';
+import { loadSongs } from '../song/song-actions';
 import * as LibraryPlayListTypes from './libraryPlayList-types';
 
 export const createPlayListRequest = () => ({
@@ -263,6 +267,87 @@ export const editUserPlayList = ({
       return dispatch(editUserPlayListSuccess());
     } catch (error) {
       return dispatch(editUserPlayListError(error.message));
+    }
+  };
+};
+
+export const addSongToPlayListRequest = () => ({
+  type: LibraryPlayListTypes.ADD_SONG_TO_PLAYLIST_REQUEST,
+});
+export const addSongToPlayListSuccess = () => ({
+  type: LibraryPlayListTypes.ADD_SONG_TO_PLAYLIST_SUCCESS,
+});
+export const addSongToPlayListError = (message) => ({
+  type: LibraryPlayListTypes.ADD_SONG_TO_PLAYLIST_ERROR,
+  payload: message,
+});
+
+export const addSongToPlayList = ({ songId, playListId }) => {
+  return async function addSongToPlayListThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+    dispatch(addSongToPlayListRequest());
+
+    try {
+      const { errorMessage, data: response } = await api.addSongToPlayList(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { songId, playListId },
+      );
+      if (errorMessage) {
+        return dispatch(addSongToPlayListError(errorMessage));
+      }
+      const { entities } = normalizePlayLists([response.data]);
+      dispatch(loadPlayList(entities.playLists));
+      return dispatch(addSongToPlayListSuccess());
+    } catch (error) {
+      return dispatch(addSongToPlayListError(error.message));
+    }
+  };
+};
+
+export const getPlayListRequest = () => ({
+  type: LibraryPlayListTypes.PLAYLIST_GET_REQUEST,
+});
+export const getPlayListSuccess = (playLists) => ({
+  type: LibraryPlayListTypes.PLAYLIST_GET_SUCCESS,
+  payload: playLists,
+});
+export const getPlayListError = (message) => ({
+  type: LibraryPlayListTypes.PLAYLIST_GET_ERROR,
+  payload: message,
+});
+
+export const getPlayList = (playListId) => {
+  return async function getPlayListThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(getPlayListRequest());
+    try {
+      const { errorMessage, data: response } = await api.getPlayList(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { playListId },
+      );
+      if (errorMessage) {
+        return dispatch(getPlayListError(errorMessage));
+      }
+
+      const { entities } = normalizeSongs(response.data.songs);
+
+      dispatch(loadSongs(entities.songs));
+      return dispatch(getPlayListSuccess());
+    } catch (error) {
+      return dispatch(getPlayListError(error.message));
     }
   };
 };

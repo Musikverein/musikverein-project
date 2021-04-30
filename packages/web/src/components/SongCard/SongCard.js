@@ -18,6 +18,7 @@ import Dropdown from '../Dropdown';
 
 import './SongCard.scss';
 import DropdownItem from '../DropdownItem';
+import AddToPlayList from '../AddToPlayList';
 
 export const SongCard = ({ songId }) => {
   const song = useSelector(selectSongByIdState(songId));
@@ -25,6 +26,7 @@ export const SongCard = ({ songId }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
   const [isDeleteSong, setIsDeleteSong] = useState(false);
+  const [isAddSongToPlayList, setIsAddSongToPlayList] = useState(false);
   const {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
@@ -52,6 +54,10 @@ export const SongCard = ({ songId }) => {
 
   const handleAddToQueque = () => {
     dispatch(addToQueque(_id));
+  };
+
+  const handleAddToPlayListModal = () => {
+    setIsAddSongToPlayList(!isAddSongToPlayList);
   };
 
   const handleDropdown = () => {
@@ -120,6 +126,12 @@ export const SongCard = ({ songId }) => {
                 text="Add to queqe"
                 action={handleAddToQueque}
               />
+              <DropdownItem
+                isButton
+                icon="bx-list-plus"
+                text="Add to playlist"
+                action={handleAddToPlayListModal}
+              />
             </>
           </Dropdown>
         )}
@@ -145,6 +157,12 @@ export const SongCard = ({ songId }) => {
           onCancel={handleConfirmDeleteSong}
           title={title}
         />
+      </ModalLayout>
+      <ModalLayout
+        isOpen={isAddSongToPlayList}
+        handleClose={handleAddToPlayListModal}
+      >
+        <AddToPlayList title={title} image={image} songId={_id} />
       </ModalLayout>
     </section>
   );

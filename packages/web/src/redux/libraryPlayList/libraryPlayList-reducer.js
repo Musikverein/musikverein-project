@@ -5,6 +5,9 @@ const userPlayListInitialState = {
   isCreatingPlayList: false,
   createPlayListSuccess: false,
   createPlayListError: null,
+  isGettingUserPlayList: false,
+  getUserPlayListError: null,
+  getUserPlayListSuccess: false,
   isGettingPlayList: false,
   getPlayListError: null,
   getPlayListSuccess: false,
@@ -17,6 +20,9 @@ const userPlayListInitialState = {
   isEditPlayList: false,
   editPlayListError: null,
   editPlayListSuccess: false,
+  isAddSongToPlayListPlayList: false,
+  addSongToPlayListPlayListError: null,
+  addSongToPlayListPlayListSuccess: false,
   currentPath: LibraryPlayListTypes.USER_PLAYLIST_PATH_OWN_PLAYLIST,
   userPlayLists: [],
 };
@@ -62,12 +68,37 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
     case LibraryPlayListTypes.USER_PLAYLIST_GET_REQUEST: {
       return {
         ...state,
+        isGettingUserPlayList: true,
+        getUserPlayListError: null,
+        getUserPlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_GET_ERROR: {
+      return {
+        ...state,
+        isGettingUserPlayList: false,
+        getUserPlayListError: action.payload,
+        getUserPlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.USER_PLAYLIST_GET_SUCCESS: {
+      return {
+        ...state,
+        isGettingUserPlayList: false,
+        getUserPlayListError: null,
+        getUserPlayListSuccess: true,
+        userPlayLists: [...action.payload],
+      };
+    }
+    case LibraryPlayListTypes.PLAYLIST_GET_REQUEST: {
+      return {
+        ...state,
         isGettingPlayList: true,
         getPlayListError: null,
         getPlayListSuccess: false,
       };
     }
-    case LibraryPlayListTypes.USER_PLAYLIST_GET_ERROR: {
+    case LibraryPlayListTypes.PLAYLIST_GET_ERROR: {
       return {
         ...state,
         isGettingPlayList: false,
@@ -75,13 +106,12 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
         getPlayListSuccess: false,
       };
     }
-    case LibraryPlayListTypes.USER_PLAYLIST_GET_SUCCESS: {
+    case LibraryPlayListTypes.PLAYLIST_GET_SUCCESS: {
       return {
         ...state,
         isGettingPlayList: false,
         getPlayListError: null,
         getPlayListSuccess: true,
-        userPlayLists: [...action.payload],
       };
     }
     case LibraryPlayListTypes.USER_PLAYLIST_SET_CURRENT_PATH: {
@@ -175,6 +205,30 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
         isEditPlayList: false,
         editPlayListError: null,
         editPlayListSuccess: true,
+      };
+    }
+    case LibraryPlayListTypes.ADD_SONG_TO_PLAYLIST_REQUEST: {
+      return {
+        ...state,
+        isAddSongToPlayListPlayList: true,
+        addSongToPlayListPlayListError: null,
+        addSongToPlayListPlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.ADD_SONG_TO_PLAYLIST_SUCCESS: {
+      return {
+        ...state,
+        isEditisAddSongToPlayListPlayListPlayList: false,
+        addSongToPlayListPlayListError: action.payload,
+        addSongToPlayListPlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.ADD_SONG_TO_PLAYLIST_ERROR: {
+      return {
+        ...state,
+        isAddSongToPlayListPlayList: false,
+        addSongToPlayListPlayListError: null,
+        addSongToPlayListPlayListSuccess: true,
       };
     }
     default:

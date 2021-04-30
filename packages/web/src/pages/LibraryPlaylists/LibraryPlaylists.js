@@ -17,7 +17,7 @@ import ModalLayout from '../../components/ModalLayout';
 import { PlayListForm } from '../../components/PlayListForm/PlayListForm';
 
 export const LibraryPlayLists = () => {
-  const { currentPath, userPlayLists, isGettingPlayList } = useSelector(
+  const { currentPath, userPlayLists, isGettingUserPlayList } = useSelector(
     userPlayListSelector,
   );
   const [isCreatePlaylist, setIsCreatePlaylist] = useState(false);
@@ -56,7 +56,7 @@ export const LibraryPlayLists = () => {
         />
 
         <section className="bg__primary">
-          {isGettingPlayList ? (
+          {isGettingUserPlayList ? (
             <Spinner />
           ) : (
             userPlayLists.length > 0 &&

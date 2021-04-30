@@ -74,6 +74,12 @@ export const api = {
     });
   },
 
+  getPlayList: (headers, body = {}) => {
+    return axios.post(`${baseURL}/playlist/`, body, {
+      headers: headers,
+    });
+  },
+
   getFollowedPlayLists: (headers, body = {}) => {
     return axios.post(`${baseURL}/playlist/userPlaylists/follow`, body, {
       headers: headers,
@@ -95,6 +101,12 @@ export const api = {
 
   editPlayList: (headers, body = {}) => {
     return axios.patch(`${baseURL}/playlist/edit`, body, {
+      headers: headers,
+    });
+  },
+
+  addSongToPlayList: (headers, body = {}) => {
+    return axios.patch(`${baseURL}/playlist/addsong`, body, {
       headers: headers,
     });
   },
