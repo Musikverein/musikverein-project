@@ -151,7 +151,7 @@ export const PlayListCard = ({ playListId }) => {
         handleClose={handleConfirmDeletePlayList}
       >
         <ConfirmText
-          handleRemoveSong={handleRemovePlayList}
+          handleRemove={handleRemovePlayList}
           onCancel={handleConfirmDeletePlayList}
           title={title}
         />

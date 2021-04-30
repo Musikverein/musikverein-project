@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addToQueque, play } from '../../redux/player/player-actions';
+import { addToQueque } from '../../redux/player/player-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import { selectSongByIdState } from '../../redux/song/song-selectors';
 import {
@@ -20,7 +20,7 @@ import './SongCard.scss';
 import DropdownItem from '../DropdownItem';
 import AddToPlayList from '../AddToPlayList';
 
-export const SongCard = ({ songId }) => {
+export const SongCard = ({ songId, handlePlay, isPlaylist }) => {
   const song = useSelector(selectSongByIdState(songId));
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -32,10 +32,6 @@ export const SongCard = ({ songId }) => {
   } = useSelector(authSelector);
 
   const { title, artist, genre, image, likedBy, _id, owner } = song;
-
-  const handlePlaySong = () => {
-    dispatch(play(_id));
-  };
 
   const handleSongEdit = () => {
     setIsEditSong(!isEditSong);
@@ -70,7 +66,7 @@ export const SongCard = ({ songId }) => {
         <button
           type="button"
           className="w-24 h-24 image-container"
-          onClick={handlePlaySong}
+          onClick={handlePlay}
         >
           <div className="flex items-center justify-center absolute w-24 h-24 img-play">
             <i className="bx bx-play text-4xl" />
@@ -153,7 +149,7 @@ export const SongCard = ({ songId }) => {
       </ModalLayout>
       <ModalLayout isOpen={isDeleteSong} handleClose={handleConfirmDeleteSong}>
         <ConfirmText
-          handleRemoveSong={handleRemoveSong}
+          handleRemove={handleRemoveSong}
           onCancel={handleConfirmDeleteSong}
           title={title}
         />
@@ -170,4 +166,6 @@ export const SongCard = ({ songId }) => {
 
 SongCard.propTypes = {
   songId: PropTypes.string.isRequired,
+  handlePlay: PropTypes.func.isRequired,
+  isPlaylist: PropTypes.bool.isRequired,
 };

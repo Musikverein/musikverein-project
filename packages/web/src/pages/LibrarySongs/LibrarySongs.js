@@ -2,6 +2,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { librarySongSelector } from '../../redux/librarySongs/librarySong-selectors';
+import { play } from '../../redux/player/player-actions';
 import {
   getUserSongs,
   setCurrentPath,
@@ -19,6 +20,10 @@ export const LibrarySongs = () => {
   const { isGettingSong, userSongs, currentPath } = useSelector(
     librarySongSelector,
   );
+
+  const handlePlaySong = ({ songId }) => {
+    dispatch(play(songId));
+  };
 
   const handleSelect = ({ target }) => {
     dispatch(setCurrentPath(target.value));
@@ -45,7 +50,14 @@ export const LibrarySongs = () => {
             <Spinner />
           ) : (
             userSongs.length > 0 &&
-            userSongs.map((songId) => <SongCard key={songId} songId={songId} />)
+            userSongs.map((songId) => (
+              <SongCard
+                key={songId}
+                songId={songId}
+                handlePlay={() => handlePlaySong({ songId })}
+                isPlaylist={false}
+              />
+            ))
           )}
         </section>
       </main>

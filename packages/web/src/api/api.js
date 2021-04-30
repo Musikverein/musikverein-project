@@ -110,4 +110,14 @@ export const api = {
       headers: headers,
     });
   },
+  searchSongs: (headers, body = {}) => {
+    return axios.post(`${baseURL}/songs/search`, body, {
+      headers: headers,
+    });
+  },
+  searchPlayLists: (headers, body = {}) => {
+    return axios.post(`${baseURL}/playlist/search`, body, {
+      headers: headers,
+    });
+  },
 };

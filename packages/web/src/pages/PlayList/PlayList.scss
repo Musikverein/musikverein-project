@@ -1,0 +1,17 @@
+@import '../../styles/utils.scss';
+.playlist {
+  height: 28vh;
+  &-img {
+    width: 8rem;
+    height: 8rem;
+    object-fit: cover;
+  }
+  &-button-play {
+    background-color: $color-principal;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    top: calc(28vh + 112px);
+    padding-left: 2px;
+  }
+}

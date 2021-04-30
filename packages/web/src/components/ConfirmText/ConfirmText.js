@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const ConfirmText = ({ handleRemoveSong, onCancel, title }) => {
+export const ConfirmText = ({ handleRemove, onCancel, title }) => {
   return (
     <>
       <h3 className="text-white text-lg mb-4 text-center">
@@ -12,7 +12,7 @@ export const ConfirmText = ({ handleRemoveSong, onCancel, title }) => {
         <button
           className="text-white button-secundary mx-4 px-4"
           type="button"
-          onClick={handleRemoveSong}
+          onClick={handleRemove}
         >
           Yes
         </button>
@@ -29,7 +29,7 @@ export const ConfirmText = ({ handleRemoveSong, onCancel, title }) => {
 };
 
 ConfirmText.propTypes = {
-  handleRemoveSong: PropTypes.func.isRequired,
+  handleRemove: PropTypes.func.isRequired,
   onCancel: PropTypes.func.isRequired,
   title: PropTypes.string.isRequired,
 };
