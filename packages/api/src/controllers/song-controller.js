@@ -191,12 +191,12 @@ async function editSong(req, res, next) {
 
 async function searchSongs(req, res, next) {
   const { value } = req.body;
+  console.log(value);
 
   try {
     const response = await SongRepo.find({
-      $text: { $search: value },
+      title: { $regex: value, $options: 'i' },
       active: true,
-      isPublic: true,
     });
     console.log(response);
     if (response.error) {
