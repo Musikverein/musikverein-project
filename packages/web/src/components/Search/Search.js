@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import {
+  resetSearch,
   searchPlayLists,
   searchSongs,
 } from '../../redux/search/search-actions';
@@ -27,6 +28,12 @@ export const Search = ({ isSearchSong, isSearchPlayList, playListId }) => {
   } = useSelector(searchSelector);
 
   const { search } = formValues;
+
+  useEffect(() => {
+    return () => {
+      dispatch(resetSearch());
+    };
+  }, [dispatch]);
 
   const handleSearch = (e) => {
     e.preventDefault();

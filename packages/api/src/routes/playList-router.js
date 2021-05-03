@@ -14,6 +14,13 @@ const playListRouter = Router();
 playListRouter.use(authMiddleware);
 playListRouter.use(findIdMiddleware);
 
+playListRouter.post('/', playListController.getPlaylist);
+playListRouter.patch(
+  '/',
+  recaptchaMiddleware,
+  validateUpdatePlayList,
+  playListController.editPlayList,
+);
 playListRouter.post(
   '/create',
   recaptchaMiddleware,
@@ -21,23 +28,23 @@ playListRouter.post(
   playListController.create,
 );
 playListRouter.post('/userPlaylists', playListController.getUserPlaylist);
+playListRouter.delete('/userPlaylists', playListController.deletePlaylist);
 playListRouter.post(
   '/userPlaylists/follow',
   playListController.getFollowPlaylist,
 );
-playListRouter.delete(
-  '/userPlaylists/delete',
-  playListController.deletePlaylist,
-);
-playListRouter.patch('/follow', playListController.followPlayList);
 playListRouter.patch(
-  '/edit',
-  recaptchaMiddleware,
-  validateUpdatePlayList,
-  playListController.editPlayList,
+  '/userPlaylists/follow',
+  playListController.followPlayList,
 );
-playListRouter.patch('/addsong', playListController.addSongToPlayList);
-playListRouter.post('/', playListController.getPlaylist);
+playListRouter.patch(
+  '/userPlaylists/song',
+  playListController.addSongToPlayList,
+);
+playListRouter.delete(
+  '/userPlaylists/song',
+  playListController.deleteSongFromPlayList,
+);
 
 module.exports = {
   playListRouter: playListRouter,

@@ -19,8 +19,9 @@ import Dropdown from '../Dropdown';
 import './SongCard.scss';
 import DropdownItem from '../DropdownItem';
 import AddToPlayList from '../AddToPlayList';
+import { removeSongFromPlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
 
-export const SongCard = ({ songId, handlePlay, isPlaylist }) => {
+export const SongCard = ({ songId, handlePlay, playListId }) => {
   const song = useSelector(selectSongByIdState(songId));
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -58,6 +59,10 @@ export const SongCard = ({ songId, handlePlay, isPlaylist }) => {
 
   const handleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
+  };
+
+  const handleRemoveFromPlayListModal = () => {
+    dispatch(removeSongFromPlayList({ songId, playListId }));
   };
 
   return (
@@ -128,6 +133,14 @@ export const SongCard = ({ songId, handlePlay, isPlaylist }) => {
                 text="Add to playlist"
                 action={handleAddToPlayListModal}
               />
+              {playListId && (
+                <DropdownItem
+                  isButton
+                  icon="bx-list-minus"
+                  text="Remove from playlist"
+                  action={handleRemoveFromPlayListModal}
+                />
+              )}
             </>
           </Dropdown>
         )}
@@ -167,5 +180,5 @@ export const SongCard = ({ songId, handlePlay, isPlaylist }) => {
 SongCard.propTypes = {
   songId: PropTypes.string.isRequired,
   handlePlay: PropTypes.func.isRequired,
-  isPlaylist: PropTypes.bool.isRequired,
+  playListId: PropTypes.string.isRequired,
 };

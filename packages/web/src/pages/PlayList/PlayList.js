@@ -155,7 +155,7 @@ export const PlayList = () => {
                   key={song}
                   songId={song}
                   handlePlay={() => handlePlayPlayList({ songId: song })}
-                  isPlaylist
+                  playListId={playListId}
                 />
               ))}
             </div>

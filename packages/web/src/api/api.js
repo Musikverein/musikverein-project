@@ -50,14 +50,14 @@ export const api = {
   },
 
   deleteSong: (headers, body = {}) => {
-    return axios.delete(`${baseURL}/songs/delete`, {
+    return axios.delete(`${baseURL}/songs`, {
       headers: headers,
       data: body,
     });
   },
 
   editSong: (headers, body = {}) => {
-    return axios.patch(`${baseURL}/songs/edit`, body, {
+    return axios.patch(`${baseURL}/songs`, body, {
       headers: headers,
     });
   },
@@ -87,36 +87,45 @@ export const api = {
   },
 
   deletePlayList: (headers, body = {}) => {
-    return axios.delete(`${baseURL}/playlist/userPlaylists/delete`, {
+    return axios.delete(`${baseURL}/playlist/userPlaylists`, {
       headers: headers,
       data: body,
     });
   },
 
   followPlayList: (headers, body = {}) => {
-    return axios.patch(`${baseURL}/playlist/follow`, body, {
+    return axios.patch(`${baseURL}/playlist/userPlaylists/follow`, body, {
       headers: headers,
     });
   },
 
   editPlayList: (headers, body = {}) => {
-    return axios.patch(`${baseURL}/playlist/edit`, body, {
+    return axios.patch(`${baseURL}/playlist`, body, {
       headers: headers,
     });
   },
 
   addSongToPlayList: (headers, body = {}) => {
-    return axios.patch(`${baseURL}/playlist/addsong`, body, {
+    return axios.patch(`${baseURL}/playlist/userPlaylists/song`, body, {
       headers: headers,
     });
   },
+
+  removeSongFromPlayList: (headers, body = {}) => {
+    return axios.delete(`${baseURL}/playlist/userPlaylists/song`, {
+      headers: headers,
+      data: body,
+    });
+  },
+
   searchSongs: (headers, body = {}) => {
-    return axios.post(`${baseURL}/songs/search`, body, {
+    return axios.post(`${baseURL}/search/songs`, body, {
       headers: headers,
     });
   },
+
   searchPlayLists: (headers, body = {}) => {
-    return axios.post(`${baseURL}/playlist/search`, body, {
+    return axios.post(`${baseURL}/search/playlists`, body, {
       headers: headers,
     });
   },

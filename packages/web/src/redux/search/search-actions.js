@@ -20,6 +20,9 @@ export const searchSongsError = (message) => ({
   type: SearchTypes.SEARCH_SONG_ERROR,
   payload: message,
 });
+export const resetSearch = () => ({
+  type: SearchTypes.SEARCH_RESET,
+});
 
 export const searchSongs = (value) => {
   return async function searchSongThunk(dispatch) {

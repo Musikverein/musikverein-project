@@ -63,6 +63,12 @@ const SearchReducer = (state = searchInitialState, action) => {
         playlists: [...action.payload],
       };
     }
+    case SearchTypes.SEARCH_RESET: {
+      return {
+        ...state,
+        ...searchInitialState,
+      };
+    }
     default:
       return state;
   }

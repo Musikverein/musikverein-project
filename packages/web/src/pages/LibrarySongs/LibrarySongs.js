@@ -55,7 +55,7 @@ export const LibrarySongs = () => {
                 key={songId}
                 songId={songId}
                 handlePlay={() => handlePlaySong({ songId })}
-                isPlaylist={false}
+                playListId=""
               />
             ))
           )}
