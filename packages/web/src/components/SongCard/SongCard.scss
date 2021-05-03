@@ -15,6 +15,9 @@
 }
 
 .card-song {
+  height: 60px;
+  display: flex;
+  align-items: center;
   &:hover {
     background-color: $color-bg-secundary;
     border-radius: 4px;
@@ -22,7 +25,7 @@
 }
 
 .image-container {
-  min-width: 96px;
+  min-width: 86px;
 }
 
 .info-container {

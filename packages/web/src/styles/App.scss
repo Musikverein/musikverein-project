@@ -20,6 +20,10 @@
     padding-top: 120px;
     padding-bottom: 120px;
   }
+
+  &-without-header {
+    padding-bottom: 120px;
+  }
 }
 
 .rounded-4 {
@@ -37,6 +41,10 @@
   &-s {
     width: 50px;
   }
+}
+.images-shadow {
+  filter: drop-shadow(rgba(0, 0, 0, 0.3) 0px 0px 1px)
+    drop-shadow(rgba(0, 0, 0, 0.3) 0px 0px 10px);
 }
 .card {
   background-color: $color-bg-secundary;

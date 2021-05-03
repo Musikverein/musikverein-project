@@ -4,7 +4,7 @@ export const play = (song) => ({
   type: PlayerTypes.PLAYER_PLAY,
   payload: song,
 });
-export const playPlayList = ({ songs, songIndex }) => ({
+export const playPlayList = ({ songs, songIndex = 0 }) => ({
   type: PlayerTypes.PLAYER_PLAY_PLAYLIST,
   payload: { songs, songIndex },
 });

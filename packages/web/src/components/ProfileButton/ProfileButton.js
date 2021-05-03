@@ -39,7 +39,10 @@ export const ProfileButton = () => {
         </p>
       </button>
       {profileMenuActive && (
-        <Dropdown handleClose={handleShowProfileMenu} styleNav="nav-profile">
+        <Dropdown
+          handleClose={handleShowProfileMenu}
+          styleNav="dropdown-profile"
+        >
           <>
             <DropdownItem
               isButton={false}

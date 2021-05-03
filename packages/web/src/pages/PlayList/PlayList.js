@@ -94,13 +94,12 @@ export const PlayList = () => {
   };
   return (
     <>
-      <Header />
-      <main className="main-container">
+      <main className="main-container-without-header">
         {isGettingPlayList ? (
           <Spinner />
         ) : (
           <>
-            <div className="h-8 w-full flex justify-end items-center mt-4">
+            <div className="h-14 w-full flex justify-end items-center sticky top-0 pt-4 bg__primary">
               <button
                 type="button"
                 className="absolute left-0 px-4 bx bxs-chevron-left text-4xl"
@@ -139,7 +138,7 @@ export const PlayList = () => {
                 </Dropdown>
               )}
             </div>
-            <div className="flex flex-col pt-8 items-center playlist">
+            <div className="flex flex-col pt-2 items-center playlist">
               <img src={image} alt="playlist" className="playlist-img" />
               <h2 className="text-lg font-semibold text-light pt-4 pt-2">
                 {title}

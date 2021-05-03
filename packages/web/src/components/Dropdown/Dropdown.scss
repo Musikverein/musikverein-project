@@ -1,13 +1,13 @@
 @import '../../styles/utils.scss';
+
 .dropdown {
   position: absolute;
   width: 200px;
-  margin-top: 75px;
-  right: 15px;
-  border-radius: 4px;
   color: rgba(255, 255, 255, 0.5);
   background-color: black;
   border-bottom: 0.5px solid $color-bg-secundary;
+  z-index: 1;
+  border-radius: 4px;
   a,
   button {
     padding: 10px 15px;
@@ -16,22 +16,17 @@
       color: white;
     }
   }
-}
-
-.nav-profile {
-  position: absolute;
-  width: 200px;
-  right: 0;
-  top: 60px;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: black;
-  border-bottom: 0.5px solid $color-bg-secundary;
-  a,
-  button {
-    padding: 10px 15px;
-    text-align: left;
-    &:hover {
-      color: white;
-    }
+  &-song {
+    top: 0;
+    right: 2.5rem;
+  }
+  &-playlist {
+    width: 180px;
+    top: 44px;
+    right: -10px;
+  }
+  &-profile {
+    right: 0;
+    top: 60px;
   }
 }
