@@ -148,17 +148,16 @@ export const PlayList = () => {
                 <p className="px-2">{isPublic ? 'Public' : 'Private'}</p>
                 <p className="px-2">{followedBy.length} Follows</p>
               </div>
+            </div>
+
+            <div className="playlist-songs">
               <button
                 type="button"
-                className="absolute playlist-button-play flex items-center justify-content"
+                className="m-auto playlist-button-play flex items-center justify-content"
                 onClick={handlePlayPlayList}
               >
                 <i className="bx bx-play text-4xl " />
               </button>
-            </div>
-            <br />
-            <hr />
-            <div className="playlist-songs">
               <DragDropContext onDragEnd={handleOnDragEnd}>
                 <Droppable droppableId="songs">
                   {(provided) => (

@@ -55,7 +55,7 @@ export const LibraryPlayLists = () => {
           handleSelect={handleSelect}
         />
 
-        <section className="flex flex-wrap">
+        <section className="flex flex-wrap justify-center">
           {isGettingUserPlayList ? (
             <Spinner />
           ) : (

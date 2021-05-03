@@ -20,6 +20,7 @@ import './SongCard.scss';
 import DropdownItem from '../DropdownItem';
 import AddToPlayList from '../AddToPlayList';
 import { removeSongFromPlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
+import { secondsToString } from '../../utils/utils';
 
 export const SongCard = ({ songId, handlePlay, playListId }) => {
   const song = useSelector(selectSongByIdState(songId));
@@ -32,7 +33,7 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
 
-  const { title, artist, genre, image, likedBy, _id, owner } = song;
+  const { title, artist, genre, image, likedBy, _id, owner, duration } = song;
 
   const handleSongEdit = () => {
     setIsEditSong(!isEditSong);
@@ -83,25 +84,26 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
             className="w-12 h-12 rounded-4 object-cover images-shadow"
           />
         </button>
-        <div className="pr-20 info-container truncate">
-          <h2 className="text-m font-semibold text-light mb-0.5 truncate">
+        <div className="pr-20 info-container truncate flex flex-col">
+          <h2 className="text-m font-semibold text-light mb-0.5 truncate w-full">
             {title}
           </h2>
-          <div className="flex-none w-full mt-0.5 font-normal">
+          <div className="flex w-full mt-0.5 font-normal">
             <dt className="sr-only">Artist</dt>
             <dd>{artist}</dd>
-          </div>
-          <dl className="flex flex-wrap items-center text-sm font-medium whitespace-pre hidden">
-            <div className="pr-4">
+
+            <div className="info-hidden w-full">
               <dt className="sr-only">Genre</dt>
               <dd>{genre}</dd>
-            </div>
 
-            <div className="pr-4">
               <dt className="sr-only">Likes</dt>
               <dd>{likedBy.length} Likes</dd>
             </div>
-          </dl>
+          </div>
+        </div>
+        <div className="info-hidden pr-1">
+          <dt className="sr-only">Duration</dt>
+          <dd>{secondsToString(duration)}</dd>
         </div>
         <div className="relative">
           {dropdownOpen && (
