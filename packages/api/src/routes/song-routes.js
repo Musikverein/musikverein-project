@@ -23,9 +23,9 @@ songRouter.post(
 songRouter.post('/userSongs', songController.getUserSongs);
 songRouter.post('/userSongs/liked', songController.getLikedSongs);
 songRouter.patch('/like', songController.likeSong);
-songRouter.delete('/delete', songController.deleteSong);
+songRouter.delete('/', songController.deleteSong);
 songRouter.patch(
-  '/edit',
+  '/',
   recaptchaMiddleware,
   validateUpdateSong,
   songController.editSong,

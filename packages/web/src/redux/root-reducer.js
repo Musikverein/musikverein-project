@@ -6,6 +6,7 @@ import playerReducer from './player/player-reducer';
 import PlayListReducer from './playList/playList-reducer';
 import LibrarySongReducer from './librarySongs/librarySong-reducer';
 import LibraryPlayListReducer from './libraryPlayList/libraryPlayList-reducer';
+import SearchReducer from './search/search-reducer';
 
 const entitiesReducer = combineReducers({
   songStore: SongReducer,
@@ -15,6 +16,7 @@ const uiReducer = combineReducers({
   player: playerReducer,
   librarySongs: LibrarySongReducer,
   libraryPlayList: LibraryPlayListReducer,
+  search: SearchReducer,
 });
 
 const rootReducer = combineReducers({

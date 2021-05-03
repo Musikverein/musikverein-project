@@ -35,6 +35,13 @@ const playReducer = (state = playerInitialState, action) => {
       // TODO: Eliminar la playlist actual, si la playlist es eliminada.
       return { ...state };
     }
+    case PlayerTypes.PLAYER_PLAY_PLAYLIST: {
+      return {
+        ...state,
+        currentPlayList: [...action.payload.songs],
+        currentIndexPlayList: action.payload.songIndex,
+      };
+    }
     default: {
       return state;
     }

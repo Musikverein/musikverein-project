@@ -351,3 +351,42 @@ export const getPlayList = (playListId) => {
     }
   };
 };
+
+export const removeSongFromPlayListRequest = () => ({
+  type: LibraryPlayListTypes.REMOVE_SONG_FROM_PLAYLIST_REQUEST,
+});
+export const removeSongFromPlayListSuccess = () => ({
+  type: LibraryPlayListTypes.REMOVE_SONG_FROM_PLAYLIST_SUCCESS,
+});
+export const removeSongFromPlayListError = (message) => ({
+  type: LibraryPlayListTypes.REMOVE_SONG_FROM_PLAYLIST_ERROR,
+  payload: message,
+});
+
+export const removeSongFromPlayList = ({ songId, playListId }) => {
+  return async function removeSongFromPlayListThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+    dispatch(removeSongFromPlayListRequest());
+
+    try {
+      const { errorMessage, data: response } = await api.removeSongFromPlayList(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { songId, playListId },
+      );
+      if (errorMessage) {
+        return dispatch(removeSongFromPlayListError(errorMessage));
+      }
+      const { entities } = normalizePlayLists([response.data]);
+      dispatch(loadPlayList(entities.playLists));
+      return dispatch(removeSongFromPlayListSuccess());
+    } catch (error) {
+      return dispatch(removeSongFromPlayListError(error.message));
+    }
+  };
+};

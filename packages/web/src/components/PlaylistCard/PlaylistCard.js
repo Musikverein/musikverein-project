@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 import { playListSelector } from '../../redux/playList/playList-selectors';
 import { authSelector } from '../../redux/auth/auth-selectors';
@@ -14,6 +15,7 @@ import ModalLayout from '../ModalLayout';
 import ConfirmText from '../ConfirmText';
 import { FollowButton } from '../FollowButton/FollowButton';
 import { PlayListForm } from '../PlayListForm/PlayListForm';
+import ROUTES from '../../routers/routes';
 
 export const PlayListCard = ({ playListId }) => {
   const { playLists } = useSelector(playListSelector);
@@ -73,7 +75,9 @@ export const PlayListCard = ({ playListId }) => {
           />
         </button> */}
         <div className="pr-20 info-container truncate">
-          <h2 className="text-lg font-semibold text-light mb-0.5 ">{title}</h2>
+          <Link to={`${ROUTES.PLAYLIST_WITHOUT_PARAM}${playListId}`}>
+            <h2 className="text-lg font-semibold text-light mb-0.5">{title}</h2>
+          </Link>
           <div className="flex-none w-full mt-0.5 font-normal">
             <dt className="sr-only">Owner</dt>
             <dd>{owner}</dd>
@@ -147,7 +151,7 @@ export const PlayListCard = ({ playListId }) => {
         handleClose={handleConfirmDeletePlayList}
       >
         <ConfirmText
-          handleRemoveSong={handleRemovePlayList}
+          handleRemove={handleRemovePlayList}
           onCancel={handleConfirmDeletePlayList}
           title={title}
         />

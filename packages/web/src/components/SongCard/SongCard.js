@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addToQueque, play } from '../../redux/player/player-actions';
+import { addToQueque } from '../../redux/player/player-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import { selectSongByIdState } from '../../redux/song/song-selectors';
 import {
@@ -19,8 +19,9 @@ import Dropdown from '../Dropdown';
 import './SongCard.scss';
 import DropdownItem from '../DropdownItem';
 import AddToPlayList from '../AddToPlayList';
+import { removeSongFromPlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
 
-export const SongCard = ({ songId }) => {
+export const SongCard = ({ songId, handlePlay, playListId }) => {
   const song = useSelector(selectSongByIdState(songId));
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -32,10 +33,6 @@ export const SongCard = ({ songId }) => {
   } = useSelector(authSelector);
 
   const { title, artist, genre, image, likedBy, _id, owner } = song;
-
-  const handlePlaySong = () => {
-    dispatch(play(_id));
-  };
 
   const handleSongEdit = () => {
     setIsEditSong(!isEditSong);
@@ -64,13 +61,17 @@ export const SongCard = ({ songId }) => {
     setDropdownOpen(!dropdownOpen);
   };
 
+  const handleRemoveFromPlayListModal = () => {
+    dispatch(removeSongFromPlayList({ songId, playListId }));
+  };
+
   return (
     <section className="p-2">
       <div className="p-4 flex space-x-4 card-song">
         <button
           type="button"
           className="w-24 h-24 image-container"
-          onClick={handlePlaySong}
+          onClick={handlePlay}
         >
           <div className="flex items-center justify-center absolute w-24 h-24 img-play">
             <i className="bx bx-play text-4xl" />
@@ -132,6 +133,14 @@ export const SongCard = ({ songId }) => {
                 text="Add to playlist"
                 action={handleAddToPlayListModal}
               />
+              {playListId && (
+                <DropdownItem
+                  isButton
+                  icon="bx-list-minus"
+                  text="Remove from playlist"
+                  action={handleRemoveFromPlayListModal}
+                />
+              )}
             </>
           </Dropdown>
         )}
@@ -153,7 +162,7 @@ export const SongCard = ({ songId }) => {
       </ModalLayout>
       <ModalLayout isOpen={isDeleteSong} handleClose={handleConfirmDeleteSong}>
         <ConfirmText
-          handleRemoveSong={handleRemoveSong}
+          handleRemove={handleRemoveSong}
           onCancel={handleConfirmDeleteSong}
           title={title}
         />
@@ -170,4 +179,6 @@ export const SongCard = ({ songId }) => {
 
 SongCard.propTypes = {
   songId: PropTypes.string.isRequired,
+  handlePlay: PropTypes.func.isRequired,
+  playListId: PropTypes.string.isRequired,
 };

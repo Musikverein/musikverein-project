@@ -26,6 +26,17 @@ class SongRepository {
       db.Song.findOneAndUpdate(queryFind, querySet, queryOptions),
     );
   }
+
+  find(options) {
+    return normalizeDBQuery(
+      db.Song.find(options).limit(10).select({
+        __v: 0,
+        active: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      }),
+    );
+  }
 }
 
 module.exports = new SongRepository();

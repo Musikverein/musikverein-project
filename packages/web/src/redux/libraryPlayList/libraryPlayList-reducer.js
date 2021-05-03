@@ -20,9 +20,12 @@ const userPlayListInitialState = {
   isEditPlayList: false,
   editPlayListError: null,
   editPlayListSuccess: false,
-  isAddSongToPlayListPlayList: false,
-  addSongToPlayListPlayListError: null,
-  addSongToPlayListPlayListSuccess: false,
+  isAddSongToPlayList: false,
+  addSongToPlayListError: null,
+  addSongToPlayListSuccess: false,
+  isRemoveSongFromPlayList: false,
+  removeSongFromPlayListError: null,
+  removeSongFromPlayListSuccess: false,
   currentPath: LibraryPlayListTypes.USER_PLAYLIST_PATH_OWN_PLAYLIST,
   userPlayLists: [],
 };
@@ -210,25 +213,49 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
     case LibraryPlayListTypes.ADD_SONG_TO_PLAYLIST_REQUEST: {
       return {
         ...state,
-        isAddSongToPlayListPlayList: true,
-        addSongToPlayListPlayListError: null,
-        addSongToPlayListPlayListSuccess: false,
+        isAddSongToPlayList: true,
+        addSongToPlayListError: null,
+        addSongToPlayListSuccess: false,
       };
     }
     case LibraryPlayListTypes.ADD_SONG_TO_PLAYLIST_SUCCESS: {
       return {
         ...state,
-        isEditisAddSongToPlayListPlayListPlayList: false,
-        addSongToPlayListPlayListError: action.payload,
-        addSongToPlayListPlayListSuccess: false,
+        isEditisAddSongToPlayListPlayList: false,
+        addSongToPlayListError: action.payload,
+        addSongToPlayListSuccess: false,
       };
     }
     case LibraryPlayListTypes.ADD_SONG_TO_PLAYLIST_ERROR: {
       return {
         ...state,
-        isAddSongToPlayListPlayList: false,
-        addSongToPlayListPlayListError: null,
-        addSongToPlayListPlayListSuccess: true,
+        isAddSongToPlayList: false,
+        addSongToPlayListError: null,
+        addSongToPlayListSuccess: true,
+      };
+    }
+    case LibraryPlayListTypes.REMOVE_SONG_FROM_PLAYLIST_REQUEST: {
+      return {
+        ...state,
+        isRemoveSongFromPlayList: true,
+        removeSongFromPlayListError: null,
+        removeSongFromPlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.REMOVE_SONG_FROM_PLAYLIST_SUCCESS: {
+      return {
+        ...state,
+        isRemoveSongFromPlayList: false,
+        removeSongFromPlayListError: action.payload,
+        removeSongFromPlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.REMOVE_SONG_FROM_PLAYLIST_ERROR: {
+      return {
+        ...state,
+        isRemoveSongFromPlayList: false,
+        removeSongFromPlayListError: null,
+        removeSongFromPlayListSuccess: true,
       };
     }
     default:
