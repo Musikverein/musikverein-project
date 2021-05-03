@@ -286,8 +286,6 @@ async function deleteSongFromPlayList(req, res, next) {
       _id: playListId,
     });
 
-    console.log(response);
-
     if (response.error) {
       return res.status(400).send({
         data: null,
