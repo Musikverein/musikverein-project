@@ -118,6 +118,12 @@ export const api = {
     });
   },
 
+  updateOrderPlayList: (headers, body = {}) => {
+    return axios.patch(`${baseURL}/playlist/userPlaylists/order`, body, {
+      headers: headers,
+    });
+  },
+
   searchSongs: (headers, body = {}) => {
     return axios.post(`${baseURL}/search/songs`, body, {
       headers: headers,

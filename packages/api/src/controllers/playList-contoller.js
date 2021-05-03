@@ -328,6 +328,38 @@ async function deleteSongFromPlayList(req, res, next) {
   }
 }
 
+async function updateOrderPlayList(req, res, next) {
+  const { _id } = req.user;
+  const { playListId, songs } = req.body;
+
+  try {
+    const updatedPlayList = await PlayListRepo.findOneAndUpdate(
+      { _id: playListId, owner: _id },
+      { songs: songs },
+      {
+        new: true,
+        select: 'title owner type songs followedBy isPublic image',
+      },
+    );
+
+    if (updatedPlayList.error) {
+      return res.status(400).send({
+        data: null,
+        error: updatedPlayList.error,
+      });
+    }
+
+    if (updatedPlayList.data) {
+      return res.status(200).send({
+        data: updatedPlayList.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   create: create,
   getUserPlaylist: getUserPlaylist,
@@ -338,4 +370,5 @@ module.exports = {
   addSongToPlayList: addSongToPlayList,
   getPlaylist: getPlaylist,
   deleteSongFromPlayList: deleteSongFromPlayList,
+  updateOrderPlayList: updateOrderPlayList,
 };

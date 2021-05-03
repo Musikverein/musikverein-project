@@ -133,7 +133,7 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
                 text="Add to playlist"
                 action={handleAddToPlayListModal}
               />
-              {playListId && (
+              {owner === userId && playListId && (
                 <DropdownItem
                   isButton
                   icon="bx-list-minus"
