@@ -390,3 +390,42 @@ export const removeSongFromPlayList = ({ songId, playListId }) => {
     }
   };
 };
+
+export const updateOrderPlayListRequest = () => ({
+  type: LibraryPlayListTypes.UPDATE_ORDER_PLAYLIST_REQUEST,
+});
+export const updateOrderPlayListSuccess = () => ({
+  type: LibraryPlayListTypes.UPDATE_ORDER_PLAYLIST_SUCCESS,
+});
+export const updateOrderPlayListError = (message) => ({
+  type: LibraryPlayListTypes.UPDATE_ORDER_PLAYLIST_ERROR,
+  payload: message,
+});
+
+export const updateOrderPlayList = ({ songs, playListId }) => {
+  return async function updateOrderPlayListThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+    dispatch(updateOrderPlayListRequest());
+
+    try {
+      const { errorMessage, data: response } = await api.updateOrderPlayList(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { songs, playListId },
+      );
+      if (errorMessage) {
+        return dispatch(updateOrderPlayListError(errorMessage));
+      }
+      const { entities } = normalizePlayLists([response.data]);
+      dispatch(loadPlayList(entities.playLists));
+      return dispatch(updateOrderPlayListSuccess());
+    } catch (error) {
+      return dispatch(updateOrderPlayListError(error.message));
+    }
+  };
+};

@@ -26,6 +26,9 @@ const userPlayListInitialState = {
   isRemoveSongFromPlayList: false,
   removeSongFromPlayListError: null,
   removeSongFromPlayListSuccess: false,
+  isUpdateOrderPlayList: false,
+  updateOrderPlayListError: null,
+  updateOrderPlayListSuccess: false,
   currentPath: LibraryPlayListTypes.USER_PLAYLIST_PATH_OWN_PLAYLIST,
   userPlayLists: [],
 };
@@ -256,6 +259,30 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
         isRemoveSongFromPlayList: false,
         removeSongFromPlayListError: null,
         removeSongFromPlayListSuccess: true,
+      };
+    }
+    case LibraryPlayListTypes.UPDATE_ORDER_PLAYLIST_REQUEST: {
+      return {
+        ...state,
+        isUpdateOrderPlayList: true,
+        updateOrderPlayListError: null,
+        updateOrderPlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.UPDATE_ORDER_PLAYLIST_ERROR: {
+      return {
+        ...state,
+        isUpdateOrderPlayList: false,
+        updateOrderPlayListError: action.payload,
+        updateOrderPlayListSuccess: false,
+      };
+    }
+    case LibraryPlayListTypes.UPDATE_ORDER_PLAYLIST_SUCCESS: {
+      return {
+        ...state,
+        isUpdateOrderPlayList: false,
+        updateOrderPlayListError: null,
+        updateOrderPlayListSuccess: true,
       };
     }
     default:

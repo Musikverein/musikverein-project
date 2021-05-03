@@ -9,6 +9,7 @@ import {
   editUserPlayList,
   followPlayList,
   getPlayList,
+  updateOrderPlayList,
 } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { selectPlayListByIdState } from '../../redux/playList/playList-selectors';
 import { userPlayListSelector } from '../../redux/libraryPlayList/libraryPlayList-selectors';
@@ -89,7 +90,7 @@ export const PlayList = () => {
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    console.log(items);
+    dispatch(updateOrderPlayList({ songs: items, playListId }));
   };
   return (
     <>

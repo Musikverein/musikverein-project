@@ -46,6 +46,11 @@ playListRouter.delete(
   playListController.deleteSongFromPlayList,
 );
 
+playListRouter.patch(
+  '/userPlaylists/order',
+  playListController.updateOrderPlayList,
+);
+
 module.exports = {
   playListRouter: playListRouter,
 };
