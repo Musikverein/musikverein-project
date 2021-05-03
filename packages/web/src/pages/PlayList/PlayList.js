@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-
-import './PlayList.scss';
+import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
 import Header from '../../components/Header';
 import {
@@ -24,6 +23,8 @@ import ConfirmText from '../../components/ConfirmText';
 import ROUTES from '../../routers/routes';
 import Spinner from '../../components/Spinner';
 import { Search } from '../../components/Search/Search';
+
+import './PlayList.scss';
 
 export const PlayList = () => {
   const { playListId } = useParams();
@@ -81,7 +82,15 @@ export const PlayList = () => {
   const handleSearch = () => {
     setIsSearching(!isSearching);
   };
+  const handleOnDragEnd = (result) => {
+    if (!result.destination) return;
 
+    const items = Array.from(songs);
+    const [reorderedItem] = items.splice(result.source.index, 1);
+    items.splice(result.destination.index, 0, reorderedItem);
+
+    console.log(items);
+  };
   return (
     <>
       <Header />
@@ -150,14 +159,40 @@ export const PlayList = () => {
             <br />
             <hr />
             <div className="playlist-songs">
-              {songs.map((song) => (
-                <SongCard
-                  key={song}
-                  songId={song}
-                  handlePlay={() => handlePlayPlayList({ songId: song })}
-                  playListId={playListId}
-                />
-              ))}
+              <DragDropContext onDragEnd={handleOnDragEnd}>
+                <Droppable droppableId="songs">
+                  {(provided) => (
+                    <ul
+                      className="songs"
+                      {...provided.droppableProps}
+                      ref={provided.innerRef}
+                    >
+                      {songs.map((song, index) => (
+                        <Draggable key={song} draggableId={song} index={index}>
+                          {(prov) => (
+                            <li
+                              key={song}
+                              ref={prov.innerRef}
+                              {...prov.draggableProps}
+                              {...prov.dragHandleProps}
+                            >
+                              <SongCard
+                                key={song}
+                                songId={song}
+                                handlePlay={() =>
+                                  handlePlayPlayList({ songId: song })
+                                }
+                                playListId={playListId}
+                              />
+                            </li>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                    </ul>
+                  )}
+                </Droppable>
+              </DragDropContext>
             </div>
             <ModalLayout
               isOpen={isEditPlayList}
