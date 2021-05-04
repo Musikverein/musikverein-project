@@ -66,8 +66,8 @@ export const PlayListCard = ({ playListId }) => {
   };
 
   return (
-    <section className="p-2">
-      <div className="m-4 flex flex-col card-playlist">
+    <section className="p-1">
+      <div className="m-2 flex flex-col card-playlist">
         <button
           type="button"
           className="image-container card-playlist-cover relative"
@@ -79,7 +79,10 @@ export const PlayListCard = ({ playListId }) => {
           <img src={image} alt="" className="rounded-4 object-cover " />
         </button>
         <div className="flex justify-between">
-          <Link to={`${ROUTES.PLAYLIST_WITHOUT_PARAM}${playListId}`}>
+          <Link
+            to={`${ROUTES.PLAYLIST_WITHOUT_PARAM}${playListId}`}
+            className="truncate"
+          >
             <h2 className="text-l font-semibold text-light p-2">{title}</h2>
           </Link>
           <div className="relative">

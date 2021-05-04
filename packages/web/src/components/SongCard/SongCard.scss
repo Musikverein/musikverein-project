@@ -22,6 +22,18 @@
     background-color: $color-bg-secundary;
     border-radius: 4px;
   }
+
+  .info-hidden{
+    display: none;
+  }
+  @media (min-width: 750px) {
+    .info-hidden{
+      display: flex;
+      *{
+        padding: 0 15px;
+      }
+    }
+  }
 }
 
 .image-container {
