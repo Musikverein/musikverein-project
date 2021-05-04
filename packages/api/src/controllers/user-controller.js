@@ -4,7 +4,7 @@ async function signUp(req, res, next) {
   const { uid, email } = req.user;
 
   try {
-    const response = await UserRepo.findOne({ email: email });
+    const response = await UserRepo.findUser({ email: email });
 
     if (response.error) {
       return res.status(400).send({

@@ -4,7 +4,7 @@ async function findIdMiddleware(req, res, next) {
   const { uid } = req.user;
 
   try {
-    const response = await UserRepo.findOne({
+    const response = await UserRepo.findUser({
       firebaseId: uid,
     });
 

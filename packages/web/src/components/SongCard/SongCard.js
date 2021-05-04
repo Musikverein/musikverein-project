@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addToQueque } from '../../redux/player/player-actions';
+import { addToQueue } from '../../redux/player/player-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import { selectSongByIdState } from '../../redux/song/song-selectors';
 import {
@@ -50,8 +50,8 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
     setIsDeleteSong(!isDeleteSong);
   };
 
-  const handleAddToQueque = () => {
-    dispatch(addToQueque(_id));
+  const handleaddToQueue = () => {
+    dispatch(addToQueue(_id));
   };
 
   const handleAddToPlayListModal = () => {
@@ -130,7 +130,7 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
                   isButton
                   icon="bx-list-plus"
                   text="Add to queqe"
-                  action={handleAddToQueque}
+                  action={handleaddToQueue}
                 />
                 <DropdownItem
                   isButton

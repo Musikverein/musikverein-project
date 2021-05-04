@@ -1,31 +1,31 @@
-import React, { useState } from 'react';
-import Navigation from '../Navigation';
+import React from 'react';
+import PropTypes from 'prop-types';
+import ROUTES from '../../routers/routes';
 
 import './Menu.scss';
+import MenuItem from '../MenuItem';
 
-export const Menu = () => {
-  const [showMenu, setShowMenu] = useState(false);
-
-  const handleShowMenu = () => {
-    setShowMenu(!showMenu);
-  };
-
+export const Menu = ({ showMenu }) => {
   return (
-    <>
-      <button
-        type="button"
-        className={showMenu ? 'relative menu open' : 'relative menu'}
-        onClick={handleShowMenu}
-      >
-        <div className="menu-link">
-          <span className="menu-icon">
-            <span className="menu-line menu-line-1" />
-            <span className="menu-line menu-line-2" />
-            <span className="menu-line menu-line-3" />
-          </span>
-        </div>
-      </button>
-      {showMenu && <Navigation showMenu={showMenu} />}
-    </>
+    <nav className={showMenu ? 'menu-overlay open' : 'menu-overlay'}>
+      <div>
+        <MenuItem path={ROUTES.HOME} text="Home" icon="bxs-home" />
+        <MenuItem path={ROUTES.LIBRARY} text="Library" icon=" bx-library" />
+        <MenuItem
+          path={ROUTES.SONG_UPLOAD}
+          text="Search"
+          icon="bx-search-alt"
+        />
+        <MenuItem
+          path={ROUTES.SONG_UPLOAD}
+          text="Upload Song"
+          icon="bx-cloud-upload"
+        />
+      </div>
+    </nav>
   );
+};
+
+Menu.propTypes = {
+  showMenu: PropTypes.bool.isRequired,
 };

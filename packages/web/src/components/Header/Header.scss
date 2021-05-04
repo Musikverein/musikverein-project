@@ -1,4 +1,4 @@
-.mobile {
+.header {
   position: fixed;
   top: 0;
   padding: 10px;
@@ -6,8 +6,10 @@
   right: 0;
   z-index: 3;
   height: 60px;
-}
-
-.header {
   background-color: black;
+  @media (min-width: 750px){
+    .menu{
+      visibility: hidden;
+    }
+  }
 }

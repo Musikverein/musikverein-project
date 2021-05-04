@@ -9,14 +9,9 @@ export const playPlayList = ({ songs, songIndex = 0 }) => ({
   payload: { songs, songIndex },
 });
 
-export const addToQueque = (song) => ({
-  type: PlayerTypes.PLAYER_ADD_TO_QUEQUE,
+export const addToQueue = (song) => ({
+  type: PlayerTypes.PLAYER_ADD_TO_QUEUE,
   payload: song,
-});
-
-export const saveIndexPlayList = (index) => ({
-  type: PlayerTypes.PLAYER_CURRENT_INDEX_PLAYLIST,
-  payload: index,
 });
 
 export const syncSongDelete = (song) => ({
@@ -27,4 +22,17 @@ export const syncSongDelete = (song) => ({
 export const syncPlayListDelete = (song) => ({
   type: PlayerTypes.PLAYER_SYNC_PLAYLIST_DELETE,
   payload: song._id,
+});
+
+export const nextSong = () => ({
+  type: PlayerTypes.PLAYER_NEXT,
+});
+
+export const prevSong = () => ({
+  type: PlayerTypes.PLAYER_PREV,
+});
+
+export const reorderQueue = (songs) => ({
+  type: PlayerTypes.PLAYER_REORDER_QUEUE,
+  payload: songs,
 });

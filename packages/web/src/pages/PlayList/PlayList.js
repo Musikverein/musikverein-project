@@ -3,7 +3,6 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-import Header from '../../components/Header';
 import {
   deletePlayList,
   editUserPlayList,

@@ -4,7 +4,6 @@ import { Link, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { authSelector } from '../../redux/auth/auth-selectors';
 
-import Header from '../../components/Header';
 import ROUTES from '../../routers/routes';
 
 import './Profile.scss';
