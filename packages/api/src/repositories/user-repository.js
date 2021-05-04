@@ -6,7 +6,7 @@ class UserRepository {
     return normalizeDBQuery(db.User.create(options));
   }
 
-  findOne(query) {
+  findUser(query) {
     return normalizeDBQuery(
       db.User.findOne(query).select(
         'userName firstName lastName email image following followedBy',
@@ -14,9 +14,12 @@ class UserRepository {
     );
   }
 
-  findOneAndUpdate(queryFind, querySet, queryOptions) {
+  findUserAndUpdate(queryFind, querySet) {
     return normalizeDBQuery(
-      db.User.findOneAndUpdate(queryFind, querySet, queryOptions),
+      db.User.findOneAndUpdate(queryFind, querySet, {
+        new: true,
+        select: 'firstName lastName userName image following followedBy',
+      }),
     );
   }
 }

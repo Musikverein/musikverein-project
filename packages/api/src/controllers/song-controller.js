@@ -87,7 +87,7 @@ async function likeSong(req, res, next) {
   const { songId } = req.body;
 
   try {
-    const response = await SongRepo.findOne({ _id: songId, active: true });
+    const response = await SongRepo.findSong({ _id: songId, active: true });
     if (response.error) {
       return res.status(400).send({
         data: null,
@@ -102,13 +102,9 @@ async function likeSong(req, res, next) {
           ? likedBy.filter((id) => String(id) !== String(_id))
           : [...likedBy, _id];
 
-      const updatedSong = await SongRepo.findOneAndUpdate(
+      const updatedSong = await SongRepo.findSongAndUpdate(
         { _id: songId, active: true },
         { likedBy: newLikedBy },
-        {
-          new: true,
-          select: 'genre image artist likedBy title duration url owner',
-        },
       );
 
       if (updatedSong.error) {
@@ -134,13 +130,9 @@ async function deleteSong(req, res, next) {
   const { _id } = req.user;
   const { songId } = req.body;
   try {
-    const response = await SongRepo.findOneAndUpdate(
+    const response = await SongRepo.findSongAndDelete(
       { _id: songId, owner: _id },
       { active: false },
-      {
-        new: true,
-        select: '_id',
-      },
     );
     if (response.error) {
       return res.status(400).send({
@@ -164,13 +156,9 @@ async function editSong(req, res, next) {
   const { _id } = req.user;
   const { title, artist, genre, image, songId } = req.body;
   try {
-    const response = await SongRepo.findOneAndUpdate(
+    const response = await SongRepo.findSongAndUpdate(
       { _id: songId, owner: _id },
       { title, artist, genre, image },
-      {
-        new: true,
-        select: 'title artist duration owner likedBy url genre image',
-      },
     );
     if (response.error) {
       return res.status(400).send({

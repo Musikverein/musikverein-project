@@ -17,13 +17,25 @@ class SongRepository {
     );
   }
 
-  findOne(options) {
+  findSong(options) {
     return normalizeDBQuery(db.Song.findOne(options));
   }
 
-  findOneAndUpdate(queryFind, querySet, queryOptions) {
+  findSongAndDelete(queryFind, querySet) {
     return normalizeDBQuery(
-      db.Song.findOneAndUpdate(queryFind, querySet, queryOptions),
+      db.PlayList.findOneAndUpdate(queryFind, querySet, {
+        new: true,
+        select: '_id',
+      }),
+    );
+  }
+
+  findSongAndUpdate(queryFind, querySet) {
+    return normalizeDBQuery(
+      db.PlayList.findOneAndUpdate(queryFind, querySet, {
+        new: true,
+        select: 'title artist duration owner likedBy url genre image',
+      }),
     );
   }
 
@@ -35,6 +47,19 @@ class SongRepository {
         createdAt: 0,
         updatedAt: 0,
       }),
+    );
+  }
+
+  searchSongs({ value }) {
+    return normalizeDBQuery(
+      db.Song.find({ title: { $regex: value, $options: 'i' }, active: true })
+        .limit(10)
+        .select({
+          __v: 0,
+          active: 0,
+          createdAt: 0,
+          updatedAt: 0,
+        }),
     );
   }
 }

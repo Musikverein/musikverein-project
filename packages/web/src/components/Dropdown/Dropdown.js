@@ -20,7 +20,9 @@ export const Dropdown = ({ handleClose, children, styleNav }) => {
   }, [clickOutsiteDropdown]);
 
   return (
-    <nav className={`${styleNav} flex flex-col shadow-xl`}>{children}</nav>
+    <nav className={`dropdown ${styleNav}  flex flex-col shadow-xl`}>
+      {children}
+    </nav>
   );
 };
 

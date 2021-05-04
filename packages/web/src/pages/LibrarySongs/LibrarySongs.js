@@ -45,7 +45,7 @@ export const LibrarySongs = () => {
           optionLikeValue={LibrarySongTypes.USER_SONG_PATH_LIKED_SONGS}
           handleSelect={handleSelect}
         />
-        <section className="bg__primary">
+        <section className="library-space">
           {isGettingSong ? (
             <Spinner />
           ) : (

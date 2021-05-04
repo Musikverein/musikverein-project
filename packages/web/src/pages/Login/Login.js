@@ -64,7 +64,7 @@ export const Login = () => {
             <h2 className="text-xl font-bold">Looking to listen to music?</h2>
             <p className="text-xm">Save your songs</p>
           </div>
-          <div className="card">
+          <div className="card images-shadow">
             {isSigningUp ? (
               <Spinner />
             ) : (

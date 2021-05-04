@@ -1,11 +1,11 @@
 const { PlayListRepo } = require('../repositories');
 
-async function create(req, res, next) {
+async function createPlayList(req, res, next) {
   const { _id } = req.user;
   const { title, type, songs, isPublic, image } = req.body;
 
   try {
-    const response = await PlayListRepo.create({
+    const response = await PlayListRepo.createPlayList({
       title,
       type,
       owner: _id,
@@ -42,11 +42,11 @@ async function create(req, res, next) {
   }
 }
 
-async function getUserPlaylist(req, res, next) {
+async function getUserPlayList(req, res, next) {
   const { _id } = req.user;
 
   try {
-    const response = await PlayListRepo.find({
+    const response = await PlayListRepo.findPlayLists({
       owner: _id,
     });
 
@@ -68,11 +68,11 @@ async function getUserPlaylist(req, res, next) {
   }
 }
 
-async function getFollowPlaylist(req, res, next) {
+async function getFollowPlayList(req, res, next) {
   const { _id } = req.user;
 
   try {
-    const response = await PlayListRepo.find({
+    const response = await PlayListRepo.findPlayLists({
       followedBy: _id,
     });
 
@@ -94,11 +94,11 @@ async function getFollowPlaylist(req, res, next) {
   }
 }
 
-async function deletePlaylist(req, res, next) {
+async function deletePlayList(req, res, next) {
   const { _id } = req.user;
   const { playListId } = req.body;
   try {
-    const response = await PlayListRepo.findOneAndDelete({
+    const response = await PlayListRepo.findPlayListAndDelete({
       owner: _id,
       _id: playListId,
     });
@@ -126,7 +126,7 @@ async function followPlayList(req, res, next) {
   const { playListId } = req.body;
 
   try {
-    const response = await PlayListRepo.findOne({ _id: playListId });
+    const response = await PlayListRepo.findPlayList({ _id: playListId });
     if (response.error) {
       return res.status(400).send({
         data: null,
@@ -141,13 +141,9 @@ async function followPlayList(req, res, next) {
           ? followedBy.filter((id) => String(id) !== String(_id))
           : [...followedBy, _id];
 
-      const updatedPlayList = await PlayListRepo.findOneAndUpdate(
+      const updatedPlayList = await PlayListRepo.findPlayListAndUpdate(
         { _id: playListId },
         { followedBy: newFollowedBy },
-        {
-          new: true,
-          select: 'title owner type songs followedBy isPublic image',
-        },
       );
 
       if (updatedPlayList.error) {
@@ -173,13 +169,9 @@ async function editPlayList(req, res, next) {
   const { _id } = req.user;
   const { title, type, isPublic, playListId, image } = req.body;
   try {
-    const response = await PlayListRepo.findOneAndUpdate(
+    const response = await PlayListRepo.findPlayListAndUpdate(
       { _id: playListId, owner: _id },
       { title, type, isPublic, image },
-      {
-        new: true,
-        select: 'title owner type isPublic followedBy songs image',
-      },
     );
     if (response.error) {
       return res.status(400).send({
@@ -203,7 +195,7 @@ async function addSongToPlayList(req, res, next) {
   const { playListId, songId } = req.body;
 
   try {
-    const response = await PlayListRepo.findOne({
+    const response = await PlayListRepo.findPlayList({
       _id: playListId,
       owner: _id,
     });
@@ -223,13 +215,9 @@ async function addSongToPlayList(req, res, next) {
         });
       }
 
-      const updatedPlayList = await PlayListRepo.findOneAndUpdate(
+      const updatedPlayList = await PlayListRepo.findPlayListAndPushSong(
         { _id: playListId },
-        { $push: { songs: songId } },
-        {
-          new: true,
-          select: 'title owner type songs followedBy isPublic image',
-        },
+        { songs: songId },
       );
 
       if (updatedPlayList.error) {
@@ -251,11 +239,11 @@ async function addSongToPlayList(req, res, next) {
   }
 }
 
-async function getPlaylist(req, res, next) {
+async function getPlayList(req, res, next) {
   const { playListId } = req.body;
 
   try {
-    const response = await PlayListRepo.findOneAndPopulate({
+    const response = await PlayListRepo.findPlayListAndPopulate({
       _id: playListId,
     });
 
@@ -281,7 +269,7 @@ async function deleteSongFromPlayList(req, res, next) {
   const { _id } = req.user;
   const { playListId, songId } = req.body;
   try {
-    const response = await PlayListRepo.findOne({
+    const response = await PlayListRepo.findPlayList({
       owner: _id,
       _id: playListId,
     });
@@ -297,16 +285,12 @@ async function deleteSongFromPlayList(req, res, next) {
       const { songs } = response.data;
       const newSongs = songs.filter((id) => String(id) !== String(songId));
 
-      const updatedPlayList = await PlayListRepo.findOneAndUpdate(
+      const updatedPlayList = await PlayListRepo.findPlayListAndUpdate(
         {
           owner: _id,
           _id: playListId,
         },
         { songs: newSongs },
-        {
-          new: true,
-          select: 'title owner type songs followedBy isPublic image',
-        },
       );
 
       if (updatedPlayList.error) {
@@ -333,13 +317,9 @@ async function updateOrderPlayList(req, res, next) {
   const { playListId, songs } = req.body;
 
   try {
-    const updatedPlayList = await PlayListRepo.findOneAndUpdate(
+    const updatedPlayList = await PlayListRepo.findPlayListAndUpdate(
       { _id: playListId, owner: _id },
       { songs: songs },
-      {
-        new: true,
-        select: 'title owner type songs followedBy isPublic image',
-      },
     );
 
     if (updatedPlayList.error) {
@@ -361,14 +341,14 @@ async function updateOrderPlayList(req, res, next) {
 }
 
 module.exports = {
-  create: create,
-  getUserPlaylist: getUserPlaylist,
-  getFollowPlaylist: getFollowPlaylist,
-  deletePlaylist: deletePlaylist,
+  createPlayList: createPlayList,
+  getUserPlayList: getUserPlayList,
+  getFollowPlayList: getFollowPlayList,
+  deletePlayList: deletePlayList,
   followPlayList: followPlayList,
   editPlayList: editPlayList,
   addSongToPlayList: addSongToPlayList,
-  getPlaylist: getPlaylist,
+  getPlayList: getPlayList,
   deleteSongFromPlayList: deleteSongFromPlayList,
   updateOrderPlayList: updateOrderPlayList,
 };
