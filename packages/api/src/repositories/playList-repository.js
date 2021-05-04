@@ -61,7 +61,10 @@ class PlayListRepository {
 
   searchPlayLists({ value }) {
     return normalizeDBQuery(
-      db.Song.find({ title: { $regex: value, $options: 'i' }, isPublic: true })
+      db.PlayList.find({
+        title: { $regex: value, $options: 'i' },
+        isPublic: true,
+      })
         .limit(10)
         .select({
           __v: 0,

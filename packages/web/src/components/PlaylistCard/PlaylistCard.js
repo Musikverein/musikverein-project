@@ -78,7 +78,7 @@ export const PlayListCard = ({ playListId }) => {
           </div>
           <img src={image} alt="" className="rounded-4 object-cover " />
         </button>
-        <div className="flex justify-between">
+        <div className="flex justify-between items-center">
           <Link
             to={`${ROUTES.PLAYLIST_WITHOUT_PARAM}${playListId}`}
             className="truncate"

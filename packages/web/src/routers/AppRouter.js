@@ -15,7 +15,7 @@ import PlayList from '../pages/PlayList';
 
 export const AppRouter = () => {
   const { isAuthenticated } = useSelector(authSelector);
-  const { queue } = useSelector(playerSelector);
+  const { playingNow } = useSelector(playerSelector);
   return (
     <>
       <Switch>
@@ -59,7 +59,7 @@ export const AppRouter = () => {
           exact
         />
       </Switch>
-      {queue.length > 0 && <Player />}
+      {playingNow && <Player />}
     </>
   );
 };

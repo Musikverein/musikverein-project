@@ -11,11 +11,17 @@ const playReducer = (state = playerInitialState, action) => {
     case PlayerTypes.PLAYER_PLAY: {
       return {
         ...state,
-        playingNow: [action.payload],
+        playingNow: action.payload,
         queue: [],
       };
     }
     case PlayerTypes.PLAYER_ADD_TO_QUEUE: {
+      if (
+        state.playingNow === action.payload ||
+        state.queue.includes(action.payload)
+      ) {
+        return { ...state };
+      }
       return {
         ...state,
         queue: [...state.queue, action.payload],
