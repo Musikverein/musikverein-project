@@ -13,6 +13,7 @@ export const ModalLayout = ({ isOpen, handleClose, children, ...props }) => {
       overlayClassName="Overlay"
       onRequestClose={handleClose}
       isOpen={isOpen}
+      closeTimeoutMS={200}
       {...props}
     >
       <section>

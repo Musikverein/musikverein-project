@@ -8,6 +8,7 @@ import {
   editUserPlayList,
   followPlayList,
   getPlayList,
+  getPlayListAndPlay,
   updateOrderPlayList,
 } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { selectPlayListByIdState } from '../../redux/playList/playList-selectors';
@@ -54,8 +55,7 @@ export const PlayList = () => {
   const { title, owner, isPublic, songs, type, image, followedBy } = state;
 
   const handlePlayPlayList = ({ songId = null }) => {
-    const songIndex = songId ? songs.indexOf(songId) : 0;
-    dispatch(playPlayList({ songs, songIndex }));
+    dispatch(getPlayListAndPlay({ playListId, songId }));
   };
 
   const handleDropdown = () => {

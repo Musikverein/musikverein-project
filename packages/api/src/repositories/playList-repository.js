@@ -33,7 +33,7 @@ class PlayListRepository {
     );
   }
 
-  findPlayListAndPopulate(options) {
+  findPlayListAndPopulateSongs(options) {
     return normalizeDBQuery(
       db.PlayList.findOne(options)
         .populate({

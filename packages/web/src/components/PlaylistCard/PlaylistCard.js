@@ -8,6 +8,7 @@ import { authSelector } from '../../redux/auth/auth-selectors';
 import {
   deletePlayList,
   editUserPlayList,
+  getPlayListAndPlay,
 } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import Dropdown from '../Dropdown';
 import DropdownItem from '../DropdownItem';
@@ -16,7 +17,6 @@ import ConfirmText from '../ConfirmText';
 import { FollowButton } from '../FollowButton/FollowButton';
 import { PlayListForm } from '../PlayListForm/PlayListForm';
 import ROUTES from '../../routers/routes';
-import { playPlayList } from '../../redux/player/player-actions';
 
 import './PlayListCard.scss';
 
@@ -30,19 +30,12 @@ export const PlayListCard = ({ playListId }) => {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
 
-  const {
-    title,
-    followedBy,
-    owner,
-    type,
-    _id,
-    isPublic,
-    image,
-    songs,
-  } = playLists[playListId];
+  const { title, followedBy, owner, type, _id, isPublic, image } = playLists[
+    playListId
+  ];
 
   const handlePlayPlayList = () => {
-    dispatch(playPlayList({ songs }));
+    dispatch(getPlayListAndPlay({ playListId }));
   };
 
   const handlePlayListEdit = useCallback(() => {

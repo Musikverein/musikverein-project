@@ -1,7 +1,7 @@
 @import '../../styles/utils.scss';
 .menu-overlay {
   background-color: $color-bg-main;
-  color: white;
+  color: rgba($color: white, $alpha: 0.7);
   height: 100%;
   width: 100%;
   position: fixed;
@@ -33,6 +33,9 @@
   }
 }
 
+.active-menu{
+  color: white;
+}
 .open {
   opacity: 1;
   visibility: visible;
