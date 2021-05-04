@@ -254,8 +254,8 @@ export const deleteSong = (songId) => {
       if (errorMessage) {
         return dispatch(deleteSongError(errorMessage));
       }
-      dispatch(deleteSongSuccess(response.data));
       dispatch(syncSongDelete(response.data));
+      dispatch(deleteSongSuccess(response.data));
       return dispatch(removeSong(response.data));
     } catch (error) {
       return dispatch(deleteSongError(error.message));

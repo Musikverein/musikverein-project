@@ -1,4 +1,3 @@
-import { toggleInArrayById } from '../../utils/utils';
 import * as PlayerTypes from './player-types';
 
 export const playerInitialState = {
@@ -29,10 +28,9 @@ const playReducer = (state = playerInitialState, action) => {
     }
 
     case PlayerTypes.PLAYER_SYNC_SONG_DELETE: {
-      if (state.queue > 0) {
+      if (state.queue.length > 0) {
         const newQueue = [...state.queue];
-        const index = state.queue.indexOf(action.payload.song);
-        console.log({ index });
+        const index = state.queue.indexOf(action.payload);
         if (index !== -1) {
           newQueue.splice(index, 1);
           return {
@@ -40,9 +38,7 @@ const playReducer = (state = playerInitialState, action) => {
             queue: newQueue,
           };
         }
-        console.log(action.payload.song === state.playingNow);
-        if (action.payload.song === state.playingNow) {
-          console.log({ cola: [...newQueue.slice(1)] });
+        if (action.payload === state.playingNow) {
           return {
             ...state,
             playingNow: newQueue[0],
@@ -50,7 +46,7 @@ const playReducer = (state = playerInitialState, action) => {
           };
         }
       }
-      if (action.payload.song === state.playingNow) {
+      if (action.payload === state.playingNow) {
         return {
           ...state,
           playingNow: '',
