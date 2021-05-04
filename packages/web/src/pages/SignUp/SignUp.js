@@ -62,7 +62,7 @@ export const SignUp = () => {
             <Spinner />
           ) : (
             <form onSubmit={handleSubmit}>
-              <div className="card mt-8">
+              <div className="card mt-8 images-shadow">
                 <input
                   type="text"
                   id="email"

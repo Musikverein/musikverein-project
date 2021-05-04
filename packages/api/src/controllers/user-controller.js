@@ -65,25 +65,10 @@ async function update(req, res) {
   try {
     let response = null;
 
-    if (image) {
-      response = await UserRepo.findOneAndUpdate(
-        { firebaseId: uid },
-        { firstName, lastName, userName, image },
-        {
-          new: true,
-          select: 'firstName lastName userName image following followedBy',
-        },
-      );
-    } else {
-      response = await UserRepo.findOneAndUpdate(
-        { firebaseId: uid },
-        { firstName, lastName, userName },
-        {
-          new: true,
-          select: 'firstName lastName userName image following followedBy',
-        },
-      );
-    }
+    response = await UserRepo.findUserAndUpdate(
+      { firebaseId: uid },
+      { firstName, lastName, userName, ...(image && { image }) },
+    );
 
     if (response.error) {
       return res.status(400).send({

@@ -5,9 +5,8 @@ async function searchSongs(req, res, next) {
   console.log(value);
 
   try {
-    const response = await SongRepo.find({
-      title: { $regex: value, $options: 'i' },
-      active: true,
+    const response = await SongRepo.searchSongs({
+      value,
     });
 
     if (response.error) {
@@ -33,10 +32,7 @@ async function searchPlayLists(req, res, next) {
   console.log(value);
 
   try {
-    const response = await PlayListRepo.find({
-      title: { $regex: value, $options: 'i' },
-      active: true,
-    });
+    const response = await PlayListRepo.searchPlayLists({ value });
 
     if (response.error) {
       return res.status(400).send({

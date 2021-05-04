@@ -68,7 +68,7 @@ export const ResetPassword = () => {
           {isSendingPasswordReset ? (
             <Spinner />
           ) : (
-            <form className="card mt-8" onSubmit={handleSubmit}>
+            <form className="card mt-8 images-shadow" onSubmit={handleSubmit}>
               <input
                 type="text"
                 id="email"

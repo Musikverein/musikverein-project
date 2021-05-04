@@ -3,7 +3,18 @@
 @import './inputs/inputs.scss';
 
 .App__container {
-  background-color: $color-bg-main;
+  background: #232526; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to bottom right,
+    #323334,
+    #232526
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to bottom right,
+    #323334,
+    #090a0a
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
   width: 100%;
   min-height: 100vh;
   display: block;
