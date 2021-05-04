@@ -21,6 +21,12 @@ const playReducer = (state = playerInitialState, action) => {
       ) {
         return { ...state };
       }
+      if (state.queue.length === 0 && !state.playingNow) {
+        return {
+          ...state,
+          playingNow: action.payload,
+        };
+      }
       return {
         ...state,
         queue: [...state.queue, action.payload],
