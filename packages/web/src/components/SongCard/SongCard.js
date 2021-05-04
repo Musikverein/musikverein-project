@@ -22,7 +22,12 @@ import AddToPlayList from '../AddToPlayList';
 import { removeSongFromPlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { secondsToString } from '../../utils/utils';
 
-export const SongCard = ({ songId, handlePlay, playListId }) => {
+export const SongCard = ({
+  songId,
+  handlePlay,
+  playListId,
+  handleRemoveSongFromQueue,
+}) => {
   const song = useSelector(selectSongByIdState(songId));
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -129,12 +134,21 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
                   />
                 )}
                 <LikeButton likedBy={likedBy} songId={_id} text />
-                <DropdownItem
-                  isButton
-                  icon="bx-list-plus"
-                  text="Add to queqe"
-                  action={handleaddToQueue}
-                />
+                {handleRemoveSongFromQueue ? (
+                  <DropdownItem
+                    isButton
+                    icon="bx-list-plus"
+                    text="Remove to queqe"
+                    action={handleRemoveSongFromQueue}
+                  />
+                ) : (
+                  <DropdownItem
+                    isButton
+                    icon="bx-list-plus"
+                    text="Add to queqe"
+                    action={handleaddToQueue}
+                  />
+                )}
                 <DropdownItem
                   isButton
                   icon="bx-list-plus"
@@ -184,9 +198,15 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
     </section>
   );
 };
-
+SongCard.defaultProps = {
+  handleRemoveSongFromQueue: false,
+};
 SongCard.propTypes = {
   songId: PropTypes.string.isRequired,
   handlePlay: PropTypes.func.isRequired,
   playListId: PropTypes.string.isRequired,
+  handleRemoveSongFromQueue: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.bool,
+  ]),
 };

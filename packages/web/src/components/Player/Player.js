@@ -60,6 +60,13 @@ export const Player = () => {
     dispatch(reorderQueue(items));
   };
 
+  const handleRemoveSongFromQueue = (index) => {
+    const items = Array.from(queue);
+    items.splice(index, 1);
+
+    dispatch(reorderQueue(items));
+  };
+
   return (
     <section className="w-full flex flex-col items-center bg-black fixed bottom-0 pt-2 z-10 ">
       <div className="w-full justify-center bg-black flex items-center">
@@ -138,6 +145,7 @@ export const Player = () => {
                                 ref={prov.innerRef}
                                 {...prov.draggableProps}
                                 {...prov.dragHandleProps}
+                                className="relative"
                               >
                                 <SongCard
                                   key={songId}
@@ -146,6 +154,9 @@ export const Player = () => {
                                     handlePlaySpecificSong({ songId: songId })
                                   }
                                   playListId=""
+                                  handleRemoveSongFromQueue={() =>
+                                    handleRemoveSongFromQueue(index)
+                                  }
                                 />
                               </li>
                             )}
