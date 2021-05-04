@@ -6,7 +6,6 @@ import {
   normalizeSongs,
 } from '../../utils/normalizrSchema/schema';
 import { signOutSuccess } from '../auth/auth-actions';
-import { syncPlayListDelete } from '../player/player-actions';
 import { loadPlayList, removePlayList } from '../playList/playList-actions';
 import { loadSongs } from '../song/song-actions';
 import * as LibraryPlayListTypes from './libraryPlayList-types';
@@ -157,7 +156,6 @@ export const deletePlayList = (playListId) => {
         return dispatch(deletePlayListError(errorMessage));
       }
       dispatch(deletePlayListSuccess(response.data));
-      dispatch(syncPlayListDelete(response.data));
       return dispatch(removePlayList(response.data));
     } catch (error) {
       return dispatch(deletePlayListError(error.message));

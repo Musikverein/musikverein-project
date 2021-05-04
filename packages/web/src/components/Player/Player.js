@@ -5,6 +5,7 @@ import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   nextSong,
+  playSpecificSongInQueue,
   prevSong,
   reorderQueue,
 } from '../../redux/player/player-actions';
@@ -41,7 +42,7 @@ export const Player = () => {
   };
 
   const handlePlaySpecificSong = (songId) => {
-    // dispatch(playSpecificSong(songId));
+    dispatch(playSpecificSongInQueue(songId));
   };
 
   const handleShuffle = () => {

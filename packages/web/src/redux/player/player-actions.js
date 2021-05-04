@@ -19,9 +19,8 @@ export const syncSongDelete = (song) => ({
   payload: song._id,
 });
 
-export const syncPlayListDelete = (song) => ({
-  type: PlayerTypes.PLAYER_SYNC_PLAYLIST_DELETE,
-  payload: song._id,
+export const resetPlayer = () => ({
+  type: PlayerTypes.PLAYER_RESET,
 });
 
 export const nextSong = () => ({
@@ -35,4 +34,9 @@ export const prevSong = () => ({
 export const reorderQueue = (songs) => ({
   type: PlayerTypes.PLAYER_REORDER_QUEUE,
   payload: songs,
+});
+
+export const playSpecificSongInQueue = (songId) => ({
+  type: PlayerTypes.PLAYER_PLAY_SPECIFIC_SONG_IN_QUEUE,
+  payload: songId,
 });

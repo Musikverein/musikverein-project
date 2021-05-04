@@ -33,6 +33,9 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
 
+  if (!song) {
+    return null;
+  }
   const { title, artist, genre, image, likedBy, _id, owner, duration } = song;
 
   const handleSongEdit = () => {

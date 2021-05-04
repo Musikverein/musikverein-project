@@ -38,6 +38,7 @@ class PlayListRepository {
       db.PlayList.findOne(options)
         .populate({
           path: 'songs',
+          match: { active: true },
           select: { __v: 0, active: 0, createdAt: 0, updatedAt: 0 },
         })
         .select('title owner type followedBy isPublic image'),

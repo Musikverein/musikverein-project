@@ -27,12 +27,35 @@ const playReducer = (state = playerInitialState, action) => {
         queue: [...state.queue, action.payload],
       };
     }
+
     case PlayerTypes.PLAYER_SYNC_SONG_DELETE: {
-      const newQueue = toggleInArrayById(state.queue, action.payload);
-      return { ...state, queue: [...newQueue] };
-    }
-    case PlayerTypes.PLAYER_SYNC_PLAYLIST_DELETE: {
-      // TODO: Eliminar la playlist actual, si la playlist es eliminada.
+      if (state.queue > 0) {
+        const newQueue = [...state.queue];
+        const index = state.queue.indexOf(action.payload.song);
+        console.log({ index });
+        if (index !== -1) {
+          newQueue.splice(index, 1);
+          return {
+            ...state,
+            queue: newQueue,
+          };
+        }
+        console.log(action.payload.song === state.playingNow);
+        if (action.payload.song === state.playingNow) {
+          console.log({ cola: [...newQueue.slice(1)] });
+          return {
+            ...state,
+            playingNow: newQueue[0],
+            queue: [...newQueue.slice(1)],
+          };
+        }
+      }
+      if (action.payload.song === state.playingNow) {
+        return {
+          ...state,
+          playingNow: '',
+        };
+      }
       return { ...state };
     }
     case PlayerTypes.PLAYER_PLAY_PLAYLIST: {
@@ -64,6 +87,24 @@ const playReducer = (state = playerInitialState, action) => {
       return {
         ...state,
         queue: [...action.payload],
+      };
+    }
+    case PlayerTypes.PLAYER_PLAY_SPECIFIC_SONG_IN_QUEUE: {
+      const index = state.queue.indexOf(action.payload.songId);
+      return {
+        ...state,
+        playingNow: state.queue[index],
+        queue: [
+          ...state.queue.slice(index + 1),
+          ...state.queue.slice(0, index),
+          state.playingNow,
+        ],
+      };
+    }
+    case PlayerTypes.PLAYER_RESET: {
+      return {
+        ...state,
+        ...playerInitialState,
       };
     }
     default: {
