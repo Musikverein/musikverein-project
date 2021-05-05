@@ -145,7 +145,6 @@ export const Player = () => {
                                 ref={prov.innerRef}
                                 {...prov.draggableProps}
                                 {...prov.dragHandleProps}
-                                className="relative"
                               >
                                 <SongCard
                                   key={songId}

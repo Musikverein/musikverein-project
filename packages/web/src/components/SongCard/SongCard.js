@@ -89,7 +89,7 @@ export const SongCard = ({
           <img
             src={image}
             alt=""
-            className="w-12 h-12 rounded-4 object-cover images-shadow"
+            className="w-12 h-12 rounded-4 object-cover"
           />
         </button>
         <div className="pr-8 info-container truncate flex flex-col">
