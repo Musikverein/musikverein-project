@@ -12,7 +12,7 @@ export const Dropzone = ({ onFileSelected }) => {
   });
 
   return (
-    <div>
+    <div className="pb-4">
       <section className="dropzone h-56">
         <div
           {...getRootProps({ className: 'dropzone' })}

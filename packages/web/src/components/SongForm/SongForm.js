@@ -48,7 +48,7 @@ export const SongForm = ({
   };
 
   return (
-    <>
+    <div className="w-full h-3/4 flex flex-col items-center">
       <ImgEdit
         handleImage={handleImage}
         handleImageChange={handleImageChange}
@@ -63,7 +63,7 @@ export const SongForm = ({
       {isLoading ? (
         <Spinner />
       ) : (
-        <form onSubmit={handlePreSubmit} className="w-2/3">
+        <form onSubmit={handlePreSubmit} className="w-full px-4">
           <input
             className="form__input"
             placeholder="Title:"
@@ -105,14 +105,14 @@ export const SongForm = ({
           </span>
           <button
             type="submit"
-            className="rounded-4 w-full mb-4 button-secundary "
+            className="rounded-4 w-full mb-4 btn button-secundary "
             disabled={isLoading}
           >
             Submit
           </button>
           <button
             type="button"
-            className="rounded-4 w-full mb-4 button-secundary"
+            className="rounded-4 w-full mb-4 btn button-secundary"
             onClick={handleCancel}
             disabled={isLoading}
           >
@@ -126,7 +126,7 @@ export const SongForm = ({
         size="invisible"
         ref={reRef}
       />
-    </>
+    </div>
   );
 };
 

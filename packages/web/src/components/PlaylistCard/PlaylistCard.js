@@ -69,7 +69,7 @@ export const PlayListCard = ({ playListId }) => {
           <div className="flex items-center justify-center absolute card-playlist-cover-play">
             <i className="bx bx-play text-4xl" />
           </div>
-          <img src={image} alt="" className="rounded-4 object-cover " />
+          <img src={image} alt="" className="rounded-4 h-full object-cover" />
         </button>
         <div className="flex justify-between items-center">
           <Link

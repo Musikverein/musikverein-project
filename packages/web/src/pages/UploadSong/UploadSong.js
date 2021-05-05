@@ -70,8 +70,8 @@ export const UploadSong = () => {
     <>
       <Header />
       <main className="main-container px-4">
-        <div className="h-full w-full flex flex-col justify-center items-center p-4">
-          <h4 className="text-2xl py-4">Upload Audio File</h4>
+        <div className="h-full w-full flex flex-col justify-center items-center">
+          <h4 className="text-xl py-4">Upload Audio File</h4>
           {loadSong ? (
             <SongForm
               {...metaSong}
@@ -88,7 +88,7 @@ export const UploadSong = () => {
             />
           )}
         </div>
-        <p className="text-sm text-gray-400 text-center px-8">
+        <p className="text-sm text-gray-400 text-center px-4">
           Uploading a song, you agree to Musikverein&apos;s&nbsp;
           <br />
           <Link
