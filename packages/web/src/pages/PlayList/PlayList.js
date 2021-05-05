@@ -14,7 +14,6 @@ import {
 import { selectPlayListByIdState } from '../../redux/playList/playList-selectors';
 import { userPlayListSelector } from '../../redux/libraryPlayList/libraryPlayList-selectors';
 import { SongCard } from '../../components/SongCard/SongCard';
-import { playPlayList } from '../../redux/player/player-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import Dropdown from '../../components/Dropdown';
 import DropdownItem from '../../components/DropdownItem';
@@ -140,7 +139,7 @@ export const PlayList = () => {
                 </Dropdown>
               )}
             </div>
-            <div className="flex flex-col pt-2 items-center playlist">
+            <div className="flex flex-col mt-8 mb-2 items-center playlist">
               <img src={image} alt="playlist" className="playlist-img" />
               <h2 className="text-lg font-semibold text-light pt-4 pt-2">
                 {title}
@@ -155,7 +154,7 @@ export const PlayList = () => {
             <div className="playlist-songs">
               <button
                 type="button"
-                className="m-auto playlist-button-play flex items-center justify-content sticky top-3 z-10"
+                className="images-shadow m-auto playlist-button-play flex items-center justify-content sticky top-3 z-10"
                 onClick={handlePlayPlayList}
               >
                 <i className="bx bx-play text-4xl " />

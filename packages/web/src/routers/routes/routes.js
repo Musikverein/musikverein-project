@@ -4,7 +4,6 @@ export const ROUTES = {
   LOGIN: '/login',
   RESET_PASSWORD: '/reset-password',
   PROFILE: '/profile',
-  PROFILE_EDIT: '/profile/edit',
   SEARCH: '/search',
   LIBRARY: '/library',
   LIBRARY_SONGS: '/library/songs',

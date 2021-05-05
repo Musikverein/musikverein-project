@@ -1,17 +1,22 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import React, { useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 import { authSelector } from '../../redux/auth/auth-selectors';
 
-import ROUTES from '../../routers/routes';
-
 import './Profile.scss';
+import { ModalLayout } from '../../components/ModalLayout/ModalLayout';
+import { ProfileEdit } from '../../components/ProfileEdit/ProfileEdit';
 
 export const Profile = () => {
   const history = useHistory();
   const { currentUser } = useSelector(authSelector);
   const { followedBy, following } = currentUser;
+  const [isEditing, setIsEditing] = useState(false);
+
+  const handleModal = useCallback(() => {
+    setIsEditing((prevState) => !prevState);
+  }, [setIsEditing]);
 
   return (
     <>
@@ -32,12 +37,13 @@ export const Profile = () => {
           <h3 className="font-medium mt-4 mb-4">
             {currentUser.userName || 'Complete your profile'}
           </h3>
-          <Link
-            to={ROUTES.PROFILE_EDIT}
-            className="rounded-4 w-full button-secundary"
+          <button
+            type="button"
+            className="rounded-4 button-secundary btn"
+            onClick={handleModal}
           >
             Edit your profile
-          </Link>
+          </button>
         </div>
 
         <div className="flex justify-around text-center p-6">
@@ -51,6 +57,9 @@ export const Profile = () => {
           </div>
         </div>
       </main>
+      <ModalLayout isOpen={isEditing} handleClose={handleModal}>
+        <ProfileEdit handleClose={handleModal} />
+      </ModalLayout>
     </>
   );
 };

@@ -1,16 +1,23 @@
 @import '../utils.scss';
-.form__input {
-  display: block;
-  width: 100%;
-  margin-bottom: 10px;
-  color: $color-text-main;
-  border: none;
-  border-bottom: 2px solid transparent !important;
+.form {
+  &__input {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    color: $color-text-main;
+    border: none;
+    border-bottom: 2px solid transparent !important;
+    padding: 0.5rem 0.75rem;
 
-  &:hover,
-  :active,
-  :focus {
-    transition: border-bottom 0.1s linear;
-    border-bottom: 2px solid $color-principal !important;
+    &:hover,
+    :active,
+    :focus {
+      transition: border-bottom 0.1s linear;
+      border-bottom: 2px solid $color-principal !important;
+    }
+  }
+
+  &__select {
+    padding: 0.5rem 0.75rem;
   }
 }

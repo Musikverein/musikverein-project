@@ -65,7 +65,7 @@ export const PlayListForm = ({
       {isCreatingPlayList || isEditPlayList ? (
         <Spinner />
       ) : (
-        <>
+        <div className="w-full h-3/4 flex flex-col items-center">
           <ImgEdit
             handleImage={handleImage}
             handleImageChange={handleImageChange}
@@ -73,14 +73,15 @@ export const PlayListForm = ({
             refId={refId}
             defaultImg={
               defaultImg ||
-              'https://res.cloudinary.com/musikverein/image/upload/v1618918279/playlist-photo_htrvf3.svg'
+              'https://res.cloudinary.com/musikverein/image/upload/v1620213731/playlist-photo_euxndm.svg'
             }
             rounded={false}
           />
-          <form className="w-full p-4 flex flex-col" onSubmit={handlePreSubmit}>
+          <form className="w-3/4 p-4 flex flex-col" onSubmit={handlePreSubmit}>
             <input
-              className="form__input rounded-4 "
-              placeholder="Insert the name"
+              type="text"
+              className="form__input rounded-4"
+              placeholder="Insert name:"
               name="title"
               onChange={handleInputChange}
               value={title}
@@ -88,18 +89,8 @@ export const PlayListForm = ({
             <span className="mb-2 p-2 block text-error">
               {errors.title ? errors.title : ' '}
             </span>
-            <label htmlFor="Type" className="my-4">
-              Public
-              <input
-                name="isPublic"
-                className="mx-2"
-                type="checkbox"
-                onChange={handleInputChange}
-                checked={isPublic}
-              />
-            </label>
             <select
-              className="playlist-select mb-4"
+              className="form__select mb-4"
               name="type"
               value={type}
               onChange={handleInputChange}
@@ -108,11 +99,28 @@ export const PlayListForm = ({
               <option value="PlayList">PlayList</option>
             </select>
 
-            <button type="submit" className="button-primary rounded-4">
+            <div className="py-1">
+              <label htmlFor="isPublic" className="flex cursor-pointer">
+                <input
+                  type="checkbox"
+                  id="isPublic"
+                  name="isPublic"
+                  className="form-checkbox rounded-4 cursor-pointer"
+                  onChange={handleInputChange}
+                  checked={isPublic}
+                />
+                <span className="ml-2 text-white">Public</span>
+              </label>
+            </div>
+
+            <button
+              type="submit"
+              className="btn w-full button-secundary rounded-4"
+            >
               Submit
             </button>
           </form>
-        </>
+        </div>
       )}
       <ReCAPTCHA
         sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
