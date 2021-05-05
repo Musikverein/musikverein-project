@@ -16,28 +16,29 @@ class PlayListRepository {
 
   findPlayListAndDelete(options) {
     return normalizeDBQuery(
-      db.PlayList.findPlayListAndDelete(options).select('_id'),
+      db.PlayList.findOneAndDelete(options).select('_id'),
     );
   }
 
   findPlayList(options) {
-    return normalizeDBQuery(db.PlayList.findPlayList(options));
+    return normalizeDBQuery(db.PlayList.findOne(options));
   }
 
   findPlayListAndUpdate(queryFind, querySet) {
     return normalizeDBQuery(
-      db.PlayList.findPlayListAndUpdate(queryFind, querySet, {
+      db.PlayList.findOneAndUpdate(queryFind, querySet, {
         new: true,
         select: 'title owner type songs followedBy isPublic image',
       }),
     );
   }
 
-  findPlayListAndPopulate(options) {
+  findPlayListAndPopulateSongs(options) {
     return normalizeDBQuery(
-      db.PlayList.findPlayList(options)
+      db.PlayList.findOne(options)
         .populate({
           path: 'songs',
+          match: { active: true },
           select: { __v: 0, active: 0, createdAt: 0, updatedAt: 0 },
         })
         .select('title owner type followedBy isPublic image'),
@@ -46,7 +47,7 @@ class PlayListRepository {
 
   findPlayListAndPushSong(queryFind, querySet) {
     return normalizeDBQuery(
-      db.PlayList.findPlayListAndUpdate(
+      db.PlayList.findOneAndUpdate(
         queryFind,
         {
           $push: querySet,
@@ -61,7 +62,10 @@ class PlayListRepository {
 
   searchPlayLists({ value }) {
     return normalizeDBQuery(
-      db.Song.find({ title: { $regex: value, $options: 'i' }, isPublic: true })
+      db.PlayList.find({
+        title: { $regex: value, $options: 'i' },
+        isPublic: true,
+      })
         .limit(10)
         .select({
           __v: 0,

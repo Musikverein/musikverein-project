@@ -1,4 +1,7 @@
 const { PlayListRepo } = require('../repositories');
+const {
+  findPlayListAndUpdate,
+} = require('../repositories/playList-repository');
 
 async function createPlayList(req, res, next) {
   const { _id } = req.user;
@@ -243,7 +246,7 @@ async function getPlayList(req, res, next) {
   const { playListId } = req.body;
 
   try {
-    const response = await PlayListRepo.findPlayListAndPopulate({
+    const response = await PlayListRepo.findPlayListAndPopulateSongs({
       _id: playListId,
     });
 
@@ -255,10 +258,24 @@ async function getPlayList(req, res, next) {
     }
 
     if (response.data) {
-      return res.status(202).send({
-        data: response.data,
-        error: null,
-      });
+      const newSongs = response.data.songs.map((song) => song._id);
+      const updatePlaylist = await findPlayListAndUpdate(
+        { _id: playListId },
+        { songs: newSongs },
+      );
+
+      if (updatePlaylist.error) {
+        return res.status(400).send({
+          data: null,
+          error: updatePlaylist.error,
+        });
+      }
+      if (updatePlaylist.data) {
+        return res.status(202).send({
+          data: response.data,
+          error: null,
+        });
+      }
     }
   } catch (error) {
     next(error);

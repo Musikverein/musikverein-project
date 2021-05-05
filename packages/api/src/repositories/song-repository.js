@@ -23,7 +23,7 @@ class SongRepository {
 
   findSongAndDelete(queryFind, querySet) {
     return normalizeDBQuery(
-      db.PlayList.findOneAndUpdate(queryFind, querySet, {
+      db.Song.findOneAndUpdate(queryFind, querySet, {
         new: true,
         select: '_id',
       }),
@@ -32,7 +32,7 @@ class SongRepository {
 
   findSongAndUpdate(queryFind, querySet) {
     return normalizeDBQuery(
-      db.PlayList.findOneAndUpdate(queryFind, querySet, {
+      db.Song.findOneAndUpdate(queryFind, querySet, {
         new: true,
         select: 'title artist duration owner likedBy url genre image',
       }),

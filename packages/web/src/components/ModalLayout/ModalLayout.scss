@@ -45,8 +45,21 @@
     height: 100%;
     display: flex;
     flex-flow: column nowrap;
-    overflow: scroll;
+    overflow: auto;
     align-items: center;
     justify-content: center;
   }
+}
+
+.ReactModal__Overlay {
+  opacity: 0;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.ReactModal__Overlay--after-open{
+  opacity: 1;
+}
+
+.ReactModal__Overlay--before-close{
+  opacity: 0;
 }

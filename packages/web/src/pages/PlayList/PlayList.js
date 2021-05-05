@@ -3,12 +3,12 @@ import { Redirect, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
-import Header from '../../components/Header';
 import {
   deletePlayList,
   editUserPlayList,
   followPlayList,
   getPlayList,
+  getPlayListAndPlay,
   updateOrderPlayList,
 } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { selectPlayListByIdState } from '../../redux/playList/playList-selectors';
@@ -55,8 +55,7 @@ export const PlayList = () => {
   const { title, owner, isPublic, songs, type, image, followedBy } = state;
 
   const handlePlayPlayList = ({ songId = null }) => {
-    const songIndex = songId ? songs.indexOf(songId) : 0;
-    dispatch(playPlayList({ songs, songIndex }));
+    dispatch(getPlayListAndPlay({ playListId, songId }));
   };
 
   const handleDropdown = () => {
@@ -99,7 +98,7 @@ export const PlayList = () => {
           <Spinner />
         ) : (
           <>
-            <div className="h-14 w-full flex justify-end items-center sticky top-0 pt-4 bg__primary">
+            <div className="h-14 w-full flex justify-end items-center sticky top-0 pt-4 bg__primary z-10">
               <button
                 type="button"
                 className="absolute left-0 px-4 bx bxs-chevron-left text-4xl"
@@ -114,7 +113,10 @@ export const PlayList = () => {
                 </button>
               )}
               {dropdownOpen && (
-                <Dropdown handleClose={handleDropdown} styleNav="dropdown">
+                <Dropdown
+                  handleClose={handleDropdown}
+                  styleNav="dropdown-playlist"
+                >
                   <>
                     <DropdownItem
                       isButton
@@ -153,7 +155,7 @@ export const PlayList = () => {
             <div className="playlist-songs">
               <button
                 type="button"
-                className="m-auto playlist-button-play flex items-center justify-content"
+                className="m-auto playlist-button-play flex items-center justify-content sticky top-3 z-10"
                 onClick={handlePlayPlayList}
               >
                 <i className="bx bx-play text-4xl " />

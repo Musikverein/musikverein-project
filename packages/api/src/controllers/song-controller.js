@@ -106,6 +106,7 @@ async function likeSong(req, res, next) {
         { _id: songId, active: true },
         { likedBy: newLikedBy },
       );
+      console.log({ updatedSong });
 
       if (updatedSong.error) {
         return res.status(400).send({

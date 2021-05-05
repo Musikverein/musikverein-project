@@ -6,7 +6,7 @@ import {
   normalizeSongs,
 } from '../../utils/normalizrSchema/schema';
 import { signOutSuccess } from '../auth/auth-actions';
-import { syncPlayListDelete } from '../player/player-actions';
+import { playPlayList } from '../player/player-actions';
 import { loadPlayList, removePlayList } from '../playList/playList-actions';
 import { loadSongs } from '../song/song-actions';
 import * as LibraryPlayListTypes from './libraryPlayList-types';
@@ -157,7 +157,6 @@ export const deletePlayList = (playListId) => {
         return dispatch(deletePlayListError(errorMessage));
       }
       dispatch(deletePlayListSuccess(response.data));
-      dispatch(syncPlayListDelete(response.data));
       return dispatch(removePlayList(response.data));
     } catch (error) {
       return dispatch(deletePlayListError(error.message));
@@ -342,9 +341,12 @@ export const getPlayList = (playListId) => {
         return dispatch(getPlayListError(errorMessage));
       }
 
-      const { entities } = normalizeSongs(response.data.songs);
+      const { entities, result } = normalizeSongs(response.data.songs);
 
       dispatch(loadSongs(entities.songs));
+      dispatch(
+        loadPlayList({ [playListId]: { ...response.data, songs: result } }),
+      );
       return dispatch(getPlayListSuccess());
     } catch (error) {
       return dispatch(getPlayListError(error.message));
@@ -426,6 +428,52 @@ export const updateOrderPlayList = ({ songs, playListId }) => {
       return dispatch(updateOrderPlayListSuccess());
     } catch (error) {
       return dispatch(updateOrderPlayListError(error.message));
+    }
+  };
+};
+
+export const getPlayListAndPlayRequest = () => ({
+  type: LibraryPlayListTypes.PLAYLIST_GET_REQUEST,
+});
+export const getPlayListAndPlaySuccess = () => ({
+  type: LibraryPlayListTypes.PLAYLIST_GET_SUCCESS,
+});
+export const getPlayListAndPlayError = (message) => ({
+  type: LibraryPlayListTypes.PLAYLIST_GET_ERROR,
+  payload: message,
+});
+
+export const getPlayListAndPlay = ({ playListId, songId = null }) => {
+  return async function getPlayListAndPlayThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(getPlayListAndPlayRequest());
+    try {
+      const { errorMessage, data: response } = await api.getPlayList(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { playListId },
+      );
+      if (errorMessage) {
+        return dispatch(getPlayListAndPlayError(errorMessage));
+      }
+
+      const { entities, result } = normalizeSongs(response.data.songs);
+
+      dispatch(loadSongs(entities.songs));
+      dispatch(
+        loadPlayList({ [playListId]: { ...response.data, songs: result } }),
+      );
+      const songIndex = songId ? result.indexOf(songId) : 0;
+      dispatch(playPlayList({ songs: result, songIndex }));
+      return dispatch(getPlayListAndPlaySuccess());
+    } catch (error) {
+      return dispatch(getPlayListAndPlayError(error.message));
     }
   };
 };

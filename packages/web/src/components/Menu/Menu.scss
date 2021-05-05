@@ -1,42 +1,43 @@
-.menu-link {
-  width: 100%;
+@import '../../styles/utils.scss';
+.menu-overlay {
+  background-color: $color-bg-main;
+  color: rgba($color: white, $alpha: 0.7);
   height: 100%;
-  position: absolute;
-  z-index: 1002;
-  top: -5px;
-  left: 10px;
-}
-
-.menu-icon {
-  position: absolute;
-  width: 20px;
-  height: 14px;
-}
-
-/* ------------- */
-.menu-line {
-  background-color: rgb(255, 255, 255);
-  height: 2px;
   width: 100%;
-  border-radius: 2px;
-  position: absolute;
+  position: fixed;
+  top: 60px;
   left: 0;
-  transition: all 0.25s ease-in-out;
-}
-.menu-line-2 {
-  top: 0;
   bottom: 0;
-  margin: auto;
-}
-.menu-line-3 {
-  bottom: 0;
-}
-.menu.open .menu-line-1 {
-  transform: translateY(7px) translateY(-50%) rotate(-45deg);
-}
-.menu.open .menu-line-2 {
+  text-align: center;
+  transition: opacity 0.2s ease-in-out;
   opacity: 0;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  a {
+    padding: 10px 0;
+    &:first-child {
+      padding-top: 20px;
+    }
+  }
+
+  @media (min-width: 750px){
+    top: 0;
+    visibility: visible;
+    width: 200px;
+    opacity: 1;
+    background-color: black;
+    text-align: left;
+    padding-left: 1rem;
+  }
 }
-.menu.open .menu-line-3 {
-  transform: translateY(-7px) translateY(50%) rotate(45deg);
+
+.active-menu{
+  color: white;
+}
+.open {
+  opacity: 1;
+  visibility: visible;
+  z-index: 5;
 }

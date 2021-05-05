@@ -3,7 +3,12 @@ import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { saveIndexPlayList } from '../../redux/player/player-actions';
+import {
+  nextSong,
+  playSpecificSongInQueue,
+  prevSong,
+  reorderQueue,
+} from '../../redux/player/player-actions';
 import { playerSelector } from '../../redux/player/player-selectors';
 import { selectSongByIdState } from '../../redux/song/song-selectors';
 
@@ -16,26 +21,20 @@ import { SongCard } from '../SongCard/SongCard';
 
 export const Player = () => {
   const dispatch = useDispatch();
-  const { currentIndexPlayList, currentPlayList } = useSelector(playerSelector);
-  const song = useSelector(
-    selectSongByIdState(currentPlayList[currentIndexPlayList]),
-  );
+  const { queue, playingNow } = useSelector(playerSelector);
+  const song = useSelector(selectSongByIdState(playingNow));
   const [isModalOpen, setIsModalOpen] = useState(false);
+
   const { title, artist, likedBy, _id, url } = song;
+
   const handleNext = () => {
-    if (currentIndexPlayList === currentPlayList.length - 1) {
-      dispatch(saveIndexPlayList(0));
-    } else {
-      dispatch(saveIndexPlayList(currentIndexPlayList + 1));
-    }
+    dispatch(nextSong());
   };
+
   const handlePrevious = () => {
-    if (currentIndexPlayList === 0) {
-      dispatch(saveIndexPlayList(0));
-    } else {
-      dispatch(saveIndexPlayList(currentIndexPlayList - 1));
-    }
+    dispatch(prevSong());
   };
+
   const handleModalSong = () => {};
 
   const handleModalPlayList = () => {
@@ -43,17 +42,29 @@ export const Player = () => {
   };
 
   const handlePlaySpecificSong = (songId) => {
-    // dispatch(playSpecificSong(songId));
+    dispatch(playSpecificSongInQueue(songId));
+  };
+
+  const handleShuffle = () => {
+    const items = queue.sort(() => 0.5 - Math.random());
+    dispatch(reorderQueue(items));
   };
 
   const handleOnDragEnd = (result) => {
     if (!result.destination) return;
 
-    const items = Array.from(currentPlayList);
+    const items = Array.from(queue);
     const [reorderedItem] = items.splice(result.source.index, 1);
     items.splice(result.destination.index, 0, reorderedItem);
 
-    console.log({ items });
+    dispatch(reorderQueue(items));
+  };
+
+  const handleRemoveSongFromQueue = (index) => {
+    const items = Array.from(queue);
+    items.splice(index, 1);
+
+    dispatch(reorderQueue(items));
   };
 
   return (
@@ -76,15 +87,30 @@ export const Player = () => {
           onClickNext={handleNext}
           onClickPrevious={handlePrevious}
           onEnded={handleNext}
+          layout="stacked-reverse"
           style={{ backgroundColor: 'black', color: 'white' }}
-          customAdditionalControls={[
+          customControlsSection={[
+            RHAP_UI.ADDITIONAL_CONTROLS,
             RHAP_UI.LOOP,
+            RHAP_UI.MAIN_CONTROLS,
+            <button
+              type="button"
+              key="shuffle"
+              className="bx bx-shuffle text-3xl pl-2"
+              onClick={handleShuffle}
+            />,
+
+            RHAP_UI.VOLUME_CONTROLS,
+          ]}
+          customAdditionalControls={[]}
+          customVolumeControls={[
             <button
               type="button"
               key="x"
-              className="bx bx-list-ul text-4xl"
+              className="bx bx-list-ul text-3xl pr-2"
               onClick={handleModalPlayList}
             />,
+            RHAP_UI.VOLUME,
           ]}
         />
       </div>
@@ -93,11 +119,7 @@ export const Player = () => {
           <h2 className="py-4 text-2xl">Queue</h2>
           <div className="pb-4">
             <h3>Now playing:</h3>
-            <SongCard
-              songId={currentPlayList[currentIndexPlayList]}
-              handlePlay={() => {}}
-              playListId=""
-            />
+            <SongCard songId={playingNow} handlePlay={() => {}} playListId="" />
           </div>
           <div>
             <h3>Playlist:</h3>
@@ -111,7 +133,7 @@ export const Player = () => {
                         {...provided.droppableProps}
                         ref={provided.innerRef}
                       >
-                        {currentPlayList.map((songId, index) => (
+                        {queue.map((songId, index) => (
                           <Draggable
                             key={songId}
                             draggableId={songId}
@@ -123,6 +145,7 @@ export const Player = () => {
                                 ref={prov.innerRef}
                                 {...prov.draggableProps}
                                 {...prov.dragHandleProps}
+                                className="relative"
                               >
                                 <SongCard
                                   key={songId}
@@ -131,6 +154,9 @@ export const Player = () => {
                                     handlePlaySpecificSong({ songId: songId })
                                   }
                                   playListId=""
+                                  handleRemoveSongFromQueue={() =>
+                                    handleRemoveSongFromQueue(index)
+                                  }
                                 />
                               </li>
                             )}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { addToQueque } from '../../redux/player/player-actions';
+import { addToQueue } from '../../redux/player/player-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import { selectSongByIdState } from '../../redux/song/song-selectors';
 import {
@@ -22,7 +22,12 @@ import AddToPlayList from '../AddToPlayList';
 import { removeSongFromPlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { secondsToString } from '../../utils/utils';
 
-export const SongCard = ({ songId, handlePlay, playListId }) => {
+export const SongCard = ({
+  songId,
+  handlePlay,
+  playListId,
+  handleRemoveSongFromQueue,
+}) => {
   const song = useSelector(selectSongByIdState(songId));
   const dispatch = useDispatch();
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -33,6 +38,9 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
 
+  if (!song) {
+    return null;
+  }
   const { title, artist, genre, image, likedBy, _id, owner, duration } = song;
 
   const handleSongEdit = () => {
@@ -50,8 +58,8 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
     setIsDeleteSong(!isDeleteSong);
   };
 
-  const handleAddToQueque = () => {
-    dispatch(addToQueque(_id));
+  const handleaddToQueue = () => {
+    dispatch(addToQueue(_id));
   };
 
   const handleAddToPlayListModal = () => {
@@ -126,12 +134,21 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
                   />
                 )}
                 <LikeButton likedBy={likedBy} songId={_id} text />
-                <DropdownItem
-                  isButton
-                  icon="bx-list-plus"
-                  text="Add to queqe"
-                  action={handleAddToQueque}
-                />
+                {handleRemoveSongFromQueue ? (
+                  <DropdownItem
+                    isButton
+                    icon="bx-list-plus"
+                    text="Remove to queqe"
+                    action={handleRemoveSongFromQueue}
+                  />
+                ) : (
+                  <DropdownItem
+                    isButton
+                    icon="bx-list-plus"
+                    text="Add to queqe"
+                    action={handleaddToQueue}
+                  />
+                )}
                 <DropdownItem
                   isButton
                   icon="bx-list-plus"
@@ -181,9 +198,15 @@ export const SongCard = ({ songId, handlePlay, playListId }) => {
     </section>
   );
 };
-
+SongCard.defaultProps = {
+  handleRemoveSongFromQueue: false,
+};
 SongCard.propTypes = {
   songId: PropTypes.string.isRequired,
   handlePlay: PropTypes.func.isRequired,
   playListId: PropTypes.string.isRequired,
+  handleRemoveSongFromQueue: PropTypes.oneOfType([
+    PropTypes.func,
+    PropTypes.bool,
+  ]),
 };
