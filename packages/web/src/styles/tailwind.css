@@ -45,7 +45,7 @@
   }
 
   .dropzone {
-    @apply mt-4 p-4 border-2 border-dark-light border-dashed outline-none;
+    @apply mt-4 p-4 border-2 border-dark-light border-dashed outline-none focus:border-white hover:border-white;
   }
 
   .dropzone_container {

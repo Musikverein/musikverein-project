@@ -75,7 +75,7 @@ export const SongCard = ({
   };
 
   return (
-    <section className="p-2 ">
+    <section>
       <div className="flex card-song px-4">
         <LikeButton likedBy={likedBy} songId={_id} text={false} />
         <button
@@ -92,7 +92,7 @@ export const SongCard = ({
             className="w-12 h-12 rounded-4 object-cover images-shadow"
           />
         </button>
-        <div className="pr-20 info-container truncate flex flex-col">
+        <div className="pr-8 info-container truncate flex flex-col">
           <h2 className="text-m font-semibold text-light mb-0.5 truncate w-full">
             {title}
           </h2>
