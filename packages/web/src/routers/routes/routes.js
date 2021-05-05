@@ -12,4 +12,5 @@ export const ROUTES = {
   TOS: '/tos',
   PLAYLIST: '/playlist/:playListId',
   PLAYLIST_WITHOUT_PARAM: '/playlist/',
+  USER: '/user/:userId',
 };
