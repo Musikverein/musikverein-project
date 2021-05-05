@@ -138,14 +138,14 @@ export const SongCard = ({
                   <DropdownItem
                     isButton
                     icon="bx-list-plus"
-                    text="Remove to queqe"
+                    text="Remove to queue"
                     action={handleRemoveSongFromQueue}
                   />
                 ) : (
                   <DropdownItem
                     isButton
                     icon="bx-list-plus"
-                    text="Add to queqe"
+                    text="Add to queue"
                     action={handleaddToQueue}
                   />
                 )}
@@ -198,6 +198,7 @@ export const SongCard = ({
     </section>
   );
 };
+
 SongCard.defaultProps = {
   handleRemoveSongFromQueue: false,
 };

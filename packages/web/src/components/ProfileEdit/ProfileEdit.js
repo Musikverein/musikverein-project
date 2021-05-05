@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
-import { Link, useHistory } from 'react-router-dom';
 import ReCAPTCHA from 'react-google-recaptcha';
+import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { resetUpdate, updateProfile } from '../../redux/auth/auth-actions';
@@ -10,14 +10,12 @@ import { useImgPreview } from '../../hooks/useImgPreview';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
 
-import ImgEdit from '../../components/ImgEdit';
-import ROUTES from '../../routers/routes';
-import Spinner from '../../components/Spinner';
+import ImgEdit from '../ImgEdit';
+import Spinner from '../Spinner';
 
-export const ProfileEdit = () => {
+export const ProfileEdit = ({ handleClose }) => {
   const { currentUser, isUpdating, updatedSuccess } = useSelector(authSelector);
   const dispatch = useDispatch();
-  const history = useHistory();
   const { formValues, handleInputChange, errors, isValid } = useForm({
     firstName: currentUser.firstName,
     lastName: currentUser.lastName,
@@ -32,11 +30,11 @@ export const ProfileEdit = () => {
   const { firstName, lastName, userName } = formValues;
 
   useEffect(() => {
-    updatedSuccess && history.goBack();
+    updatedSuccess && handleClose();
     return () => {
       dispatch(resetUpdate());
     };
-  }, [updatedSuccess, history, dispatch]);
+  }, [updatedSuccess, handleClose, dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -52,9 +50,8 @@ export const ProfileEdit = () => {
 
   return (
     <>
-      <Link to={ROUTES.PROFILE} className="bx bxs-chevron-left text-4xl" />
-      <div className="animate__animated animate__slideInUp">
-        <div className="flex justify-center my-8 ">
+      <div className="w-full h-3/4 flex flex-col items-center">
+        <div className="flex justify-center">
           <ImgEdit
             handleImage={handleImage}
             handleImageChange={handleImageChange}
@@ -68,7 +65,7 @@ export const ProfileEdit = () => {
         {isUpdating ? (
           <Spinner />
         ) : (
-          <form onSubmit={handleSubmit} className="px-8 text-center">
+          <form onSubmit={handleSubmit} className="p-4 w-3/4 text-center">
             <input
               type="text"
               id="userName"
@@ -111,19 +108,23 @@ export const ProfileEdit = () => {
 
             <button
               type="submit"
-              className="rounded-4 button-secundary"
+              className="btn w-full rounded-4 button-secundary"
               disabled={isUpdating}
             >
               Update profile
             </button>
           </form>
         )}
-        <ReCAPTCHA
-          sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
-          size="invisible"
-          ref={reRef}
-        />
       </div>
+      <ReCAPTCHA
+        sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
+        size="invisible"
+        ref={reRef}
+      />
     </>
   );
+};
+
+ProfileEdit.propTypes = {
+  handleClose: PropTypes.func.isRequired,
 };

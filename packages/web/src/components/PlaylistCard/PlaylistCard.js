@@ -105,7 +105,7 @@ export const PlayListCard = ({ playListId }) => {
                   <DropdownItem
                     isButton
                     icon="bx-list-plus"
-                    text="Add to queqe"
+                    text="Add to queue"
                     action={handlePlayPlayList}
                   />
                 </>

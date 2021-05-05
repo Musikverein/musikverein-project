@@ -107,11 +107,6 @@ export const Login = () => {
                 >
                   Forgot your password?
                 </Link>
-                <ReCAPTCHA
-                  sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
-                  size="invisible"
-                  ref={reRef}
-                />
                 <button
                   className="btn w-full button-secundary rounded-4 mt-4 mb-0"
                   type="submit"
@@ -145,6 +140,11 @@ export const Login = () => {
             </Link>
           </section>
         </section>
+        <ReCAPTCHA
+          sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
+          size="invisible"
+          ref={reRef}
+        />
       </main>
     </>
   );
