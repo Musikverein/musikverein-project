@@ -30,6 +30,7 @@ songRouter.patch(
   validateUpdateSong,
   songController.editSong,
 );
+songRouter.get('/:userId', songController.getSongs);
 
 module.exports = {
   songRouter: songRouter,

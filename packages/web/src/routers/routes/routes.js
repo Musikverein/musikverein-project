@@ -13,4 +13,5 @@ export const ROUTES = {
   PLAYLIST: '/playlist/:playListId',
   PLAYLIST_WITHOUT_PARAM: '/playlist/',
   USER: '/user/:userId',
+  USER_WITHOUT_PARAM: '/user/',
 };

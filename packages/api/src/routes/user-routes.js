@@ -20,6 +20,7 @@ userRouter.patch(
   validateUpdateUser,
   userController.update,
 );
+userRouter.get('/:userId', userController.getUser);
 
 module.exports = {
   userRouter: userRouter,

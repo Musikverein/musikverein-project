@@ -135,4 +135,22 @@ export const api = {
       headers: headers,
     });
   },
+
+  getUserView: (headers, body = {}) => {
+    return axios.get(`${baseURL}/user/${body.userId}`, {
+      headers: headers,
+    });
+  },
+
+  getUserViewSongs: (headers, body = {}) => {
+    return axios.get(`${baseURL}/songs/${body.userId}`, {
+      headers: headers,
+    });
+  },
+
+  getUserViewPlayLists: (headers, body = {}) => {
+    return axios.get(`${baseURL}/playlist/byUser/${body.userId}`, {
+      headers: headers,
+    });
+  },
 };

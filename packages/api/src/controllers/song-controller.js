@@ -158,9 +158,31 @@ async function editSong(req, res, next) {
   const { title, artist, genre, image, songId } = req.body;
   try {
     const response = await SongRepo.findSongAndUpdate(
-      { _id: songId, owner: _id },
+      { _id: songId, owner: _id, active: true },
       { title, artist, genre, image },
     );
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+    if (response.data) {
+      return res.status(202).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getSongs(req, res, next) {
+  const { userId } = req.params;
+
+  try {
+    const response = await SongRepo.find({ owner: userId, active: true });
     if (response.error) {
       return res.status(400).send({
         data: null,
@@ -185,4 +207,5 @@ module.exports = {
   likeSong: likeSong,
   deleteSong: deleteSong,
   editSong: editSong,
+  getSongs: getSongs,
 };

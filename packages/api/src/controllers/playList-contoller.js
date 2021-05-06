@@ -357,6 +357,33 @@ async function updateOrderPlayList(req, res, next) {
   }
 }
 
+async function getPlayListsByUser(req, res, next) {
+  const { userId } = req.params;
+
+  try {
+    const response = await PlayListRepo.findPlayListByUser({
+      owner: userId,
+      isPublic: true,
+    });
+
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      return res.status(200).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   createPlayList: createPlayList,
   getUserPlayList: getUserPlayList,
@@ -368,4 +395,5 @@ module.exports = {
   getPlayList: getPlayList,
   deleteSongFromPlayList: deleteSongFromPlayList,
   updateOrderPlayList: updateOrderPlayList,
+  getPlayListsByUser: getPlayListsByUser,
 };

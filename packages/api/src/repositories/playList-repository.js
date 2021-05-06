@@ -69,10 +69,19 @@ class PlayListRepository {
         .limit(10)
         .select({
           __v: 0,
-          active: 0,
           createdAt: 0,
           updatedAt: 0,
         }),
+    );
+  }
+
+  findPlayListByUser(options) {
+    return normalizeDBQuery(
+      db.PlayList.find(options).limit(10).select({
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      }),
     );
   }
 }
