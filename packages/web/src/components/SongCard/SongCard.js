@@ -21,6 +21,7 @@ import DropdownItem from '../DropdownItem';
 import AddToPlayList from '../AddToPlayList';
 import { removeSongFromPlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { secondsToString } from '../../utils/utils';
+import { playerSelector } from '../../redux/player/player-selectors';
 
 export const SongCard = ({
   songId,
@@ -37,6 +38,7 @@ export const SongCard = ({
   const {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
+  const { playingNow } = useSelector(playerSelector);
 
   if (!song) {
     return null;
@@ -75,7 +77,7 @@ export const SongCard = ({
   };
 
   return (
-    <section>
+    <section className={playingNow === _id ? 'bg__terciary' : ''}>
       <div className="flex card-song px-4">
         <LikeButton likedBy={likedBy} songId={_id} text={false} />
         <button

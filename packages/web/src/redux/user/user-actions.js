@@ -1,11 +1,11 @@
 import * as UserTypes from './user-types';
 
-export const loadUsers = (songs) => ({
+export const loadUsers = (users) => ({
   type: UserTypes.LOAD_USERS,
-  payload: songs,
+  payload: users,
 });
 
-export const removeUser = (songId) => ({
+export const removeUser = (userId) => ({
   type: UserTypes.REMOVE_USER,
-  payload: songId._id,
+  payload: userId._id,
 });

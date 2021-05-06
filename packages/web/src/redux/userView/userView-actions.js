@@ -123,3 +123,87 @@ export const getUserViewPlayLists = ({ userId }) => {
     }
   };
 };
+
+export const getUserViewFollowedRequest = () => ({
+  type: UserViewTypes.USER_VIEW_GET_FOLLOWEDBY_REQUEST,
+});
+export const getUserViewFollowedSuccess = () => ({
+  type: UserViewTypes.USER_VIEW_GET_FOLLOWEDBY_SUCCESS,
+});
+export const getUserViewFollowedError = (message) => ({
+  type: UserViewTypes.USER_VIEW_GET_FOLLOWEDBY_ERROR,
+  payload: message,
+});
+
+export const getUserViewFollowed = ({ userId }) => {
+  return async function getUserViewThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(getUserViewFollowedRequest());
+    try {
+      const { errorMessage, data: response } = await api.getUserViewFollowed(
+        { Authorization: `Bearer ${token}` },
+        { userId },
+      );
+      if (errorMessage) {
+        return dispatch(getUserViewFollowedError(errorMessage));
+      }
+      const { entities, result } = normalizeUsers(response.data.folloedBy);
+      dispatch(loadUsers(entities.users));
+      dispatch(
+        loadUsers({
+          [response.data._id]: { ...response.data, folloedBy: result },
+        }),
+      );
+      return dispatch(getUserViewFollowedRequest());
+    } catch (error) {
+      return dispatch(getUserViewFollowedError(error.message));
+    }
+  };
+};
+
+export const getUserViewFollowingRequest = () => ({
+  type: UserViewTypes.USER_VIEW_GET_FOLLOWING_REQUEST,
+});
+export const getUserViewFollowingSuccess = () => ({
+  type: UserViewTypes.USER_VIEW_GET_FOLLOWING_SUCCESS,
+});
+export const getUserViewFollowingError = (message) => ({
+  type: UserViewTypes.USER_VIEW_GET_FOLLOWING_ERROR,
+  payload: message,
+});
+
+export const getUserViewFollowing = ({ userId }) => {
+  return async function getUserViewThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(getUserViewFollowingRequest());
+    try {
+      const { errorMessage, data: response } = await api.getUserViewFollowing(
+        { Authorization: `Bearer ${token}` },
+        { userId },
+      );
+      if (errorMessage) {
+        return dispatch(getUserViewFollowingError(errorMessage));
+      }
+      const { entities, result } = normalizeUsers(response.data.following);
+      dispatch(loadUsers(entities.users));
+      dispatch(
+        loadUsers({
+          [response.data._id]: { ...response.data, following: result },
+        }),
+      );
+      return dispatch(getUserViewFollowingRequest());
+    } catch (error) {
+      return dispatch(getUserViewFollowingError(error.message));
+    }
+  };
+};

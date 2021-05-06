@@ -1,0 +1,19 @@
+.user {
+  &-info {
+    width: 100%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    padding: 10px 0;
+  }
+  &-playlists {
+    &-playlist {
+      display: flex;
+      flex-flow: row nowrap;
+      overflow-x: auto;
+      @media (min-width: 750px) {
+        flex-flow: row wrap;
+      }
+    }
+  }
+}

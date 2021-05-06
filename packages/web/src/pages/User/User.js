@@ -1,6 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect, useParams } from 'react-router-dom';
+import { Header } from '../../components/Header/Header';
+import ModalLayout from '../../components/ModalLayout';
 
 import { PlayListCard } from '../../components/PlayListCard/PlaylistCard';
 import { SongCard } from '../../components/SongCard/SongCard';
@@ -8,6 +10,8 @@ import { play } from '../../redux/player/player-actions';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 import {
   getUserView,
+  getUserViewFollowed,
+  getUserViewFollowing,
   getUserViewPlayLists,
   getUserViewSongs,
 } from '../../redux/userView/userView-actions';
@@ -21,6 +25,8 @@ export const User = () => {
   const dispatch = useDispatch();
   const state = useSelector(selectUserByIdState(userId));
   const { userSongs, userPlayLists } = useSelector(userViewSelector);
+  const [isModalFollowedOpen, setIsModalFollowedOpen] = useState(false);
+  const [isModalFollowingOpen, setIsModalFollowingOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getUserView({ userId }));
@@ -42,30 +48,81 @@ export const User = () => {
     dispatch(play(songId));
   };
 
+  const handleFollowed = () => {
+    if (!isModalFollowedOpen) {
+      dispatch(getUserViewFollowed({ userId }));
+    }
+    setIsModalFollowedOpen(!isModalFollowedOpen);
+  };
+  const handleFollowing = () => {
+    if (!isModalFollowingOpen) {
+      dispatch(getUserViewFollowing({ userId }));
+    }
+    setIsModalFollowingOpen(!setIsModalFollowingOpen);
+  };
   return (
-    <section className="main-container-without-header">
-      <div className="user-info">
-        <img src={image} alt="profile" />
-        <div>
-          <h2>{userName}</h2>
-          <p>{`${followedBy.length} Followers · ${following.length} Following`}</p>
-        </div>
-      </div>
-      <div className="user-playlists">
-        {userPlayLists.map((playlist) => (
-          <PlayListCard key={playlist} playListId={playlist} />
-        ))}
-      </div>
-      <div className="user-songs">
-        {userSongs.map((song) => (
-          <SongCard
-            key={song}
-            songId={song}
-            handlePlay={() => handlePlaySong({ songId: song })}
-            playListId=""
+    <>
+      <Header />
+      <section className="main-container px-4">
+        <div className="py-4">
+          <img
+            className="w-32 h-32 rounded-full mx-auto border-2 border-mk-magenta object-cover"
+            src={image}
+            alt="profile"
           />
-        ))}
-      </div>
-    </section>
+          <div className="user-info">
+            <h2 className="text-l font-semibold text-light">{userName}</h2>
+            <div className="flex text-gray-200">
+              <button
+                type="button"
+                className="mr-4 hover:underline"
+                onClick={handleFollowed}
+              >
+                {followedBy.length} Followers
+              </button>
+              <button
+                type="button"
+                className="hover:underline"
+                onClick={handleFollowing}
+              >
+                {following.length} Following
+              </button>
+            </div>
+          </div>
+        </div>
+        <div className="user-playlists pt-4">
+          <h2 className="text-2xl font-bold pb-2">
+            {userName}&#39;s Playlist:
+          </h2>
+          <div className="user-playlists-playlist">
+            {userPlayLists.map((playlist) => (
+              <PlayListCard key={playlist} playListId={playlist} />
+            ))}
+          </div>
+        </div>
+        <div className="user-songs pt-6">
+          <h2 className="text-2xl font-bold">{userName}&#39;s Songs:</h2>
+          <div className="user-songs-song">
+            {userSongs.map((song) => (
+              <SongCard
+                key={song}
+                songId={song}
+                handlePlay={() => handlePlaySong({ songId: song })}
+                playListId=""
+              />
+            ))}
+          </div>
+        </div>
+        <ModalLayout isOpen={isModalFollowedOpen} hanndleClose={handleFollowed}>
+          <div>hola</div>
+        </ModalLayout>
+        <ModalLayout
+          isOpen={isModalFollowingOpen}
+          hanndleClose={handleFollowing}
+        >
+          <div>hello</div>
+        </ModalLayout>
+      </section>
+    </>
   );
 };
