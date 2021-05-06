@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Switch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
@@ -46,12 +46,9 @@ export const AppRouter = () => {
           exact
         />
 
-        <ProtectedRoute
-          isAuthenticated={isAuthenticated}
-          path={ROUTES.USER}
-          component={User}
-          exact
-        />
+        <Route path={ROUTES.USER}>
+          <User />
+        </Route>
 
         <ProtectedRoute
           isAuthenticated={isAuthenticated}

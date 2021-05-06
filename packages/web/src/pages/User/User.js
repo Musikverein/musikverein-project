@@ -6,6 +6,8 @@ import ModalLayout from '../../components/ModalLayout';
 
 import { PlayListCard } from '../../components/PlayListCard/PlaylistCard';
 import { SongCard } from '../../components/SongCard/SongCard';
+import Spinner from '../../components/Spinner';
+import { UserCard } from '../../components/UserCard/UserCard';
 import { play } from '../../redux/player/player-actions';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 import {
@@ -24,19 +26,20 @@ export const User = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
   const state = useSelector(selectUserByIdState(userId));
-  const { userSongs, userPlayLists } = useSelector(userViewSelector);
+  const {
+    userSongs,
+    userPlayLists,
+    isGettingUserViewFollowed,
+    isGettingUserViewFollowing,
+  } = useSelector(userViewSelector);
   const [isModalFollowedOpen, setIsModalFollowedOpen] = useState(false);
   const [isModalFollowingOpen, setIsModalFollowingOpen] = useState(false);
 
   useEffect(() => {
     dispatch(getUserView({ userId }));
-  }, [dispatch, userId]);
-  useEffect(() => {
     dispatch(getUserViewSongs({ userId }));
-  }, [dispatch, userId]);
-  useEffect(() => {
     dispatch(getUserViewPlayLists({ userId }));
-  }, [dispatch, userId]);
+  }, [userId]);
 
   if (!state) {
     return <Redirect to={ROUTES.HOME} />;
@@ -58,7 +61,8 @@ export const User = () => {
     if (!isModalFollowingOpen) {
       dispatch(getUserViewFollowing({ userId }));
     }
-    setIsModalFollowingOpen(!setIsModalFollowingOpen);
+
+    setIsModalFollowingOpen((prevState) => !prevState);
   };
   return (
     <>
@@ -77,6 +81,7 @@ export const User = () => {
                 type="button"
                 className="mr-4 hover:underline"
                 onClick={handleFollowed}
+                disabled={followedBy.length < 1}
               >
                 {followedBy.length} Followers
               </button>
@@ -84,6 +89,7 @@ export const User = () => {
                 type="button"
                 className="hover:underline"
                 onClick={handleFollowing}
+                disabled={following.length < 1}
               >
                 {following.length} Following
               </button>
@@ -94,15 +100,15 @@ export const User = () => {
           <h2 className="text-2xl font-bold pb-2">
             {userName}&#39;s Playlist:
           </h2>
-          <div className="user-playlists-playlist">
+          {/* <div className="user-playlists-playlist">
             {userPlayLists.map((playlist) => (
               <PlayListCard key={playlist} playListId={playlist} />
             ))}
-          </div>
+          </div> */}
         </div>
         <div className="user-songs pt-6">
           <h2 className="text-2xl font-bold">{userName}&#39;s Songs:</h2>
-          <div className="user-songs-song">
+          {/* <div className="user-songs-song">
             {userSongs.map((song) => (
               <SongCard
                 key={song}
@@ -111,17 +117,36 @@ export const User = () => {
                 playListId=""
               />
             ))}
-          </div>
+          </div> */}
         </div>
-        <ModalLayout isOpen={isModalFollowedOpen} hanndleClose={handleFollowed}>
-          <div>hola</div>
+        <ModalLayout isOpen={isModalFollowedOpen} handleClose={handleFollowed}>
+          {isGettingUserViewFollowed ? (
+            <Spinner />
+          ) : (
+            <div className="w-full h-full pt-16 px-4 ">
+              {followedBy > 0 &&
+                followedBy.map((followedId) => (
+                  <UserCard key={followedId} userId={followedId} />
+                ))}
+            </div>
+          )}
         </ModalLayout>
-        <ModalLayout
-          isOpen={isModalFollowingOpen}
-          hanndleClose={handleFollowing}
-        >
-          <div>hello</div>
-        </ModalLayout>
+        {isModalFollowingOpen && (
+          <ModalLayout
+            isOpen={isModalFollowingOpen}
+            handleClose={handleFollowing}
+          >
+            {isGettingUserViewFollowing ? (
+              <Spinner />
+            ) : (
+              <div className="w-full h-full pt-16 px-4 ">
+                {following.map((followingId) => {
+                  return <UserCard key={followingId} userId={followingId} />;
+                })}
+              </div>
+            )}
+          </ModalLayout>
+        )}
       </section>
     </>
   );

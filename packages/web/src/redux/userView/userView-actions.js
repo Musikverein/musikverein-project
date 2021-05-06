@@ -24,6 +24,7 @@ export const getUserViewError = (message) => ({
 
 export const getUserView = ({ userId }) => {
   return async function getUserViewThunk(dispatch) {
+    console.log(userId, 'del actions');
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
@@ -159,7 +160,7 @@ export const getUserViewFollowed = ({ userId }) => {
           [response.data._id]: { ...response.data, folloedBy: result },
         }),
       );
-      return dispatch(getUserViewFollowedRequest());
+      return dispatch(getUserViewFollowedSuccess());
     } catch (error) {
       return dispatch(getUserViewFollowedError(error.message));
     }
@@ -201,7 +202,7 @@ export const getUserViewFollowing = ({ userId }) => {
           [response.data._id]: { ...response.data, following: result },
         }),
       );
-      return dispatch(getUserViewFollowingRequest());
+      return dispatch(getUserViewFollowingSuccess());
     } catch (error) {
       return dispatch(getUserViewFollowingError(error.message));
     }

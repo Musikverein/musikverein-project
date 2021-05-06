@@ -22,6 +22,24 @@ class UserRepository {
       }),
     );
   }
+
+  getUserFollowedPopulate(options) {
+    return normalizeDBQuery(
+      db.User.findOne(options).populate({
+        path: 'followedBy',
+        select: { userName: 1, image: 1 },
+      }),
+    );
+  }
+
+  getUserFollowingPopulate(options) {
+    return normalizeDBQuery(
+      db.User.findOne(options).populate({
+        path: 'following',
+        select: { userName: 1, image: 1 },
+      }),
+    );
+  }
 }
 
 module.exports = new UserRepository();

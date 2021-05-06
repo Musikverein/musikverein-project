@@ -153,4 +153,16 @@ export const api = {
       headers: headers,
     });
   },
+
+  getUserViewFollowed: (headers, body = {}) => {
+    return axios.get(`${baseURL}/user/followedBy/${body.userId}`, {
+      headers: headers,
+    });
+  },
+
+  getUserViewFollowing: (headers, body = {}) => {
+    return axios.get(`${baseURL}/user/following/${body.userId}`, {
+      headers: headers,
+    });
+  },
 };

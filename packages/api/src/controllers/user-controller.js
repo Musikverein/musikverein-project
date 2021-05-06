@@ -111,9 +111,58 @@ async function getUser(req, res, next) {
   }
 }
 
+async function getUserFollowedPopulate(req, res, next) {
+  const { userId } = req.params;
+
+  try {
+    const response = await UserRepo.getUserFollowedPopulate({ _id: userId });
+
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      return res.status(202).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
+async function getUserFollowingPopulate(req, res, next) {
+  const { userId } = req.params;
+  try {
+    const response = await UserRepo.getUserFollowingPopulate({ _id: userId });
+
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      return res.status(202).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   signUp: signUp,
   signOut: signOut,
   update: update,
   getUser: getUser,
+  getUserFollowedPopulate: getUserFollowedPopulate,
+  getUserFollowingPopulate: getUserFollowingPopulate,
 };

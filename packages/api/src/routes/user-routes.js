@@ -21,6 +21,8 @@ userRouter.patch(
   userController.update,
 );
 userRouter.get('/:userId', userController.getUser);
+userRouter.get('/followedBy/:userId', userController.getUserFollowedPopulate);
+userRouter.get('/following/:userId', userController.getUserFollowingPopulate);
 
 module.exports = {
   userRouter: userRouter,
