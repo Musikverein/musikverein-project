@@ -24,7 +24,6 @@ export const getUserViewError = (message) => ({
 
 export const getUserView = ({ userId }) => {
   return async function getUserViewThunk(dispatch) {
-    console.log(userId, 'del actions');
     const token = await auth.getCurrentUserToken();
 
     if (!token) {
@@ -153,11 +152,11 @@ export const getUserViewFollowed = ({ userId }) => {
       if (errorMessage) {
         return dispatch(getUserViewFollowedError(errorMessage));
       }
-      const { entities, result } = normalizeUsers(response.data.folloedBy);
+      const { entities, result } = normalizeUsers(response.data.followedBy);
       dispatch(loadUsers(entities.users));
       dispatch(
         loadUsers({
-          [response.data._id]: { ...response.data, folloedBy: result },
+          [response.data._id]: { ...response.data, followedBy: result },
         }),
       );
       return dispatch(getUserViewFollowedSuccess());
@@ -205,6 +204,43 @@ export const getUserViewFollowing = ({ userId }) => {
       return dispatch(getUserViewFollowingSuccess());
     } catch (error) {
       return dispatch(getUserViewFollowingError(error.message));
+    }
+  };
+};
+
+export const followUserRequest = () => ({
+  type: UserViewTypes.FOLLOW_USER_REQUEST,
+});
+export const followUserSuccess = () => ({
+  type: UserViewTypes.FOLLOW_USER_SUCCESS,
+});
+export const followUserError = (message) => ({
+  type: UserViewTypes.FOLLOW_USER_ERROR,
+  payload: message,
+});
+
+export const followUser = ({ userId }) => {
+  return async function getUserViewThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(followUserRequest());
+    try {
+      const { errorMessage, data: response } = await api.followUser(
+        { Authorization: `Bearer ${token}` },
+        { userId },
+      );
+      if (errorMessage) {
+        return dispatch(followUserError(errorMessage));
+      }
+      const { entities } = normalizeUsers([response.data]);
+      dispatch(loadUsers(entities.users));
+      return dispatch(followUserSuccess());
+    } catch (error) {
+      return dispatch(followUserError(error.message));
     }
   };
 };

@@ -158,6 +158,77 @@ async function getUserFollowingPopulate(req, res, next) {
   }
 }
 
+async function followUser(req, res, next) {
+  const { _id } = req.user;
+  const { userId } = req.body;
+  console.log({ userId }, { _id });
+
+  try {
+    const responseUserFollowed = await UserRepo.findUser({ _id: userId });
+    if (responseUserFollowed.error) {
+      return res.status(400).send({
+        data: null,
+        error: responseUserFollowed.error,
+      });
+    }
+    const responseUserFollowing = await UserRepo.findUser({ _id: _id });
+    if (responseUserFollowing.error) {
+      return res.status(400).send({
+        data: null,
+        error: responseUserFollowing.error,
+      });
+    }
+
+    if (responseUserFollowed.data && responseUserFollowing.data) {
+      console.log('en el primer if');
+      const { followedBy } = responseUserFollowed.data;
+      const { following } = responseUserFollowing.data;
+
+      const newFollowedBy =
+        followedBy.indexOf(_id) !== -1
+          ? followedBy.filter((id) => String(id) !== String(_id))
+          : [...followedBy, _id];
+
+      const newFollowing =
+        following.indexOf(_id) !== -1
+          ? following.filter((id) => String(id) !== String(_id))
+          : [...following, _id];
+
+      const updatedUserFollowed = await UserRepo.findUserAndUpdate(
+        { _id: userId },
+        { followedBy: newFollowedBy },
+      );
+
+      if (updatedUserFollowed.error) {
+        return res.status(400).send({
+          data: null,
+          error: updatedUserFollowed.error,
+        });
+      }
+      const updatedUserFollowing = await UserRepo.findUserAndUpdate(
+        { _id: _id },
+        { following: newFollowing },
+      );
+
+      if (updatedUserFollowing.error) {
+        return res.status(400).send({
+          data: null,
+          error: updatedUserFollowing.error,
+        });
+      }
+
+      if (updatedUserFollowed.data && updatedUserFollowing.data) {
+        return res.status(200).send({
+          data: updatedUserFollowed.data,
+          error: null,
+        });
+      }
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   signUp: signUp,
   signOut: signOut,
@@ -165,4 +236,5 @@ module.exports = {
   getUser: getUser,
   getUserFollowedPopulate: getUserFollowedPopulate,
   getUserFollowingPopulate: getUserFollowingPopulate,
+  followUser: followUser,
 };

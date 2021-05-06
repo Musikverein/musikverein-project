@@ -246,7 +246,7 @@ async function getPlayList(req, res, next) {
   const { playListId } = req.body;
 
   try {
-    const response = await PlayListRepo.findPlayListAndPopulateSongs({
+    const response = await PlayListRepo.findPlayListAndPopulateSongsAndOwner({
       _id: playListId,
     });
 

@@ -165,4 +165,10 @@ export const api = {
       headers: headers,
     });
   },
+
+  followUser: (headers, body = {}) => {
+    return axios.patch(`${baseURL}/user/follow`, body, {
+      headers: headers,
+    });
+  },
 };

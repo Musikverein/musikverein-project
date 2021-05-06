@@ -4,9 +4,14 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 import ROUTES from '../../routers/routes';
+import Spinner from '../Spinner';
 
 export const UserCard = ({ userId }) => {
-  const { image, userName, _id } = useSelector(selectUserByIdState(userId));
+  const state = useSelector(selectUserByIdState(userId));
+  if (!state) {
+    return <Spinner />;
+  }
+  const { image, userName, _id } = state;
 
   return (
     <section className="flex items-center text-white w-full">

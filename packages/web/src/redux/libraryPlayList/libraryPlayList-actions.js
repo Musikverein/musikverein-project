@@ -4,11 +4,13 @@ import { imageUpload } from '../../services/cloudinary';
 import {
   normalizePlayLists,
   normalizeSongs,
+  normalizeUsers,
 } from '../../utils/normalizrSchema/schema';
 import { signOutSuccess } from '../auth/auth-actions';
 import { playPlayList } from '../player/player-actions';
 import { loadPlayList, removePlayList } from '../playList/playList-actions';
 import { loadSongs } from '../song/song-actions';
+import { loadUsers } from '../user/user-actions';
 import * as LibraryPlayListTypes from './libraryPlayList-types';
 
 export const createPlayListRequest = () => ({
@@ -341,11 +343,23 @@ export const getPlayList = (playListId) => {
         return dispatch(getPlayListError(errorMessage));
       }
 
-      const { entities, result } = normalizeSongs(response.data.songs);
+      const { entities: entitiesSong, result: resultSong } = normalizeSongs(
+        response.data.songs,
+      );
+      const { entities: entitiesUser, result: resultUser } = normalizeUsers([
+        response.data.owner,
+      ]);
 
-      dispatch(loadSongs(entities.songs));
+      dispatch(loadSongs(entitiesSong.songs));
+      dispatch(loadUsers(entitiesUser.users));
       dispatch(
-        loadPlayList({ [playListId]: { ...response.data, songs: result } }),
+        loadPlayList({
+          [playListId]: {
+            ...response.data,
+            songs: resultSong,
+            owner: resultUser[0],
+          },
+        }),
       );
       return dispatch(getPlayListSuccess());
     } catch (error) {

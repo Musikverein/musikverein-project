@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -25,6 +25,7 @@ import Spinner from '../../components/Spinner';
 import { Search } from '../../components/Search/Search';
 
 import './PlayList.scss';
+import { selectUserByIdState } from '../../redux/user/user-selectors';
 
 export const PlayList = () => {
   const { playListId } = useParams();
@@ -39,6 +40,7 @@ export const PlayList = () => {
 
   const { isGettingPlayList } = useSelector(userPlayListSelector);
   const state = useSelector(selectPlayListByIdState(playListId));
+  const { userName } = useSelector(selectUserByIdState(state?.owner)) || {};
   const {
     currentUser: { _id: userId },
   } = useSelector(authSelector);
@@ -145,7 +147,13 @@ export const PlayList = () => {
                 {title}
               </h2>
               <div className="flex justify-center text-sm text-gray-200">
-                <p className="px-2">{type} of Manolo</p>
+                <p className="px-2">
+                  {type} of
+                  <Link to={`${ROUTES.USER_WITHOUT_PARAM}${owner}`}>
+                    {' '}
+                    {userName}{' '}
+                  </Link>
+                </p>
                 <p className="px-2">{isPublic ? 'Public' : 'Private'}</p>
                 <p className="px-2">{followedBy.length} Follows</p>
               </div>

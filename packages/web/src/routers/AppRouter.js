@@ -21,6 +21,18 @@ export const AppRouter = () => {
       <Switch>
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
+          path={ROUTES.USER}
+          component={User}
+        />
+
+        <ProtectedRoute
+          isAuthenticated={isAuthenticated}
+          path={ROUTES.PLAYLIST}
+          component={PlayList}
+        />
+
+        <ProtectedRoute
+          isAuthenticated={isAuthenticated}
           path={ROUTES.LIBRARY}
           component={LibraryRouter}
         />
@@ -29,32 +41,18 @@ export const AppRouter = () => {
           isAuthenticated={isAuthenticated}
           path={ROUTES.PROFILE}
           component={Profile}
-          exact
-        />
-
-        <ProtectedRoute
-          isAuthenticated={isAuthenticated}
-          path={ROUTES.HOME}
-          component={Home}
-          exact
         />
 
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
           path={ROUTES.SONG_UPLOAD}
           component={UploadSong}
-          exact
         />
-
-        <Route path={ROUTES.USER}>
-          <User />
-        </Route>
 
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
-          path={ROUTES.PLAYLIST}
-          component={PlayList}
-          exact
+          path={ROUTES.HOME}
+          component={Home}
         />
       </Switch>
       {playingNow && <Player />}
