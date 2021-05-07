@@ -3,11 +3,7 @@ import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
-import {
-  resetSearch,
-  searchPlayLists,
-  searchSongs,
-} from '../../redux/search/search-actions';
+import { resetSearch, searchSongs } from '../../redux/search/search-actions';
 import { searchSelector } from '../../redux/search/search-selectors';
 import Spinner from '../Spinner';
 import { songSelector } from '../../redux/song/song-selectors';
@@ -19,13 +15,7 @@ export const Search = ({ isSearchSong, isSearchPlayList, playListId }) => {
     search: '',
   });
   const { songs: songsStore } = useSelector(songSelector);
-  const [searchSubmit, setSearchSubmit] = useState(false);
-  const {
-    // isSearchingPlayList,
-    isSearchingSong,
-    songs,
-    // playlists,
-  } = useSelector(searchSelector);
+  const { isSearchingSong, songs } = useSelector(searchSelector);
 
   const { search } = formValues;
 
@@ -37,13 +27,7 @@ export const Search = ({ isSearchSong, isSearchPlayList, playListId }) => {
 
   const handleSearch = (e) => {
     e.preventDefault();
-    setSearchSubmit(true);
-    if (isSearchSong) {
-      dispatch(searchSongs(search));
-    }
-    /*     if (isSearchPlayList) {
-      dispatch(searchPlayLists(search));
-    } */
+    dispatch(searchSongs(search));
   };
   const handleSubmit = (songId) => {
     dispatch(addSongToPlayList({ playListId, songId }));
@@ -69,7 +53,7 @@ export const Search = ({ isSearchSong, isSearchPlayList, playListId }) => {
             Result of Songs:{' '}
           </h1>
           <section>
-            {isSearchingSong && !searchSubmit ? (
+            {isSearchingSong ? (
               <Spinner />
             ) : (
               songs.length > 0 &&

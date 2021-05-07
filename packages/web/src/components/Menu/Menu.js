@@ -11,11 +11,7 @@ export const Menu = ({ showMenu }) => {
       <div>
         <MenuItem path={ROUTES.HOME} text="Home" icon="bxs-home" />
         <MenuItem path={ROUTES.LIBRARY} text="Library" icon=" bx-library" />
-        <MenuItem
-          path={ROUTES.SONG_UPLOAD}
-          text="Search"
-          icon="bx-search-alt"
-        />
+        <MenuItem path={ROUTES.SEARCH} text="Search" icon="bx-search-alt" />
         <MenuItem
           path={ROUTES.SONG_UPLOAD}
           text="Upload Song"

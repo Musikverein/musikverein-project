@@ -1,3 +1,3 @@
-const { userCard } = require('./UserCard');
+const { UserCard } = require('./UserCard');
 
-export default userCard;
+export default UserCard;

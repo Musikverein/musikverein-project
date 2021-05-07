@@ -9,6 +9,10 @@ const searchInitialState = {
   searchPlayListError: null,
   searchPlayListSuccess: false,
   playlists: [],
+  isSearchingUser: false,
+  searchUserError: null,
+  searchUserSuccess: false,
+  users: [],
 };
 
 const SearchReducer = (state = searchInitialState, action) => {
@@ -61,6 +65,31 @@ const SearchReducer = (state = searchInitialState, action) => {
         searchPlayListError: null,
         searchPlayListSuccess: true,
         playlists: [...action.payload],
+      };
+    }
+    case SearchTypes.SEARCH_USER_REQUEST: {
+      return {
+        ...state,
+        isSearchingUser: true,
+        searchUserError: null,
+        searchUserSuccess: false,
+      };
+    }
+    case SearchTypes.SEARCH_USER_ERROR: {
+      return {
+        ...state,
+        isSearchingUser: false,
+        searchUserError: action.payload,
+        searchUserSuccess: false,
+      };
+    }
+    case SearchTypes.SEARCH_USER_SUCCESS: {
+      return {
+        ...state,
+        isSearchingUser: false,
+        searchUserError: null,
+        searchUserSuccess: true,
+        users: [...action.payload],
       };
     }
     case SearchTypes.SEARCH_RESET: {

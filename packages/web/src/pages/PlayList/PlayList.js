@@ -32,8 +32,6 @@ export const PlayList = () => {
   const { playListId } = useParams();
   const dispatch = useDispatch();
 
-  const history = useHistory();
-
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isEditPlayList, setIsEditPlayList] = useState(false);
   const [isDeletePlayList, setIsDeletePlayList] = useState(false);
@@ -104,43 +102,49 @@ export const PlayList = () => {
         ) : (
           <>
             <HeaderGoBack>
-              {userId !== owner && (
-                <button type="button" onClick={handleFollowPlayList}>
-                  {followedBy?.includes(userId) ? 'Unfollow' : 'Follow'}
-                </button>
-              )}
-              {userId === owner && (
-                <button type="button" className="pl-4" onClick={handleDropdown}>
-                  <i className="bx bx-dots-vertical-rounded text-2xl" />
-                </button>
-              )}
-              {dropdownOpen && (
-                <Dropdown
-                  handleClose={handleDropdown}
-                  styleNav="dropdown-playlist"
-                >
-                  <>
-                    <DropdownItem
-                      isButton
-                      icon="bx-edit-alt"
-                      text="Edit Playlist"
-                      action={handlePlayListEdit}
-                    />
-                    <DropdownItem
-                      isButton
-                      icon="bx-trash"
-                      text="Remove Playlist"
-                      action={handleConfirmDeletePlayList}
-                    />
-                    <DropdownItem
-                      isButton
-                      icon="bx-list-plus"
-                      text="Add new songs"
-                      action={handleSearch}
-                    />
-                  </>
-                </Dropdown>
-              )}
+              <>
+                {userId !== owner && (
+                  <button type="button" onClick={handleFollowPlayList}>
+                    {followedBy?.includes(userId) ? 'Unfollow' : 'Follow'}
+                  </button>
+                )}
+                {userId === owner && (
+                  <button
+                    type="button"
+                    className="pl-4"
+                    onClick={handleDropdown}
+                  >
+                    <i className="bx bx-dots-vertical-rounded text-2xl" />
+                  </button>
+                )}
+                {dropdownOpen && (
+                  <Dropdown
+                    handleClose={handleDropdown}
+                    styleNav="dropdown-playlist"
+                  >
+                    <>
+                      <DropdownItem
+                        isButton
+                        icon="bx-edit-alt"
+                        text="Edit Playlist"
+                        action={handlePlayListEdit}
+                      />
+                      <DropdownItem
+                        isButton
+                        icon="bx-trash"
+                        text="Remove Playlist"
+                        action={handleConfirmDeletePlayList}
+                      />
+                      <DropdownItem
+                        isButton
+                        icon="bx-list-plus"
+                        text="Add new songs"
+                        action={handleSearch}
+                      />
+                    </>
+                  </Dropdown>
+                )}
+              </>
             </HeaderGoBack>
             <div className="flex flex-col mt-8 mb-2 items-center playlist">
               <img src={image} alt="playlist" className="playlist-img" />
