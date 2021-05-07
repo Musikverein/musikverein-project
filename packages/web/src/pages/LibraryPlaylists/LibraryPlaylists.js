@@ -36,6 +36,9 @@ export const LibraryPlayLists = () => {
   };
   useEffect(() => {
     dispatch(getUserPlayLists(currentPath));
+    return () => {
+      return null;
+    };
   }, [dispatch, currentPath]);
 
   return (

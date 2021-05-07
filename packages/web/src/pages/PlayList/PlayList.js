@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -22,11 +22,11 @@ import { PlayListForm } from '../../components/PlayListForm/PlayListForm';
 import ConfirmText from '../../components/ConfirmText';
 import ROUTES from '../../routers/routes';
 import Spinner from '../../components/Spinner';
-import { Search } from '../../components/Search/Search';
 
 import './PlayList.scss';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 import { HeaderGoBack } from '../../components/HeaderGoBack/HeaderGoBack';
+import { AddSongSearch } from '../../components/AddSongSearch/AddSongSearch';
 
 export const PlayList = () => {
   const { playListId } = useParams();
@@ -234,7 +234,7 @@ export const PlayList = () => {
               />
             </ModalLayout>
             <ModalLayout isOpen={isSearching} handleClose={handleSearch}>
-              <Search
+              <AddSongSearch
                 isSearchSong
                 isSearchPlayList={false}
                 playListId={playListId}

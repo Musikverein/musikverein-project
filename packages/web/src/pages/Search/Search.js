@@ -57,7 +57,7 @@ export const Search = () => {
             value={search}
             name="search"
             placeholder="Search..."
-            className="p-4 rounded-4 form__input"
+            className="rounded-4 form__input"
             onChange={handleInputChange}
           />
           <button

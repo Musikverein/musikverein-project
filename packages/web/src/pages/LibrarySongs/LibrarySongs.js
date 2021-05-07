@@ -31,6 +31,9 @@ export const LibrarySongs = () => {
 
   useEffect(() => {
     dispatch(getUserSongs(currentPath));
+    return () => {
+      return null;
+    };
   }, [dispatch, currentPath]);
 
   return (
