@@ -9,7 +9,7 @@ class UserRepository {
   findUser(query) {
     return normalizeDBQuery(
       db.User.findOne(query).select(
-        'userName firstName lastName email image following followedBy',
+        'userName firstName lastName image following followedBy',
       ),
     );
   }
@@ -19,6 +19,24 @@ class UserRepository {
       db.User.findOneAndUpdate(queryFind, querySet, {
         new: true,
         select: 'firstName lastName userName image following followedBy',
+      }),
+    );
+  }
+
+  getUserFollowedPopulate(options) {
+    return normalizeDBQuery(
+      db.User.findOne(options).populate({
+        path: 'followedBy',
+        select: 'userName firstName lastName image following followedBy',
+      }),
+    );
+  }
+
+  getUserFollowingPopulate(options) {
+    return normalizeDBQuery(
+      db.User.findOne(options).populate({
+        path: 'following',
+        select: 'userName firstName lastName image following followedBy',
       }),
     );
   }

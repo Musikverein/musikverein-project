@@ -135,4 +135,40 @@ export const api = {
       headers: headers,
     });
   },
+
+  getUserView: (headers, body = {}) => {
+    return axios.get(`${baseURL}/user/${body.userId}`, {
+      headers: headers,
+    });
+  },
+
+  getUserViewSongs: (headers, body = {}) => {
+    return axios.get(`${baseURL}/songs/${body.userId}`, {
+      headers: headers,
+    });
+  },
+
+  getUserViewPlayLists: (headers, body = {}) => {
+    return axios.get(`${baseURL}/playlist/byUser/${body.userId}`, {
+      headers: headers,
+    });
+  },
+
+  getUserViewFollowed: (headers, body = {}) => {
+    return axios.get(`${baseURL}/user/followedBy/${body.userId}`, {
+      headers: headers,
+    });
+  },
+
+  getUserViewFollowing: (headers, body = {}) => {
+    return axios.get(`${baseURL}/user/following/${body.userId}`, {
+      headers: headers,
+    });
+  },
+
+  followUser: (headers, body = {}) => {
+    return axios.patch(`${baseURL}/user/follow`, body, {
+      headers: headers,
+    });
+  },
 };

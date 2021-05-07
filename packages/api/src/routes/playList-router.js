@@ -45,11 +45,11 @@ playListRouter.delete(
   '/userPlayLists/song',
   playListController.deleteSongFromPlayList,
 );
-
 playListRouter.patch(
   '/userPlayLists/order',
   playListController.updateOrderPlayList,
 );
+playListRouter.get('/byUser/:userId', playListController.getPlayListsByUser);
 
 module.exports = {
   playListRouter: playListRouter,

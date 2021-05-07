@@ -52,14 +52,15 @@ class SongRepository {
 
   searchSongs({ value }) {
     return normalizeDBQuery(
-      db.Song.find({ title: { $regex: value, $options: 'i' }, active: true })
-        .limit(10)
-        .select({
-          __v: 0,
-          active: 0,
-          createdAt: 0,
-          updatedAt: 0,
-        }),
+      db.Song.find({
+        title: { $regex: value, $options: 'i' },
+        active: true,
+      }).select({
+        __v: 0,
+        active: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      }),
     );
   }
 }

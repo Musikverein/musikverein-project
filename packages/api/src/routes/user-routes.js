@@ -5,6 +5,7 @@ const {
   validateUpdateUser,
   validateCreateUser,
   recaptchaMiddleware,
+  findIdMiddleware,
 } = require('../middlewares');
 const { userController } = require('../controllers');
 
@@ -20,6 +21,10 @@ userRouter.patch(
   validateUpdateUser,
   userController.update,
 );
+userRouter.get('/:userId', userController.getUser);
+userRouter.get('/followedBy/:userId', userController.getUserFollowedPopulate);
+userRouter.get('/following/:userId', userController.getUserFollowingPopulate);
+userRouter.patch('/follow', findIdMiddleware, userController.followUser);
 
 module.exports = {
   userRouter: userRouter,

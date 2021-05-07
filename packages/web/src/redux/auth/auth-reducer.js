@@ -9,9 +9,7 @@ export const AuthInitialState = {
   isSendingPasswordReset: false,
   passwordResetError: null,
   passwordResetSent: false,
-  currentUser: {
-    email: null,
-  },
+  currentUser: '',
   isUpdating: false,
   updatedError: null,
   updatedSuccess: false,

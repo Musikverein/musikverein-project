@@ -36,8 +36,8 @@
 .modal {
   &-button-close {
     position: absolute;
-    left: 1.5rem;
-    top: 1.5rem;
+    left: 11px;
+    top: 12px;
     color: white;
   }
   &-wrapper {
@@ -56,10 +56,10 @@
   transition: opacity 0.2s ease-in-out;
 }
 
-.ReactModal__Overlay--after-open{
+.ReactModal__Overlay--after-open {
   opacity: 1;
 }
 
-.ReactModal__Overlay--before-close{
+.ReactModal__Overlay--before-close {
   opacity: 0;
 }

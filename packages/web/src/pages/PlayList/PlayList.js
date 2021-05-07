@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Redirect, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -25,6 +25,8 @@ import Spinner from '../../components/Spinner';
 import { Search } from '../../components/Search/Search';
 
 import './PlayList.scss';
+import { selectUserByIdState } from '../../redux/user/user-selectors';
+import { HeaderGoBack } from '../../components/HeaderGoBack/HeaderGoBack';
 
 export const PlayList = () => {
   const { playListId } = useParams();
@@ -39,19 +41,23 @@ export const PlayList = () => {
 
   const { isGettingPlayList } = useSelector(userPlayListSelector);
   const state = useSelector(selectPlayListByIdState(playListId));
-  const {
-    currentUser: { _id: userId },
-  } = useSelector(authSelector);
+  const { userName } = useSelector(selectUserByIdState(state?.owner)) || {};
+  const { currentUser } = useSelector(authSelector);
+  const { _id: userId } = useSelector(selectUserByIdState(currentUser)) || {};
 
   useEffect(() => {
     dispatch(getPlayList(playListId));
   }, [dispatch, playListId]);
 
-  if (!state || (state?.owner !== userId && !state?.isPublic)) {
-    return <Redirect to={ROUTES.LIBRARY_PLAYLISTS} />;
+  if (!state) {
+    return <Spinner />;
   }
 
   const { title, owner, isPublic, songs, type, image, followedBy } = state;
+
+  if (owner !== userId && !isPublic) {
+    return <Redirect to={ROUTES.LIBRARY_PLAYLISTS} />;
+  }
 
   const handlePlayPlayList = ({ songId = null }) => {
     dispatch(getPlayListAndPlay({ playListId, songId }));
@@ -97,17 +103,14 @@ export const PlayList = () => {
           <Spinner />
         ) : (
           <>
-            <div className="h-14 w-full flex justify-end items-center sticky top-0 pt-4 bg__primary z-10">
-              <button
-                type="button"
-                className="absolute left-0 px-4 bx bxs-chevron-left text-4xl"
-                onClick={() => history.goBack()}
-              />
-              <button type="button" onClick={handleFollowPlayList}>
-                {followedBy.includes(userId) ? 'Unfollow' : 'Follow'}
-              </button>
+            <HeaderGoBack>
+              {userId !== owner && (
+                <button type="button" onClick={handleFollowPlayList}>
+                  {followedBy?.includes(userId) ? 'Unfollow' : 'Follow'}
+                </button>
+              )}
               {userId === owner && (
-                <button type="button" className="px-4" onClick={handleDropdown}>
+                <button type="button" className="pl-4" onClick={handleDropdown}>
                   <i className="bx bx-dots-vertical-rounded text-2xl" />
                 </button>
               )}
@@ -138,16 +141,22 @@ export const PlayList = () => {
                   </>
                 </Dropdown>
               )}
-            </div>
+            </HeaderGoBack>
             <div className="flex flex-col mt-8 mb-2 items-center playlist">
               <img src={image} alt="playlist" className="playlist-img" />
               <h2 className="text-lg font-semibold text-light pt-4 pt-2">
                 {title}
               </h2>
               <div className="flex justify-center text-sm text-gray-200">
-                <p className="px-2">{type} of Manolo</p>
+                <p className="px-2">
+                  {type} of
+                  <Link to={`${ROUTES.USER_WITHOUT_PARAM}${owner}`}>
+                    {' '}
+                    {userName}{' '}
+                  </Link>
+                </p>
                 <p className="px-2">{isPublic ? 'Public' : 'Private'}</p>
-                <p className="px-2">{followedBy.length} Follows</p>
+                <p className="px-2">{followedBy?.length} Follows</p>
               </div>
             </div>
 
@@ -159,7 +168,10 @@ export const PlayList = () => {
               >
                 <i className="bx bx-play text-4xl " />
               </button>
-              <DragDropContext onDragEnd={handleOnDragEnd}>
+              <DragDropContext
+                onDragEnd={handleOnDragEnd}
+                enableDefaultSensors={userId === owner}
+              >
                 <Droppable droppableId="songs">
                   {(provided) => (
                     <ul

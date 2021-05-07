@@ -2,6 +2,8 @@ import * as AuthTypes from './auth-types';
 import api from '../../api';
 import * as auth from '../../services/auth';
 import { imageUpload } from '../../services/cloudinary';
+import { normalizeUsers } from '../../utils/normalizrSchema/schema';
+import { loadUsers } from '../user/user-actions';
 
 export const resetStoreAndLogOut = () => ({
   type: AuthTypes.RESET_STORE_AND_LOG_OUT,
@@ -75,15 +77,20 @@ export function syncSignIn() {
       return dispatch(signOutSuccess());
     }
 
-    const { errorMessage, data: response } = await api.signUp({
-      Authorization: `Bearer ${token}`,
-    });
+    try {
+      const { errorMessage, data: response } = await api.signUp({
+        Authorization: `Bearer ${token}`,
+      });
 
-    if (errorMessage) {
-      return dispatch(signUpError(errorMessage));
+      if (errorMessage) {
+        return dispatch(signUpError(errorMessage));
+      }
+      const { entities, result } = normalizeUsers([response.data]);
+      dispatch(loadUsers(entities.users));
+      return dispatch(signUpSuccess(result[0]));
+    } catch (error) {
+      return dispatch(signUpError(error.message));
     }
-
-    return dispatch(signUpSuccess(response.data));
   };
 }
 
@@ -207,8 +214,10 @@ export const updateProfile = ({
       if (errorMessage) {
         return dispatch(updateProfileError(errorMessage));
       }
+      const { entities, result } = normalizeUsers([response.data]);
+      dispatch(loadUsers(entities.users));
 
-      return dispatch(updateProfileSuccess(response.data));
+      return dispatch(updateProfileSuccess(result[0]));
     } catch (error) {
       return dispatch(updateProfileError(error.message));
     }

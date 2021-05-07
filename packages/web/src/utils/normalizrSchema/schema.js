@@ -23,3 +23,15 @@ const playList = new schema.Entity(
 export function normalizePlayLists(playLists) {
   return normalize(playLists, [playList]);
 }
+
+const user = new schema.Entity(
+  'users',
+  {},
+  {
+    idAttribute: '_id',
+  },
+);
+
+export function normalizeUsers(users) {
+  return normalize(users, [user]);
+}

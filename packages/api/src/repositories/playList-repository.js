@@ -33,13 +33,17 @@ class PlayListRepository {
     );
   }
 
-  findPlayListAndPopulateSongs(options) {
+  findPlayListAndPopulateSongsAndOwner(options) {
     return normalizeDBQuery(
       db.PlayList.findOne(options)
         .populate({
           path: 'songs',
           match: { active: true },
           select: { __v: 0, active: 0, createdAt: 0, updatedAt: 0 },
+        })
+        .populate({
+          path: 'owner',
+          select: 'userName firstName lastName image following followedBy',
         })
         .select('title owner type followedBy isPublic image'),
     );
@@ -65,14 +69,21 @@ class PlayListRepository {
       db.PlayList.find({
         title: { $regex: value, $options: 'i' },
         isPublic: true,
-      })
-        .limit(10)
-        .select({
-          __v: 0,
-          active: 0,
-          createdAt: 0,
-          updatedAt: 0,
-        }),
+      }).select({
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      }),
+    );
+  }
+
+  findPlayListByUser(options) {
+    return normalizeDBQuery(
+      db.PlayList.find(options).limit(10).select({
+        __v: 0,
+        createdAt: 0,
+        updatedAt: 0,
+      }),
     );
   }
 }

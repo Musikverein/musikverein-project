@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { authSelector } from '../../redux/auth/auth-selectors';
 import { likeSong } from '../../redux/librarySongs/librarySong-actions';
+import { selectUserByIdState } from '../../redux/user/user-selectors';
 
 export const LikeButton = ({ likedBy, songId, text }) => {
-  const {
-    currentUser: { _id: userId },
-  } = useSelector(authSelector);
+  const { currentUser } = useSelector(authSelector);
+  const { _id: userId } = useSelector(selectUserByIdState(currentUser)) || {};
   const dispatch = useDispatch();
 
   const handleLike = () => {

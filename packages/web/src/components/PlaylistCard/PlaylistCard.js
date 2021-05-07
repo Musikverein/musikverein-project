@@ -19,6 +19,7 @@ import { PlayListForm } from '../PlayListForm/PlayListForm';
 import ROUTES from '../../routers/routes';
 
 import './PlayListCard.scss';
+import { selectUserByIdState } from '../../redux/user/user-selectors';
 
 export const PlayListCard = ({ playListId }) => {
   const { playLists } = useSelector(playListSelector);
@@ -26,9 +27,8 @@ export const PlayListCard = ({ playListId }) => {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isDeletePlayList, setIsDeletePlayList] = useState(false);
   const [isEditPlayList, setIsEditPlayList] = useState(false);
-  const {
-    currentUser: { _id: userId },
-  } = useSelector(authSelector);
+  const { currentUser } = useSelector(authSelector);
+  const { _id: userId } = useSelector(selectUserByIdState(currentUser)) || {};
 
   const { title, followedBy, owner, type, _id, isPublic, image } = playLists[
     playListId
@@ -136,7 +136,7 @@ export const PlayListCard = ({ playListId }) => {
             </div>
             <div className="pr-4">
               <dt className="sr-only">Follow</dt>
-              <dd>{followedBy.length} Followed</dd>
+              <dd>{followedBy?.length} Followed</dd>
             </div>
             <FollowButton
               followedBy={followedBy}
