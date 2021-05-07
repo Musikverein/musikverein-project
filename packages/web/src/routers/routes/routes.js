@@ -3,7 +3,6 @@ export const ROUTES = {
   SIGN_UP: '/sign-up',
   LOGIN: '/login',
   RESET_PASSWORD: '/reset-password',
-  PROFILE: '/profile',
   SEARCH: '/search',
   LIBRARY: '/library',
   LIBRARY_SONGS: '/library/songs',

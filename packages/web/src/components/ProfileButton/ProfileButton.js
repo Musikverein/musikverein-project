@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { signOut } from '../../redux/auth/auth-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
+import { selectUserByIdState } from '../../redux/user/user-selectors';
 import ROUTES from '../../routers/routes';
 import Dropdown from '../Dropdown';
 import DropdownItem from '../DropdownItem';
@@ -10,10 +11,8 @@ import DropdownItem from '../DropdownItem';
 export const ProfileButton = () => {
   const [profileMenuActive, setProfileMenuActive] = useState(false);
   const { currentUser } = useSelector(authSelector);
+  const { userName, _id } = useSelector(selectUserByIdState(currentUser)) || {};
   const dispatch = useDispatch();
-
-  let idUser = currentUser._id;
-  idUser = idUser.substring(0, 6).toUpperCase();
 
   function handleSignOut() {
     dispatch(signOut());
@@ -33,7 +32,7 @@ export const ProfileButton = () => {
         <p className="flex items-center font-normal">
           Hello&nbsp;
           <span className="font-semibold">
-            {currentUser.userName ? currentUser.userName : idUser}
+            {userName || _id?.substring(0, 6)?.toUpperCase()}
           </span>
           <i className="bx bx-chevron-down text-2xl" />
         </p>
@@ -48,7 +47,7 @@ export const ProfileButton = () => {
               isButton={false}
               icon="bx-user"
               text="Profile"
-              action={ROUTES.PROFILE}
+              action={`${ROUTES.USER_WITHOUT_PARAM}${currentUser}`}
             />
             <DropdownItem
               isButton

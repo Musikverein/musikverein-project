@@ -477,14 +477,28 @@ export const getPlayListAndPlay = ({ playListId, songId = null }) => {
         return dispatch(getPlayListAndPlayError(errorMessage));
       }
 
-      const { entities, result } = normalizeSongs(response.data.songs);
-
-      dispatch(loadSongs(entities.songs));
-      dispatch(
-        loadPlayList({ [playListId]: { ...response.data, songs: result } }),
+      const { entities: entitiesSong, result: resultSong } = normalizeSongs(
+        response.data.songs,
       );
-      const songIndex = songId ? result.indexOf(songId) : 0;
-      dispatch(playPlayList({ songs: result, songIndex }));
+      const { entities: entitiesUser, result: resultUser } = normalizeUsers([
+        response.data.owner,
+      ]);
+
+      dispatch(loadSongs(entitiesSong.songs));
+      dispatch(loadUsers(entitiesUser.users));
+
+      dispatch(
+        loadPlayList({
+          [playListId]: {
+            ...response.data,
+            songs: resultSong,
+            owner: resultUser[0],
+          },
+        }),
+      );
+
+      const songIndex = songId ? resultSong.indexOf(songId) : 0;
+      dispatch(playPlayList({ songs: resultSong, songIndex }));
       return dispatch(getPlayListAndPlaySuccess());
     } catch (error) {
       return dispatch(getPlayListAndPlayError(error.message));

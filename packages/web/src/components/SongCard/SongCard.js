@@ -22,6 +22,7 @@ import AddToPlayList from '../AddToPlayList';
 import { removeSongFromPlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { secondsToString } from '../../utils/utils';
 import { playerSelector } from '../../redux/player/player-selectors';
+import { selectUserByIdState } from '../../redux/user/user-selectors';
 
 export const SongCard = ({
   songId,
@@ -35,9 +36,8 @@ export const SongCard = ({
   const [isEditSong, setIsEditSong] = useState(false);
   const [isDeleteSong, setIsDeleteSong] = useState(false);
   const [isAddSongToPlayList, setIsAddSongToPlayList] = useState(false);
-  const {
-    currentUser: { _id: userId },
-  } = useSelector(authSelector);
+  const { currentUser } = useSelector(authSelector);
+  const { _id: userId } = useSelector(selectUserByIdState(currentUser)) || {};
   const { playingNow } = useSelector(playerSelector);
 
   if (!song) {
@@ -107,7 +107,7 @@ export const SongCard = ({
               <dd>{genre}</dd>
 
               <dt className="sr-only">Likes</dt>
-              <dd>{likedBy.length} Likes</dd>
+              <dd>{likedBy?.length} Likes</dd>
             </div>
           </div>
         </div>

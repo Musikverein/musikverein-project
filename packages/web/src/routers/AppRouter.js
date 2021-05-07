@@ -1,9 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Route, Switch } from 'react-router-dom';
+import { Switch } from 'react-router-dom';
 import { ProtectedRoute } from '../components/ProtectedRoute/ProtectedRoute';
 import Home from '../pages/Home';
-import Profile from '../pages/Profile';
 import UploadSong from '../pages/UploadSong';
 import { authSelector } from '../redux/auth/auth-selectors';
 import ROUTES from './routes';
@@ -35,12 +34,6 @@ export const AppRouter = () => {
           isAuthenticated={isAuthenticated}
           path={ROUTES.LIBRARY}
           component={LibraryRouter}
-        />
-
-        <ProtectedRoute
-          isAuthenticated={isAuthenticated}
-          path={ROUTES.PROFILE}
-          component={Profile}
         />
 
         <ProtectedRoute

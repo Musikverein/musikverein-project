@@ -27,7 +27,7 @@ class UserRepository {
     return normalizeDBQuery(
       db.User.findOne(options).populate({
         path: 'followedBy',
-        select: { userName: 1, image: 1 },
+        select: 'userName firstName lastName image following followedBy',
       }),
     );
   }
@@ -36,7 +36,7 @@ class UserRepository {
     return normalizeDBQuery(
       db.User.findOne(options).populate({
         path: 'following',
-        select: { userName: 1, image: 1 },
+        select: 'userName firstName lastName image following followedBy',
       }),
     );
   }

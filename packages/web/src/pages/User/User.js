@@ -5,6 +5,7 @@ import { Header } from '../../components/Header/Header';
 import ModalLayout from '../../components/ModalLayout';
 
 import { PlayListCard } from '../../components/PlayListCard/PlaylistCard';
+import { ProfileEdit } from '../../components/ProfileEdit/ProfileEdit';
 import { SongCard } from '../../components/SongCard/SongCard';
 import Spinner from '../../components/Spinner';
 import { UserCard } from '../../components/UserCard/UserCard';
@@ -26,10 +27,8 @@ import './User.scss';
 export const User = () => {
   const { userId } = useParams();
   const dispatch = useDispatch();
+  const { currentUser } = useSelector(authSelector);
   const state = useSelector(selectUserByIdState(userId));
-  const {
-    currentUser: { _id: currentUserId },
-  } = useSelector(authSelector);
   const {
     userSongs,
     userPlayLists,
@@ -38,6 +37,7 @@ export const User = () => {
   } = useSelector(userViewSelector);
   const [isModalFollowedOpen, setIsModalFollowedOpen] = useState(false);
   const [isModalFollowingOpen, setIsModalFollowingOpen] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
 
   useEffect(() => {
     dispatch(getUserView({ userId }));
@@ -83,6 +83,10 @@ export const User = () => {
     dispatch(followUser({ userId }));
   };
 
+  const handleModalEdit = () => {
+    setIsEditing((prevState) => !prevState);
+  };
+
   return (
     <>
       <Header />
@@ -95,13 +99,23 @@ export const User = () => {
           />
           <div className="user-info">
             <h2 className="text-l font-semibold text-light">{userName}</h2>
-            <button
-              type="button"
-              className="mr-4 hover:underline"
-              onClick={handleFollow}
-            >
-              {followedBy?.includes(currentUserId) ? 'Unfollow' : 'Follow'}
-            </button>
+            {userId === currentUser ? (
+              <button
+                type="button"
+                className="rounded-4 button-secundary btn"
+                onClick={handleModalEdit}
+              >
+                Edit your profile
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="mr-4 hover:underline"
+                onClick={handleFollow}
+              >
+                {followedBy?.includes(currentUser) ? 'Unfollow' : 'Follow'}
+              </button>
+            )}
             <div className="flex text-gray-200">
               <button
                 type="button"
@@ -170,6 +184,11 @@ export const User = () => {
                 })}
               </div>
             )}
+          </ModalLayout>
+        )}
+        {currentUser === userId && (
+          <ModalLayout isOpen={isEditing} handleClose={handleModalEdit}>
+            <ProfileEdit handleClose={handleModalEdit} />
           </ModalLayout>
         )}
       </section>

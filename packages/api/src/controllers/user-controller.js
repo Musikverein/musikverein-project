@@ -190,9 +190,9 @@ async function followUser(req, res, next) {
           : [...followedBy, _id];
 
       const newFollowing =
-        following.indexOf(_id) !== -1
-          ? following.filter((id) => String(id) !== String(_id))
-          : [...following, _id];
+        following.indexOf(userId) !== -1
+          ? following.filter((id) => String(id) !== String(userId))
+          : [...following, userId];
 
       const updatedUserFollowed = await UserRepo.findUserAndUpdate(
         { _id: userId },

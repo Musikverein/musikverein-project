@@ -12,9 +12,15 @@ import { validationSchema } from '../../utils/validation/validationSchema';
 
 import ImgEdit from '../ImgEdit';
 import Spinner from '../Spinner';
+import { selectUserByIdState } from '../../redux/user/user-selectors';
 
 export const ProfileEdit = ({ handleClose }) => {
-  const { currentUser, isUpdating, updatedSuccess } = useSelector(authSelector);
+  const {
+    currentUser: currentUserId,
+    isUpdating,
+    updatedSuccess,
+  } = useSelector(authSelector);
+  const currentUser = useSelector(selectUserByIdState(currentUserId)) || {};
   const dispatch = useDispatch();
   const { formValues, handleInputChange, errors, isValid } = useForm({
     firstName: currentUser.firstName,
@@ -34,7 +40,8 @@ export const ProfileEdit = ({ handleClose }) => {
     return () => {
       dispatch(resetUpdate());
     };
-  }, [updatedSuccess, handleClose, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [updatedSuccess, dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -57,7 +64,7 @@ export const ProfileEdit = ({ handleClose }) => {
             handleImageChange={handleImageChange}
             urlPreview={urlPreview}
             refId={refId}
-            defaultImg={currentUser.image}
+            defaultImg={currentUser?.image}
             rounded
           />
         </div>

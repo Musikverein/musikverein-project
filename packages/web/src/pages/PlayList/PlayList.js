@@ -41,19 +41,22 @@ export const PlayList = () => {
   const { isGettingPlayList } = useSelector(userPlayListSelector);
   const state = useSelector(selectPlayListByIdState(playListId));
   const { userName } = useSelector(selectUserByIdState(state?.owner)) || {};
-  const {
-    currentUser: { _id: userId },
-  } = useSelector(authSelector);
+  const { currentUser } = useSelector(authSelector);
+  const { _id: userId } = useSelector(selectUserByIdState(currentUser)) || {};
 
   useEffect(() => {
     dispatch(getPlayList(playListId));
   }, [dispatch, playListId]);
 
-  if (!state || (state?.owner !== userId && !state?.isPublic)) {
-    return <Redirect to={ROUTES.LIBRARY_PLAYLISTS} />;
+  if (!state) {
+    return <Spinner />;
   }
 
   const { title, owner, isPublic, songs, type, image, followedBy } = state;
+
+  if (owner !== userId && !isPublic) {
+    return <Redirect to={ROUTES.LIBRARY_PLAYLISTS} />;
+  }
 
   const handlePlayPlayList = ({ songId = null }) => {
     dispatch(getPlayListAndPlay({ playListId, songId }));
@@ -106,7 +109,7 @@ export const PlayList = () => {
                 onClick={() => history.goBack()}
               />
               <button type="button" onClick={handleFollowPlayList}>
-                {followedBy.includes(userId) ? 'Unfollow' : 'Follow'}
+                {followedBy?.includes(userId) ? 'Unfollow' : 'Follow'}
               </button>
               {userId === owner && (
                 <button type="button" className="px-4" onClick={handleDropdown}>
@@ -155,7 +158,7 @@ export const PlayList = () => {
                   </Link>
                 </p>
                 <p className="px-2">{isPublic ? 'Public' : 'Private'}</p>
-                <p className="px-2">{followedBy.length} Follows</p>
+                <p className="px-2">{followedBy?.length} Follows</p>
               </div>
             </div>
 
@@ -167,7 +170,10 @@ export const PlayList = () => {
               >
                 <i className="bx bx-play text-4xl " />
               </button>
-              <DragDropContext onDragEnd={handleOnDragEnd}>
+              <DragDropContext
+                onDragEnd={handleOnDragEnd}
+                enableDefaultSensors={userId === owner}
+              >
                 <Droppable droppableId="songs">
                   {(provided) => (
                     <ul
