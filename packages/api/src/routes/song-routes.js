@@ -20,16 +20,19 @@ songRouter.post(
   validateCreateSong,
   songController.createSong,
 );
-songRouter.get('/userSongs', songController.getUserSongs);
-songRouter.get('/userSongs/liked', songController.getLikedSongs);
+
 songRouter.patch('/like', songController.likeSong);
-songRouter.delete('/', songController.deleteSong);
 songRouter.patch(
   '/',
   recaptchaMiddleware,
   validateUpdateSong,
   songController.editSong,
 );
+
+songRouter.delete('/', songController.deleteSong);
+
+songRouter.get('/userSongs/liked', songController.getLikedSongs);
+songRouter.get('/userSongs', songController.getUserSongs);
 songRouter.get('/:userId', songController.getSongs);
 
 module.exports = {

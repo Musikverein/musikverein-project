@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect, useHistory, useParams } from 'react-router-dom';
+import { Link, Redirect, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 
@@ -22,17 +22,15 @@ import { PlayListForm } from '../../components/PlayListForm/PlayListForm';
 import ConfirmText from '../../components/ConfirmText';
 import ROUTES from '../../routers/routes';
 import Spinner from '../../components/Spinner';
-import { Search } from '../../components/Search/Search';
 
 import './PlayList.scss';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 import { HeaderGoBack } from '../../components/HeaderGoBack/HeaderGoBack';
+import { AddSongSearch } from '../../components/AddSongSearch/AddSongSearch';
 
 export const PlayList = () => {
   const { playListId } = useParams();
   const dispatch = useDispatch();
-
-  const history = useHistory();
 
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isEditPlayList, setIsEditPlayList] = useState(false);
@@ -104,43 +102,49 @@ export const PlayList = () => {
         ) : (
           <>
             <HeaderGoBack>
-              {userId !== owner && (
-                <button type="button" onClick={handleFollowPlayList}>
-                  {followedBy?.includes(userId) ? 'Unfollow' : 'Follow'}
-                </button>
-              )}
-              {userId === owner && (
-                <button type="button" className="pl-4" onClick={handleDropdown}>
-                  <i className="bx bx-dots-vertical-rounded text-2xl" />
-                </button>
-              )}
-              {dropdownOpen && (
-                <Dropdown
-                  handleClose={handleDropdown}
-                  styleNav="dropdown-playlist"
-                >
-                  <>
-                    <DropdownItem
-                      isButton
-                      icon="bx-edit-alt"
-                      text="Edit Playlist"
-                      action={handlePlayListEdit}
-                    />
-                    <DropdownItem
-                      isButton
-                      icon="bx-trash"
-                      text="Remove Playlist"
-                      action={handleConfirmDeletePlayList}
-                    />
-                    <DropdownItem
-                      isButton
-                      icon="bx-list-plus"
-                      text="Add new songs"
-                      action={handleSearch}
-                    />
-                  </>
-                </Dropdown>
-              )}
+              <>
+                {userId !== owner && (
+                  <button type="button" onClick={handleFollowPlayList}>
+                    {followedBy?.includes(userId) ? 'Unfollow' : 'Follow'}
+                  </button>
+                )}
+                {userId === owner && (
+                  <button
+                    type="button"
+                    className="pl-4"
+                    onClick={handleDropdown}
+                  >
+                    <i className="bx bx-dots-vertical-rounded text-2xl" />
+                  </button>
+                )}
+                {dropdownOpen && (
+                  <Dropdown
+                    handleClose={handleDropdown}
+                    styleNav="dropdown-playlist"
+                  >
+                    <>
+                      <DropdownItem
+                        isButton
+                        icon="bx-edit-alt"
+                        text="Edit Playlist"
+                        action={handlePlayListEdit}
+                      />
+                      <DropdownItem
+                        isButton
+                        icon="bx-trash"
+                        text="Remove Playlist"
+                        action={handleConfirmDeletePlayList}
+                      />
+                      <DropdownItem
+                        isButton
+                        icon="bx-list-plus"
+                        text="Add new songs"
+                        action={handleSearch}
+                      />
+                    </>
+                  </Dropdown>
+                )}
+              </>
             </HeaderGoBack>
             <div className="flex flex-col mt-8 mb-2 items-center playlist">
               <img src={image} alt="playlist" className="playlist-img" />
@@ -230,7 +234,7 @@ export const PlayList = () => {
               />
             </ModalLayout>
             <ModalLayout isOpen={isSearching} handleClose={handleSearch}>
-              <Search
+              <AddSongSearch
                 isSearchSong
                 isSearchPlayList={false}
                 playListId={playListId}

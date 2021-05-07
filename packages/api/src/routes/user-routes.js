@@ -15,16 +15,18 @@ userRouter.use(authMiddleware);
 
 userRouter.post('/sign-up', validateCreateUser, userController.signUp);
 userRouter.post('/sign-out', userController.signOut);
+
 userRouter.patch(
   '/update',
   recaptchaMiddleware,
   validateUpdateUser,
   userController.update,
 );
-userRouter.get('/:userId', userController.getUser);
+userRouter.patch('/follow', findIdMiddleware, userController.followUser);
+
 userRouter.get('/followedBy/:userId', userController.getUserFollowedPopulate);
 userRouter.get('/following/:userId', userController.getUserFollowingPopulate);
-userRouter.patch('/follow', findIdMiddleware, userController.followUser);
+userRouter.get('/:userId', userController.getUser);
 
 module.exports = {
   userRouter: userRouter,

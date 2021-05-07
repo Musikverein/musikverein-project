@@ -203,11 +203,12 @@ export const SongCard = ({
 
 SongCard.defaultProps = {
   handleRemoveSongFromQueue: false,
+  playListId: '',
 };
 SongCard.propTypes = {
   songId: PropTypes.string.isRequired,
   handlePlay: PropTypes.func.isRequired,
-  playListId: PropTypes.string.isRequired,
+  playListId: PropTypes.string,
   handleRemoveSongFromQueue: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.bool,

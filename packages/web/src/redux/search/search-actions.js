@@ -5,9 +5,11 @@ import { signOutSuccess } from '../auth/auth-actions';
 import {
   normalizePlayLists,
   normalizeSongs,
+  normalizeUsers,
 } from '../../utils/normalizrSchema/schema';
 import { loadSongs } from '../song/song-actions';
 import { loadPlayList } from '../playList/playList-actions';
+import { loadUsers } from '../user/user-actions';
 
 export const searchSongsRequest = () => ({
   type: SearchTypes.SEARCH_SONG_REQUEST,
@@ -55,14 +57,14 @@ export const searchSongs = (value) => {
 };
 
 export const searchPlayListsRequest = () => ({
-  type: SearchTypes.SEARCH_SONG_REQUEST,
+  type: SearchTypes.SEARCH_PLAYLIST_REQUEST,
 });
 export const searchPlayListsSuccess = (playlists) => ({
-  type: SearchTypes.SEARCH_SONG_SUCCESS,
+  type: SearchTypes.SEARCH_PLAYLIST_SUCCESS,
   payload: playlists,
 });
 export const searchPlayListsError = (message) => ({
-  type: SearchTypes.SEARCH_SONG_ERROR,
+  type: SearchTypes.SEARCH_PLAYLIST_ERROR,
   payload: message,
 });
 
@@ -92,6 +94,48 @@ export const searchPlayLists = (value) => {
       return dispatch(searchPlayListsSuccess(result));
     } catch (error) {
       return dispatch(searchPlayListsError(error.message));
+    }
+  };
+};
+
+export const searchUsersRequest = () => ({
+  type: SearchTypes.SEARCH_USER_REQUEST,
+});
+export const searchUsersSuccess = (users) => ({
+  type: SearchTypes.SEARCH_USER_SUCCESS,
+  payload: users,
+});
+export const searchUsersError = (message) => ({
+  type: SearchTypes.SEARCH_USER_ERROR,
+  payload: message,
+});
+
+export const searchUsers = (value) => {
+  return async function searchUsersThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(searchUsersRequest());
+    try {
+      const { errorMessage, data: response } = await api.searchUsers(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { value },
+      );
+      if (errorMessage) {
+        return dispatch(searchUsersError(errorMessage));
+      }
+
+      const { result, entities } = normalizeUsers(response.data);
+
+      dispatch(loadUsers(entities.users));
+      return dispatch(searchUsersSuccess(result));
+    } catch (error) {
+      return dispatch(searchUsersError(error.message));
     }
   };
 };

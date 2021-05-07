@@ -136,7 +136,7 @@ export const api = {
     });
   },
 
-  searchUser: (headers, body = {}) => {
+  searchUsers: (headers, body = {}) => {
     return axios.get(`${baseURL}/search/user/${body.value}`, {
       headers: headers,
     });
