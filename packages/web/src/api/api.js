@@ -25,6 +25,12 @@ export const api = {
     return axios.post(`${baseURL}/recaptcha`, { recaptchaToken }, {});
   },
 
+  getSong: (headers, body = {}) => {
+    return axios.get(`${baseURL}/songs/${body.songId}`, {
+      headers: headers,
+    });
+  },
+
   uploadSong: (headers, body = {}) => {
     return axios.post(`${baseURL}/songs/upload`, body, {
       headers: headers,
@@ -149,7 +155,7 @@ export const api = {
   },
 
   getUserViewSongs: (headers, body = {}) => {
-    return axios.get(`${baseURL}/songs/${body.userId}`, {
+    return axios.get(`${baseURL}/songs/userSongs/${body.userId}`, {
       headers: headers,
     });
   },

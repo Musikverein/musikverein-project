@@ -8,6 +8,8 @@ export const ROUTES = {
   LIBRARY_SONGS: '/library/songs',
   LIBRARY_PLAYLISTS: '/library/playlists',
   SONG_UPLOAD: '/song/upload',
+  SONG: '/song/:songId',
+  SONG_WITHOUT_PARAM: '/song/',
   TOS: '/tos',
   PLAYLIST: '/playlist/:playListId',
   PLAYLIST_WITHOUT_PARAM: '/playlist/',

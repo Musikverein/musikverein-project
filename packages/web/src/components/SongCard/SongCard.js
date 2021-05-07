@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToQueue } from '../../redux/player/player-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
@@ -23,6 +23,8 @@ import { removeSongFromPlayList } from '../../redux/libraryPlayList/libraryPlayL
 import { secondsToString } from '../../utils/utils';
 import { playerSelector } from '../../redux/player/player-selectors';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
+
+import ROUTES from '../../routers/routes';
 
 export const SongCard = ({
   songId,
@@ -95,9 +97,11 @@ export const SongCard = ({
           />
         </button>
         <div className="pr-8 info-container truncate flex flex-col">
-          <h2 className="text-m font-semibold text-light mb-0.5 truncate w-full">
-            {title}
-          </h2>
+          <Link to={`${ROUTES.SONG_WITHOUT_PARAM}${songId}`}>
+            <h2 className="text-m font-semibold text-light mb-0.5 truncate w-full">
+              {title}
+            </h2>
+          </Link>
           <div className="flex w-full mt-0.5 font-normal">
             <dt className="sr-only">Artist</dt>
             <dd>{artist}</dd>

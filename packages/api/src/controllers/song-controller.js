@@ -200,6 +200,32 @@ async function getSongs(req, res, next) {
   }
 }
 
+async function getSongWithOwnerPopulate(req, res, next) {
+  const { songId } = req.params;
+
+  try {
+    const response = await SongRepo.findSongWithOwnerPopulate({
+      _id: songId,
+      active: true,
+    });
+    if (response.error) {
+      return res.status(400).send({
+        data: null,
+        error: response.error,
+      });
+    }
+
+    if (response.data) {
+      return res.status(200).send({
+        data: response.data,
+        error: null,
+      });
+    }
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   createSong: createSong,
   getUserSongs: getUserSongs,
@@ -208,4 +234,5 @@ module.exports = {
   deleteSong: deleteSong,
   editSong: editSong,
   getSongs: getSongs,
+  getSongWithOwnerPopulate: getSongWithOwnerPopulate,
 };

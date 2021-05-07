@@ -1,0 +1,22 @@
+.song {
+  &-interation {
+    display: flex;
+    flex-flow: row nowrap;
+    padding: 10px 15px;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  &-info-img {
+    height: 180px;
+    width: 180px;
+    object-fit: cover;
+    &-play {
+      max-height: 160px;
+      max-width: 160px;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+    }
+  }
+}
