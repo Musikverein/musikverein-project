@@ -26,6 +26,7 @@ import { Search } from '../../components/Search/Search';
 
 import './PlayList.scss';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
+import { HeaderGoBack } from '../../components/HeaderGoBack/HeaderGoBack';
 
 export const PlayList = () => {
   const { playListId } = useParams();
@@ -102,17 +103,14 @@ export const PlayList = () => {
           <Spinner />
         ) : (
           <>
-            <div className="h-14 w-full flex justify-end items-center sticky top-0 pt-4 bg__primary z-10">
-              <button
-                type="button"
-                className="absolute left-0 px-4 bx bxs-chevron-left text-4xl"
-                onClick={() => history.goBack()}
-              />
-              <button type="button" onClick={handleFollowPlayList}>
-                {followedBy?.includes(userId) ? 'Unfollow' : 'Follow'}
-              </button>
+            <HeaderGoBack>
+              {userId !== owner && (
+                <button type="button" onClick={handleFollowPlayList}>
+                  {followedBy?.includes(userId) ? 'Unfollow' : 'Follow'}
+                </button>
+              )}
               {userId === owner && (
-                <button type="button" className="px-4" onClick={handleDropdown}>
+                <button type="button" className="pl-4" onClick={handleDropdown}>
                   <i className="bx bx-dots-vertical-rounded text-2xl" />
                 </button>
               )}
@@ -143,7 +141,7 @@ export const PlayList = () => {
                   </>
                 </Dropdown>
               )}
-            </div>
+            </HeaderGoBack>
             <div className="flex flex-col mt-8 mb-2 items-center playlist">
               <img src={image} alt="playlist" className="playlist-img" />
               <h2 className="text-lg font-semibold text-light pt-4 pt-2">

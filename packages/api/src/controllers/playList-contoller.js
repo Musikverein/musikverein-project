@@ -77,6 +77,7 @@ async function getFollowPlayList(req, res, next) {
   try {
     const response = await PlayListRepo.findPlayLists({
       followedBy: _id,
+      isPublic: true,
     });
 
     if (response.error) {
