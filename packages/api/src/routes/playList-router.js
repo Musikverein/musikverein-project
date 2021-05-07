@@ -14,7 +14,7 @@ const playListRouter = Router();
 playListRouter.use(authMiddleware);
 playListRouter.use(findIdMiddleware);
 
-playListRouter.post('/', playListController.getPlayList);
+playListRouter.get('/:playListId', playListController.getPlayList);
 playListRouter.patch(
   '/',
   recaptchaMiddleware,
@@ -27,9 +27,9 @@ playListRouter.post(
   validateCreatePlayList,
   playListController.createPlayList,
 );
-playListRouter.post('/userPlayLists', playListController.getUserPlayList);
+playListRouter.get('/userPlayLists', playListController.getUserPlayList);
 playListRouter.delete('/userPlayLists', playListController.deletePlayList);
-playListRouter.post(
+playListRouter.get(
   '/userPlayLists/follow',
   playListController.getFollowPlayList,
 );

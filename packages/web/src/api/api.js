@@ -31,14 +31,14 @@ export const api = {
     });
   },
 
-  getUserSongs: (headers, body = {}) => {
-    return axios.post(`${baseURL}/songs/userSongs`, body, {
+  getUserSongs: (headers) => {
+    return axios.get(`${baseURL}/songs/userSongs`, {
       headers: headers,
     });
   },
 
-  getLikedSongs: (headers, body = {}) => {
-    return axios.post(`${baseURL}/songs/userSongs/liked`, body, {
+  getLikedSongs: (headers) => {
+    return axios.get(`${baseURL}/songs/userSongs/liked`, {
       headers: headers,
     });
   },
@@ -68,20 +68,20 @@ export const api = {
     });
   },
 
-  getUserPlayLists: (headers, body = {}) => {
-    return axios.post(`${baseURL}/playlist/userPlaylists`, body, {
+  getUserPlayLists: (headers) => {
+    return axios.get(`${baseURL}/playlist/userPlaylists`, {
       headers: headers,
     });
   },
 
   getPlayList: (headers, body = {}) => {
-    return axios.post(`${baseURL}/playlist`, body, {
+    return axios.get(`${baseURL}/playlist/${body.playListId}`, {
       headers: headers,
     });
   },
 
-  getFollowedPlayLists: (headers, body = {}) => {
-    return axios.post(`${baseURL}/playlist/userPlaylists/follow`, body, {
+  getFollowedPlayLists: (headers) => {
+    return axios.get(`${baseURL}/playlist/userPlaylists/follow`, {
       headers: headers,
     });
   },
@@ -125,13 +125,19 @@ export const api = {
   },
 
   searchSongs: (headers, body = {}) => {
-    return axios.post(`${baseURL}/search/songs`, body, {
+    return axios.get(`${baseURL}/search/songs/${body.value}`, {
       headers: headers,
     });
   },
 
   searchPlayLists: (headers, body = {}) => {
-    return axios.post(`${baseURL}/search/playlists`, body, {
+    return axios.get(`${baseURL}/search/playlists/${body.value}`, {
+      headers: headers,
+    });
+  },
+
+  searchUser: (headers, body = {}) => {
+    return axios.get(`${baseURL}/search/user/${body.value}`, {
       headers: headers,
     });
   },

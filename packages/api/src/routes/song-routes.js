@@ -20,8 +20,8 @@ songRouter.post(
   validateCreateSong,
   songController.createSong,
 );
-songRouter.post('/userSongs', songController.getUserSongs);
-songRouter.post('/userSongs/liked', songController.getLikedSongs);
+songRouter.get('/userSongs', songController.getUserSongs);
+songRouter.get('/userSongs/liked', songController.getLikedSongs);
 songRouter.patch('/like', songController.likeSong);
 songRouter.delete('/', songController.deleteSong);
 songRouter.patch(

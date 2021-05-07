@@ -14,6 +14,14 @@ class UserRepository {
     );
   }
 
+  searchUsers({ value }) {
+    return normalizeDBQuery(
+      db.User.find({
+        userName: { $regex: value, $options: 'i' },
+      }).select('userName firstName lastName image following followedBy'),
+    );
+  }
+
   findUserAndUpdate(queryFind, querySet) {
     return normalizeDBQuery(
       db.User.findOneAndUpdate(queryFind, querySet, {
