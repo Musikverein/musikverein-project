@@ -41,12 +41,28 @@ class SongRepository {
 
   find(options) {
     return normalizeDBQuery(
-      db.Song.find(options).limit(10).select({
+      db.Song.find(options).select({
         __v: 0,
         active: 0,
         createdAt: 0,
         updatedAt: 0,
       }),
+    );
+  }
+
+  findSongWithOwnerPopulate(options) {
+    return normalizeDBQuery(
+      db.Song.findOne(options)
+        .populate({
+          path: 'owner',
+          select: 'firstName lastName userName image following followedBy',
+        })
+        .select({
+          __v: 0,
+          active: 0,
+          createdAt: 0,
+          updatedAt: 0,
+        }),
     );
   }
 

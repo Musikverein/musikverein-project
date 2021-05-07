@@ -12,6 +12,7 @@ import { playerSelector } from '../redux/player/player-selectors';
 import PlayList from '../pages/PlayList';
 import User from '../pages/User';
 import { Search } from '../pages/Search/Search';
+import { Song } from '../pages/Song/Song';
 
 export const AppRouter = () => {
   const { isAuthenticated } = useSelector(authSelector);
@@ -41,6 +42,12 @@ export const AppRouter = () => {
           isAuthenticated={isAuthenticated}
           path={ROUTES.SEARCH}
           component={Search}
+        />
+
+        <ProtectedRoute
+          isAuthenticated={isAuthenticated}
+          path={ROUTES.SONG}
+          component={Song}
         />
 
         <ProtectedRoute

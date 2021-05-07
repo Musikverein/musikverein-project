@@ -32,8 +32,9 @@ songRouter.patch(
 songRouter.delete('/', songController.deleteSong);
 
 songRouter.get('/userSongs/liked', songController.getLikedSongs);
+songRouter.get('/userSongs/:userId', songController.getSongs);
 songRouter.get('/userSongs', songController.getUserSongs);
-songRouter.get('/:userId', songController.getSongs);
+songRouter.get('/:songId', songController.getSongWithOwnerPopulate);
 
 module.exports = {
   songRouter: songRouter,

@@ -20,6 +20,10 @@ export const USER_SONG_LIKE_SUCCESS = 'USER_SONG_LIKE_SUCCESS';
 export const USER_SONG_LIKE_ERROR = 'USER_SONG_LIKE_ERROR';
 export const USER_SONG_SYNC_LIKE = 'USER_SONG_SYNC_LIKE';
 
+export const SONG_GET_REQUEST = 'SONG_GET_REQUEST';
+export const SONG_GET_SUCCESS = 'SONG_GET_SUCCESS';
+export const SONG_GET_ERROR = 'SONG_GET_ERROR';
+
 export const USER_SONG_SET_CURRENT_PATH = 'USER_SONG_SET_CURRENT_PATH';
 
 // This are the values of current path.

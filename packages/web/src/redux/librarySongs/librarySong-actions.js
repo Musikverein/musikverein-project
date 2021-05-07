@@ -2,10 +2,14 @@ import * as auth from '../../services/auth';
 import * as LibrarySongTypes from './librarySong-types';
 import { signOutSuccess } from '../auth/auth-actions';
 import api from '../../api';
-import { normalizeSongs } from '../../utils/normalizrSchema/schema';
+import {
+  normalizeSongs,
+  normalizeUsers,
+} from '../../utils/normalizrSchema/schema';
 import { loadSongs, removeSong } from '../song/song-actions';
 import { imageUpload, songUpload } from '../../services/cloudinary';
 import { syncSongDelete } from '../player/player-actions';
+import { loadUsers } from '../user/user-actions';
 
 export const getUserSongsRequest = () => ({
   type: LibrarySongTypes.USER_SONG_GET_REQUEST,
@@ -259,6 +263,53 @@ export const deleteSong = (songId) => {
       return dispatch(removeSong(response.data));
     } catch (error) {
       return dispatch(deleteSongError(error.message));
+    }
+  };
+};
+
+export const getSongRequest = () => ({
+  type: LibrarySongTypes.SONG_GET_REQUEST,
+});
+export const getSongSuccess = (song) => ({
+  type: LibrarySongTypes.SONG_GET_SUCCESS,
+  payload: song,
+});
+export const getSongError = (message) => ({
+  type: LibrarySongTypes.SONG_GET_ERROR,
+  payload: message,
+});
+
+export const getSong = ({ songId }) => {
+  return async function getSongThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(getSongRequest());
+    try {
+      const { errorMessage, data: response } = await api.getSong(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { songId },
+      );
+      if (errorMessage) {
+        return dispatch(getSongError(errorMessage));
+      }
+
+      const { result, entities } = normalizeUsers([response.data.owner]);
+
+      dispatch(loadUsers(entities.users));
+      dispatch(
+        loadSongs({
+          [response.data._id]: { ...response.data, owner: result[0] },
+        }),
+      );
+      return dispatch(getSongSuccess());
+    } catch (error) {
+      return dispatch(getSongError(error.message));
     }
   };
 };

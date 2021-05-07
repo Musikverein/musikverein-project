@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
-
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import ROUTES from '../../routers/routes';
+
 import {
   nextSong,
   playSpecificSongInQueue,
@@ -34,8 +36,6 @@ export const Player = () => {
   const handlePrevious = () => {
     dispatch(prevSong());
   };
-
-  const handleModalSong = () => {};
 
   const handleModalPlayList = () => {
     setIsModalOpen(!isModalOpen);
@@ -71,10 +71,10 @@ export const Player = () => {
     <section className="w-full flex flex-col items-center bg-black fixed bottom-0 pt-2 z-10 ">
       <div className="w-full justify-center bg-black flex items-center">
         <div className="w-full flex text-l items-center justify-around">
-          <button type="button" onClick={handleModalSong} className="flex">
+          <Link to={`${ROUTES.SONG_WITHOUT_PARAM}${_id}`} className="flex">
             <h2 className="text-l font-semibold text-light">{title} -</h2>
             <h3 className="text-m font-normal text-light">&nbsp;{artist}</h3>
-          </button>
+          </Link>
           <LikeButton likedBy={likedBy} songId={_id} text={false} />
         </div>
       </div>
