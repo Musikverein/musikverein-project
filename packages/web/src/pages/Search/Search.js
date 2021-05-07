@@ -73,7 +73,7 @@ export const Search = () => {
             {isSearchingPlayList ? (
               <Spinner />
             ) : (
-              playlists.length > 0 &&
+              playlists?.length > 0 &&
               playlists.map((playlistId) => (
                 <PlayListCard key={playlistId} playListId={playlistId} />
               ))
@@ -89,7 +89,7 @@ export const Search = () => {
             {isSearchingSong ? (
               <Spinner />
             ) : (
-              songs.length > 0 &&
+              songs?.length > 0 &&
               songs.map((songId) => (
                 <SongCard
                   key={songId}
@@ -108,7 +108,7 @@ export const Search = () => {
             {isSearchingUser ? (
               <Spinner />
             ) : (
-              users.length > 0 &&
+              users?.length > 0 &&
               users.map((userId) => <UserCard key={userId} userId={userId} />)
             )}
           </section>

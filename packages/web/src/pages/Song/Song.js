@@ -109,7 +109,7 @@ export const Song = () => {
           >
             Play
           </button>
-          <LikeButton songId={songId} likedBy={likedBy} />
+          <LikeButton songId={songId} likedBy={likedBy} text={false} />
         </div>
         <div className="flex flex-col mt-4 mb-2 items-center song-info">
           <img src={image} alt="cover-song" className="song-info-img" />
