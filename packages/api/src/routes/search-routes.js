@@ -7,8 +7,9 @@ const searchRouter = Router();
 
 searchRouter.use(authMiddleware);
 
-searchRouter.post('/songs', searchController.searchSongs);
-searchRouter.post('/playlists', searchController.searchPlayLists);
+searchRouter.get('/songs/:value', searchController.searchSongs);
+searchRouter.get('/playlists/:value', searchController.searchPlayLists);
+searchRouter.get('/user/:value', searchController.searchUsers);
 
 module.exports = {
   searchRouter: searchRouter,
