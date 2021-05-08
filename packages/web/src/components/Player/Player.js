@@ -68,7 +68,7 @@ export const Player = () => {
   };
 
   return (
-    <section className="w-full flex flex-col items-center bg-black fixed bottom-0 pt-2 z-10 ">
+    <section className="w-full flex flex-col items-center bg-black fixed bottom-0 pt-2 z-10 player">
       <div className="w-full justify-center bg-black flex items-center">
         <div className="w-full flex text-l items-center justify-around">
           <Link to={`${ROUTES.SONG_WITHOUT_PARAM}${_id}`} className="flex">

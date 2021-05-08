@@ -35,19 +35,20 @@ export const LibraryPlayLists = () => {
     dispatch(createPlayList({ ...formValues }));
   };
   useEffect(() => {
-    dispatch(getUserPlayLists(currentPath));
+    let mounted = true;
+    if (mounted) dispatch(getUserPlayLists(currentPath));
     return () => {
-      return null;
+      mounted = false;
     };
   }, [dispatch, currentPath]);
 
   return (
     <>
       <Header />
-      <LibraryNav
-        handleShowCreatePlayListModal={handleShowCreatePlayListModal}
-      />
-      <main className="main-container-library">
+      <main className="main-container-library main-container">
+        <LibraryNav
+          handleShowCreatePlayListModal={handleShowCreatePlayListModal}
+        />
         <LibrarySelect
           selectValue={currentPath}
           title="PlayList"

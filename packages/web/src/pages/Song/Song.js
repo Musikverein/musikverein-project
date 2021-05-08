@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Dropdown from '../../components/Dropdown';
 import DropdownItem from '../../components/DropdownItem';
+import Header from '../../components/Header';
 import { HeaderGoBack } from '../../components/HeaderGoBack/HeaderGoBack';
 import LikeButton from '../../components/LikeButton';
 import Spinner from '../../components/Spinner';
@@ -28,7 +29,11 @@ export const Song = () => {
   const [isAddSongToPlayList, setIsAddSongToPlayList] = useState(false);
 
   useEffect(() => {
-    dispatch(getSong({ songId }));
+    let mounted = true;
+    if (mounted) dispatch(getSong({ songId }));
+    return () => {
+      mounted = false;
+    };
   }, [dispatch, songId]);
 
   if (!state) {
@@ -58,7 +63,8 @@ export const Song = () => {
 
   return (
     <>
-      <section className="main-container-without-header">
+      <Header isHidden />
+      <section className="main-container">
         <HeaderGoBack>
           <div className="relative">
             {dropdownOpen && (

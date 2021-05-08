@@ -17,23 +17,60 @@
 
   width: 100%;
   min-height: 100vh;
-  display: block;
+  display: grid;
+
+  grid-template-areas: 
+    'Header' 
+    'mainContainer' 
+    'Player' 
+    ;
+    grid-template-rows: 60px 1fr 60px;
+
+    .main-container{
+      grid-area: mainContainer;
+    }
+    .header, .headerGoBack{
+      grid-area: Header;
+    }
+    .headerGoBack{
+      position: fixed;
+      top: 0;
+      @media (min-width: 750px){
+        position: static;
+      }
+    }
+    .player{
+      grid-area: Player;
+    }
+  @media (min-width: 750px){
+    overflow-y: hidden;
+    grid-template-areas:
+    'Header Header '
+    'navMenu mainContainer'
+    'navMenu Player'
+    ;
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 60px 1fr 100px;
+    .menu-overlay{
+      grid-area: navMenu;
+    }
+  }
+  .mobile-hidden{
+    display: none;
+    @media (min-width: 750px){
+   display: flex;
+    }
+  }
 }
 
 .main-container {
-  padding-top: 60px;
   height: 100%;
   width: 100%;
   overflow-y: auto;
   padding-bottom: 120px;
 
   &-library {
-    padding-top: 120px;
-    padding-bottom: 120px;
-  }
-
-  &-without-header {
-    padding-bottom: 120px;
+    padding-top: 60px;
   }
 }
 

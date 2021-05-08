@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { signOut } from '../../redux/auth/auth-actions';
@@ -13,6 +13,10 @@ export const ProfileButton = () => {
   const { currentUser } = useSelector(authSelector);
   const { userName, _id } = useSelector(selectUserByIdState(currentUser)) || {};
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    return () => null;
+  }, []);
 
   function handleSignOut() {
     dispatch(signOut());
