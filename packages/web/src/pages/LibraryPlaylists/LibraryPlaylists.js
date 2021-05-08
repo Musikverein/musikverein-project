@@ -45,7 +45,7 @@ export const LibraryPlayLists = () => {
   return (
     <>
       <Header />
-      <main className="main-container-library main-container">
+      <main className="main-container">
         <LibraryNav
           handleShowCreatePlayListModal={handleShowCreatePlayListModal}
         />

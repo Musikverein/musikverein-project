@@ -40,7 +40,7 @@ export const LibrarySongs = () => {
   return (
     <>
       <Header />
-      <main className="main-container-library main-container">
+      <main className="main-container">
         <LibraryNav handleShowCreatePlayListModal />
         <LibrarySelect
           selectValue={currentPath}

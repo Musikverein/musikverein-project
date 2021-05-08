@@ -29,14 +29,14 @@
     .main-container{
       grid-area: mainContainer;
     }
-    .header, .headerGoBack{
+    .header{
       grid-area: Header;
     }
     .headerGoBack{
       position: fixed;
       top: 0;
       @media (min-width: 750px){
-        position: static;
+        position: sticky;
       }
     }
     .player{
@@ -68,10 +68,6 @@
   width: 100%;
   overflow-y: auto;
   padding-bottom: 120px;
-
-  &-library {
-    padding-top: 60px;
-  }
 }
 
 .rounded-4 {
