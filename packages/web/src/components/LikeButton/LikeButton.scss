@@ -1,0 +1,43 @@
+$trans-time: 0.25s;
+$trans-time--shorter: 0.2s;
+$trans-ease: ease-in-out;
+$ease-elastic: cubic-bezier(0.77, -0.19, 0.33, 1.12);
+
+.a-icon__asset {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.a-icon--heart {
+  color: white;
+  filter: drop-shadow(0px 1px 3px rgba(#808080, 0.4));
+  cursor: pointer;
+  transform: translateZ(0);
+  transition: $trans-time--shorter $trans-ease transform;
+
+  &:hover {
+    transform: scale(1.25) translateZ(0);
+  }
+
+  &.is-active {
+    animation: scale-up $trans-time $ease-elastic;
+
+    .a-icon--heart__stroke {
+      opacity: 0;
+    }
+
+    .a-icon--heart__fill {
+      opacity: 1;
+    }
+  }
+}
+@keyframes scale-up {
+  50% {
+    transform: scale(1.5);
+  }
+}
+
+.hide {
+  display: none;
+}

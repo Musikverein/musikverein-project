@@ -1,3 +1,4 @@
+@import '../../styles/utils.scss';
 .rhap_volume-container {
   display: none;
   @media (min-width: 600px) {
@@ -9,4 +10,33 @@
   height: 10px;
   top: -3px;
   margin-left: -6px;
+}
+
+.rhap_progress-filled {
+  &:hover {
+    background-color: $color-principal;
+  }
+}
+.rhap_progress-indicator,
+.rhap_volume-indicator {
+  background-color: white;
+}
+.rhap_time,
+.rhap_total-time,
+.rhap_controls-section,
+.rhap_repeat-button,
+.rhap_button-clear,
+.rhap_main-controls-button,
+.rhap_play-pause-button {
+  color: $color-bg-details;
+  &:hover {
+    color: white;
+  }
+}
+
+.rhap_play-pause-button {
+  &:hover {
+    filter: drop-shadow(rgba(0, 0, 0, 0.3) 0px 0px 1px)
+      drop-shadow(rgba(0, 0, 0, 0.3) 0px 0px 10px);
+  }
 }

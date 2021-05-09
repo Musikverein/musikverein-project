@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 
 import ROUTES from '../../routers/routes';
 
+import './Logo.scss';
+
 export const Logo = ({ size, titleLogo }) => {
   return (
     <div>

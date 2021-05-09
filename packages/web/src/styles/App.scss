@@ -19,46 +19,44 @@
   min-height: 100vh;
   display: grid;
 
-  grid-template-areas: 
-    'Header' 
-    'mainContainer' 
-    'Player' 
-    ;
-    grid-template-rows: 60px 1fr 60px;
+  grid-template-areas:
+    'Header'
+    'mainContainer'
+    'Player';
+  grid-template-rows: 60px 1fr 60px;
 
-    .main-container{
-      grid-area: mainContainer;
+  .main-container {
+    grid-area: mainContainer;
+  }
+  .header {
+    grid-area: Header;
+  }
+  .headerGoBack {
+    position: fixed;
+    top: 0;
+    @media (min-width: 750px) {
+      position: sticky;
     }
-    .header{
-      grid-area: Header;
-    }
-    .headerGoBack{
-      position: fixed;
-      top: 0;
-      @media (min-width: 750px){
-        position: sticky;
-      }
-    }
-    .player{
-      grid-area: Player;
-    }
-  @media (min-width: 750px){
+  }
+  .player {
+    grid-area: Player;
+  }
+  @media (min-width: 750px) {
     overflow-y: hidden;
     grid-template-areas:
-    'Header Header '
-    'navMenu mainContainer'
-    'navMenu Player'
-    ;
+      'Header Header '
+      'navMenu mainContainer'
+      'navMenu Player';
     grid-template-columns: 200px 1fr;
     grid-template-rows: 60px 1fr 100px;
-    .menu-overlay{
+    .menu-overlay {
       grid-area: navMenu;
     }
   }
-  .mobile-hidden{
+  .mobile-hidden {
     display: none;
-    @media (min-width: 750px){
-   display: flex;
+    @media (min-width: 750px) {
+      display: flex;
     }
   }
 }
@@ -72,19 +70,6 @@
 
 .rounded-4 {
   border-radius: 4px;
-}
-
-.img__logo {
-  &-m {
-    width: 150px;
-  }
-  &-xm {
-    margin: 0 auto;
-    width: 100px;
-  }
-  &-s {
-    width: 50px;
-  }
 }
 
 .img-play {
