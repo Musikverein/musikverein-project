@@ -12,6 +12,7 @@ const {
   songRouter,
   playListRouter,
   searchRouter,
+  genresRouter,
 } = require('./routes');
 
 const app = express();
@@ -30,6 +31,7 @@ app.use('/recaptcha', recaptchaRouter);
 app.use('/songs', songRouter);
 app.use('/playList', playListRouter);
 app.use('/search', searchRouter);
+app.use('/genres', genresRouter);
 
 app.get('/', (req, res) => {
   res.status(200).send({

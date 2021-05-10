@@ -30,17 +30,18 @@ export const LibrarySongs = () => {
   };
 
   useEffect(() => {
-    dispatch(getUserSongs(currentPath));
+    let mounted = true;
+    if (mounted) dispatch(getUserSongs(currentPath));
     return () => {
-      return null;
+      mounted = false;
     };
   }, [dispatch, currentPath]);
 
   return (
     <>
       <Header />
-      <LibraryNav handleShowCreatePlayListModal />
-      <main className="main-container-library">
+      <main className="main-container">
+        <LibraryNav handleShowCreatePlayListModal />
         <LibrarySelect
           selectValue={currentPath}
           title="Song"

@@ -9,11 +9,13 @@ import LibraryPlayListReducer from './libraryPlayList/libraryPlayList-reducer';
 import SearchReducer from './search/search-reducer';
 import UserReducer from './user/user-reducer';
 import UserViewReducer from './userView/userView-reducer';
+import GenresReducer from './genre/genre-reducer';
 
 const entitiesReducer = combineReducers({
   songStore: SongReducer,
   playListStore: PlayListReducer,
   userStore: UserReducer,
+  genreStore: GenresReducer,
 });
 const uiReducer = combineReducers({
   player: playerReducer,

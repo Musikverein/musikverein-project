@@ -25,6 +25,7 @@ import { playerSelector } from '../../redux/player/player-selectors';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 
 import ROUTES from '../../routers/routes';
+import { genreSelector } from '../../redux/genre/genre-selectors';
 
 export const SongCard = ({
   songId,
@@ -41,6 +42,7 @@ export const SongCard = ({
   const { currentUser } = useSelector(authSelector);
   const { _id: userId } = useSelector(selectUserByIdState(currentUser)) || {};
   const { playingNow } = useSelector(playerSelector);
+  const { genres } = useSelector(genreSelector);
 
   if (!song) {
     return null;
@@ -108,7 +110,7 @@ export const SongCard = ({
 
             <div className="info-hidden w-full">
               <dt className="sr-only">Genre</dt>
-              <dd>{genre}</dd>
+              <dd>{genres[genre].genre}</dd>
 
               <dt className="sr-only">Likes</dt>
               <dd>{likedBy?.length} Likes</dd>

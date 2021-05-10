@@ -13,9 +13,8 @@ const SongSchema = Schema(
       required: [true, 'The duration is required'],
     },
     genre: {
-      type: String,
-      trim: true,
-      default: '',
+      type: Schema.Types.ObjectId,
+      ref: 'genre',
     },
     url: {
       type: String,

@@ -1,0 +1,23 @@
+.img__logo {
+  &-m {
+    width: 150px;
+  }
+  &-xm {
+    margin: 0 auto;
+    width: 100px;
+  }
+  &-s {
+    width: 50px;
+  }
+  &-xs {
+    width: 30px;
+  }
+}
+
+.logo-musikverein {
+  display: none;
+  @media (min-width: 750px) {
+    display: flex;
+    margin-bottom: 10px;
+  }
+}

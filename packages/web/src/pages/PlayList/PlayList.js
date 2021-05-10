@@ -27,6 +27,7 @@ import './PlayList.scss';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 import { HeaderGoBack } from '../../components/HeaderGoBack/HeaderGoBack';
 import { AddSongSearch } from '../../components/AddSongSearch/AddSongSearch';
+import Header from '../../components/Header';
 
 export const PlayList = () => {
   const { playListId } = useParams();
@@ -96,7 +97,8 @@ export const PlayList = () => {
   };
   return (
     <>
-      <main className="main-container-without-header">
+      <Header isHidden />
+      <main className="main-container">
         {isGettingPlayList ? (
           <Spinner />
         ) : (
@@ -167,7 +169,7 @@ export const PlayList = () => {
             <div className="playlist-songs">
               <button
                 type="button"
-                className="images-shadow m-auto playlist-button-play flex items-center justify-content sticky top-3 z-10"
+                className="images-shadow m-auto playlist-button-play flex items-center justify-content"
                 onClick={handlePlayPlayList}
               >
                 <i className="bx bx-play text-4xl " />

@@ -183,4 +183,10 @@ export const api = {
       headers: headers,
     });
   },
+
+  getGenres: (headers) => {
+    return axios.get(`${baseURL}/genres`, {
+      headers: headers,
+    });
+  },
 };

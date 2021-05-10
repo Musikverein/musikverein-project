@@ -46,12 +46,18 @@ export const User = () => {
   }, [dispatch, userId]);
 
   useEffect(() => {
-    if (isModalFollowedOpen) {
-      setIsModalFollowedOpen(!isModalFollowedOpen);
+    let mounted = true;
+    if (mounted) {
+      if (isModalFollowedOpen) {
+        setIsModalFollowedOpen(!isModalFollowedOpen);
+      }
+      if (isModalFollowingOpen) {
+        setIsModalFollowingOpen(!isModalFollowingOpen);
+      }
     }
-    if (isModalFollowingOpen) {
-      setIsModalFollowingOpen(!isModalFollowingOpen);
-    }
+    return () => {
+      mounted = false;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userId]);
 

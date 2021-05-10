@@ -61,7 +61,7 @@ export const ResetPassword = () => {
   };
 
   return (
-    <>
+    <div className="App__container-public">
       <main className="ResetPassword">
         <section className="Login__wrapper">
           <Logo size="xm" titleLogo />
@@ -111,6 +111,6 @@ export const ResetPassword = () => {
           ref={reRef}
         />
       </main>
-    </>
+    </div>
   );
 };

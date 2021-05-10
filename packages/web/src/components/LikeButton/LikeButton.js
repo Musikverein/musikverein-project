@@ -6,6 +6,8 @@ import { authSelector } from '../../redux/auth/auth-selectors';
 import { likeSong } from '../../redux/librarySongs/librarySong-actions';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 
+import './LikeButton.scss';
+
 export const LikeButton = ({ likedBy, songId, text }) => {
   const { currentUser } = useSelector(authSelector);
   const { _id: userId } = useSelector(selectUserByIdState(currentUser)) || {};
@@ -17,9 +19,9 @@ export const LikeButton = ({ likedBy, songId, text }) => {
   return (
     <button type="button" onClick={handleLike} className="flex items-center">
       {likedBy.includes(userId) ? (
-        <i className="bx bxs-heart text-xl" />
+        <i className="a-icon--heart bx bxs-heart text-xl is-active" />
       ) : (
-        <i className="bx bx-heart text-xl" />
+        <i className="a-icon--heart bx bx-heart text-xl" />
       )}
       {text &&
         (likedBy.includes(userId) ? (

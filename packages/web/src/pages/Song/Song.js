@@ -3,10 +3,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 import Dropdown from '../../components/Dropdown';
 import DropdownItem from '../../components/DropdownItem';
+import Header from '../../components/Header';
 import { HeaderGoBack } from '../../components/HeaderGoBack/HeaderGoBack';
 import LikeButton from '../../components/LikeButton';
 import Spinner from '../../components/Spinner';
 import { authSelector } from '../../redux/auth/auth-selectors';
+import { genreSelector } from '../../redux/genre/genre-selectors';
 import { getSong } from '../../redux/librarySongs/librarySong-actions';
 import { addToQueue, play } from '../../redux/player/player-actions';
 import { selectSongByIdState } from '../../redux/song/song-selectors';
@@ -22,13 +24,18 @@ export const Song = () => {
   const { currentUser } = useSelector(authSelector);
   const state = useSelector(selectSongByIdState(songId));
   const { userName } = useSelector(selectUserByIdState(state?.owner));
+  const { genres } = useSelector(genreSelector);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
   const [isDeleteSong, setIsDeleteSong] = useState(false);
   const [isAddSongToPlayList, setIsAddSongToPlayList] = useState(false);
 
   useEffect(() => {
-    dispatch(getSong({ songId }));
+    let mounted = true;
+    if (mounted) dispatch(getSong({ songId }));
+    return () => {
+      mounted = false;
+    };
   }, [dispatch, songId]);
 
   if (!state) {
@@ -58,7 +65,8 @@ export const Song = () => {
 
   return (
     <>
-      <section className="main-container-without-header">
+      <Header isHidden />
+      <section className="main-container">
         <HeaderGoBack>
           <div className="relative">
             {dropdownOpen && (
@@ -119,7 +127,7 @@ export const Song = () => {
           <div className="flex justify-center text-sm text-gray-200">
             <div className="px-2">
               <span className="pr-4">{artist}</span>
-              <span className="pr-4">{genre}</span>
+              <span className="pr-4">{genres[genre].genre}</span>
               <span>{secondsToString(duration)}</span>
             </div>
           </div>

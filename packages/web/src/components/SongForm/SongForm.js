@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import ReCAPTCHA from 'react-google-recaptcha';
 
+import { useSelector } from 'react-redux';
 import { useImgPreview } from '../../hooks/useImgPreview';
 import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
@@ -9,6 +10,7 @@ import { validationSchema } from '../../utils/validation/validationSchema';
 import { ImgEdit } from '../ImgEdit/ImgEdit';
 
 import Spinner from '../Spinner';
+import { genreSelector } from '../../redux/genre/genre-selectors';
 
 export const SongForm = ({
   songTitle,
@@ -27,6 +29,7 @@ export const SongForm = ({
     artist: songArtist,
     genre: songGenre,
   });
+  const { genres, genreIds } = useSelector(genreSelector);
   const reRef = useRef();
 
   const { urlPreview, file } = stateImg;
@@ -90,16 +93,19 @@ export const SongForm = ({
           <span className="mb-2 p-2 block text-error">
             {errors.artist ? errors.artist : ' '}
           </span>
-          <input
-            className="form__input"
-            placeholder="Genre:"
-            type="text"
+          <select
+            onChange={handleInputChange}
             value={genre}
             name="genre"
-            id="genre"
-            aria-label="Genre"
-            onChange={handleInputChange}
-          />
+            className="form__input"
+          >
+            <option value="default">Select a genre</option>
+            {genreIds.map((genreId) => (
+              <option key={genreId} value={genreId}>
+                {genres[genreId].genre}
+              </option>
+            ))}
+          </select>
           <span className="mb-2 p-2 block text-error">
             {errors.genre ? errors.genre : ' '}
           </span>
@@ -130,10 +136,14 @@ export const SongForm = ({
   );
 };
 
+SongForm.defaultProps = {
+  songGenre: 'default',
+};
+
 SongForm.propTypes = {
   songTitle: PropTypes.string.isRequired,
   songArtist: PropTypes.string.isRequired,
-  songGenre: PropTypes.string.isRequired,
+  songGenre: PropTypes.string,
   handleSubmit: PropTypes.func.isRequired,
   handleCancel: PropTypes.func.isRequired,
   defaultImg: PropTypes.string.isRequired,

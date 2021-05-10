@@ -14,7 +14,9 @@ export const LibrarySelect = ({
     <div className="library-select">
       <select value={selectValue} onChange={handleSelect} className="rounded-4">
         <option value={optionMyValue}>My {title}</option>
-        <option value={optionLikeValue}>Liked {title}</option>
+        <option value={optionLikeValue}>
+          {title === 'PlayList' ? 'Followed Playlist' : 'Liked Songs'}
+        </option>
       </select>
     </div>
   );

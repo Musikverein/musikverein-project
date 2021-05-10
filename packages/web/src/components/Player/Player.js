@@ -68,12 +68,17 @@ export const Player = () => {
   };
 
   return (
-    <section className="w-full flex flex-col items-center bg-black fixed bottom-0 pt-2 z-10 ">
+    <section className="w-full flex flex-col items-center bg-black fixed bottom-0 pt-2 z-10 player">
       <div className="w-full justify-center bg-black flex items-center">
-        <div className="w-full flex text-l items-center justify-around">
-          <Link to={`${ROUTES.SONG_WITHOUT_PARAM}${_id}`} className="flex">
-            <h2 className="text-l font-semibold text-light">{title} -</h2>
-            <h3 className="text-m font-normal text-light">&nbsp;{artist}</h3>
+        <div className="w-full flex text-l items-center justify-around px-2">
+          <Link
+            to={`${ROUTES.SONG_WITHOUT_PARAM}${_id}`}
+            className="flex flex-col text-left"
+          >
+            <h2 className="text-l font-semibold text-light whitespace-nowrap truncate">
+              {title} -
+            </h2>
+            <h3 className="text-m font-normal text-light">{artist}</h3>
           </Link>
           <LikeButton likedBy={likedBy} songId={_id} text={false} />
         </div>

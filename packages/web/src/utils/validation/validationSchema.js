@@ -40,7 +40,7 @@ export const validationSchema = {
   song: Joi.object({
     title: Joi.string().required(),
     artist: Joi.string().required(),
-    genre: Joi.string().required(),
+    genre: Joi.string().min(9).required(),
   }).with('title', ['artist', 'genre']),
 
   playList: Joi.object({

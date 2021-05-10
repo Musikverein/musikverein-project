@@ -2,56 +2,84 @@
 @import './buttons/button.scss';
 @import './inputs/inputs.scss';
 
-.App__container {
+.App__container-public {
   background: #232526; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom right,
-    #323334,
-    #232526
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom right,
-    #323334,
-    #090a0a
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: -webkit-linear-gradient(to bottom right, #323334, #232526);
+  background: linear-gradient(to bottom right, #323334, #090a0a);
 
   width: 100%;
   min-height: 100vh;
-  display: block;
+  color: white;
+  display: flex;
+  justify-content: center;
+
+  .main-container-public {
+    max-width: 1200px;
+  }
+}
+
+.App__container {
+  background: #232526; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom right, #323334, #232526);
+  background: linear-gradient(to bottom right, #323334, #090a0a);
+
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+
+  grid-template-areas:
+    'Header'
+    'mainContainer'
+    'Player';
+  grid-template-rows: 60px 1fr 60px;
+
+  .main-container {
+    grid-area: mainContainer;
+  }
+
+  .header {
+    grid-area: Header;
+  }
+  .headerGoBack {
+    position: fixed;
+    top: 0;
+    z-index: 1;
+    @media (min-width: 750px) {
+      top: 60px
+    }
+  }
+  .player {
+    grid-area: Player;
+  }
+  @media (min-width: 750px) {
+    overflow-y: hidden;
+    grid-template-areas:
+      'Header Header '
+      'navMenu mainContainer'
+      'navMenu Player';
+    grid-template-columns: 200px 1fr;
+    grid-template-rows: 60px 1fr 100px;
+    .menu-overlay {
+      grid-area: navMenu;
+    }
+  }
+  .mobile-hidden {
+    display: none;
+    @media (min-width: 750px) {
+      display: flex;
+    }
+  }
 }
 
 .main-container {
-  padding-top: 60px;
   height: 100%;
   width: 100%;
   overflow-y: auto;
   padding-bottom: 120px;
-
-  &-library {
-    padding-top: 120px;
-    padding-bottom: 120px;
-  }
-
-  &-without-header {
-    padding-bottom: 120px;
-  }
 }
 
 .rounded-4 {
   border-radius: 4px;
-}
-
-.img__logo {
-  &-m {
-    width: 150px;
-  }
-  &-xm {
-    margin: 0 auto;
-    width: 100px;
-  }
-  &-s {
-    width: 50px;
-  }
 }
 
 .img-play {
