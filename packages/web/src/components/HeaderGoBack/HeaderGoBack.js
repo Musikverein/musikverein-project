@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 export const HeaderGoBack = ({ children }) => {
   const history = useHistory();
   return (
-    <div className="h-14 w-full flex justify-end items-center sticky pr-4 top-0 bg__primary headerGoBack">
+    <div className="h-14 bg__primary headerGoBack px-4">
       <button
         type="button"
         className="absolute left-0 px-4 bx bxs-chevron-left text-4xl"
