@@ -6,8 +6,12 @@ class GenreRepository {
     return normalizeDBQuery(db.Genre.create(options));
   }
 
-  find(query) {
-    return normalizeDBQuery(db.Genre.find(query));
+  find() {
+    return normalizeDBQuery(db.Genre.find({}).select({ __v: 0 }));
+  }
+
+  clear() {
+    return normalizeDBQuery(db.Genre.deleteMany({}));
   }
 }
 

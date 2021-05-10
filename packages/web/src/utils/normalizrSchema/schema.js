@@ -35,3 +35,15 @@ const user = new schema.Entity(
 export function normalizeUsers(users) {
   return normalize(users, [user]);
 }
+
+const genre = new schema.Entity(
+  'genres',
+  {},
+  {
+    idAttribute: '_id',
+  },
+);
+
+export function normalizeGenres(genres) {
+  return normalize(genres, [genre]);
+}

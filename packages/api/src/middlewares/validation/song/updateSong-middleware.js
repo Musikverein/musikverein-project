@@ -3,7 +3,7 @@ const Joi = require('joi');
 const updateSongSchema = Joi.object({
   title: Joi.string().min(3).max(200).required(),
   artist: Joi.string().min(3).max(150).required(),
-  genre: Joi.string().min(3).max(20).required(),
+  genre: Joi.string().min(9).required(),
 });
 
 async function validateUpdateSong(req, res, next) {

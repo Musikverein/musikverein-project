@@ -13,6 +13,8 @@ connect().then(() => {
     const response = await GenreRepo.find();
     if (response.error) console.log(response.error);
     if (response.data.length !== genres.genres.length) {
+      const deleteDb = await GenreRepo.clear();
+      if (deleteDb.error) console.log(deleteDb.error);
       const responseCreate = await GenreRepo.create(genres.genres);
       if (responseCreate.error) console.log(responseCreate.error);
     }
