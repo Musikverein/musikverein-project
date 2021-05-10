@@ -33,7 +33,7 @@ const GenresReducer = (state = genresInitialState, action) => {
         getGenresSuccess: true,
         getGenresError: null,
         genres: { ...state.genres, ...action.payload.genres },
-        genreIds: [...state.genreIds, ...action.payload.genreIds],
+        genreIds: [...action.payload.genreIds],
       };
     }
     default:
