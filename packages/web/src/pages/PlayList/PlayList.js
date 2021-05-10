@@ -113,7 +113,7 @@ export const PlayList = () => {
                 {userId === owner && (
                   <button
                     type="button"
-                    className="pl-4"
+                    className="pl-4 "
                     onClick={handleDropdown}
                   >
                     <i className="bx bx-dots-vertical-rounded text-2xl" />
@@ -148,7 +148,7 @@ export const PlayList = () => {
                 )}
               </>
             </HeaderGoBack>
-            <div className="flex flex-col mt-8 mb-2 items-center playlist">
+            <div className="flex flex-col mb-2 items-center playlist">
               <img src={image} alt="playlist" className="playlist-img" />
               <h2 className="text-lg font-semibold text-light pt-4 pt-2">
                 {title}
