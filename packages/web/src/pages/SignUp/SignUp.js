@@ -54,7 +54,7 @@ export const SignUp = () => {
   };
 
   return (
-    <>
+    <div className="App__container-public">
       <main className="SignUp">
         <section className="Login__wrapper">
           <Logo size="xm" titleLogo={false} />
@@ -126,7 +126,11 @@ export const SignUp = () => {
               </section>
               <p className="text-sm text-gray-200 text-center">
                 By clicking Sign Up, you agree to Musikverein&apos;s&nbsp;
-                <Link className="text-sm underline" to={ROUTES.TOS}>
+                <Link
+                  className="text-sm underline"
+                  to={ROUTES.TOS}
+                  target="_blank"
+                >
                   Terms and Conditions of Use.
                 </Link>
               </p>
@@ -146,6 +150,6 @@ export const SignUp = () => {
           ref={reRef}
         />
       </main>
-    </>
+    </div>
   );
 };

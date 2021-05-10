@@ -18,7 +18,7 @@ export const AppRouter = () => {
   const { isAuthenticated } = useSelector(authSelector);
   const { playingNow } = useSelector(playerSelector);
   return (
-    <>
+    <div className="App__container">
       <Switch>
         <ProtectedRoute
           isAuthenticated={isAuthenticated}
@@ -63,6 +63,6 @@ export const AppRouter = () => {
         />
       </Switch>
       {playingNow && <Player />}
-    </>
+    </div>
   );
 };

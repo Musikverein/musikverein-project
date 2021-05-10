@@ -1,12 +1,10 @@
 import React from 'react';
-import { HeaderGoBack } from '../../components/HeaderGoBack/HeaderGoBack';
 
 export const Tos = () => {
   return (
-    <>
-      <main className="main-container">
-        <HeaderGoBack />
-        <h1 className="pt-4 px-4 text-xl font-semibold">
+    <div className="App__container-public">
+      <main className="main-container-public">
+        <h1 className="py-4 px-4 text-xl font-semibold">
           Musikverein Terms and Conditions of Use
         </h1>
         <div className="px-4 text-sm">
@@ -94,6 +92,6 @@ export const Tos = () => {
           </p>
         </div>
       </main>
-    </>
+    </div>
   );
 };

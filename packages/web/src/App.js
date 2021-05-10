@@ -45,7 +45,7 @@ export const App = () => {
   }, [dispatch, setIsLoading]);
 
   return (
-    <div className="App__container">
+    <>
       {isLoading ? (
         <Spinner />
       ) : (
@@ -77,6 +77,6 @@ export const App = () => {
           <Redirect to={ROUTES.HOME} />
         </Switch>
       )}
-    </div>
+    </>
   );
 };

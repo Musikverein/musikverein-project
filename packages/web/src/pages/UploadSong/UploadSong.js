@@ -87,17 +87,18 @@ export const UploadSong = () => {
               }}
             />
           )}
+          <p className="text-sm text-gray-400 text-center px-4">
+            Uploading a song, you agree to Musikverein&apos;s&nbsp;
+            <br />
+            <Link
+              className="text-sm underline hover:text-gray-200"
+              to={ROUTES.TOS}
+              target="_blank"
+            >
+              Terms and Conditions of Use.
+            </Link>
+          </p>
         </div>
-        <p className="text-sm text-gray-400 text-center px-4">
-          Uploading a song, you agree to Musikverein&apos;s&nbsp;
-          <br />
-          <Link
-            className="text-sm underline hover:text-gray-200"
-            to={ROUTES.TOS}
-          >
-            Terms and Conditions of Use.
-          </Link>
-        </p>
       </main>
     </>
   );

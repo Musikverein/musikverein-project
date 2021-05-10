@@ -2,18 +2,26 @@
 @import './buttons/button.scss';
 @import './inputs/inputs.scss';
 
+.App__container-public {
+  background: #232526; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to bottom right, #323334, #232526);
+  background: linear-gradient(to bottom right, #323334, #090a0a);
+
+  width: 100%;
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  justify-content: center;
+
+  .main-container-public {
+    max-width: 1200px;
+  }
+}
+
 .App__container {
   background: #232526; /* fallback for old browsers */
-  background: -webkit-linear-gradient(
-    to bottom right,
-    #323334,
-    #232526
-  ); /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(
-    to bottom right,
-    #323334,
-    #090a0a
-  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: -webkit-linear-gradient(to bottom right, #323334, #232526);
+  background: linear-gradient(to bottom right, #323334, #090a0a);
 
   width: 100%;
   min-height: 100vh;
@@ -28,6 +36,7 @@
   .main-container {
     grid-area: mainContainer;
   }
+
   .header {
     grid-area: Header;
   }
