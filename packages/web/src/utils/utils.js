@@ -1,6 +1,6 @@
 export const metaImgToBase64 = (image, format) => {
   if (image) {
-    const base64String = btoa(String.fromCharCode(...image));
+    const base64String = Buffer.from(image, 'base64').toString('base64');
 
     return `data:${format};base64,${base64String}`;
   }
