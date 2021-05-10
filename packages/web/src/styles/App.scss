@@ -43,8 +43,9 @@
   .headerGoBack {
     position: fixed;
     top: 0;
+    z-index: 1;
     @media (min-width: 750px) {
-      position: sticky;
+      top: 60px
     }
   }
   .player {

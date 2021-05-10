@@ -169,7 +169,7 @@ export const PlayList = () => {
             <div className="playlist-songs">
               <button
                 type="button"
-                className="images-shadow m-auto playlist-button-play flex items-center justify-content sticky top-3 z-10"
+                className="images-shadow m-auto playlist-button-play flex items-center justify-content"
                 onClick={handlePlayPlayList}
               >
                 <i className="bx bx-play text-4xl " />

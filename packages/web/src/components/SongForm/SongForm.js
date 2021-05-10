@@ -101,11 +101,7 @@ export const SongForm = ({
           >
             <option value="default">Select a genre</option>
             {genreIds.map((genreId) => (
-              <option
-                key={genreId}
-                value={genreId}
-                selected={genreId === genre}
-              >
+              <option key={genreId} value={genreId}>
                 {genres[genreId].genre}
               </option>
             ))}
