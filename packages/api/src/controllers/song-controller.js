@@ -1,4 +1,5 @@
 const { SongRepo } = require('../repositories');
+const { addLike, removeLike } = require('./liked-controller');
 
 async function createSong(req, res, next) {
   const { title, duration, url, artist, genre, image } = req.body;
@@ -97,24 +98,31 @@ async function likeSong(req, res, next) {
 
     if (response.data) {
       const { likedBy } = response.data;
-      let newLikedBy =
-        likedBy.indexOf(_id) !== -1
-          ? likedBy.filter((id) => String(id) !== String(_id))
-          : [...likedBy, _id];
+
+      let newLikedBy = null;
+      let updatedMetadata = null;
+
+      if (likedBy.indexOf(_id) !== -1) {
+        newLikedBy = likedBy.filter((id) => String(id) !== String(_id));
+        updatedMetadata = await removeLike(songId);
+      } else {
+        newLikedBy = [...likedBy, _id];
+        updatedMetadata = await addLike(songId);
+      }
 
       const updatedSong = await SongRepo.findSongAndUpdate(
         { _id: songId, active: true },
         { likedBy: newLikedBy },
       );
 
-      if (updatedSong.error) {
+      if (updatedSong.error || updatedMetadata.error) {
         return res.status(400).send({
           data: null,
-          error: updatedSong.error,
+          error: updatedSong.error || updatedMetadata.error,
         });
       }
 
-      if (updatedSong.data) {
+      if (updatedSong.data && updatedMetadata.data) {
         return res.status(200).send({
           data: updatedSong.data,
           error: null,
