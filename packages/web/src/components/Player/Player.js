@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AudioPlayer, { RHAP_UI } from 'react-h5-audio-player';
 import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
 import { Link } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ROUTES from '../../routers/routes';
 
 import {
+  addSongPlayed,
   nextSong,
   playSpecificSongInQueue,
   prevSong,
@@ -27,7 +28,17 @@ export const Player = () => {
   const song = useSelector(selectSongByIdState(playingNow));
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { title, artist, likedBy, _id, url } = song;
+  const { title, artist, likedBy, _id, url } = song || {};
+
+  useEffect(() => {
+    let mounted = true;
+    if (mounted) {
+      dispatch(addSongPlayed({ songId: _id }));
+    }
+    return () => {
+      mounted = false;
+    };
+  }, [dispatch, _id]);
 
   const handleNext = () => {
     dispatch(nextSong());
