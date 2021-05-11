@@ -64,7 +64,7 @@ async function addFollowUser(userId) {
 
     const response = await MonthlyFollowedUserRepo.create({
       yearMonth: yearMonth,
-      liked: { [userId]: { user: userId, follows: 1 } },
+      followed: { [userId]: { user: userId, follows: 1 } },
     });
 
     if (response.error) {
@@ -152,7 +152,7 @@ async function removeFollowUser(userId) {
 
     const response = await MonthlyFollowedUserRepo.create({
       yearMonth: yearMonth,
-      liked: { [userId]: { user: userId, follows: -1 } },
+      followed: { [userId]: { user: userId, follows: -1 } },
     });
 
     if (response.error) {

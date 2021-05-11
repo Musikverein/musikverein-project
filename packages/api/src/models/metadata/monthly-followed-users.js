@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = require('mongoose');
 
-const FolloedUsersSchema = Schema(
+const FollowedUsersSchema = Schema(
   {
     yearMonth: {
       type: String,
@@ -25,6 +25,6 @@ const FolloedUsersSchema = Schema(
   },
 );
 
-const MonthFollowedUser = mongoose.model('followedUser', FolloedUsersSchema);
+const MonthFollowedUser = mongoose.model('followedUser', FollowedUsersSchema);
 
 module.exports = MonthFollowedUser;
