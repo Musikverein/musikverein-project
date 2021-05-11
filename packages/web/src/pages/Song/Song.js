@@ -23,7 +23,7 @@ export const Song = () => {
   const dispatch = useDispatch();
   const { currentUser } = useSelector(authSelector);
   const state = useSelector(selectSongByIdState(songId));
-  const { userName } = useSelector(selectUserByIdState(state?.owner));
+  const { userName } = useSelector(selectUserByIdState(state?.owner)) || {};
   const { genres } = useSelector(genreSelector);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
@@ -42,7 +42,7 @@ export const Song = () => {
     return <Spinner />;
   }
 
-  const { title, image, likedBy, duration, genre, artist, owner } = state;
+  const { title, image, likedBy, duration, genre, artist, owner } = state || {};
 
   const handlePlaySong = () => {
     dispatch(play(songId));

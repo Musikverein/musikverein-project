@@ -2,6 +2,10 @@ const { PlayListRepo } = require('../repositories');
 const {
   findPlayListAndUpdate,
 } = require('../repositories/playList-repository');
+const {
+  addFollowPlayList,
+  removeFollowPlayList,
+} = require('./playListFollowed-controller');
 
 async function createPlayList(req, res, next) {
   const { _id } = req.user;
@@ -140,24 +144,30 @@ async function followPlayList(req, res, next) {
 
     if (response.data) {
       const { followedBy } = response.data;
-      const newFollowedBy =
-        followedBy.indexOf(_id) !== -1
-          ? followedBy.filter((id) => String(id) !== String(_id))
-          : [...followedBy, _id];
+
+      let newFollowedBy = null;
+      let updatedFollowedMetadata = null;
+      if (followedBy.indexOf(_id) !== -1) {
+        newFollowedBy = followedBy.filter((id) => String(id) !== String(_id));
+        updatedFollowedMetadata = await removeFollowPlayList(playListId);
+      } else {
+        newFollowedBy = [...followedBy, _id];
+        updatedFollowedMetadata = await addFollowPlayList(playListId);
+      }
 
       const updatedPlayList = await PlayListRepo.findPlayListAndUpdate(
         { _id: playListId },
         { followedBy: newFollowedBy },
       );
 
-      if (updatedPlayList.error) {
+      if (updatedPlayList.error || updatedFollowedMetadata.error) {
         return res.status(400).send({
           data: null,
-          error: updatedPlayList.error,
+          error: updatedPlayList.error || updatedFollowedMetadata.error,
         });
       }
 
-      if (updatedPlayList.data) {
+      if (updatedPlayList.data && updatedFollowedMetadata.data) {
         return res.status(200).send({
           data: updatedPlayList.data,
           error: null,

@@ -15,8 +15,9 @@
   flex-direction: column;
   background-color: rgb(10, 10, 10);
   @media (min-width: 750px) {
-    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.3),
-      0 0 20px rgba(255, 255, 255, 0.3);
+    box-shadow: 0 1px 4px rgba(255, 255, 255, 0.1),
+      0 0 20px rgba(255, 255, 255, 0.1);
+    border: 1px solid #2a2a2a;
     border-radius: 4px;
     max-height: 85vh;
   }

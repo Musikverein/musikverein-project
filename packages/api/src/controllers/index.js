@@ -3,6 +3,7 @@ const songController = require('./song-controller');
 const playListController = require('./playList-contoller');
 const searchController = require('./search-controller');
 const genresController = require('./genre-controller');
+const playedController = require('./played-controller');
 
 module.exports = {
   userController: userController,
@@ -10,4 +11,5 @@ module.exports = {
   playListController: playListController,
   searchController: searchController,
   genresController: genresController,
+  playedController: playedController,
 };

@@ -1,4 +1,8 @@
 const { UserRepo } = require('../repositories');
+const {
+  removeFollowUser,
+  addFollowUser,
+} = require('./userFollowed-controller');
 
 async function signUp(req, res, next) {
   const { uid, email } = req.user;
@@ -180,14 +184,18 @@ async function followUser(req, res, next) {
     }
 
     if (responseUserFollowed.data && responseUserFollowing.data) {
-      console.log('en el primer if');
       const { followedBy } = responseUserFollowed.data;
       const { following } = responseUserFollowing.data;
 
-      const newFollowedBy =
-        followedBy.indexOf(_id) !== -1
-          ? followedBy.filter((id) => String(id) !== String(_id))
-          : [...followedBy, _id];
+      let newFollowedBy = null;
+      let followedMetadataUpdated = null;
+      if (followedBy.indexOf(_id) !== -1) {
+        newFollowedBy = followedBy.filter((id) => String(id) !== String(_id));
+        followedMetadataUpdated = await removeFollowUser(_id);
+      } else {
+        newFollowedBy = [...followedBy, _id];
+        followedMetadataUpdated = await addFollowUser(_id);
+      }
 
       const newFollowing =
         following.indexOf(userId) !== -1
@@ -199,7 +207,7 @@ async function followUser(req, res, next) {
         { followedBy: newFollowedBy },
       );
 
-      if (updatedUserFollowed.error) {
+      if (updatedUserFollowed.error || followedMetadataUpdated.error) {
         return res.status(400).send({
           data: null,
           error: updatedUserFollowed.error,
@@ -210,14 +218,18 @@ async function followUser(req, res, next) {
         { following: newFollowing },
       );
 
-      if (updatedUserFollowing.error) {
+      if (updatedUserFollowing.error || followedMetadataUpdated.error) {
         return res.status(400).send({
           data: null,
           error: updatedUserFollowing.error,
         });
       }
 
-      if (updatedUserFollowed.data && updatedUserFollowing.data) {
+      if (
+        updatedUserFollowed.data &&
+        updatedUserFollowing.data &&
+        followedMetadataUpdated.data
+      ) {
         return res.status(200).send({
           data: updatedUserFollowed.data,
           error: null,
