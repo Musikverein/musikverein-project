@@ -4,6 +4,7 @@ const PlayListModel = require('./playList-model');
 const Genre = require('./genre-model');
 const MonthlyPlayedSong = require('./metadata/monthly-played-songs');
 const MonthlyLikedSong = require('./metadata/monthly-liked-songs');
+const MonthFollowedUser = require('./metadata/monthly-followed-users');
 
 module.exports = {
   User: UserModel,
@@ -12,4 +13,5 @@ module.exports = {
   Genre: Genre,
   MonthlyPlayedSong: MonthlyPlayedSong,
   MonthlyLikedSong: MonthlyLikedSong,
+  MonthFollowedUser: MonthFollowedUser,
 };

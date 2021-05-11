@@ -3,17 +3,17 @@ const normalizeDBQuery = require('../utils/normalizeDBQuery');
 
 class MonthlyLikedSongRepository {
   create(options) {
-    return normalizeDBQuery(db.MonthlyPlayedSong.create(options));
+    return normalizeDBQuery(db.MonthlyLikedSong.create(options));
   }
 
   find(options) {
-    return normalizeDBQuery(db.MonthlyPlayedSong.findOne(options));
+    return normalizeDBQuery(db.MonthlyLikedSong.findOne(options));
   }
 
   findByIdAndIncrement(documentId, songId) {
     const query = `liked.${songId}.likes`;
     return normalizeDBQuery(
-      db.MonthlyPlayedSong.findByIdAndUpdate(
+      db.MonthlyLikedSong.findByIdAndUpdate(
         documentId,
         {
           $inc: { [query]: 1 },
@@ -28,7 +28,7 @@ class MonthlyLikedSongRepository {
   findByIdAndDecrement(documentId, songId) {
     const query = `liked.${songId}.likes`;
     return normalizeDBQuery(
-      db.MonthlyPlayedSong.findByIdAndUpdate(
+      db.MonthlyLikedSong.findByIdAndUpdate(
         documentId,
         {
           $inc: { [query]: -1 },
@@ -43,7 +43,7 @@ class MonthlyLikedSongRepository {
   findByIdAndAddSong(documentId, songId) {
     const query = `liked.${songId}`;
     return normalizeDBQuery(
-      db.MonthlyPlayedSong.findByIdAndUpdate(
+      db.MonthlyLikedSong.findByIdAndUpdate(
         documentId,
         {
           [query]: { song: songId, likes: 1 },
@@ -58,7 +58,7 @@ class MonthlyLikedSongRepository {
   findByIdAndAddSongWithDecrement(documentId, songId) {
     const query = `liked.${songId}`;
     return normalizeDBQuery(
-      db.MonthlyPlayedSong.findByIdAndUpdate(
+      db.MonthlyLikedSong.findByIdAndUpdate(
         documentId,
         {
           [query]: { song: songId, likes: -1 },
