@@ -21,7 +21,7 @@ async function addFollowUser(userId) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.liked.get(userId)) {
+      if (findresponse.data.followed.get(userId)) {
         const updatedResponse = await MonthlyFollowedUserRepo.findByIdAndIncrement(
           findresponse.data._id,
           userId,
@@ -109,7 +109,7 @@ async function removeFollowUser(userId) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.liked.get(userId)) {
+      if (findresponse.data.followed.get(userId)) {
         const updatedResponse = await MonthlyFollowedUserRepo.findByIdAndDecrement(
           findresponse.data._id,
           userId,
