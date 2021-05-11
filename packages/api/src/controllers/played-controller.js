@@ -1,14 +1,10 @@
 const { MonthlyPlayedSongRepo } = require('../repositories');
+const { getYearMonth } = require('../utils/utils');
 
 async function addReproduction(req, res, next) {
   const { songId } = req.body;
 
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
+  const yearMonth = getYearMonth();
 
   try {
     const findresponse = await MonthlyPlayedSongRepo.find({

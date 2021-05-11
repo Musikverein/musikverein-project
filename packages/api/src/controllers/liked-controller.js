@@ -1,13 +1,8 @@
 const { MonthlyLikedSongRepo } = require('../repositories');
+const { getYearMonth } = require('../utils/utils');
 
 async function addLike(songId) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
-
+  const yearMonth = getYearMonth();
   try {
     const findresponse = await MonthlyLikedSongRepo.find({
       yearMonth: yearMonth,
@@ -21,7 +16,12 @@ async function addLike(songId) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.liked.get(songId)) {
+      const index = findresponse.data.liked.findIndex(
+        (el) => String(el.song) === String(songId),
+      );
+      console.log(findresponse.data);
+      console.log(index);
+      if (index !== -1) {
         const updatedResponse = await MonthlyLikedSongRepo.findByIdAndIncrement(
           findresponse.data._id,
           songId,
@@ -64,7 +64,7 @@ async function addLike(songId) {
 
     const response = await MonthlyLikedSongRepo.create({
       yearMonth: yearMonth,
-      liked: { [songId]: { song: songId, likes: 1 } },
+      liked: [{ song: songId, likes: 1 }],
     });
 
     if (response.error) {
@@ -89,12 +89,7 @@ async function addLike(songId) {
 }
 
 async function removeLike(songId) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
+  const yearMonth = getYearMonth();
 
   try {
     const findresponse = await MonthlyLikedSongRepo.find({
@@ -109,11 +104,15 @@ async function removeLike(songId) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.liked.get(songId)) {
+      const index = findresponse.data.liked.findIndex(
+        (el) => String(el.song) === String(songId),
+      );
+      if (index !== -1) {
         const updatedResponse = await MonthlyLikedSongRepo.findByIdAndDecrement(
           findresponse.data._id,
           songId,
         );
+        console.log(updatedResponse.data);
 
         if (updatedResponse.error) {
           return {
@@ -152,7 +151,7 @@ async function removeLike(songId) {
 
     const response = await MonthlyLikedSongRepo.create({
       yearMonth: yearMonth,
-      liked: { [songId]: { song: songId, likes: -1 } },
+      liked: [{ song: songId, likes: -1 }],
     });
 
     if (response.error) {

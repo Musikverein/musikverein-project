@@ -1,12 +1,8 @@
 const { MonthlyFollowedPlayListRepo } = require('../repositories');
+const { getYearMonth } = require('../utils/utils');
 
 async function addFollowPlayList(playListId) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
+  const yearMonth = getYearMonth();
 
   try {
     const findresponse = await MonthlyFollowedPlayListRepo.find({
@@ -89,12 +85,7 @@ async function addFollowPlayList(playListId) {
 }
 
 async function removeFollowPlayList(playListId) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
+  const yearMonth = getYearMonth();
 
   try {
     const findresponse = await MonthlyFollowedPlayListRepo.find({

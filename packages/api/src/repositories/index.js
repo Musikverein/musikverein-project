@@ -6,6 +6,7 @@ const MonthlyPlayedSongRepository = require('./monthlyPlayedSongs-repository');
 const MonthlyLikedSongsRepository = require('./monthlyLikedSongs-repository');
 const MonthlyFollowedUserRepository = require('./monthlyFollowedUsers-repository');
 const monthlyFollowedPlayListRepository = require('./monthlyFollowedPlayList-repository');
+const trendRepository = require('./trend-repository');
 
 module.exports = {
   UserRepo: UserRepository,
@@ -16,4 +17,5 @@ module.exports = {
   MonthlyLikedSongRepo: MonthlyLikedSongsRepository,
   MonthlyFollowedUserRepo: MonthlyFollowedUserRepository,
   MonthlyFollowedPlayListRepo: monthlyFollowedPlayListRepository,
+  TrendRepo: trendRepository,
 };

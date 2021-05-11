@@ -11,14 +11,15 @@ class MonthlyLikedSongRepository {
   }
 
   findByIdAndIncrement(documentId, songId) {
-    const query = `liked.${songId}.likes`;
     return normalizeDBQuery(
-      db.MonthlyLikedSong.findByIdAndUpdate(
-        documentId,
+      db.MonthlyLikedSong.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: 1 },
+          $inc: { 'liked.$[el].likes': 1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.song': songId }],
           new: true,
         },
       ),
@@ -26,14 +27,15 @@ class MonthlyLikedSongRepository {
   }
 
   findByIdAndDecrement(documentId, songId) {
-    const query = `liked.${songId}.likes`;
     return normalizeDBQuery(
-      db.MonthlyLikedSong.findByIdAndUpdate(
-        documentId,
+      db.MonthlyLikedSong.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: -1 },
+          $inc: { 'liked.$[el].likes': -1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.song': songId }],
           new: true,
         },
       ),
@@ -41,12 +43,11 @@ class MonthlyLikedSongRepository {
   }
 
   findByIdAndAddSong(documentId, songId) {
-    const query = `liked.${songId}`;
     return normalizeDBQuery(
-      db.MonthlyLikedSong.findByIdAndUpdate(
-        documentId,
+      db.MonthlyLikedSong.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { song: songId, likes: 1 },
+          $push: { liked: { song: songId, likes: 1 } },
         },
         {
           new: true,
@@ -56,12 +57,11 @@ class MonthlyLikedSongRepository {
   }
 
   findByIdAndAddSongWithDecrement(documentId, songId) {
-    const query = `liked.${songId}`;
     return normalizeDBQuery(
-      db.MonthlyLikedSong.findByIdAndUpdate(
-        documentId,
+      db.MonthlyLikedSong.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { song: songId, likes: -1 },
+          $push: { liked: { song: songId, likes: -1 } },
         },
         {
           new: true,

@@ -1,13 +1,8 @@
 const { MonthlyFollowedUserRepo } = require('../repositories');
+const { getYearMonth } = require('../utils/utils');
 
 async function addFollowUser(userId) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
-
+  const yearMonth = getYearMonth();
   try {
     const findresponse = await MonthlyFollowedUserRepo.find({
       yearMonth: yearMonth,
@@ -89,13 +84,7 @@ async function addFollowUser(userId) {
 }
 
 async function removeFollowUser(userId) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
-
+  const yearMonth = getYearMonth();
   try {
     const findresponse = await MonthlyFollowedUserRepo.find({
       yearMonth: yearMonth,
