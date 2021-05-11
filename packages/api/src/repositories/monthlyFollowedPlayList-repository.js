@@ -11,14 +11,15 @@ class MonthlyFollowedPlayListRepository {
   }
 
   findByIdAndIncrement(documentId, playListId) {
-    const query = `followed.${playListId}.follows`;
     return normalizeDBQuery(
-      db.MonthFollowedPlayList.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedPlayList.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: 1 },
+          $inc: { 'followed.$[el].follows': 1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.playList': playListId }],
           new: true,
         },
       ),
@@ -26,14 +27,15 @@ class MonthlyFollowedPlayListRepository {
   }
 
   findByIdAndDecrement(documentId, playListId) {
-    const query = `followed.${playListId}.follows`;
     return normalizeDBQuery(
-      db.MonthFollowedPlayList.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedPlayList.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: -1 },
+          $inc: { 'followed.$[el].follows': -1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.playList': playListId }],
           new: true,
         },
       ),
@@ -41,12 +43,11 @@ class MonthlyFollowedPlayListRepository {
   }
 
   findByIdAndAddPlayList(documentId, playListId) {
-    const query = `followed.${playListId}`;
     return normalizeDBQuery(
-      db.MonthFollowedPlayList.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedPlayList.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { playList: playListId, follows: 1 },
+          $push: { followed: { playList: playListId, follows: 1 } },
         },
         {
           new: true,
@@ -56,12 +57,11 @@ class MonthlyFollowedPlayListRepository {
   }
 
   findByIdAndAddPlaytListWithDecrement(documentId, playListId) {
-    const query = `followed.${playListId}`;
     return normalizeDBQuery(
-      db.MonthFollowedPlayList.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedPlayList.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { playList: playListId, follows: 1 },
+          $push: { followed: { playList: playListId, follows: -1 } },
         },
         {
           new: true,

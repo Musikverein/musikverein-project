@@ -11,14 +11,15 @@ class MonthlyFollowedUserRepository {
   }
 
   findByIdAndIncrement(documentId, userId) {
-    const query = `followed.${userId}.follows`;
     return normalizeDBQuery(
-      db.MonthFollowedUser.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedUser.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: 1 },
+          $inc: { 'followed.$[el].follows': 1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.user': userId }],
           new: true,
         },
       ),
@@ -26,14 +27,15 @@ class MonthlyFollowedUserRepository {
   }
 
   findByIdAndDecrement(documentId, userId) {
-    const query = `followed.${userId}.follows`;
     return normalizeDBQuery(
-      db.MonthFollowedUser.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedUser.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: -1 },
+          $inc: { 'followed.$[el].follows': -1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.user': userId }],
           new: true,
         },
       ),
@@ -41,12 +43,11 @@ class MonthlyFollowedUserRepository {
   }
 
   findByIdAndAddUser(documentId, userId) {
-    const query = `followed.${userId}`;
     return normalizeDBQuery(
-      db.MonthFollowedUser.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedUser.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { user: userId, follows: 1 },
+          $push: { followed: { user: userId, follows: 1 } },
         },
         {
           new: true,
@@ -56,12 +57,11 @@ class MonthlyFollowedUserRepository {
   }
 
   findByIdAndAddUserWithDecrement(documentId, userId) {
-    const query = `followed.${userId}`;
     return normalizeDBQuery(
-      db.MonthFollowedUser.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedUser.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { user: userId, follows: 1 },
+          $push: { followed: { user: userId, follows: -1 } },
         },
         {
           new: true,

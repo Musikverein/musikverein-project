@@ -16,7 +16,10 @@ async function addFollowUser(userId) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.followed.get(userId)) {
+      const index = findresponse.data.followed.findIndex(
+        (el) => String(el.user) === String(userId),
+      );
+      if (index !== -1) {
         const updatedResponse = await MonthlyFollowedUserRepo.findByIdAndIncrement(
           findresponse.data._id,
           userId,
@@ -59,7 +62,7 @@ async function addFollowUser(userId) {
 
     const response = await MonthlyFollowedUserRepo.create({
       yearMonth: yearMonth,
-      followed: { [userId]: { user: userId, follows: 1 } },
+      followed: [{ user: userId, follows: 1 }],
     });
 
     if (response.error) {
@@ -98,7 +101,10 @@ async function removeFollowUser(userId) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.followed.get(userId)) {
+      const index = findresponse.data.followed.findIndex(
+        (el) => String(el.user) === String(userId),
+      );
+      if (index !== -1) {
         const updatedResponse = await MonthlyFollowedUserRepo.findByIdAndDecrement(
           findresponse.data._id,
           userId,
@@ -141,7 +147,7 @@ async function removeFollowUser(userId) {
 
     const response = await MonthlyFollowedUserRepo.create({
       yearMonth: yearMonth,
-      followed: { [userId]: { user: userId, follows: -1 } },
+      followed: [{ user: userId, follows: -1 }],
     });
 
     if (response.error) {

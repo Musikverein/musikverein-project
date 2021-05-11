@@ -19,7 +19,10 @@ async function addReproduction(req, res, next) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.playbacks.get(songId)) {
+      const index = findresponse.data.playbacks.findIndex(
+        (el) => String(el.song) === String(songId),
+      );
+      if (index !== -1) {
         const updatedResponse = await MonthlyPlayedSongRepo.findByIdAndIncrement(
           findresponse.data._id,
           songId,
@@ -62,7 +65,7 @@ async function addReproduction(req, res, next) {
 
     const response = await MonthlyPlayedSongRepo.create({
       yearMonth: yearMonth,
-      playbacks: { [songId]: { song: songId, reproductions: 1 } },
+      playbacks: [{ song: songId, reproductions: 1 }],
     });
 
     if (response.error) {

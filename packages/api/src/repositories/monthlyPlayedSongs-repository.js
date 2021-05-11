@@ -11,14 +11,15 @@ class MonthlyPlayedSongRepository {
   }
 
   findByIdAndIncrement(documentId, songId) {
-    const query = `playbacks.${songId}.reproductions`;
     return normalizeDBQuery(
-      db.MonthlyPlayedSong.findByIdAndUpdate(
-        documentId,
+      db.MonthlyPlayedSong.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: 1 },
+          $inc: { 'playbacks.$[el].reproductions': 1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.song': songId }],
           new: true,
         },
       ),
@@ -26,12 +27,11 @@ class MonthlyPlayedSongRepository {
   }
 
   findByIdAndAddSong(documentId, songId) {
-    const query = `playbacks.${songId}`;
     return normalizeDBQuery(
-      db.MonthlyPlayedSong.findByIdAndUpdate(
-        documentId,
+      db.MonthlyPlayedSong.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { song: songId, reproductions: 1 },
+          $push: { playbacks: { song: songId, reproductions: 1 } },
         },
         {
           new: true,

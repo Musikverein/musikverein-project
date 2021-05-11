@@ -19,8 +19,6 @@ async function addLike(songId) {
       const index = findresponse.data.liked.findIndex(
         (el) => String(el.song) === String(songId),
       );
-      console.log(findresponse.data);
-      console.log(index);
       if (index !== -1) {
         const updatedResponse = await MonthlyLikedSongRepo.findByIdAndIncrement(
           findresponse.data._id,
