@@ -40,7 +40,7 @@ class MonthlyFollowedUserRepository {
     );
   }
 
-  findByIdAndAddSong(documentId, userId) {
+  findByIdAndAddUser(documentId, userId) {
     const query = `followed.${userId}`;
     return normalizeDBQuery(
       db.MonthFollowedUser.findByIdAndUpdate(
@@ -55,7 +55,7 @@ class MonthlyFollowedUserRepository {
     );
   }
 
-  findByIdAndAddSongWithDecrement(documentId, userId) {
+  findByIdAndAddUserWithDecrement(documentId, userId) {
     const query = `followed.${userId}`;
     return normalizeDBQuery(
       db.MonthFollowedUser.findByIdAndUpdate(
