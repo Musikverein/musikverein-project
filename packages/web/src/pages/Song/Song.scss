@@ -5,6 +5,9 @@
     padding: 10px 15px;
     justify-content: flex-end;
     align-items: center;
+    @media (min-width: 750px) {
+      margin-top: 60px;
+    }
   }
   &-info-img {
     height: 180px;
