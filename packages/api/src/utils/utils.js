@@ -8,6 +8,11 @@ function getYearMonth() {
   return yearMonth;
 }
 
+function responseTransfromTrend(array) {
+  return array.map((el) => el.populate[0]);
+}
+
 module.exports = {
   getYearMonth: getYearMonth,
+  responseTransfromTrend: responseTransfromTrend,
 };

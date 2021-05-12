@@ -69,6 +69,38 @@ class MonthlyFollowedPlayListRepository {
       ),
     );
   }
+
+  findPlayLists(query) {
+    return normalizeDBQuery(
+      db.MonthFollowedPlayList.aggregate([
+        { $match: query },
+        { $unwind: '$followed' },
+        { $sort: { 'followed.follows': -1 } },
+        { $limit: 10 },
+        {
+          $lookup: {
+            from: db.PlayList.collection.name,
+            localField: 'followed.playList',
+            foreignField: '_id',
+            as: 'populate',
+          },
+        },
+        { $match: { 'populate.isPublic': true } },
+        {
+          $project: {
+            'populate._id': 1,
+            'populate.title': 1,
+            'populate.type': 1,
+            'populate.songs': 1,
+            'populate.owner': 1,
+            'populate.followedBy': 1,
+            'populate.isPublic': 1,
+            'populate.image': 1,
+          },
+        },
+      ]),
+    );
+  }
 }
 
 module.exports = new MonthlyFollowedPlayListRepository();

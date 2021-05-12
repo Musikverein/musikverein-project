@@ -1,10 +1,17 @@
-const { TrendRepo } = require('../repositories');
-const { getYearMonth } = require('../utils/utils');
+const {
+  MonthlyFollowedPlayListRepo,
+  MonthlyPlayedSongRepo,
+  MonthlyLikedSongRepo,
+  MonthlyFollowedUserRepo,
+} = require('../repositories');
+const { getYearMonth, responseTransfromTrend } = require('../utils/utils');
 
 async function getTrendSongs(req, res, next) {
   const yearMonth = getYearMonth();
   try {
-    const response = await TrendRepo.findSongsLiked({ yearMonth: yearMonth });
+    const response = await MonthlyLikedSongRepo.findSongsLiked({
+      yearMonth: yearMonth,
+    });
     if (response.error) {
       return res.status(400).send({
         data: null,
@@ -13,8 +20,9 @@ async function getTrendSongs(req, res, next) {
     }
 
     if (response.data) {
+      const responseTransform = responseTransfromTrend(response.data);
       return res.status(200).send({
-        data: response.data,
+        data: responseTransform,
         error: null,
       });
     }
@@ -26,7 +34,9 @@ async function getTrendPlayLists(req, res, next) {
   const yearMonth = getYearMonth();
 
   try {
-    const response = await TrendRepo.findPlayLists({ yearMonth: yearMonth });
+    const response = await MonthlyFollowedPlayListRepo.findPlayLists({
+      yearMonth: yearMonth,
+    });
     if (response.error) {
       return res.status(400).send({
         data: null,
@@ -35,8 +45,9 @@ async function getTrendPlayLists(req, res, next) {
     }
 
     if (response.data) {
+      const responseTransform = responseTransfromTrend(response.data);
       return res.status(200).send({
-        data: response.data,
+        data: responseTransform,
         error: null,
       });
     }
@@ -48,7 +59,9 @@ async function getTrendUsers(req, res, next) {
   const yearMonth = getYearMonth();
 
   try {
-    const response = await TrendRepo.findUsers({ yearMonth: yearMonth });
+    const response = await MonthlyFollowedUserRepo.findUsers({
+      yearMonth: yearMonth,
+    });
     if (response.error) {
       return res.status(400).send({
         data: null,
@@ -57,8 +70,9 @@ async function getTrendUsers(req, res, next) {
     }
 
     if (response.data) {
+      const responseTransform = responseTransfromTrend(response.data);
       return res.status(200).send({
-        data: response.data,
+        data: responseTransform,
         error: null,
       });
     }
@@ -70,7 +84,9 @@ async function getTrendPlayed(req, res, next) {
   const yearMonth = getYearMonth();
 
   try {
-    const response = await TrendRepo.findSongsPlayed({ yearMonth: yearMonth });
+    const response = await MonthlyPlayedSongRepo.findSongsPlayed({
+      yearMonth: yearMonth,
+    });
     if (response.error) {
       return res.status(400).send({
         data: null,
@@ -79,8 +95,9 @@ async function getTrendPlayed(req, res, next) {
     }
 
     if (response.data) {
+      const responseTransform = responseTransfromTrend(response.data);
       return res.status(200).send({
-        data: response.data,
+        data: responseTransform,
         error: null,
       });
     }

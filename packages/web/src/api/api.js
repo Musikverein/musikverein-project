@@ -208,7 +208,7 @@ export const api = {
     });
   },
 
-  getTrendPlayer: (headers) => {
+  getTrendPlayed: (headers) => {
     return axios.get(`${baseURL}/trends/played`, {
       headers: headers,
     });
