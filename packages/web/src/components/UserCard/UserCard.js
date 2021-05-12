@@ -4,13 +4,14 @@ import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 import ROUTES from '../../routers/routes';
-import Spinner from '../Spinner';
+import UserCardSpinner from '../placeholder/UserCardSpinner';
 
 export const UserCard = ({ userId }) => {
   const state = useSelector(selectUserByIdState(userId));
   if (!state) {
-    return <Spinner />;
+    return <UserCardSpinner />;
   }
+
   const { image, userName, _id } = state;
 
   return (

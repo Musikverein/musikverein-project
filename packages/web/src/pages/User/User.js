@@ -4,13 +4,12 @@ import { useParams } from 'react-router-dom';
 import { Header } from '../../components/Header/Header';
 import ModalLayout from '../../components/ModalLayout';
 
-import { PlayListCard } from '../../components/PlayListCard/PlaylistCard';
+import { PlayListList } from '../../components/PlayListList/PlayListList';
 import { ProfileEdit } from '../../components/ProfileEdit/ProfileEdit';
-import { SongCard } from '../../components/SongCard/SongCard';
+import SongList from '../../components/SongList';
 import Spinner from '../../components/Spinner';
-import { UserCard } from '../../components/UserCard/UserCard';
+import { UserList } from '../../components/UserList/UserList';
 import { authSelector } from '../../redux/auth/auth-selectors';
-import { play } from '../../redux/player/player-actions';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 import {
   followUser,
@@ -32,6 +31,8 @@ export const User = () => {
   const {
     userSongs,
     userPlayLists,
+    isGettingUserViewSongs,
+    isGettingUserViewPlayLists,
     isGettingUserViewFollowed,
     isGettingUserViewFollowing,
   } = useSelector(userViewSelector);
@@ -66,10 +67,6 @@ export const User = () => {
   }
 
   const { image, userName, followedBy, following } = state;
-
-  const handlePlaySong = ({ songId }) => {
-    dispatch(play(songId));
-  };
 
   const handleFollowed = () => {
     if (!isModalFollowedOpen) {
@@ -147,49 +144,27 @@ export const User = () => {
             {userName}&#39;s Playlist:
           </h2>
           <div className="user-playlists-playlist">
-            {userPlayLists?.map((playlist) => (
-              <PlayListCard key={playlist} playListId={playlist} />
-            ))}
+            <PlayListList
+              loading={isGettingUserViewPlayLists}
+              playlists={userPlayLists}
+            />
           </div>
         </div>
         <div className="user-songs pt-6">
           <h2 className="text-2xl font-bold">{userName}&#39;s Songs:</h2>
           <div className="user-songs-song">
-            {userSongs?.map((song) => (
-              <SongCard
-                key={song}
-                songId={song}
-                handlePlay={() => handlePlaySong({ songId: song })}
-                playListId=""
-              />
-            ))}
+            <SongList loading={isGettingUserViewSongs} songs={userSongs} />
           </div>
         </div>
         <ModalLayout isOpen={isModalFollowedOpen} handleClose={handleFollowed}>
-          {isGettingUserViewFollowed ? (
-            <Spinner />
-          ) : (
-            <div className="w-full h-full pt-16 px-4 ">
-              {followedBy?.map((followedId) => (
-                <UserCard key={followedId} userId={followedId} />
-              ))}
-            </div>
-          )}
+          <UserList loading={isGettingUserViewFollowed} users={followedBy} />
         </ModalLayout>
         {isModalFollowingOpen && (
           <ModalLayout
             isOpen={isModalFollowingOpen}
             handleClose={handleFollowing}
           >
-            {isGettingUserViewFollowing ? (
-              <Spinner />
-            ) : (
-              <div className="w-full h-full pt-16 px-4 ">
-                {following?.map((followingId) => {
-                  return <UserCard key={followingId} userId={followingId} />;
-                })}
-              </div>
-            )}
+            <UserList loading={isGettingUserViewFollowing} users={following} />
           </ModalLayout>
         )}
         {currentUser === userId && (

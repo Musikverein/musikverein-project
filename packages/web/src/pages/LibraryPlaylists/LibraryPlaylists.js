@@ -11,10 +11,9 @@ import {
   setCurrentPath,
 } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { userPlayListSelector } from '../../redux/libraryPlayList/libraryPlayList-selectors';
-import { Spinner } from '../../components/Spinner/Spinner';
-import PlayListCard from '../../components/PlayListCard';
 import ModalLayout from '../../components/ModalLayout';
 import { PlayListForm } from '../../components/PlayListForm/PlayListForm';
+import { PlayListList } from '../../components/PlayListList/PlayListList';
 
 export const LibraryPlayLists = () => {
   const { currentPath, userPlayLists, isGettingUserPlayList } = useSelector(
@@ -60,14 +59,10 @@ export const LibraryPlayLists = () => {
         />
 
         <section className="flex flex-wrap library-space">
-          {isGettingUserPlayList ? (
-            <Spinner />
-          ) : (
-            userPlayLists.length > 0 &&
-            userPlayLists.map((playListId) => (
-              <PlayListCard key={playListId} playListId={playListId} />
-            ))
-          )}
+          <PlayListList
+            loading={isGettingUserPlayList}
+            playlists={userPlayLists}
+          />
         </section>
         <ModalLayout
           isOpen={isCreatePlaylist}
