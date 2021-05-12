@@ -11,14 +11,15 @@ class MonthlyFollowedUserRepository {
   }
 
   findByIdAndIncrement(documentId, userId) {
-    const query = `followed.${userId}.follows`;
     return normalizeDBQuery(
-      db.MonthFollowedUser.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedUser.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: 1 },
+          $inc: { 'followed.$[el].follows': 1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.user': userId }],
           new: true,
         },
       ),
@@ -26,14 +27,15 @@ class MonthlyFollowedUserRepository {
   }
 
   findByIdAndDecrement(documentId, userId) {
-    const query = `followed.${userId}.follows`;
     return normalizeDBQuery(
-      db.MonthFollowedUser.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedUser.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: -1 },
+          $inc: { 'followed.$[el].follows': -1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.user': userId }],
           new: true,
         },
       ),
@@ -41,12 +43,11 @@ class MonthlyFollowedUserRepository {
   }
 
   findByIdAndAddUser(documentId, userId) {
-    const query = `followed.${userId}`;
     return normalizeDBQuery(
-      db.MonthFollowedUser.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedUser.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { user: userId, follows: 1 },
+          $push: { followed: { user: userId, follows: 1 } },
         },
         {
           new: true,
@@ -56,17 +57,46 @@ class MonthlyFollowedUserRepository {
   }
 
   findByIdAndAddUserWithDecrement(documentId, userId) {
-    const query = `followed.${userId}`;
     return normalizeDBQuery(
-      db.MonthFollowedUser.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedUser.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { user: userId, follows: 1 },
+          $push: { followed: { user: userId, follows: -1 } },
         },
         {
           new: true,
         },
       ),
+    );
+  }
+
+  findUsers(query) {
+    return normalizeDBQuery(
+      db.MonthFollowedUser.aggregate([
+        { $match: query },
+        { $unwind: '$followed' },
+        { $sort: { 'followed.follows': -1 } },
+        { $limit: 10 },
+        {
+          $lookup: {
+            from: db.User.collection.name,
+            localField: 'followed.user',
+            foreignField: '_id',
+            as: 'populate',
+          },
+        },
+        {
+          $project: {
+            'populate._id': 1,
+            'populate.userName': 1,
+            'populate.firstName': 1,
+            'populate.lastName': 1,
+            'populate.image': 1,
+            'populate.following': 1,
+            'populate.followedBy': 1,
+          },
+        },
+      ]),
     );
   }
 }

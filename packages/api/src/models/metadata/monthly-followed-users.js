@@ -8,16 +8,17 @@ const FollowedUsersSchema = Schema(
       required: [true, 'yearMonth key is required'],
     },
     followed: {
-      type: Map,
-      of: {
-        user: {
-          type: Schema.Types.ObjectId,
-          ref: 'user',
+      type: [
+        {
+          user: {
+            type: Schema.Types.ObjectId,
+            ref: 'user',
+          },
+          follows: {
+            type: Number,
+          },
         },
-        follows: {
-          type: Number,
-        },
-      },
+      ],
     },
   },
   {

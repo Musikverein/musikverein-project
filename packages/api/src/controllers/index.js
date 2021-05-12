@@ -4,6 +4,7 @@ const playListController = require('./playList-contoller');
 const searchController = require('./search-controller');
 const genresController = require('./genre-controller');
 const playedController = require('./played-controller');
+const trendsController = require('./trend-controller');
 
 module.exports = {
   userController: userController,
@@ -12,4 +13,5 @@ module.exports = {
   searchController: searchController,
   genresController: genresController,
   playedController: playedController,
+  trendsController: trendsController,
 };

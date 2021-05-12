@@ -3,6 +3,10 @@ import * as PlayerTypes from './player-types';
 export const playerInitialState = {
   queue: [],
   playingNow: '',
+
+  isAddingSongPlayed: false,
+  songPlayedError: null,
+  songPlayedSuccess: false,
 };
 
 const playReducer = (state = playerInitialState, action) => {
@@ -107,6 +111,30 @@ const playReducer = (state = playerInitialState, action) => {
       return {
         ...state,
         ...playerInitialState,
+      };
+    }
+    case PlayerTypes.PLAYER_ADD_SONG_PLAYED_REQUEST: {
+      return {
+        ...state,
+        isAddingSongPlayed: true,
+        songPlayedError: null,
+        songPlayedSuccess: false,
+      };
+    }
+    case PlayerTypes.PLAYER_ADD_SONG_PLAYED_ERROR: {
+      return {
+        ...state,
+        isAddingSongPlayed: true,
+        songPlayedError: action.payload,
+        songPlayedSuccess: false,
+      };
+    }
+    case PlayerTypes.PLAYER_ADD_SONG_PLAYED_SUCCESS: {
+      return {
+        ...state,
+        isAddingSongPlayed: true,
+        songPlayedError: null,
+        songPlayedSuccess: true,
       };
     }
     default: {

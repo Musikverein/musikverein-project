@@ -8,16 +8,17 @@ const LikedSongsSchema = Schema(
       required: [true, 'yearMonth key is required'],
     },
     liked: {
-      type: Map,
-      of: {
-        song: {
-          type: Schema.Types.ObjectId,
-          ref: 'song',
+      type: [
+        {
+          song: {
+            type: Schema.Types.ObjectId,
+            ref: 'song',
+          },
+          likes: {
+            type: Number,
+          },
         },
-        likes: {
-          type: Number,
-        },
-      },
+      ],
     },
   },
   {

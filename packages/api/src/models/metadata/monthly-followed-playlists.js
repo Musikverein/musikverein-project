@@ -8,16 +8,17 @@ const FollowedPlayListSchema = Schema(
       required: [true, 'yearMonth key is required'],
     },
     followed: {
-      type: Map,
-      of: {
-        playList: {
-          type: Schema.Types.ObjectId,
-          ref: 'playList',
+      type: [
+        {
+          playList: {
+            type: Schema.Types.ObjectId,
+            ref: 'playList',
+          },
+          follows: {
+            type: Number,
+          },
         },
-        follows: {
-          type: Number,
-        },
-      },
+      ],
     },
   },
   {

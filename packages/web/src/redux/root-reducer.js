@@ -10,6 +10,7 @@ import SearchReducer from './search/search-reducer';
 import UserReducer from './user/user-reducer';
 import UserViewReducer from './userView/userView-reducer';
 import GenresReducer from './genre/genre-reducer';
+import HomeReducer from './Home/home-reducer';
 
 const entitiesReducer = combineReducers({
   songStore: SongReducer,
@@ -23,6 +24,7 @@ const uiReducer = combineReducers({
   libraryPlayList: LibraryPlayListReducer,
   search: SearchReducer,
   userView: UserViewReducer,
+  home: HomeReducer,
 });
 
 const rootReducer = combineReducers({

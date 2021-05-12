@@ -189,4 +189,34 @@ export const api = {
       headers: headers,
     });
   },
+
+  getTrendSongs: (headers) => {
+    return axios.get(`${baseURL}/trends/songs`, {
+      headers: headers,
+    });
+  },
+
+  getTrendPlayLists: (headers) => {
+    return axios.get(`${baseURL}/trends/playlists`, {
+      headers: headers,
+    });
+  },
+
+  getTrendUsers: (headers) => {
+    return axios.get(`${baseURL}/trends/users`, {
+      headers: headers,
+    });
+  },
+
+  getTrendPlayed: (headers) => {
+    return axios.get(`${baseURL}/trends/played`, {
+      headers: headers,
+    });
+  },
+
+  addSongPlayed: (headers, body = {}) => {
+    return axios.post(`${baseURL}/played`, body, {
+      headers: headers,
+    });
+  },
 };

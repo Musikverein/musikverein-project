@@ -5,6 +5,7 @@ const { playListRouter } = require('./playList-router');
 const { searchRouter } = require('./search-routes');
 const { genresRouter } = require('./genres-router');
 const { playedRouter } = require('./played-router');
+const { trendsRouter } = require('./trends-router');
 
 module.exports = {
   userRouter: userRouter,
@@ -14,4 +15,5 @@ module.exports = {
   searchRouter: searchRouter,
   genresRouter: genresRouter,
   playedRouter: playedRouter,
+  trendsRouter: trendsRouter,
 };

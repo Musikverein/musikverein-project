@@ -14,6 +14,7 @@ const {
   searchRouter,
   genresRouter,
   playedRouter,
+  trendsRouter,
 } = require('./routes');
 
 const app = express();
@@ -34,6 +35,7 @@ app.use('/playList', playListRouter);
 app.use('/search', searchRouter);
 app.use('/genres', genresRouter);
 app.use('/played', playedRouter);
+app.use('/trends', trendsRouter);
 
 app.get('/', (req, res) => {
   res.status(200).send({

@@ -11,14 +11,15 @@ class MonthlyLikedSongRepository {
   }
 
   findByIdAndIncrement(documentId, songId) {
-    const query = `liked.${songId}.likes`;
     return normalizeDBQuery(
-      db.MonthlyLikedSong.findByIdAndUpdate(
-        documentId,
+      db.MonthlyLikedSong.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: 1 },
+          $inc: { 'liked.$[el].likes': 1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.song': songId }],
           new: true,
         },
       ),
@@ -26,14 +27,15 @@ class MonthlyLikedSongRepository {
   }
 
   findByIdAndDecrement(documentId, songId) {
-    const query = `liked.${songId}.likes`;
     return normalizeDBQuery(
-      db.MonthlyLikedSong.findByIdAndUpdate(
-        documentId,
+      db.MonthlyLikedSong.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: -1 },
+          $inc: { 'liked.$[el].likes': -1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.song': songId }],
           new: true,
         },
       ),
@@ -41,12 +43,11 @@ class MonthlyLikedSongRepository {
   }
 
   findByIdAndAddSong(documentId, songId) {
-    const query = `liked.${songId}`;
     return normalizeDBQuery(
-      db.MonthlyLikedSong.findByIdAndUpdate(
-        documentId,
+      db.MonthlyLikedSong.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { song: songId, likes: 1 },
+          $push: { liked: { song: songId, likes: 1 } },
         },
         {
           new: true,
@@ -56,17 +57,49 @@ class MonthlyLikedSongRepository {
   }
 
   findByIdAndAddSongWithDecrement(documentId, songId) {
-    const query = `liked.${songId}`;
     return normalizeDBQuery(
-      db.MonthlyLikedSong.findByIdAndUpdate(
-        documentId,
+      db.MonthlyLikedSong.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { song: songId, likes: -1 },
+          $push: { liked: { song: songId, likes: -1 } },
         },
         {
           new: true,
         },
       ),
+    );
+  }
+
+  findSongsLiked(query) {
+    return normalizeDBQuery(
+      db.MonthlyLikedSong.aggregate([
+        { $match: query },
+        { $unwind: '$liked' },
+        { $sort: { 'liked.likes': -1 } },
+        { $limit: 10 },
+        {
+          $lookup: {
+            from: db.Song.collection.name,
+            localField: 'liked.song',
+            foreignField: '_id',
+            as: 'populate',
+          },
+        },
+        { $match: { 'populate.active': true } },
+        {
+          $project: {
+            'populate._id': 1,
+            'populate.title': 1,
+            'populate.artist': 1,
+            'populate.duration': 1,
+            'populate.owner': 1,
+            'populate.likedBy': 1,
+            'populate.url': 1,
+            'populate.genre': 1,
+            'populate.image': 1,
+          },
+        },
+      ]),
     );
   }
 }

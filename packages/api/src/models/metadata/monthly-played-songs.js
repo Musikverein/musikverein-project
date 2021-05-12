@@ -8,16 +8,17 @@ const PlayedSongsSchema = Schema(
       required: [true, 'yearMonth key is required'],
     },
     playbacks: {
-      type: Map,
-      of: {
-        song: {
-          type: Schema.Types.ObjectId,
-          ref: 'song',
+      type: [
+        {
+          song: {
+            type: Schema.Types.ObjectId,
+            ref: 'song',
+          },
+          reproductions: {
+            type: Number,
+          },
         },
-        reproductions: {
-          type: Number,
-        },
-      },
+      ],
     },
   },
   {

@@ -1,13 +1,8 @@
 const { MonthlyFollowedUserRepo } = require('../repositories');
+const { getYearMonth } = require('../utils/utils');
 
 async function addFollowUser(userId) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
-
+  const yearMonth = getYearMonth();
   try {
     const findresponse = await MonthlyFollowedUserRepo.find({
       yearMonth: yearMonth,
@@ -21,7 +16,10 @@ async function addFollowUser(userId) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.followed.get(userId)) {
+      const index = findresponse.data.followed.findIndex(
+        (el) => String(el.user) === String(userId),
+      );
+      if (index !== -1) {
         const updatedResponse = await MonthlyFollowedUserRepo.findByIdAndIncrement(
           findresponse.data._id,
           userId,
@@ -64,7 +62,7 @@ async function addFollowUser(userId) {
 
     const response = await MonthlyFollowedUserRepo.create({
       yearMonth: yearMonth,
-      followed: { [userId]: { user: userId, follows: 1 } },
+      followed: [{ user: userId, follows: 1 }],
     });
 
     if (response.error) {
@@ -89,13 +87,7 @@ async function addFollowUser(userId) {
 }
 
 async function removeFollowUser(userId) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
-
+  const yearMonth = getYearMonth();
   try {
     const findresponse = await MonthlyFollowedUserRepo.find({
       yearMonth: yearMonth,
@@ -109,7 +101,10 @@ async function removeFollowUser(userId) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.followed.get(userId)) {
+      const index = findresponse.data.followed.findIndex(
+        (el) => String(el.user) === String(userId),
+      );
+      if (index !== -1) {
         const updatedResponse = await MonthlyFollowedUserRepo.findByIdAndDecrement(
           findresponse.data._id,
           userId,
@@ -152,7 +147,7 @@ async function removeFollowUser(userId) {
 
     const response = await MonthlyFollowedUserRepo.create({
       yearMonth: yearMonth,
-      followed: { [userId]: { user: userId, follows: -1 } },
+      followed: [{ user: userId, follows: -1 }],
     });
 
     if (response.error) {

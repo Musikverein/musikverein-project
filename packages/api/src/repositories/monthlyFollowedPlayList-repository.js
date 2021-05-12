@@ -11,14 +11,15 @@ class MonthlyFollowedPlayListRepository {
   }
 
   findByIdAndIncrement(documentId, playListId) {
-    const query = `followed.${playListId}.follows`;
     return normalizeDBQuery(
-      db.MonthFollowedPlayList.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedPlayList.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: 1 },
+          $inc: { 'followed.$[el].follows': 1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.playList': playListId }],
           new: true,
         },
       ),
@@ -26,14 +27,15 @@ class MonthlyFollowedPlayListRepository {
   }
 
   findByIdAndDecrement(documentId, playListId) {
-    const query = `followed.${playListId}.follows`;
     return normalizeDBQuery(
-      db.MonthFollowedPlayList.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedPlayList.findOneAndUpdate(
+        { _id: documentId },
         {
-          $inc: { [query]: -1 },
+          $inc: { 'followed.$[el].follows': -1 },
         },
         {
+          multi: false,
+          arrayFilters: [{ 'el.playList': playListId }],
           new: true,
         },
       ),
@@ -41,12 +43,11 @@ class MonthlyFollowedPlayListRepository {
   }
 
   findByIdAndAddPlayList(documentId, playListId) {
-    const query = `followed.${playListId}`;
     return normalizeDBQuery(
-      db.MonthFollowedPlayList.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedPlayList.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { playList: playListId, follows: 1 },
+          $push: { followed: { playList: playListId, follows: 1 } },
         },
         {
           new: true,
@@ -56,17 +57,48 @@ class MonthlyFollowedPlayListRepository {
   }
 
   findByIdAndAddPlaytListWithDecrement(documentId, playListId) {
-    const query = `followed.${playListId}`;
     return normalizeDBQuery(
-      db.MonthFollowedPlayList.findByIdAndUpdate(
-        documentId,
+      db.MonthFollowedPlayList.findOneAndUpdate(
+        { _id: documentId },
         {
-          [query]: { playList: playListId, follows: 1 },
+          $push: { followed: { playList: playListId, follows: -1 } },
         },
         {
           new: true,
         },
       ),
+    );
+  }
+
+  findPlayLists(query) {
+    return normalizeDBQuery(
+      db.MonthFollowedPlayList.aggregate([
+        { $match: query },
+        { $unwind: '$followed' },
+        { $sort: { 'followed.follows': -1 } },
+        { $limit: 10 },
+        {
+          $lookup: {
+            from: db.PlayList.collection.name,
+            localField: 'followed.playList',
+            foreignField: '_id',
+            as: 'populate',
+          },
+        },
+        { $match: { 'populate.isPublic': true } },
+        {
+          $project: {
+            'populate._id': 1,
+            'populate.title': 1,
+            'populate.type': 1,
+            'populate.songs': 1,
+            'populate.owner': 1,
+            'populate.followedBy': 1,
+            'populate.isPublic': 1,
+            'populate.image': 1,
+          },
+        },
+      ]),
     );
   }
 }

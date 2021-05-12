@@ -1,12 +1,8 @@
 const { MonthlyFollowedPlayListRepo } = require('../repositories');
+const { getYearMonth } = require('../utils/utils');
 
 async function addFollowPlayList(playListId) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
+  const yearMonth = getYearMonth();
 
   try {
     const findresponse = await MonthlyFollowedPlayListRepo.find({
@@ -21,7 +17,10 @@ async function addFollowPlayList(playListId) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.followed.get(playListId)) {
+      const index = findresponse.data.followed.findIndex(
+        (el) => String(el.playList) === String(playListId),
+      );
+      if (index !== -1) {
         const updatedResponse = await MonthlyFollowedPlayListRepo.findByIdAndIncrement(
           findresponse.data._id,
           playListId,
@@ -64,7 +63,7 @@ async function addFollowPlayList(playListId) {
 
     const response = await MonthlyFollowedPlayListRepo.create({
       yearMonth: yearMonth,
-      followed: { [playListId]: { playList: playListId, follows: 1 } },
+      followed: [{ playList: playListId, follows: 1 }],
     });
 
     if (response.error) {
@@ -89,12 +88,7 @@ async function addFollowPlayList(playListId) {
 }
 
 async function removeFollowPlayList(playListId) {
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
+  const yearMonth = getYearMonth();
 
   try {
     const findresponse = await MonthlyFollowedPlayListRepo.find({
@@ -109,7 +103,10 @@ async function removeFollowPlayList(playListId) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.followed.get(playListId)) {
+      const index = findresponse.data.followed.findIndex(
+        (el) => String(el.playList) === String(playListId),
+      );
+      if (index !== -1) {
         const updatedResponse = await MonthlyFollowedPlayListRepo.findByIdAndDecrement(
           findresponse.data._id,
           playListId,
@@ -152,7 +149,7 @@ async function removeFollowPlayList(playListId) {
 
     const response = await MonthlyFollowedPlayListRepo.create({
       yearMonth: yearMonth,
-      followed: { [playListId]: { playList: playListId, follows: -1 } },
+      followed: [{ playList: playListId, follows: -1 }],
     });
 
     if (response.error) {

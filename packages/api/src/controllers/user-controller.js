@@ -191,10 +191,10 @@ async function followUser(req, res, next) {
       let followedMetadataUpdated = null;
       if (followedBy.indexOf(_id) !== -1) {
         newFollowedBy = followedBy.filter((id) => String(id) !== String(_id));
-        followedMetadataUpdated = await removeFollowUser(_id);
+        followedMetadataUpdated = await removeFollowUser(userId);
       } else {
         newFollowedBy = [...followedBy, _id];
-        followedMetadataUpdated = await addFollowUser(_id);
+        followedMetadataUpdated = await addFollowUser(userId);
       }
 
       const newFollowing =

@@ -1,14 +1,10 @@
 const { MonthlyPlayedSongRepo } = require('../repositories');
+const { getYearMonth } = require('../utils/utils');
 
 async function addReproduction(req, res, next) {
   const { songId } = req.body;
 
-  const currentDate = new Date();
-  const currentMonth = currentDate.getUTCMonth() + 1;
-  const currentYear = currentDate.getUTCFullYear();
-  const yearMonth = `${currentYear}/${
-    currentMonth < 10 ? '0' + currentMonth : currentMonth
-  }`;
+  const yearMonth = getYearMonth();
 
   try {
     const findresponse = await MonthlyPlayedSongRepo.find({
@@ -23,7 +19,10 @@ async function addReproduction(req, res, next) {
     }
 
     if (findresponse.data) {
-      if (findresponse.data.playbacks.get(songId)) {
+      const index = findresponse.data.playbacks.findIndex(
+        (el) => String(el.song) === String(songId),
+      );
+      if (index !== -1) {
         const updatedResponse = await MonthlyPlayedSongRepo.findByIdAndIncrement(
           findresponse.data._id,
           songId,
@@ -66,7 +65,7 @@ async function addReproduction(req, res, next) {
 
     const response = await MonthlyPlayedSongRepo.create({
       yearMonth: yearMonth,
-      playbacks: { [songId]: { song: songId, reproductions: 1 } },
+      playbacks: [{ song: songId, reproductions: 1 }],
     });
 
     if (response.error) {
