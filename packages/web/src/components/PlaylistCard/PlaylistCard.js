@@ -10,21 +10,22 @@ import {
   editUserPlayList,
   getPlayListAndPlay,
 } from '../../redux/libraryPlayList/libraryPlayList-actions';
-import Dropdown from '../Dropdown';
-import DropdownItem from '../DropdownItem';
 import ModalLayout from '../ModalLayout';
 import ConfirmText from '../ConfirmText';
 import { FollowButton } from '../FollowButton/FollowButton';
 import { PlayListForm } from '../PlayListForm/PlayListForm';
 import ROUTES from '../../routers/routes';
 
-import './PlayListCard.scss';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
+import ModalMenuOptionsItem from '../ModalMenuOptionsItem';
+import ModalMenuOptions from '../ModalMenuOptions';
+
+import './PlayListCard.scss';
 
 export const PlayListCard = ({ playListId }) => {
   const { playLists } = useSelector(playListSelector);
   const dispatch = useDispatch();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [menuOptionOpen, setMenuOptionOpen] = useState(false);
   const [isDeletePlayList, setIsDeletePlayList] = useState(false);
   const [isEditPlayList, setIsEditPlayList] = useState(false);
   const { currentUser } = useSelector(authSelector);
@@ -50,8 +51,8 @@ export const PlayListCard = ({ playListId }) => {
     dispatch(editUserPlayList({ ...formValues, playListId: _id }));
   };
 
-  const handleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+  const handleMenuOption = () => {
+    setMenuOptionOpen(!menuOptionOpen);
   };
 
   const handleConfirmDeletePlayList = () => {
@@ -78,43 +79,10 @@ export const PlayListCard = ({ playListId }) => {
           >
             <h2 className="text-l font-semibold text-light p-2">{title}</h2>
           </Link>
-          <div className="relative">
-            {dropdownOpen && (
-              <Dropdown
-                handleClose={handleDropdown}
-                styleNav="dropdown-playlist"
-              >
-                <>
-                  {owner === userId && (
-                    <DropdownItem
-                      isButton
-                      icon="bx-edit-alt"
-                      text="Edit"
-                      action={handlePlayListEdit}
-                    />
-                  )}
-                  {owner === userId && (
-                    <DropdownItem
-                      isButton
-                      icon="bx-trash"
-                      text="Remove"
-                      action={handleConfirmDeletePlayList}
-                    />
-                  )}
-                  <FollowButton followedBy={followedBy} playListId={_id} text />
-                  <DropdownItem
-                    isButton
-                    icon="bx-list-plus"
-                    text="Add to queue"
-                    action={handlePlayPlayList}
-                  />
-                </>
-              </Dropdown>
-            )}
-            <button type="button" onClick={handleDropdown}>
-              <i className="bx bx-dots-vertical-rounded text-2xl" />
-            </button>
-          </div>
+
+          <button type="button" onClick={handleMenuOption}>
+            <i className="bx bx-dots-vertical-rounded text-2xl" />
+          </button>
         </div>
 
         <div className="pr-20 info-container truncate hidden">
@@ -146,6 +114,38 @@ export const PlayListCard = ({ playListId }) => {
           </dl>
         </div>
       </div>
+
+      <ModalMenuOptions isOpen={menuOptionOpen} handleClose={handleMenuOption}>
+        <>
+          {owner === userId && (
+            <ModalMenuOptionsItem
+              isButton
+              icon="bx-edit-alt"
+              text="Edit"
+              action={handlePlayListEdit}
+              handleClose={handleMenuOption}
+            />
+          )}
+          {owner === userId && (
+            <ModalMenuOptionsItem
+              isButton
+              icon="bx-trash"
+              text="Remove"
+              action={handleConfirmDeletePlayList}
+              handleClose={handleMenuOption}
+            />
+          )}
+          <FollowButton followedBy={followedBy} playListId={_id} text />
+          <ModalMenuOptionsItem
+            isButton
+            icon="bx-list-plus"
+            text="Add to queue"
+            action={handlePlayPlayList}
+            handleClose={handleMenuOption}
+          />
+        </>
+      </ModalMenuOptions>
+
       <ModalLayout isOpen={isEditPlayList} handleClose={handlePlayListEdit}>
         <PlayListForm
           handleSubmit={handleSubmitEditForm}
@@ -156,6 +156,7 @@ export const PlayListCard = ({ playListId }) => {
           handleClose={handlePlayListEdit}
         />
       </ModalLayout>
+
       <ModalLayout
         isOpen={isDeletePlayList}
         handleClose={handleConfirmDeletePlayList}
