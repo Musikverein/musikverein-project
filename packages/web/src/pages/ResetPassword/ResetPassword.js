@@ -91,7 +91,7 @@ export const ResetPassword = () => {
               )}
               <button
                 type="submit"
-                className="btn w-full button-secundary rounded-4 mt-4 mb-0"
+                className="btn w-full button-secondary rounded-4 mt-4 mb-0"
                 disabled={isSendingPasswordReset || passwordResetSent}
               >
                 {buttonText(isSendingPasswordReset, passwordResetSent)}

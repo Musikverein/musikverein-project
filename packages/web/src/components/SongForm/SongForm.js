@@ -111,14 +111,14 @@ export const SongForm = ({
           </span>
           <button
             type="submit"
-            className="rounded-4 w-full mb-4 btn button-secundary "
+            className="rounded-4 w-full mb-4 btn button-secondary "
             disabled={isLoading}
           >
             Submit
           </button>
           <button
             type="button"
-            className="rounded-4 w-full mb-4 btn button-secundary"
+            className="rounded-4 w-full mb-4 btn button-secondary"
             onClick={handleCancel}
             disabled={isLoading}
           >

@@ -112,7 +112,7 @@ export const Song = () => {
         <div className="song-interation">
           <button
             type="button"
-            className="btn button-secundary m-0 mr-4"
+            className="btn button-secondary m-0 mr-4"
             onClick={handlePlaySong}
           >
             Play

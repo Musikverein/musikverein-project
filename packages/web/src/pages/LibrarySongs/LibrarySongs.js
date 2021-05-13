@@ -2,7 +2,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { librarySongSelector } from '../../redux/librarySongs/librarySong-selectors';
-import { play } from '../../redux/player/player-actions';
 import {
   getUserSongs,
   setCurrentPath,
@@ -10,20 +9,15 @@ import {
 
 import Header from '../../components/Header';
 import LibraryNav from '../../components/LibraryNav';
-import SongCard from '../../components/SongCard';
-import Spinner from '../../components/Spinner';
 import * as LibrarySongTypes from '../../redux/librarySongs/librarySong-types';
 import { LibrarySelect } from '../../components/LibrarySelect/LibrarySelect';
+import SongList from '../../components/SongList';
 
 export const LibrarySongs = () => {
   const dispatch = useDispatch();
   const { isGettingSong, userSongs, currentPath } = useSelector(
     librarySongSelector,
   );
-
-  const handlePlaySong = ({ songId }) => {
-    dispatch(play(songId));
-  };
 
   const handleSelect = ({ target }) => {
     dispatch(setCurrentPath(target.value));
@@ -50,19 +44,7 @@ export const LibrarySongs = () => {
           handleSelect={handleSelect}
         />
         <section className="library-space p-1">
-          {isGettingSong ? (
-            <Spinner />
-          ) : (
-            userSongs.length > 0 &&
-            userSongs.map((songId) => (
-              <SongCard
-                key={songId}
-                songId={songId}
-                handlePlay={() => handlePlaySong({ songId })}
-                playListId=""
-              />
-            ))
-          )}
+          <SongList loading={isGettingSong} songs={userSongs} />
         </section>
       </main>
     </>

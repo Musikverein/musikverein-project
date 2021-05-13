@@ -115,7 +115,7 @@ export const PlayListForm = ({
 
             <button
               type="submit"
-              className="btn w-full button-secundary rounded-4"
+              className="btn w-full button-secondary rounded-4"
             >
               Submit
             </button>

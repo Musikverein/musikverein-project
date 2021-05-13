@@ -9,10 +9,10 @@
   border: 1px solid $color-bg-terciary;
   &:hover,
   &:active {
-    border: 1px solid $color-principal;
+    border: 1px solid $color-main;
   }
   &::placeholder {
-    color: $color-bg-secundary;
+    color: $color-bg-secondary;
   }
 }
 .icon_edit {
@@ -20,7 +20,7 @@
   background-color: $color-bg-main;
   padding-top: calc(50% - 9px);
 
-  border: 1px solid $color-principal;
+  border: 1px solid $color-main;
   width: 30px;
   height: 30px;
   text-align: center;
