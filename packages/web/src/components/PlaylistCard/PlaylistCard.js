@@ -31,9 +31,8 @@ export const PlayListCard = ({ playListId }) => {
   const { currentUser } = useSelector(authSelector);
   const { _id: userId } = useSelector(selectUserByIdState(currentUser)) || {};
 
-  const { title, followedBy, owner, type, _id, isPublic, image } = playLists[
-    playListId
-  ];
+  const { title, followedBy, owner, type, _id, isPublic, image } =
+    playLists[playListId] || {};
 
   const handlePlayPlayList = () => {
     dispatch(getPlayListAndPlay({ playListId }));
@@ -64,20 +63,21 @@ export const PlayListCard = ({ playListId }) => {
       <div className="m-2 flex flex-col card-playlist">
         <button
           type="button"
-          className="image-container card-playlist-cover relative"
+          className="image-container card-playlist-cover"
           onClick={handlePlayPlayList}
         >
-          <div className="flex items-center justify-center absolute card-playlist-cover-play">
+          <div className="flex items-center justify-center absolute card-playlist-cover img-play">
             <i className="bx bx-play text-4xl" />
           </div>
           <img src={image} alt="" className="rounded-4 h-full object-cover" />
         </button>
+
         <div className="flex justify-between items-center">
           <Link
             to={`${ROUTES.PLAYLIST_WITHOUT_PARAM}${playListId}`}
             className="truncate"
           >
-            <h2 className="text-l font-semibold text-light p-2">{title}</h2>
+            <h3 className="text-title-h3">{title}</h3>
           </Link>
 
           <button type="button" onClick={handleMenuOption}>

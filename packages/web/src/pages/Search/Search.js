@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { searchSelector } from '../../redux/search/search-selectors';
@@ -15,6 +15,7 @@ import SongList from '../../components/SongList';
 
 export const Search = () => {
   const dispatch = useDispatch();
+  const [isSearch, setIsSearch] = useState(false);
   const { formValues, handleInputChange, resetForm } = useForm({
     search: '',
   });
@@ -31,6 +32,7 @@ export const Search = () => {
   useEffect(() => {
     return () => {
       dispatch(resetSearch());
+      setIsSearch(false);
     };
   }, [dispatch]);
 
@@ -40,13 +42,17 @@ export const Search = () => {
     dispatch(searchPlayLists(search));
     dispatch(searchUsers(search));
     resetForm();
+    setIsSearch(true);
   };
 
   return (
     <>
       <Header />
-      <section className="main-container px-4">
-        <form onSubmit={handleSearch} className="py-4 flex items-center">
+      <div className="main-container px-4">
+        <form
+          onSubmit={handleSearch}
+          className="py-4 flex items-center max-w-lg justify-center"
+        >
           <input
             value={search}
             name="search"
@@ -59,23 +65,28 @@ export const Search = () => {
             className="bx bx-search text-gray-200 text-4xl pl-4"
           />
         </form>
-        <section>
-          <h1 className="text-white text-semibold text-lg pb-4">
-            Result of Playlists:{' '}
-          </h1>
-          <div className="flex">
-            <PlayListList loading={isSearchingPlayList} playlists={playlists} />
-          </div>
-        </section>
-        <h1 className="text-white text-semibold text-lg pb-4">
-          Result of Songs:{' '}
-        </h1>
-        <SongList loading={isSearchingSong} songs={songs} />
-        <h1 className="text-white text-semibold text-lg pb-4">
-          Result of Users:{' '}
-        </h1>
-        <UserList loading={isSearchingUser} users={users} />
-      </section>
+        {isSearch && (
+          <>
+            <section>
+              <h2 className="text-title-h2">Result of Playlists: </h2>
+              <div className="flex">
+                <PlayListList
+                  loading={isSearchingPlayList}
+                  playlists={playlists}
+                />
+              </div>
+            </section>
+            <section>
+              <h2 className="text-title-h2">Result of Songs: </h2>
+              <SongList loading={isSearchingSong} songs={songs} />
+            </section>
+            <section>
+              <h2 className="text-title-h2">Result of Users: </h2>
+              <UserList loading={isSearchingUser} users={users} />
+            </section>
+          </>
+        )}
+      </div>
     </>
   );
 };

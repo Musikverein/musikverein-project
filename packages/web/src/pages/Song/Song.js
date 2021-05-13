@@ -119,15 +119,13 @@ export const Song = () => {
           </button>
           <LikeButton songId={songId} likedBy={likedBy} text={false} />
         </div>
-        <div className="flex flex-col mt-4 mb-2 items-center song-info">
+        <div className="flex flex-col m-4 items-center song-info">
           <img src={image} alt="cover-song" className="song-info-img" />
-          <h2 className="text-lg font-semibold text-light pt-4 pt-2">
-            {title}
-          </h2>
+          <h2 className="text-title-h2 my-4 px-4">{title}</h2>
           <div className="flex justify-center text-sm text-gray-200">
-            <div className="px-2">
-              <span className="pr-4">{artist}</span>
-              <span className="pr-4">{genres[genre].genre}</span>
+            <div className="px-2 text-dd">
+              <span className="pr-4 ">{artist}</span>
+              <span className="pr-4 ">{genres[genre].genre}</span>
               <span>{secondsToString(duration)}</span>
             </div>
           </div>

@@ -79,17 +79,18 @@ export const Player = () => {
   };
 
   return (
-    <section className="w-full flex flex-col items-center bg-black fixed bottom-0 pt-2 z-10 player">
+    <section className="container-player container-player-main player">
       <div className="w-full justify-center bg-black flex items-center">
         <div className="w-full flex text-l items-center justify-around px-2">
           <Link
             to={`${ROUTES.SONG_WITHOUT_PARAM}${_id}`}
-            className="flex flex-col text-left"
+            className="flex items-center text-left"
           >
             <h2 className="text-l font-semibold text-light whitespace-nowrap truncate">
-              {title} -
+              {title}
+              <span className="px-2">-</span>
+              <span className="text-dd">{artist}</span>
             </h2>
-            <h3 className="text-m font-normal text-light">{artist}</h3>
           </Link>
           <LikeButton likedBy={likedBy} songId={_id} text={false} />
         </div>

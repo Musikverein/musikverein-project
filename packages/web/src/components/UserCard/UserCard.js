@@ -15,9 +15,9 @@ export const UserCard = ({ userId }) => {
   const { image, userName, _id } = state;
 
   return (
-    <section className="flex items-center text-white w-full">
+    <section className="flex items-center text-white w-full py-4">
       <img
-        className="w-12 h-12 rounded-full border-2 border-mk-magenta object-cover"
+        className="w-12 h-12 rounded-full images-shadow object-cover"
         alt="profile"
         src={image}
       />

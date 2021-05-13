@@ -94,14 +94,14 @@ export const User = () => {
     <>
       <Header />
       <section className="main-container px-4">
-        <div className="py-4">
+        <div className="pt-4">
           <img
-            className="w-32 h-32 rounded-full mx-auto border-2 border-mk-magenta object-cover"
+            className="w-32 h-32 rounded-full mx-auto object-cover"
             src={image}
             alt="profile"
           />
           <div className="user-info">
-            <h2 className="text-l font-semibold text-light">{userName}</h2>
+            <h3 className="text-title-h2 pb-4">{userName}</h3>
             {userId === currentUser ? (
               <button
                 type="button"
@@ -122,7 +122,7 @@ export const User = () => {
             <div className="flex text-gray-200">
               <button
                 type="button"
-                className="mr-4 hover:underline"
+                className="mr-4 hover:underline text-text"
                 onClick={handleFollowed}
                 disabled={followedBy?.length === 0}
               >
@@ -130,7 +130,7 @@ export const User = () => {
               </button>
               <button
                 type="button"
-                className="hover:underline"
+                className="hover:underline text-text"
                 onClick={handleFollowing}
                 disabled={following?.length === 0}
               >
@@ -139,19 +139,15 @@ export const User = () => {
             </div>
           </div>
         </div>
-        <div className="user-playlists pt-4">
-          <h2 className="text-2xl font-bold pb-2">
-            {userName}&#39;s Playlist:
-          </h2>
-          <div className="container-playlist-loader">
-            <PlayListList
-              loading={isGettingUserViewPlayLists}
-              playlists={userPlayLists}
-            />
-          </div>
+        <h2 className="text-title-h2">{userName}&#39;s Playlist:</h2>
+        <div className="flex ">
+          <PlayListList
+            loading={isGettingUserViewPlayLists}
+            playlists={userPlayLists}
+          />
         </div>
         <div className="user-songs pt-6">
-          <h2 className="text-2xl font-bold">{userName}&#39;s Songs:</h2>
+          <h2 className="text-title-h2">{userName}&#39;s Songs:</h2>
           <div className="user-songs-song">
             <SongList loading={isGettingUserViewSongs} songs={userSongs} />
           </div>

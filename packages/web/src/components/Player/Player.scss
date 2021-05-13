@@ -1,4 +1,25 @@
 @import '../../styles/utils.scss';
+
+.container-player {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background-color: black;
+  flex-direction: column;
+  padding: 0 10px;
+  &-main {
+    position: fixed;
+    bottom: 0;
+    padding-top: 0.5rem;
+    z-index: 10;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    // @media (max-with: 750px) {
+    // }
+  }
+}
+// Custom player library
 .rhap_volume-container {
   display: none;
   @media (min-width: 600px) {
@@ -11,7 +32,6 @@
   top: -3px;
   margin-left: -6px;
 }
-
 .rhap_progress-filled {
   &:hover {
     background-color: $color-main;
@@ -28,12 +48,11 @@
 .rhap_button-clear,
 .rhap_main-controls-button,
 .rhap_play-pause-button {
-  color: $color-bg-details;
+  color: $color-details;
   &:hover {
     color: white;
   }
 }
-
 .rhap_play-pause-button {
   &:hover {
     filter: drop-shadow(rgba(0, 0, 0, 0.3) 0px 0px 1px)

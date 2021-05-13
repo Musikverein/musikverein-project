@@ -1,0 +1,45 @@
+@import '../../styles/utils.scss';
+
+.text {
+  &-title {
+    line-height: 2rem;
+    padding-bottom: 0.5rem;
+    &-h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+    &-h2 {
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    &-h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      padding: 1px 0.5rem;
+      font-size: 0.9rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    &-h4 {
+      width: 100%;
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.125rem;
+      font-size: 0.9rem;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+  }
+  &-text {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: $color-details;
+  }
+  &-dd {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: $color-details;
+  }
+}

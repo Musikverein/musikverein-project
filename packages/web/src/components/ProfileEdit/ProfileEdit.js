@@ -79,7 +79,7 @@ export const ProfileEdit = ({ handleClose }) => {
               id="userName"
               name="userName"
               arial-label="Insert your user name"
-              className="input__edit"
+              className="form__input"
               value={userName}
               onChange={handleInputChange}
               placeholder="Insert your user name"
@@ -92,7 +92,7 @@ export const ProfileEdit = ({ handleClose }) => {
               id="firstName"
               name="firstName"
               arial-label="Insert your first name"
-              className="input__edit"
+              className="form__input"
               value={firstName}
               onChange={handleInputChange}
               placeholder="Insert your first name"
@@ -105,7 +105,7 @@ export const ProfileEdit = ({ handleClose }) => {
               id="lastName"
               name="lastName"
               arial-label="Insert your last name"
-              className="input__edit"
+              className="form__input"
               value={lastName}
               onChange={handleInputChange}
               placeholder="Insert your last name"

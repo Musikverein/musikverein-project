@@ -150,9 +150,9 @@ export const PlayList = () => {
             </HeaderGoBack>
             <div className="flex flex-col mb-2 items-center playlist">
               <img src={image} alt="playlist" className="playlist-img" />
-              <h2 className="text-lg font-semibold text-light pt-4 pt-2">
+              <h3 className="text-lg font-semibold text-light pt-4 pt-2">
                 {title}
-              </h2>
+              </h3>
               <div className="flex justify-center text-sm text-gray-200">
                 <p className="px-2">
                   {type} of

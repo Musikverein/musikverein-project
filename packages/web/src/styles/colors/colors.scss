@@ -1,18 +1,15 @@
 .bg__primary {
-  background-color: $color-bg-main;
+  background-color: $color-black;
 }
 .bg__secondary {
-  background-color: #be255d;
+  background-color: $color-main;
 }
 .bg__terciary {
-  background-color: $color-bg-terciary;
+  background-color: $color-terciary;
 }
-.color__primary {
+.color__main {
   color: $color-main;
 }
-.color__secondary {
-  color: #be255d;
-}
-.border-mk-main {
+.border-main {
   border-color: $color-main;
 }

@@ -3,6 +3,7 @@
 @import './colors/colors.scss';
 @import './inputs/inputs.scss';
 @import './images/images.scss';
+@import './texts/texts.scss';
 
 .App__container-public {
   background: #232526; /* fallback for old browsers */
@@ -16,7 +17,7 @@
   justify-content: center;
 
   .card {
-    background-color: $color-bg-secondary;
+    background-color: $color-secondary;
     border-radius: 4px;
   }
 
@@ -49,7 +50,9 @@
   }
   .container {
     &-playlist-loader {
-      display: inline-flex;
+      display: flex;
+      flex-flow: row nowrap;
+      overflow-x: hidden;
     }
   }
   .header {
@@ -72,7 +75,7 @@
   .player {
     grid-area: Player;
   }
-  
+
   @media (min-width: 750px) {
     overflow-y: hidden;
     grid-template-areas:
@@ -93,6 +96,6 @@
   }
 }
 
-.progress-bar{
+.progress-bar {
   background: $color-main !important;
 }
