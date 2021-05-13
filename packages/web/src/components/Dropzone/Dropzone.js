@@ -18,7 +18,7 @@ export const Dropzone = ({ onFileSelected }) => {
           {...getRootProps({ className: 'dropzone' })}
           className="dropzone_container"
         >
-          <input {...getInputProps()} />
+          <input {...getInputProps()} id="dropzoneInput" />
           <p className="text-center">
             Drag n drop some files here, or click to select files
           </p>
