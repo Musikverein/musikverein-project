@@ -105,7 +105,7 @@ If you want to contribute, please fork the repository, create a new branch whit 
 
 - You can find more information of how the app works in the [TDR](./documentation/TDR.md) file.
 - You can also check the full [Memory](./documentation/Memory.pdf) on PDF.
-- You can also check the custom [hooks](./packages/web/src/hooks/documentation.md) file.
+- You can also check the custom [hooks](./packages/web/src/hooks/documentation.md) documentation file.
 
 ## Contributors ✨
 
