@@ -14,10 +14,7 @@ import SongForm from '../SongForm';
 import LikeButton from '../LikeButton';
 import ModalLayout from '../ModalLayout';
 import ConfirmText from '../ConfirmText';
-import Dropdown from '../Dropdown';
 
-import './SongCard.scss';
-import DropdownItem from '../DropdownItem';
 import AddToPlayList from '../AddToPlayList';
 import { removeSongFromPlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
 import { secondsToString } from '../../utils/utils';
@@ -26,6 +23,10 @@ import { selectUserByIdState } from '../../redux/user/user-selectors';
 
 import ROUTES from '../../routers/routes';
 import { genreSelector } from '../../redux/genre/genre-selectors';
+import ModalMenuOptions from '../ModalMenuOptions';
+import ModalMenuOptionsItem from '../ModalMenuOptionsItem';
+
+import './SongCard.scss';
 
 export const SongCard = ({
   songId,
@@ -35,7 +36,7 @@ export const SongCard = ({
 }) => {
   const song = useSelector(selectSongByIdState(songId));
   const dispatch = useDispatch();
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [menuOptionOpen, setMenuOptionOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
   const [isDeleteSong, setIsDeleteSong] = useState(false);
   const [isAddSongToPlayList, setIsAddSongToPlayList] = useState(false);
@@ -72,8 +73,8 @@ export const SongCard = ({
     setIsAddSongToPlayList(!isAddSongToPlayList);
   };
 
-  const handleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+  const handleMenuOption = () => {
+    setMenuOptionOpen(!menuOptionOpen);
   };
 
   const handleRemoveFromPlayListModal = () => {
@@ -98,6 +99,7 @@ export const SongCard = ({
             className="w-12 h-12 rounded-4 object-cover"
           />
         </button>
+
         <div className="pr-8 info-container truncate flex flex-col">
           <Link to={`${ROUTES.SONG_WITHOUT_PARAM}${songId}`}>
             <h2 className="text-m font-semibold text-light mb-0.5 truncate w-full">
@@ -117,68 +119,73 @@ export const SongCard = ({
             </div>
           </div>
         </div>
+
         <div className="info-hidden pr-1">
           <dt className="sr-only">Duration</dt>
           <dd>{secondsToString(duration)}</dd>
         </div>
-        <div className="relative">
-          {dropdownOpen && (
-            <Dropdown handleClose={handleDropdown} styleNav="dropdown-song">
-              <>
-                {owner === userId && (
-                  <DropdownItem
-                    isButton
-                    icon="bx-edit-alt"
-                    text="Edit"
-                    action={handleSongEdit}
-                  />
-                )}
-                {owner === userId && (
-                  <DropdownItem
-                    isButton
-                    icon="bx-trash"
-                    text="Remove"
-                    action={handleConfirmDeleteSong}
-                  />
-                )}
-                <LikeButton likedBy={likedBy} songId={_id} text />
-                {handleRemoveSongFromQueue ? (
-                  <DropdownItem
-                    isButton
-                    icon="bx-list-plus"
-                    text="Remove to queue"
-                    action={handleRemoveSongFromQueue}
-                  />
-                ) : (
-                  <DropdownItem
-                    isButton
-                    icon="bx-list-plus"
-                    text="Add to queue"
-                    action={handleaddToQueue}
-                  />
-                )}
-                <DropdownItem
-                  isButton
-                  icon="bx-list-plus"
-                  text="Add to playlist"
-                  action={handleAddToPlayListModal}
-                />
-                {owner === userId && playListId && (
-                  <DropdownItem
-                    isButton
-                    icon="bx-list-minus"
-                    text="Remove from playlist"
-                    action={handleRemoveFromPlayListModal}
-                  />
-                )}
-              </>
-            </Dropdown>
-          )}
-          <button type="button" onClick={handleDropdown}>
-            <i className="bx bx-dots-vertical-rounded text-2xl" />
-          </button>
-        </div>
+
+        <button type="button" onClick={handleMenuOption}>
+          <i className="bx bx-dots-vertical-rounded text-2xl" />
+        </button>
       </div>
+      <ModalMenuOptions isOpen={menuOptionOpen} handleClose={handleMenuOption}>
+        <>
+          {owner === userId && (
+            <ModalMenuOptionsItem
+              isButton
+              icon="bx-edit-alt"
+              text="Edit"
+              action={handleSongEdit}
+              handleClose={handleMenuOption}
+            />
+          )}
+          {owner === userId && (
+            <ModalMenuOptionsItem
+              isButton
+              icon="bx-trash"
+              text="Remove"
+              action={handleConfirmDeleteSong}
+              handleClose={handleMenuOption}
+            />
+          )}
+          <LikeButton likedBy={likedBy} songId={_id} text />
+          {handleRemoveSongFromQueue ? (
+            <ModalMenuOptionsItem
+              isButton
+              icon="bx-list-plus"
+              text="Remove to queue"
+              action={handleRemoveSongFromQueue}
+              handleClose={handleMenuOption}
+            />
+          ) : (
+            <ModalMenuOptionsItem
+              isButton
+              icon="bx-list-plus"
+              text="Add to queue"
+              action={handleaddToQueue}
+              handleClose={handleMenuOption}
+            />
+          )}
+          <ModalMenuOptionsItem
+            isButton
+            icon="bx-list-plus"
+            text="Add to playlist"
+            action={handleAddToPlayListModal}
+            handleClose={handleMenuOption}
+          />
+          {owner === userId && playListId && (
+            <ModalMenuOptionsItem
+              isButton
+              icon="bx-list-minus"
+              text="Remove from playlist"
+              action={handleRemoveFromPlayListModal}
+              handleClose={handleMenuOption}
+            />
+          )}
+        </>
+      </ModalMenuOptions>
+
       <ModalLayout isOpen={isEditSong} handleClose={handleSongEdit}>
         <SongForm
           songTitle={title}
@@ -190,6 +197,7 @@ export const SongCard = ({
           isLoading={false}
         />
       </ModalLayout>
+
       <ModalLayout isOpen={isDeleteSong} handleClose={handleConfirmDeleteSong}>
         <ConfirmText
           handleRemove={handleRemoveSong}
@@ -197,6 +205,7 @@ export const SongCard = ({
           title={title}
         />
       </ModalLayout>
+
       <ModalLayout
         isOpen={isAddSongToPlayList}
         handleClose={handleAddToPlayListModal}
