@@ -50,3 +50,15 @@ Inside each one you can find the configuration files, and a src folder with all 
 ### ✏️ Tasks and Organization ✏️
 
 You can vist the [GitHub Kanban](https://github.com/Musikverein/musikverein-project/projects/1) to see all the completed issues, pull request, commits and merges.
+
+### 👀 More information 👀
+
+For more information you can visit our project [memory](../documentation/Memory.pdf)
+
+
+## Whit ❤ Musikverein Team !!
+
+- [Jose Serralvo](https://github.com/joserra-15)
+- [Ramón Soler](https://github.com/rshernan)
+- [Raúl Cátedra](https://github.com/RaulCatedra3003)
+- [Verónica Velázquez](https://github.com/vvelazquezc)
