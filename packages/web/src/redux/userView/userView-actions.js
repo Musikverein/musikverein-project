@@ -255,13 +255,7 @@ export const followUser = ({ userId }) => {
   };
 };
 
-export const updateProfile = ({
-  userName,
-  firstName,
-  lastName,
-  file,
-  recaptchaToken,
-}) => {
+export const updateProfile = ({ userName, firstName, lastName, file }) => {
   return async function updateProfileThunk(dispatch) {
     const token = await auth.getCurrentUserToken();
 
@@ -285,7 +279,7 @@ export const updateProfile = ({
         {
           Authorization: `Bearer ${token}`,
         },
-        { userName, firstName, lastName, image, recaptchaToken },
+        { userName, firstName, lastName, image },
       );
       if (errorMessage || response.error) {
         toast.error('🔥 Something went wrong!');

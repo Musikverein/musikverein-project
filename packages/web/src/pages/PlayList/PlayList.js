@@ -28,6 +28,9 @@ import { selectUserByIdState } from '../../redux/user/user-selectors';
 import { HeaderGoBack } from '../../components/HeaderGoBack/HeaderGoBack';
 import { AddSongSearch } from '../../components/AddSongSearch/AddSongSearch';
 import Header from '../../components/Header';
+import ModalMenuOptions from '../../components/ModalMenuOptions';
+import ModalMenuOptionsItem from '../../components/ModalMenuOptionsItem';
+import { FollowButton } from '../../components/FollowButton/FollowButton';
 
 export const PlayList = () => {
   const { playListId } = useParams();
@@ -37,6 +40,7 @@ export const PlayList = () => {
   const [isEditPlayList, setIsEditPlayList] = useState(false);
   const [isDeletePlayList, setIsDeletePlayList] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
+  const [menuOptionOpen, setMenuOptionOpen] = useState(false);
 
   const { isGettingPlayList } = useSelector(userPlayListSelector);
   const state = useSelector(selectPlayListByIdState(playListId));
@@ -83,6 +87,10 @@ export const PlayList = () => {
     dispatch(followPlayList(playListId));
   };
 
+  const handleMenuOption = () => {
+    setMenuOptionOpen(!menuOptionOpen);
+  };
+
   const handleSearch = () => {
     setIsSearching(!isSearching);
   };
@@ -114,49 +122,23 @@ export const PlayList = () => {
                   <button
                     type="button"
                     className="pl-4 "
-                    onClick={handleDropdown}
+                    onClick={handleMenuOption}
                   >
                     <i className="bx bx-dots-vertical-rounded text-2xl" />
                   </button>
-                )}
-                {dropdownOpen && (
-                  <Dropdown
-                    handleClose={handleDropdown}
-                    styleNav="dropdown-playlist"
-                  >
-                    <>
-                      <DropdownItem
-                        isButton
-                        icon="bx-edit-alt"
-                        text="Edit Playlist"
-                        action={handlePlayListEdit}
-                      />
-                      <DropdownItem
-                        isButton
-                        icon="bx-trash"
-                        text="Remove Playlist"
-                        action={handleConfirmDeletePlayList}
-                      />
-                      <DropdownItem
-                        isButton
-                        icon="bx-list-plus"
-                        text="Add new songs"
-                        action={handleSearch}
-                      />
-                    </>
-                  </Dropdown>
                 )}
               </>
             </HeaderGoBack>
             <div className="flex flex-col mb-2 items-center playlist">
               <img src={image} alt="playlist" className="playlist-img" />
-              <h2 className="text-lg font-semibold text-light pt-4 pt-2">
-                {title}
-              </h2>
-              <div className="flex justify-center text-sm text-gray-200">
+              <h2 className="text-title-h2 pt-4 pt-2">{title}</h2>
+              <div className="flex justify-center text-dd mt-2">
                 <p className="px-2">
                   {type} of
-                  <Link to={`${ROUTES.USER_WITHOUT_PARAM}${owner}`}>
+                  <Link
+                    to={`${ROUTES.USER_WITHOUT_PARAM}${owner}`}
+                    className="hover:underline"
+                  >
                     {' '}
                     {userName}{' '}
                   </Link>
@@ -242,6 +224,39 @@ export const PlayList = () => {
                 playListId={playListId}
               />
             </ModalLayout>
+
+            <ModalMenuOptions
+              isOpen={menuOptionOpen}
+              handleClose={handleMenuOption}
+            >
+              <>
+                {owner === userId && (
+                  <ModalMenuOptionsItem
+                    isButton
+                    icon="bx-edit-alt"
+                    text="Edit Playlist"
+                    action={handlePlayListEdit}
+                    handleClose={handleMenuOption}
+                  />
+                )}
+                {owner === userId && (
+                  <ModalMenuOptionsItem
+                    isButton
+                    icon="bx-trash"
+                    text="Remove Playlist"
+                    action={handleConfirmDeletePlayList}
+                    handleClose={handleMenuOption}
+                  />
+                )}
+                <ModalMenuOptionsItem
+                  isButton
+                  icon="bx-list-plus"
+                  text="Add new songs"
+                  action={handleSearch}
+                  handleClose={handleMenuOption}
+                />
+              </>
+            </ModalMenuOptions>
           </>
         )}
       </main>

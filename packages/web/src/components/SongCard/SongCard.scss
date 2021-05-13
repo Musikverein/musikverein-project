@@ -1,4 +1,4 @@
-@import '../../styles/utils.scss';
+@import '../../styles/utils/utils.scss';
 
 .time {
   all: unset;
@@ -12,7 +12,7 @@
   align-items: center;
   &:hover {
     border-radius: 4px;
-    background-color: $color-bg-terciary;
+    background-color: $color-terciary;
     filter: drop-shadow(rgba(0, 0, 0, 0.3) 0px 0px 1px)
       drop-shadow(rgba(0, 0, 0, 0.3) 0px 0px 10px);
   }

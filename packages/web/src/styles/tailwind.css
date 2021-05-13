@@ -6,9 +6,6 @@
   .header {
     @apply flex justify-between items-center w-full;
   }
-  .profile_button {
-    @apply w-10 h-10 rounded-full;
-  }
   .App__container {
     @apply min-h-screen text-white;
   }
@@ -19,27 +16,10 @@
     @apply p-4;
   }
 
-  .form-label {
-    @apply text-gray-100 mb-2 block;
-  }
-
-  .form-select {
-    @apply block w-full shadow-sm mb-4 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
-  }
-
-  .form-radio {
-    @apply shadow-sm mb-4 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
-  }
-
   .btn {
     @apply mb-4 px-4 py-2;
   }
 
-  .form-checkbox {
-    /* enabled checked config in extend */
-    /* https://tailwindcss.com/docs/hover-focus-and-other-states#checked */
-    @apply w-6 h-6 mr-2 shadow-sm mb-4 focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50;
-  }
   .card {
     @apply overflow-hidden p-8;
   }

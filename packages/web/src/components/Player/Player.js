@@ -79,7 +79,7 @@ export const Player = () => {
   };
 
   return (
-    <section className="w-full flex flex-col items-center bg-black fixed bottom-0 pt-2 z-10 player">
+    <section className="container-player container-player-main player">
       <div className="w-full justify-center bg-black flex items-center">
         <div className="w-full flex text-l items-center justify-around px-2">
           <Link
@@ -87,9 +87,10 @@ export const Player = () => {
             className="flex flex-col text-left"
           >
             <h2 className="text-l font-semibold text-light whitespace-nowrap truncate">
-              {title} -
+              {title}
+              <span className="px-2">-</span>
+              <span className="text-dd">{artist}</span>
             </h2>
-            <h3 className="text-m font-normal text-light">{artist}</h3>
           </Link>
           <LikeButton likedBy={likedBy} songId={_id} text={false} />
         </div>
@@ -132,13 +133,13 @@ export const Player = () => {
       </div>
       <ModalLayout isOpen={isModalOpen} handleClose={handleModalPlayList}>
         <div className="w-full h-full px-4 text-white pt-12">
-          <h2 className="py-4 text-2xl">Queue</h2>
+          <h1 className="text-title-h1 py-4">Queue</h1>
           <div className="pb-4">
-            <h3>Now playing:</h3>
+            <h4 className="text-title-h4">Now playing:</h4>
             <SongCard songId={playingNow} handlePlay={() => {}} playListId="" />
           </div>
           <div>
-            <h3>Playlist:</h3>
+            <h4 className="text-title-h4">Playlist:</h4>
             <div>
               <div className="playlist-songs">
                 <DragDropContext onDragEnd={handleOnDragEnd}>

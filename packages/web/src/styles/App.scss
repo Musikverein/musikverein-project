@@ -1,8 +1,9 @@
-@import './utils.scss';
+@import './utils/utils.scss';
 @import './buttons/button.scss';
 @import './colors/colors.scss';
 @import './inputs/inputs.scss';
 @import './images/images.scss';
+@import './text/text.scss';
 
 .App__container-public {
   background: #232526; /* fallback for old browsers */
@@ -16,7 +17,7 @@
   justify-content: center;
 
   .card {
-    background-color: $color-bg-secondary;
+    background-color: $color-secondary;
     border-radius: 4px;
   }
 
@@ -49,7 +50,8 @@
   }
   .container {
     &-playlist-loader {
-      display: inline-flex;
+      display: flex;
+      overflow-x: auto;
     }
   }
   .header {
@@ -72,7 +74,7 @@
   .player {
     grid-area: Player;
   }
-  
+
   @media (min-width: 750px) {
     overflow-y: hidden;
     grid-template-areas:
@@ -93,6 +95,6 @@
   }
 }
 
-.progress-bar{
+.progress-bar {
   background: $color-main !important;
 }

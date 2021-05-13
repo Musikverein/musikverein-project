@@ -96,12 +96,12 @@ export const User = () => {
       <section className="main-container px-4">
         <div className="py-4">
           <img
-            className="w-32 h-32 rounded-full mx-auto border-2 border-mk-magenta object-cover"
+            className="w-32 h-32 rounded-full mx-auto object-cover images-shadow"
             src={image}
             alt="profile"
           />
           <div className="user-info">
-            <h2 className="text-l font-semibold text-light">{userName}</h2>
+            <h2 className="text-title-h2 pb-4">{userName}</h2>
             {userId === currentUser ? (
               <button
                 type="button"
@@ -122,7 +122,7 @@ export const User = () => {
             <div className="flex text-gray-200">
               <button
                 type="button"
-                className="mr-4 hover:underline"
+                className="mr-4 hover:underline text-text"
                 onClick={handleFollowed}
                 disabled={followedBy?.length === 0}
               >
@@ -130,7 +130,7 @@ export const User = () => {
               </button>
               <button
                 type="button"
-                className="hover:underline"
+                className="hover:underline text-text"
                 onClick={handleFollowing}
                 disabled={following?.length === 0}
               >
@@ -147,6 +147,7 @@ export const User = () => {
             <PlayListList
               loading={isGettingUserViewPlayLists}
               playlists={userPlayLists}
+              count={2}
             />
           </div>
         </div>
@@ -156,15 +157,32 @@ export const User = () => {
             <SongList loading={isGettingUserViewSongs} songs={userSongs} />
           </div>
         </div>
-        <ModalLayout isOpen={isModalFollowedOpen} handleClose={handleFollowed}>
-          <UserList loading={isGettingUserViewFollowed} users={followedBy} />
-        </ModalLayout>
+        {isModalFollowedOpen && (
+          <section className="w-full h-3/4 flex flex-col items-center px-4">
+            <h2 className="text-title-h2">The followed:</h2>
+            <ModalLayout
+              isOpen={isModalFollowedOpen}
+              handleClose={handleFollowed}
+            >
+              <UserList
+                loading={isGettingUserViewFollowed}
+                users={followedBy}
+              />
+            </ModalLayout>
+          </section>
+        )}
         {isModalFollowingOpen && (
           <ModalLayout
             isOpen={isModalFollowingOpen}
             handleClose={handleFollowing}
           >
-            <UserList loading={isGettingUserViewFollowing} users={following} />
+            <section className="w-full h-3/4 flex flex-col items-center px-4">
+              <h2 className="text-title-h2">The followings:</h2>
+              <UserList
+                loading={isGettingUserViewFollowing}
+                users={following}
+              />
+            </section>
           </ModalLayout>
         )}
         {currentUser === userId && (

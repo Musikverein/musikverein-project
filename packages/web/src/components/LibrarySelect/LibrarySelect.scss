@@ -1,4 +1,4 @@
-@import '../../styles/utils.scss';
+@import '../../styles/utils/utils.scss';
 
 .library-select {
   width: 100%;
@@ -6,7 +6,7 @@
   top: 120px;
   position: fixed;
   z-index: 1;
-  background-color: $color-bg-secondary;
+  background-color: $color-secondary;
   display: flex;
   place-items: center stretch;
   border-bottom: 1px solid rgba(54, 54, 54, 0.1);

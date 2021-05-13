@@ -4,7 +4,6 @@ const {
   authMiddleware,
   validateUpdateUser,
   validateCreateUser,
-  recaptchaMiddleware,
   findIdMiddleware,
 } = require('../middlewares');
 const { userController } = require('../controllers');
@@ -16,12 +15,7 @@ userRouter.use(authMiddleware);
 userRouter.post('/sign-up', validateCreateUser, userController.signUp);
 userRouter.post('/sign-out', userController.signOut);
 
-userRouter.patch(
-  '/update',
-  recaptchaMiddleware,
-  validateUpdateUser,
-  userController.update,
-);
+userRouter.patch('/update', validateUpdateUser, userController.update);
 userRouter.patch('/follow', findIdMiddleware, userController.followUser);
 
 userRouter.get('/followedBy/:userId', userController.getUserFollowedPopulate);

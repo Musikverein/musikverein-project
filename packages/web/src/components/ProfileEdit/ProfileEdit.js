@@ -1,5 +1,4 @@
-import React, { useEffect, useRef } from 'react';
-import ReCAPTCHA from 'react-google-recaptcha';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -31,7 +30,6 @@ export const ProfileEdit = ({ handleClose }) => {
   const { stateImg, handleImageChange, handleImage, refId } = useImgPreview(
     'imageProfile',
   );
-  const reRef = useRef();
 
   const { urlPreview, file } = stateImg;
   const { firstName, lastName, userName } = formValues;
@@ -48,11 +46,7 @@ export const ProfileEdit = ({ handleClose }) => {
     e.preventDefault();
 
     if (isValid(validationSchema.userProfile)) {
-      const recaptchaToken = await reRef.current.executeAsync();
-      reRef.current.reset();
-      dispatch(
-        updateProfile({ userName, firstName, lastName, file, recaptchaToken }),
-      );
+      dispatch(updateProfile({ userName, firstName, lastName, file }));
     }
   };
 
@@ -79,7 +73,7 @@ export const ProfileEdit = ({ handleClose }) => {
               id="userName"
               name="userName"
               arial-label="Insert your user name"
-              className="input__edit"
+              className="form__input"
               value={userName}
               onChange={handleInputChange}
               placeholder="Insert your user name"
@@ -92,7 +86,7 @@ export const ProfileEdit = ({ handleClose }) => {
               id="firstName"
               name="firstName"
               arial-label="Insert your first name"
-              className="input__edit"
+              className="form__input"
               value={firstName}
               onChange={handleInputChange}
               placeholder="Insert your first name"
@@ -105,7 +99,7 @@ export const ProfileEdit = ({ handleClose }) => {
               id="lastName"
               name="lastName"
               arial-label="Insert your last name"
-              className="input__edit"
+              className="form__input"
               value={lastName}
               onChange={handleInputChange}
               placeholder="Insert your last name"
@@ -124,11 +118,6 @@ export const ProfileEdit = ({ handleClose }) => {
           </form>
         )}
       </div>
-      <ReCAPTCHA
-        sitekey={process.env.REACT_APP_RECAPTCHA_WEB_KEY}
-        size="invisible"
-        ref={reRef}
-      />
     </>
   );
 };

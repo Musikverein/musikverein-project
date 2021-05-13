@@ -28,8 +28,8 @@ export const ImgEdit = ({
         src={urlPreview || defaultImg}
         className={
           rounded
-            ? 'w-32 h-32 border-2 border-mk-main object-cover rounded-full'
-            : 'w-32 h-32 border-2 border-mk-main object-cover rounded-4'
+            ? 'w-32 h-32 object-cover rounded-full'
+            : 'w-32 h-32 object-cover rounded-4'
         }
         alt="profile"
       />
