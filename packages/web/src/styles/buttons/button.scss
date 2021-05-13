@@ -5,16 +5,16 @@
   border-radius: 4px;
 
   &-primary {
-    border: 1px solid $color-bg-secundary;
-    background-color: $color-principal;
+    border: 1px solid $color-bg-secondary;
+    background-color: $color-main;
     &:hover,
     :focus,
     :active {
-      border: 1px solid $color-principal;
+      border: 1px solid $color-main;
     }
   }
-  &-secundary {
-    border: 1px solid $color-bg-secundary;
+  &-secondary {
+    border: 1px solid $color-bg-secondary;
     background-color: $color-bg-main;
     color: white;
 

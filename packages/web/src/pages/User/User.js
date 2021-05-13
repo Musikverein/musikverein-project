@@ -105,7 +105,7 @@ export const User = () => {
             {userId === currentUser ? (
               <button
                 type="button"
-                className="rounded-4 button-secundary btn"
+                className="rounded-4 button-secondary btn"
                 onClick={handleModalEdit}
               >
                 Edit your profile

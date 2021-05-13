@@ -115,7 +115,7 @@ export const ProfileEdit = ({ handleClose }) => {
 
             <button
               type="submit"
-              className="btn w-full rounded-4 button-secundary"
+              className="btn w-full rounded-4 button-secondary"
               disabled={isUpdating}
             >
               Update profile

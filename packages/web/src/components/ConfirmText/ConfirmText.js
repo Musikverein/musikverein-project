@@ -10,14 +10,14 @@ export const ConfirmText = ({ handleRemove, onCancel, title }) => {
       </h3>
       <div className="flex">
         <button
-          className="text-white button-secundary mx-4 px-4"
+          className="text-white button-secondary mx-4 px-4"
           type="button"
           onClick={handleRemove}
         >
           Yes
         </button>
         <button
-          className="text-white button-secundary mx-4 px-4"
+          className="text-white button-secondary mx-4 px-4"
           type="button"
           onClick={onCancel}
         >

@@ -1,6 +1,9 @@
 @import './utils.scss';
 @import './buttons/button.scss';
+@import './colors/colors.scss';
 @import './inputs/inputs.scss';
+@import './images/images.scss';
+@import './texts/texts.scss';
 
 .App__container-public {
   background: #232526; /* fallback for old browsers */
@@ -35,6 +38,10 @@
 
   .main-container {
     grid-area: mainContainer;
+    height: 100%;
+    width: 100%;
+    overflow-y: auto;
+    padding-bottom: 120px;
   }
   .container {
     &-playlist-loader {
@@ -44,7 +51,7 @@
   .header {
     grid-area: Header;
   }
-  .headerGoBack {
+  .header-goback {
     position: fixed;
     width: 100%;
     align-items: center;
@@ -61,6 +68,11 @@
   .player {
     grid-area: Player;
   }
+  .card {
+    background-color: $color-bg-secondary;
+    border-radius: 4px;
+  }
+
   @media (min-width: 750px) {
     overflow-y: hidden;
     grid-template-areas:
@@ -79,52 +91,4 @@
       display: flex;
     }
   }
-}
-
-.main-container {
-  height: 100%;
-  width: 100%;
-  overflow-y: auto;
-  padding-bottom: 120px;
-}
-
-.rounded-4 {
-  border-radius: 4px;
-}
-
-.img-play {
-  opacity: 0;
-  transition: opacity 0.2s linear;
-
-  &:hover {
-    opacity: 1;
-    background-color: rgba(41, 41, 41, 0.357);
-  }
-}
-
-.images-shadow {
-  filter: drop-shadow(rgba(0, 0, 0, 0.3) 0px 0px 1px)
-    drop-shadow(rgba(0, 0, 0, 0.3) 0px 0px 10px);
-}
-.card {
-  background-color: $color-bg-secundary;
-  border-radius: 4px;
-}
-.bg__primary {
-  background-color: $color-bg-main;
-}
-.bg__secundary {
-  background-color: #be255d;
-}
-.bg__terciary {
-  background-color: $color-bg-terciary;
-}
-.color__primary {
-  color: $color-principal;
-}
-.color__secundary {
-  color: #be255d;
-}
-.border-mk-magenta {
-  border-color: $color-principal;
 }

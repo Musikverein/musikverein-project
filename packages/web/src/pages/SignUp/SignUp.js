@@ -108,7 +108,7 @@ export const SignUp = () => {
                   <div className="m-2" />
                 )}
                 <button
-                  className="btn w-full button-secundary rounded-4 mt-4 mb-0"
+                  className="btn w-full button-secondary rounded-4 mt-4 mb-0"
                   type="submit"
                   disabled={isSigningUp}
                 >
@@ -118,7 +118,7 @@ export const SignUp = () => {
               <section className="mt-4 text-center">
                 <p>Sign up with:</p>
                 <button
-                  className="btn mt-4 rounded-4 bg__secundary bx bxl-google"
+                  className="btn mt-4 rounded-4 bg__secondary bx bxl-google"
                   type="button"
                   onClick={handleLoginWithGoogle}
                   disabled={isSigningUp}
