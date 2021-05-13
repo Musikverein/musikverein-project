@@ -35,8 +35,8 @@ export const getTrendSongs = () => {
       const { errorMessage, data: response } = await api.getTrendSongs({
         Authorization: `Bearer ${token}`,
       });
-      if (errorMessage) {
-        return dispatch(getTrendSongsError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getTrendSongsError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizeSongs(response.data);
@@ -74,8 +74,8 @@ export const getTrendPlayLists = () => {
       const { errorMessage, data: response } = await api.getTrendPlayLists({
         Authorization: `Bearer ${token}`,
       });
-      if (errorMessage) {
-        return dispatch(getTrendPlayListsError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getTrendPlayListsError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizePlayLists(response.data);
@@ -113,8 +113,8 @@ export const getTrendUsers = () => {
       const { errorMessage, data: response } = await api.getTrendUsers({
         Authorization: `Bearer ${token}`,
       });
-      if (errorMessage) {
-        return dispatch(getTrendUsersError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getTrendUsersError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizePlayLists(response.data);
@@ -152,8 +152,8 @@ export const getTrendPlayed = () => {
       const { errorMessage, data: response } = await api.getTrendPlayed({
         Authorization: `Bearer ${token}`,
       });
-      if (errorMessage) {
-        return dispatch(getTrendPlayedError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getTrendPlayedError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizePlayLists(response.data);

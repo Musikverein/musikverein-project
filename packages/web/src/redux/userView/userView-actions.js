@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import api from '../../api';
 import * as auth from '../../services/auth';
 import * as UserViewTypes from './userView-types';
@@ -10,6 +11,7 @@ import {
 import { loadUsers } from '../user/user-actions';
 import { loadSongs } from '../song/song-actions';
 import { loadPlayList } from '../playList/playList-actions';
+import { imageUpload } from '../../services/cloudinary';
 
 export const getUserViewRequest = () => ({
   type: UserViewTypes.USER_VIEW_GET_REQUEST,
@@ -36,8 +38,8 @@ export const getUserView = ({ userId }) => {
         { Authorization: `Bearer ${token}` },
         { userId },
       );
-      if (errorMessage) {
-        return dispatch(getUserViewError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getUserViewError(errorMessage || response.error));
       }
       const { entities } = normalizeUsers([response.data]);
       dispatch(loadUsers(entities.users));
@@ -74,8 +76,8 @@ export const getUserViewSongs = ({ userId }) => {
         { Authorization: `Bearer ${token}` },
         { userId },
       );
-      if (errorMessage) {
-        return dispatch(getUserViewSongsError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getUserViewSongsError(errorMessage || response.error));
       }
       const { entities, result } = normalizeSongs(response.data);
       dispatch(loadSongs(entities.songs));
@@ -112,8 +114,10 @@ export const getUserViewPlayLists = ({ userId }) => {
         { Authorization: `Bearer ${token}` },
         { userId },
       );
-      if (errorMessage) {
-        return dispatch(getUserViewPlayListsError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(
+          getUserViewPlayListsError(errorMessage || response.error),
+        );
       }
       const { entities, result } = normalizePlayLists(response.data);
       dispatch(loadPlayList(entities.playLists));
@@ -149,8 +153,10 @@ export const getUserViewFollowed = ({ userId }) => {
         { Authorization: `Bearer ${token}` },
         { userId },
       );
-      if (errorMessage) {
-        return dispatch(getUserViewFollowedError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(
+          getUserViewFollowedError(errorMessage || response.error),
+        );
       }
       const { entities, result } = normalizeUsers(response.data.followedBy);
       dispatch(loadUsers(entities.users));
@@ -191,8 +197,10 @@ export const getUserViewFollowing = ({ userId }) => {
         { Authorization: `Bearer ${token}` },
         { userId },
       );
-      if (errorMessage) {
-        return dispatch(getUserViewFollowingError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(
+          getUserViewFollowingError(errorMessage || response.error),
+        );
       }
       const { entities, result } = normalizeUsers(response.data.following);
       dispatch(loadUsers(entities.users));
@@ -233,8 +241,9 @@ export const followUser = ({ userId }) => {
         { Authorization: `Bearer ${token}` },
         { userId },
       );
-      if (errorMessage) {
-        return dispatch(followUserError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(followUserError(errorMessage || response.error));
       }
       const { entities } = normalizeUsers([response.data]);
       dispatch(loadUsers(entities.users));
@@ -244,3 +253,67 @@ export const followUser = ({ userId }) => {
     }
   };
 };
+
+export const updateProfile = ({
+  userName,
+  firstName,
+  lastName,
+  file,
+  recaptchaToken,
+}) => {
+  return async function updateProfileThunk(dispatch) {
+    const token = await auth.getCurrentUserToken();
+
+    if (!token) {
+      return dispatch(signOutSuccess());
+    }
+
+    dispatch(updateProfileRequest());
+    try {
+      let image = null;
+
+      if (file) {
+        const fileUrl = await imageUpload(
+          file,
+          process.env.REACT_APP_CLOUDINARY_PRESET_PROFILE_IMG,
+        );
+        image = fileUrl;
+      }
+
+      const { errorMessage, data: response } = await api.updateProfile(
+        {
+          Authorization: `Bearer ${token}`,
+        },
+        { userName, firstName, lastName, image, recaptchaToken },
+      );
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(updateProfileError(errorMessage || response.error));
+      }
+      const { entities } = normalizeUsers([response.data]);
+      dispatch(loadUsers(entities.users));
+
+      toast.dark('✌ Update Correctly!');
+      return dispatch(updateProfileSuccess());
+    } catch (error) {
+      return dispatch(updateProfileError(error.message));
+    }
+  };
+};
+
+export const updateProfileRequest = () => ({
+  type: UserViewTypes.USER_VIEW_EDIT_REQUEST,
+});
+
+export const updateProfileError = (errorMessage) => ({
+  type: UserViewTypes.USER_VIEW_EDIT_ERROR,
+  payload: errorMessage,
+});
+
+export const updateProfileSuccess = () => ({
+  type: UserViewTypes.USER_VIEW_EDIT_SUCCESS,
+});
+
+export const resetUpdate = () => ({
+  type: UserViewTypes.USER_VIEW_EDIT_RESET,
+});

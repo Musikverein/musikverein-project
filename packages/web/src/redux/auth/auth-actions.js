@@ -1,7 +1,7 @@
+import { toast } from 'react-toastify';
 import * as AuthTypes from './auth-types';
 import api from '../../api';
 import * as auth from '../../services/auth';
-import { imageUpload } from '../../services/cloudinary';
 import { normalizeUsers } from '../../utils/normalizrSchema/schema';
 import { loadUsers } from '../user/user-actions';
 
@@ -82,8 +82,8 @@ export function syncSignIn() {
         Authorization: `Bearer ${token}`,
       });
 
-      if (errorMessage) {
-        return dispatch(signUpError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(signUpError(errorMessage || response.error));
       }
       const { entities, result } = normalizeUsers([response.data]);
       dispatch(loadUsers(entities.users));
@@ -151,6 +151,7 @@ export function sendPasswordResetEmail(email, recaptchaToken) {
         if (firebaseRespone.error) {
           dispatch(sendPasswordResetEmailError(firebaseRespone.error.message));
         } else {
+          toast.success('👌 Email sent!');
           dispatch(sendPasswordResetEmailSuccess());
         }
       } else {
@@ -177,67 +178,4 @@ export const sendPasswordResetEmailSuccess = () => ({
 
 export const resetAuthState = () => ({
   type: AuthTypes.RESET_AUTH_STATE,
-});
-
-export const updateProfile = ({
-  userName,
-  firstName,
-  lastName,
-  file,
-  recaptchaToken,
-}) => {
-  return async function updateProfileThunk(dispatch) {
-    const token = await auth.getCurrentUserToken();
-
-    if (!token) {
-      return dispatch(signOutSuccess());
-    }
-
-    dispatch(updateProfileRequest());
-    try {
-      let image = null;
-
-      if (file) {
-        const fileUrl = await imageUpload(
-          file,
-          process.env.REACT_APP_CLOUDINARY_PRESET_PROFILE_IMG,
-        );
-        image = fileUrl;
-      }
-
-      const { errorMessage, data: response } = await api.updateProfile(
-        {
-          Authorization: `Bearer ${token}`,
-        },
-        { userName, firstName, lastName, image, recaptchaToken },
-      );
-      if (errorMessage) {
-        return dispatch(updateProfileError(errorMessage));
-      }
-      const { entities, result } = normalizeUsers([response.data]);
-      dispatch(loadUsers(entities.users));
-
-      return dispatch(updateProfileSuccess(result[0]));
-    } catch (error) {
-      return dispatch(updateProfileError(error.message));
-    }
-  };
-};
-
-export const updateProfileRequest = () => ({
-  type: AuthTypes.UPDATE_PROFILE_REQUEST,
-});
-
-export const updateProfileError = (errorMessage) => ({
-  type: AuthTypes.UPDATE_PROFILE_ERROR,
-  payload: errorMessage,
-});
-
-export const updateProfileSuccess = (user) => ({
-  type: AuthTypes.UPDATE_PROFILE_SUCCESS,
-  payload: user,
-});
-
-export const resetUpdate = () => ({
-  type: AuthTypes.RESET_UPDATE_PROFILE,
 });

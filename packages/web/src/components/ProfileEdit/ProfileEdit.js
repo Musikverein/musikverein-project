@@ -3,7 +3,10 @@ import ReCAPTCHA from 'react-google-recaptcha';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { resetUpdate, updateProfile } from '../../redux/auth/auth-actions';
+import {
+  resetUpdate,
+  updateProfile,
+} from '../../redux/userView/userView-actions';
 import { authSelector } from '../../redux/auth/auth-selectors';
 
 import { useImgPreview } from '../../hooks/useImgPreview';
@@ -13,13 +16,11 @@ import { validationSchema } from '../../utils/validation/validationSchema';
 import ImgEdit from '../ImgEdit';
 import Spinner from '../Spinner';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
+import { userViewSelector } from '../../redux/userView/userView-selectors';
 
 export const ProfileEdit = ({ handleClose }) => {
-  const {
-    currentUser: currentUserId,
-    isUpdating,
-    updatedSuccess,
-  } = useSelector(authSelector);
+  const { currentUser: currentUserId } = useSelector(authSelector);
+  const { isUpdating, updatedSuccess } = useSelector(userViewSelector) || {};
   const currentUser = useSelector(selectUserByIdState(currentUserId)) || {};
   const dispatch = useDispatch();
   const { formValues, handleInputChange, errors, isValid } = useForm({

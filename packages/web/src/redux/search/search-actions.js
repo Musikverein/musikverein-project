@@ -42,8 +42,8 @@ export const searchSongs = (value) => {
         },
         { value },
       );
-      if (errorMessage) {
-        return dispatch(searchSongsError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(searchSongsError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizeSongs(response.data);
@@ -84,8 +84,8 @@ export const searchPlayLists = (value) => {
         },
         { value },
       );
-      if (errorMessage) {
-        return dispatch(searchPlayListsError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(searchPlayListsError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizePlayLists(response.data);
@@ -126,8 +126,8 @@ export const searchUsers = (value) => {
         },
         { value },
       );
-      if (errorMessage) {
-        return dispatch(searchUsersError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(searchUsersError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizeUsers(response.data);
