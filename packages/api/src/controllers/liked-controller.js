@@ -110,7 +110,6 @@ async function removeLike(songId) {
           findresponse.data._id,
           songId,
         );
-        console.log(updatedResponse.data);
 
         if (updatedResponse.error) {
           return {

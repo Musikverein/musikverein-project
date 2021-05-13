@@ -32,6 +32,7 @@ export const SongCard = ({
   songId,
   handlePlay,
   playListId,
+  ownerPlayList,
   handleRemoveSongFromQueue,
 }) => {
   const song = useSelector(selectSongByIdState(songId));
@@ -172,7 +173,7 @@ export const SongCard = ({
             action={handleAddToPlayListModal}
             handleClose={handleMenuOption}
           />
-          {owner === userId && playListId && (
+          {userId === ownerPlayList && playListId && (
             <ModalMenuOptionsItem
               isButton
               icon="bx-list-minus"
@@ -217,11 +218,13 @@ export const SongCard = ({
 SongCard.defaultProps = {
   handleRemoveSongFromQueue: false,
   playListId: '',
+  ownerPlayList: '',
 };
 SongCard.propTypes = {
   songId: PropTypes.string.isRequired,
   handlePlay: PropTypes.func.isRequired,
   playListId: PropTypes.string,
+  ownerPlayList: PropTypes.string,
   handleRemoveSongFromQueue: PropTypes.oneOfType([
     PropTypes.func,
     PropTypes.bool,

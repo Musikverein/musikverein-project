@@ -1,16 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import Dropdown from '../../components/Dropdown';
-import DropdownItem from '../../components/DropdownItem';
+import { Link, useHistory, useParams } from 'react-router-dom';
+import AddToPlayList from '../../components/AddToPlayList';
+import ConfirmText from '../../components/ConfirmText';
 import Header from '../../components/Header';
 import { HeaderGoBack } from '../../components/HeaderGoBack/HeaderGoBack';
 import LikeButton from '../../components/LikeButton';
+import ModalLayout from '../../components/ModalLayout';
+import ModalMenuOptions from '../../components/ModalMenuOptions';
+import ModalMenuOptionsItem from '../../components/ModalMenuOptionsItem';
+import SongForm from '../../components/SongForm';
 import Spinner from '../../components/Spinner';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import { genreSelector } from '../../redux/genre/genre-selectors';
-import { getSong } from '../../redux/librarySongs/librarySong-actions';
+import {
+  deleteSong,
+  editUserSong,
+  getSong,
+} from '../../redux/librarySongs/librarySong-actions';
 import { addToQueue, play } from '../../redux/player/player-actions';
+import { playerSelector } from '../../redux/player/player-selectors';
 import { selectSongByIdState } from '../../redux/song/song-selectors';
 import { selectUserByIdState } from '../../redux/user/user-selectors';
 import ROUTES from '../../routers/routes';
@@ -21,11 +30,13 @@ import './Song.scss';
 export const Song = () => {
   const { songId } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
   const { currentUser } = useSelector(authSelector);
+  const { playingNow } = useSelector(playerSelector) || {};
   const state = useSelector(selectSongByIdState(songId));
   const { userName } = useSelector(selectUserByIdState(state?.owner)) || {};
   const { genres } = useSelector(genreSelector);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [menuOptionOpen, setMenuOptionOpen] = useState(false);
   const [isEditSong, setIsEditSong] = useState(false);
   const [isDeleteSong, setIsDeleteSong] = useState(false);
   const [isAddSongToPlayList, setIsAddSongToPlayList] = useState(false);
@@ -47,8 +58,8 @@ export const Song = () => {
   const handlePlaySong = () => {
     dispatch(play(songId));
   };
-  const handleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
+  const handleMenuOption = () => {
+    setMenuOptionOpen(!menuOptionOpen);
   };
   const handleConfirmDeleteSong = () => {
     setIsDeleteSong(!isDeleteSong);
@@ -62,61 +73,35 @@ export const Song = () => {
   const handleAddToPlayListModal = () => {
     setIsAddSongToPlayList(!isAddSongToPlayList);
   };
+  const handleRemoveSong = () => {
+    dispatch(deleteSong(songId));
+    history.goBack();
+  };
+
+  const handleSubmitEditForm = (formValues) => {
+    dispatch(editUserSong({ ...formValues, songId: songId }));
+    setIsEditSong(false);
+  };
 
   return (
     <>
       <Header isHidden />
       <section className="main-container">
         <HeaderGoBack>
-          <div className="relative">
-            {dropdownOpen && (
-              <Dropdown handleClose={handleDropdown} styleNav="dropdown-song">
-                <>
-                  {owner === currentUser && (
-                    <DropdownItem
-                      isButton
-                      icon="bx-edit-alt"
-                      text="Edit"
-                      action={handleSongEdit}
-                    />
-                  )}
-                  {owner === currentUser && (
-                    <DropdownItem
-                      isButton
-                      icon="bx-trash"
-                      text="Remove"
-                      action={handleConfirmDeleteSong}
-                    />
-                  )}
-                  <LikeButton likedBy={likedBy} songId={songId} text={false} />
-                  <DropdownItem
-                    isButton
-                    icon="bx-list-plus"
-                    text="Add to queue"
-                    action={handleaddToQueue}
-                  />
-                  <DropdownItem
-                    isButton
-                    icon="bx-list-plus"
-                    text="Add to playlist"
-                    action={handleAddToPlayListModal}
-                  />
-                </>
-              </Dropdown>
-            )}
-            <button type="button" onClick={handleDropdown}>
-              <i className="bx bx-dots-vertical-rounded text-2xl pl-4" />
-            </button>
-          </div>
+          <button type="button" onClick={handleMenuOption}>
+            <i className="bx bx-dots-vertical-rounded text-2xl pl-4" />
+          </button>
         </HeaderGoBack>
         <div className="song-interation">
-          <button
-            type="button"
-            className="btn button-secondary m-0 mr-4"
-            onClick={handlePlaySong}
-          >
-            Play
-          </button>
+          {playingNow !== songId && (
+            <button
+              type="button"
+              className="btn button-secondary m-0 mr-4"
+              onClick={handlePlaySong}
+            >
+              Play
+            </button>
+          )}
           <LikeButton songId={songId} likedBy={likedBy} text={false} />
         </div>
         <div className="flex flex-col mt-4 mb-2 items-center song-info">
@@ -139,6 +124,76 @@ export const Song = () => {
             </Link>
           </div>
         </div>
+
+        <ModalMenuOptions
+          isOpen={menuOptionOpen}
+          handleClose={handleMenuOption}
+        >
+          <>
+            {owner === currentUser && (
+              <ModalMenuOptionsItem
+                isButton
+                icon="bx-edit-alt"
+                text="Edit"
+                action={handleSongEdit}
+                handleClose={handleMenuOption}
+              />
+            )}
+            {owner === currentUser && (
+              <ModalMenuOptionsItem
+                isButton
+                icon="bx-trash"
+                text="Remove"
+                action={handleConfirmDeleteSong}
+                handleClose={handleMenuOption}
+              />
+            )}
+            <LikeButton likedBy={likedBy} songId={songId} text />
+            <ModalMenuOptionsItem
+              isButton
+              icon="bx-list-plus"
+              text="Add to queue"
+              action={handleaddToQueue}
+              handleClose={handleMenuOption}
+            />
+            <ModalMenuOptionsItem
+              isButton
+              icon="bx-list-plus"
+              text="Add to playlist"
+              action={handleAddToPlayListModal}
+              handleClose={handleMenuOption}
+            />
+          </>
+        </ModalMenuOptions>
+        <ModalLayout isOpen={isEditSong} handleClose={handleSongEdit}>
+          <SongForm
+            songTitle={title}
+            songArtist={artist}
+            songGenre={genre}
+            defaultImg={image}
+            handleSubmit={handleSubmitEditForm}
+            handleCancel={handleSongEdit}
+            isLoading={false}
+          />
+        </ModalLayout>
+
+        <ModalLayout
+          isOpen={isDeleteSong}
+          handleClose={handleConfirmDeleteSong}
+        >
+          <ConfirmText
+            handleRemove={handleRemoveSong}
+            onCancel={handleConfirmDeleteSong}
+            title={title}
+          />
+        </ModalLayout>
+
+        <ModalLayout
+          isOpen={isAddSongToPlayList}
+          handleClose={handleAddToPlayListModal}
+        >
+          <AddToPlayList title={title} image={image} songId={songId} />
+        </ModalLayout>
       </section>
     </>
   );

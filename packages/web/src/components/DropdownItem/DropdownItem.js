@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 export const DropdownItem = ({ isButton, icon, text, action }) => {
   return isButton ? (
@@ -9,10 +9,14 @@ export const DropdownItem = ({ isButton, icon, text, action }) => {
       <span className="pl-4">{text}</span>
     </button>
   ) : (
-    <Link to={action} className="flex items-center">
+    <NavLink
+      to={action}
+      className="flex items-center"
+      activeClassName="text-white"
+    >
       <i className={`bx ${icon} text-xl`} />
       <span className="pl-4">{text}</span>
-    </Link>
+    </NavLink>
   );
 };
 

@@ -15,8 +15,6 @@ import { selectPlayListByIdState } from '../../redux/playList/playList-selectors
 import { userPlayListSelector } from '../../redux/libraryPlayList/libraryPlayList-selectors';
 import { SongCard } from '../../components/SongCard/SongCard';
 import { authSelector } from '../../redux/auth/auth-selectors';
-import Dropdown from '../../components/Dropdown';
-import DropdownItem from '../../components/DropdownItem';
 import ModalLayout from '../../components/ModalLayout';
 import { PlayListForm } from '../../components/PlayListForm/PlayListForm';
 import ConfirmText from '../../components/ConfirmText';
@@ -30,13 +28,11 @@ import { AddSongSearch } from '../../components/AddSongSearch/AddSongSearch';
 import Header from '../../components/Header';
 import ModalMenuOptions from '../../components/ModalMenuOptions';
 import ModalMenuOptionsItem from '../../components/ModalMenuOptionsItem';
-import { FollowButton } from '../../components/FollowButton/FollowButton';
 
 export const PlayList = () => {
   const { playListId } = useParams();
   const dispatch = useDispatch();
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
   const [isEditPlayList, setIsEditPlayList] = useState(false);
   const [isDeletePlayList, setIsDeletePlayList] = useState(false);
   const [isSearching, setIsSearching] = useState(false);
@@ -64,10 +60,6 @@ export const PlayList = () => {
 
   const handlePlayPlayList = ({ songId = null }) => {
     dispatch(getPlayListAndPlay({ playListId, songId }));
-  };
-
-  const handleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
   };
 
   const handlePlayListEdit = () => {
@@ -183,6 +175,7 @@ export const PlayList = () => {
                                   handlePlayPlayList({ songId: song })
                                 }
                                 playListId={playListId}
+                                ownerPlayList={owner}
                               />
                             </li>
                           )}

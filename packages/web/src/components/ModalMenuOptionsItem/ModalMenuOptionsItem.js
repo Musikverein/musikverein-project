@@ -9,7 +9,7 @@ export const ModalMenuOptionsItem = ({ handleClose, icon, text, action }) => {
   return (
     <button type="button" onClick={handleAction} className="flex items-center">
       <i className={`bx ${icon} text-xl`} />
-      <span className="pl-4">{text}</span>
+      <span className="pl-4 text-left">{text}</span>
     </button>
   );
 };

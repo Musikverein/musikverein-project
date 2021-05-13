@@ -73,6 +73,12 @@ const playReducer = (state = playerInitialState, action) => {
       };
     }
     case PlayerTypes.PLAYER_NEXT: {
+      if (state.queue.length === 0) {
+        return {
+          ...state,
+          playingNow: '',
+        };
+      }
       return {
         ...state,
         queue: [...state.queue.slice(1), state.playingNow],

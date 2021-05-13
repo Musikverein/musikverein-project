@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { playListSelector } from '../../redux/playList/playList-selectors';
+import { selectPlayListByIdState } from '../../redux/playList/playList-selectors';
 import { authSelector } from '../../redux/auth/auth-selectors';
 import {
   deletePlayList,
@@ -23,7 +23,7 @@ import ModalMenuOptions from '../ModalMenuOptions';
 import './PlayListCard.scss';
 
 export const PlayListCard = ({ playListId }) => {
-  const { playLists } = useSelector(playListSelector);
+  const playlist = useSelector(selectPlayListByIdState(playListId));
   const dispatch = useDispatch();
   const [menuOptionOpen, setMenuOptionOpen] = useState(false);
   const [isDeletePlayList, setIsDeletePlayList] = useState(false);
@@ -31,17 +31,18 @@ export const PlayListCard = ({ playListId }) => {
   const { currentUser } = useSelector(authSelector);
   const { _id: userId } = useSelector(selectUserByIdState(currentUser)) || {};
 
-  const { title, followedBy, owner, type, _id, isPublic, image } = playLists[
-    playListId
-  ];
+  const handlePlayListEdit = useCallback(() => {
+    setIsEditPlayList((prevState) => !prevState);
+  }, [setIsEditPlayList]);
+
+  if (!playlist) {
+    return null;
+  }
+  const { title, followedBy, owner, type, _id, isPublic, image } = playlist;
 
   const handlePlayPlayList = () => {
     dispatch(getPlayListAndPlay({ playListId }));
   };
-
-  const handlePlayListEdit = useCallback(() => {
-    setIsEditPlayList((prevState) => !prevState);
-  }, [setIsEditPlayList]);
 
   const handleRemovePlayList = () => {
     dispatch(deletePlayList(_id));

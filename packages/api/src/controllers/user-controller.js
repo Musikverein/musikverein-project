@@ -165,7 +165,6 @@ async function getUserFollowingPopulate(req, res, next) {
 async function followUser(req, res, next) {
   const { _id } = req.user;
   const { userId } = req.body;
-  console.log({ userId }, { _id });
 
   try {
     const responseUserFollowed = await UserRepo.findUser({ _id: userId });
