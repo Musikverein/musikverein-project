@@ -77,6 +77,7 @@ export const createPlayList = ({
       toast.dark('🚀 Create playlist correctly!');
       return dispatch(createPlayListSuccess(result[0]));
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(createPlayListError(error.message));
     }
   };
@@ -166,6 +167,7 @@ export const deletePlayList = (playListId) => {
       toast.dark('👌 Delete correctly!');
       return dispatch(removePlayList(response.data));
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(deletePlayListError(error.message));
     }
   };
@@ -218,6 +220,7 @@ export const followPlayList = (playListId) => {
       }
       return dispatch(followPlayListSuccess());
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(followPlayListError(error.message));
     }
   };
@@ -275,6 +278,7 @@ export const editUserPlayList = ({
       toast.dark('✌ Update Correctly!');
       return dispatch(editUserPlayListSuccess());
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(editUserPlayListError(error.message));
     }
   };
@@ -316,6 +320,7 @@ export const addSongToPlayList = ({ songId, playListId }) => {
       toast.dark('✌ Added Correctly!');
       return dispatch(addSongToPlayListSuccess());
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(addSongToPlayListError(error.message));
     }
   };
@@ -416,6 +421,7 @@ export const removeSongFromPlayList = ({ songId, playListId }) => {
       toast.dark('👌 Delete Correctly!');
       return dispatch(removeSongFromPlayListSuccess());
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(removeSongFromPlayListError(error.message));
     }
   };
@@ -458,6 +464,7 @@ export const updateOrderPlayList = ({ songs, playListId }) => {
       dispatch(loadPlayList(entities.playLists));
       return dispatch(updateOrderPlayListSuccess());
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(updateOrderPlayListError(error.message));
     }
   };

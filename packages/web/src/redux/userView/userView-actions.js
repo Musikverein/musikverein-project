@@ -249,6 +249,7 @@ export const followUser = ({ userId }) => {
       dispatch(loadUsers(entities.users));
       return dispatch(followUserSuccess());
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(followUserError(error.message));
     }
   };
@@ -296,6 +297,7 @@ export const updateProfile = ({
       toast.dark('✌ Update Correctly!');
       return dispatch(updateProfileSuccess());
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(updateProfileError(error.message));
     }
   };

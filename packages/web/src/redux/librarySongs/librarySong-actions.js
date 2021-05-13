@@ -108,6 +108,7 @@ export const editUserSong = ({
       toast.dark('✌ Update Correctly!');
       return dispatch(editUserSongSuccess());
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(editUserSongError(error.message));
     }
   };
@@ -178,6 +179,7 @@ export const uploadSong = ({
       toast.dark('🚀 Upload Correctly!');
       return dispatch(uploadSongSuccess());
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(uploadSongError(error.message));
     }
   };
@@ -228,6 +230,7 @@ export const likeSong = (songId) => {
       }
       return dispatch(likeSongSuccess());
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(likeSongError(error.message));
     }
   };
@@ -270,6 +273,7 @@ export const deleteSong = (songId) => {
       toast.dark('👌 Delete Correctly!');
       return dispatch(removeSong(response.data));
     } catch (error) {
+      toast.error('🔥 Something went wrong!');
       return dispatch(deleteSongError(error.message));
     }
   };
