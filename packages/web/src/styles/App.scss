@@ -36,7 +36,11 @@
   .main-container {
     grid-area: mainContainer;
   }
-
+  .container {
+    &-playlist-loader {
+      display: inline-flex;
+    }
+  }
   .header {
     grid-area: Header;
   }

@@ -59,25 +59,22 @@ export const Search = () => {
             className="bx bx-search text-gray-200 text-4xl pl-4"
           />
         </form>
-        <>
+        <section>
           <h1 className="text-white text-semibold text-lg pb-4">
             Result of Playlists:{' '}
           </h1>
-          <PlayListList loading={isSearchingPlayList} playlists={playlists} />
-        </>
-
-        <>
-          <h1 className="text-white text-semibold text-lg pb-4">
-            Result of Songs:{' '}
-          </h1>
-          <SongList loading={isSearchingSong} songs={songs} />
-        </>
-        <>
-          <h1 className="text-white text-semibold text-lg pb-4">
-            Result of Users:{' '}
-          </h1>
-          <UserList loading={isSearchingUser} users={users} />
-        </>
+          <div className="flex">
+            <PlayListList loading={isSearchingPlayList} playlists={playlists} />
+          </div>
+        </section>
+        <h1 className="text-white text-semibold text-lg pb-4">
+          Result of Songs:{' '}
+        </h1>
+        <SongList loading={isSearchingSong} songs={songs} />
+        <h1 className="text-white text-semibold text-lg pb-4">
+          Result of Users:{' '}
+        </h1>
+        <UserList loading={isSearchingUser} users={users} />
       </section>
     </>
   );

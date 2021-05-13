@@ -143,7 +143,7 @@ export const User = () => {
           <h2 className="text-2xl font-bold pb-2">
             {userName}&#39;s Playlist:
           </h2>
-          <div className="user-playlists-playlist">
+          <div className="container-playlist-loader">
             <PlayListList
               loading={isGettingUserViewPlayLists}
               playlists={userPlayLists}

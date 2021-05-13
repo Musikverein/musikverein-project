@@ -51,11 +51,13 @@ export function Home() {
           <h1 className="text-white text-semibold text-lg pb-4">
             Playlists most followed:
           </h1>
-          <PlayListList
-            loading={isGettingTrendPlayLists}
-            playlists={trendPlayLists}
-            count={10}
-          />
+          <div className="container-playlist-loader">
+            <PlayListList
+              loading={isGettingTrendPlayLists}
+              playlists={trendPlayLists}
+              count={10}
+            />
+          </div>
         </section>
 
         <section>
