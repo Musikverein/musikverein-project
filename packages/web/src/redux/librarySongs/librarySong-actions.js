@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import * as auth from '../../services/auth';
 import * as LibrarySongTypes from './librarySong-types';
 import { signOutSuccess } from '../auth/auth-actions';
@@ -41,8 +42,8 @@ export const getUserSongs = (filter) => {
           : await api.getLikedSongs({
               Authorization: `Bearer ${token}`,
             });
-      if (errorMessage) {
-        return dispatch(getUserSongsError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getUserSongsError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizeSongs(response.data);
@@ -98,11 +99,13 @@ export const editUserSong = ({
         },
         { title, artist, genre, image: imgUrl, songId, recaptchaToken },
       );
-      if (errorMessage) {
-        return dispatch(editUserSongError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(editUserSongError(errorMessage || response.error));
       }
       const { entities } = normalizeSongs([response.data]);
       dispatch(loadSongs(entities.songs));
+      toast.dark('✌ Update Correctly!');
       return dispatch(editUserSongSuccess());
     } catch (error) {
       return dispatch(editUserSongError(error.message));
@@ -152,7 +155,7 @@ export const uploadSong = ({
       const songResponse = await songUpload(song);
       const songUrl = songResponse.secure_url;
       const songDuration = songResponse.duration;
-      const { errorMessage } = await api.uploadSong(
+      const { errorMessage, data: response } = await api.uploadSong(
         {
           Authorization: `Bearer ${token}`,
         },
@@ -167,10 +170,12 @@ export const uploadSong = ({
         },
       );
 
-      if (errorMessage) {
-        return dispatch(uploadSongError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(uploadSongError(errorMessage || response.error));
       }
 
+      toast.dark('🚀 Upload Correctly!');
       return dispatch(uploadSongSuccess());
     } catch (error) {
       return dispatch(uploadSongError(error.message));
@@ -210,8 +215,9 @@ export const likeSong = (songId) => {
         },
         { songId },
       );
-      if (errorMessage) {
-        return dispatch(likeSongError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(likeSongError(errorMessage || response.error));
       }
       const { entities, result } = normalizeSongs([response.data]);
 
@@ -255,11 +261,13 @@ export const deleteSong = (songId) => {
         },
         { songId },
       );
-      if (errorMessage) {
-        return dispatch(deleteSongError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(deleteSongError(errorMessage || response.error));
       }
       dispatch(syncSongDelete(response.data));
       dispatch(deleteSongSuccess(response.data));
+      toast.dark('👌 Delete Correctly!');
       return dispatch(removeSong(response.data));
     } catch (error) {
       return dispatch(deleteSongError(error.message));
@@ -295,8 +303,8 @@ export const getSong = ({ songId }) => {
         },
         { songId },
       );
-      if (errorMessage) {
-        return dispatch(getSongError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getSongError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizeUsers([response.data.owner]);

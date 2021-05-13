@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import api from '../../api';
 import * as auth from '../../services/auth';
 import { imageUpload } from '../../services/cloudinary';
@@ -66,12 +67,14 @@ export const createPlayList = ({
         },
       );
 
-      if (errorMessage) {
-        return dispatch(createPlayListError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(createPlayListError(errorMessage || response.error));
       }
 
       const { entities, result } = normalizePlayLists([response.data]);
       dispatch(loadPlayList(entities.playLists));
+      toast.dark('🚀 Create playlist correctly!');
       return dispatch(createPlayListSuccess(result[0]));
     } catch (error) {
       return dispatch(createPlayListError(error.message));
@@ -109,8 +112,8 @@ export const getUserPlayLists = (filter) => {
           : await api.getFollowedPlayLists({
               Authorization: `Bearer ${token}`,
             });
-      if (errorMessage) {
-        return dispatch(getUserPlayListsError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getUserPlayListsError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizePlayLists(response.data);
@@ -155,10 +158,12 @@ export const deletePlayList = (playListId) => {
         },
         { playListId },
       );
-      if (errorMessage) {
-        return dispatch(deletePlayListError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(deletePlayListError(errorMessage || response.error));
       }
       dispatch(deletePlayListSuccess(response.data));
+      toast.dark('👌 Delete correctly!');
       return dispatch(removePlayList(response.data));
     } catch (error) {
       return dispatch(deletePlayListError(error.message));
@@ -198,8 +203,9 @@ export const followPlayList = (playListId) => {
         },
         { playListId },
       );
-      if (errorMessage) {
-        return dispatch(followPlayListError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(followPlayListError(errorMessage || response.error));
       }
       const { entities, result } = normalizePlayLists([response.data]);
 
@@ -260,11 +266,13 @@ export const editUserPlayList = ({
         },
         { title, isPublic, type, playListId, recaptchaToken, image: imgUrl },
       );
-      if (errorMessage) {
-        return dispatch(editUserPlayListError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(editUserPlayListError(errorMessage || response.error));
       }
       const { entities } = normalizePlayLists([response.data]);
       dispatch(loadPlayList(entities.playLists));
+      toast.dark('✌ Update Correctly!');
       return dispatch(editUserPlayListSuccess());
     } catch (error) {
       return dispatch(editUserPlayListError(error.message));
@@ -299,11 +307,13 @@ export const addSongToPlayList = ({ songId, playListId }) => {
         },
         { songId, playListId },
       );
-      if (errorMessage) {
-        return dispatch(addSongToPlayListError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(addSongToPlayListError(errorMessage || response.error));
       }
       const { entities } = normalizePlayLists([response.data]);
       dispatch(loadPlayList(entities.playLists));
+      toast.dark('✌ Added Correctly!');
       return dispatch(addSongToPlayListSuccess());
     } catch (error) {
       return dispatch(addSongToPlayListError(error.message));
@@ -339,8 +349,8 @@ export const getPlayList = (playListId) => {
         },
         { playListId },
       );
-      if (errorMessage) {
-        return dispatch(getPlayListError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getPlayListError(errorMessage || response.error));
       }
 
       const { entities: entitiesSong, result: resultSong } = normalizeSongs(
@@ -395,11 +405,15 @@ export const removeSongFromPlayList = ({ songId, playListId }) => {
         },
         { songId, playListId },
       );
-      if (errorMessage) {
-        return dispatch(removeSongFromPlayListError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(
+          removeSongFromPlayListError(errorMessage || response.error),
+        );
       }
       const { entities } = normalizePlayLists([response.data]);
       dispatch(loadPlayList(entities.playLists));
+      toast.dark('👌 Delete Correctly!');
       return dispatch(removeSongFromPlayListSuccess());
     } catch (error) {
       return dispatch(removeSongFromPlayListError(error.message));
@@ -434,8 +448,11 @@ export const updateOrderPlayList = ({ songs, playListId }) => {
         },
         { songs, playListId },
       );
-      if (errorMessage) {
-        return dispatch(updateOrderPlayListError(errorMessage));
+      if (errorMessage || response.error) {
+        toast.error('🔥 Something went wrong!');
+        return dispatch(
+          updateOrderPlayListError(errorMessage || response.error),
+        );
       }
       const { entities } = normalizePlayLists([response.data]);
       dispatch(loadPlayList(entities.playLists));
@@ -473,8 +490,10 @@ export const getPlayListAndPlay = ({ playListId, songId = null }) => {
         },
         { playListId },
       );
-      if (errorMessage) {
-        return dispatch(getPlayListAndPlayError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(
+          getPlayListAndPlayError(errorMessage || response.error),
+        );
       }
 
       const { entities: entitiesSong, result: resultSong } = normalizeSongs(

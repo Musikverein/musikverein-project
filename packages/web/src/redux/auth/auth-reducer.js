@@ -10,9 +10,6 @@ export const AuthInitialState = {
   passwordResetError: null,
   passwordResetSent: false,
   currentUser: '',
-  isUpdating: false,
-  updatedError: null,
-  updatedSuccess: false,
 };
 
 const AuthReducer = (state = AuthInitialState, action) => {
@@ -99,39 +96,6 @@ const AuthReducer = (state = AuthInitialState, action) => {
         isSendingPasswordReset: false,
         passwordResetError: null,
         passwordResetSent: false,
-      };
-    }
-    case AuthTypes.UPDATE_PROFILE_REQUEST: {
-      return {
-        ...state,
-        isUpdating: true,
-        updatedSuccess: false,
-        updatedError: null,
-      };
-    }
-    case AuthTypes.UPDATE_PROFILE_SUCCESS: {
-      return {
-        ...state,
-        isUpdating: false,
-        updatedSuccess: true,
-        updatedError: null,
-        currentUser: action.payload,
-      };
-    }
-    case AuthTypes.UPDATE_PROFILE_ERROR: {
-      return {
-        ...state,
-        isUpdating: false,
-        updatedSuccess: false,
-        updatedError: action.payload,
-      };
-    }
-    case AuthTypes.RESET_UPDATE_PROFILE: {
-      return {
-        ...state,
-        isUpdating: false,
-        updatedSuccess: false,
-        updatedError: null,
       };
     }
     default: {

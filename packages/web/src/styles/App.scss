@@ -15,6 +15,11 @@
   display: flex;
   justify-content: center;
 
+  .card {
+    background-color: $color-bg-secondary;
+    border-radius: 4px;
+  }
+
   .main-container-public {
     max-width: 1200px;
   }
@@ -67,11 +72,7 @@
   .player {
     grid-area: Player;
   }
-  .card {
-    background-color: $color-bg-secondary;
-    border-radius: 4px;
-  }
-
+  
   @media (min-width: 750px) {
     overflow-y: hidden;
     grid-template-areas:
@@ -90,4 +91,8 @@
       display: flex;
     }
   }
+}
+
+.progress-bar{
+  background: $color-main !important;
 }

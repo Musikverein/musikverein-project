@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 import './styles/App.scss';
+import 'react-toastify/dist/ReactToastify.css';
 
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
@@ -77,6 +79,18 @@ export const App = () => {
           <Redirect to={ROUTES.HOME} />
         </Switch>
       )}
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        progressClassName="progress-bar"
+      />
     </>
   );
 };

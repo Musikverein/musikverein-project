@@ -19,6 +19,9 @@ const userViewInitialState = {
   isFollowingUser: false,
   followUserError: null,
   followUserSuccess: false,
+  isUpdating: false,
+  updatedError: null,
+  updatedSuccess: false,
   userSongs: [],
   userPlayLists: [],
 };
@@ -169,6 +172,38 @@ const UserViewReducer = (state = userViewInitialState, action) => {
         isFollowingUser: false,
         followUserError: null,
         followUserSuccess: true,
+      };
+    }
+    case UserViewTypes.USER_VIEW_EDIT_REQUEST: {
+      return {
+        ...state,
+        isUpdating: true,
+        updatedSuccess: false,
+        updatedError: null,
+      };
+    }
+    case UserViewTypes.USER_VIEW_EDIT_SUCCESS: {
+      return {
+        ...state,
+        isUpdating: false,
+        updatedSuccess: true,
+        updatedError: null,
+      };
+    }
+    case UserViewTypes.USER_VIEW_EDIT_ERROR: {
+      return {
+        ...state,
+        isUpdating: false,
+        updatedSuccess: false,
+        updatedError: action.payload,
+      };
+    }
+    case UserViewTypes.USER_VIEW_EDIT_RESET: {
+      return {
+        ...state,
+        isUpdating: false,
+        updatedSuccess: false,
+        updatedError: null,
       };
     }
     default:

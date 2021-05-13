@@ -29,8 +29,8 @@ export const getGenres = () => {
       const { errorMessage, data: response } = await api.getGenres({
         Authorization: `Bearer ${token}`,
       });
-      if (errorMessage) {
-        return dispatch(getGenresError(errorMessage));
+      if (errorMessage || response.error) {
+        return dispatch(getGenresError(errorMessage || response.error));
       }
 
       const { result, entities } = normalizeGenres(response.data);
