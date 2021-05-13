@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useForm } from '../../hooks/useForm';
 import { searchSelector } from '../../redux/search/search-selectors';
@@ -14,6 +14,7 @@ import { PlayListList } from '../../components/PlayListList/PlayListList';
 import SongList from '../../components/SongList';
 
 export const Search = () => {
+  const [isSearch, setIsSearch] = useState(false);
   const dispatch = useDispatch();
   const { formValues, handleInputChange, resetForm } = useForm({
     search: '',
@@ -31,6 +32,7 @@ export const Search = () => {
   useEffect(() => {
     return () => {
       dispatch(resetSearch());
+      setIsSearch(false);
     };
   }, [dispatch]);
 
@@ -40,6 +42,7 @@ export const Search = () => {
     dispatch(searchPlayLists(search));
     dispatch(searchUsers(search));
     resetForm();
+    setIsSearch(true);
   };
 
   return (
@@ -59,22 +62,34 @@ export const Search = () => {
             className="bx bx-search text-gray-200 text-4xl pl-4"
           />
         </form>
-        <section>
-          <h1 className="text-white text-semibold text-lg pb-4">
-            Result of Playlists:{' '}
-          </h1>
-          <div className="flex">
-            <PlayListList loading={isSearchingPlayList} playlists={playlists} />
-          </div>
-        </section>
-        <h1 className="text-white text-semibold text-lg pb-4">
-          Result of Songs:{' '}
-        </h1>
-        <SongList loading={isSearchingSong} songs={songs} />
-        <h1 className="text-white text-semibold text-lg pb-4">
-          Result of Users:{' '}
-        </h1>
-        <UserList loading={isSearchingUser} users={users} />
+        {isSearch && (
+          <>
+            <section>
+              <h1 className="text-white text-semibold text-lg pb-4">
+                Result of Playlists:{' '}
+              </h1>
+              <div className="container-playlist-loader">
+                <PlayListList
+                  loading={isSearchingPlayList}
+                  playlists={playlists}
+                  count={2}
+                />
+              </div>
+            </section>
+            <section>
+              <h1 className="text-white text-semibold text-lg pb-4">
+                Result of Songs:{' '}
+              </h1>
+              <SongList loading={isSearchingSong} songs={songs} />
+            </section>
+            <section>
+              <h1 className="text-white text-semibold text-lg pb-4">
+                Result of Users:{' '}
+              </h1>
+              <UserList loading={isSearchingUser} users={users} />
+            </section>
+          </>
+        )}
       </section>
     </>
   );

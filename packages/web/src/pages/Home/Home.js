@@ -46,24 +46,20 @@ export function Home() {
   return (
     <>
       <Header />
-      <main className="main-container">
+      <main className="main-container p-4">
         <section>
-          <h1 className="text-white text-semibold text-lg pb-4">
-            Playlists most followed:
-          </h1>
+          <h1 className="text-title-h1">Playlists most followed:</h1>
           <div className="container-playlist-loader">
             <PlayListList
               loading={isGettingTrendPlayLists}
               playlists={trendPlayLists}
-              count={10}
+              count={2}
             />
           </div>
         </section>
 
         <section>
-          <h1 className="text-white text-semibold text-lg pb-4">
-            Songs most liked:
-          </h1>
+          <h1 className="text-title-h1">Songs most liked:</h1>
           <SongList
             loading={isGettingTrendPlayed}
             songs={trendSongs}
@@ -72,9 +68,7 @@ export function Home() {
         </section>
 
         <section>
-          <h1 className="text-white text-semibold text-lg pb-4">
-            Songs most played:
-          </h1>
+          <h1 className="text-title-h1">Songs most played:</h1>
           <SongList
             loading={isGettingTrendSongs}
             songs={trendPlayed}
@@ -83,9 +77,7 @@ export function Home() {
         </section>
 
         <section>
-          <h1 className="text-white text-semibold text-lg pb-4">
-            Users most followed:
-          </h1>
+          <h1 className="text-title-h1">Users most followed:</h1>
           <UserList
             loading={isGettingTrendUsers}
             users={trendUsers}

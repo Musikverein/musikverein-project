@@ -1,4 +1,4 @@
-@import '../../styles/utils.scss';
+@import '../../styles/utils/utils.scss';
 .playlist {
   margin-top: 2rem;
   &-img {
@@ -7,7 +7,7 @@
     object-fit: cover;
   }
   &-button-play {
-    background-color: $color-bg-main;
+    background-color: $color-black;
     width: 36px;
     height: 36px;
     border-radius: 50%;

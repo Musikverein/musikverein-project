@@ -1,28 +1,17 @@
-@import '../../styles/utils.scss';
+@import '../../styles/utils/utils.scss';
 
-.input__edit[type='text'] {
-  font-size: 14px;
-  width: 100%;
-  padding: 10px 15px;
-  display: block;
-  color: black;
-  border: 1px solid $color-bg-terciary;
-  &:hover,
-  &:active {
-    border: 1px solid $color-main;
-  }
-  &::placeholder {
-    color: $color-bg-secondary;
-  }
-}
 .icon_edit {
   color: white;
-  background-color: $color-bg-main;
+  background-color: $color-black;
   padding-top: calc(50% - 9px);
 
-  border: 1px solid $color-main;
+  border: 1px solid $color-secondary;
   width: 30px;
   height: 30px;
   text-align: center;
   border-radius: 50%;
+  &:hover,
+  &:active {
+    border: 1px solid $color-main;
+  }
 }

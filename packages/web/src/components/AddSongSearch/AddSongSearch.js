@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { songSelector } from '../../redux/song/song-selectors';
 import { addSongToPlayList } from '../../redux/libraryPlayList/libraryPlayList-actions';
 
 export const AddSongSearch = ({ playListId }) => {
+  const [isSearch, setIsSearch] = useState(false);
   const dispatch = useDispatch();
   const { formValues, handleInputChange } = useForm({
     search: '',
@@ -22,12 +23,14 @@ export const AddSongSearch = ({ playListId }) => {
   useEffect(() => {
     return () => {
       dispatch(resetSearch());
+      setIsSearch(false);
     };
   }, [dispatch]);
 
   const handleSearch = (e) => {
     e.preventDefault();
     dispatch(searchSongs(search));
+    setIsSearch(true);
   };
   const handleSubmit = (songId) => {
     dispatch(addSongToPlayList({ playListId, songId }));
@@ -50,32 +53,33 @@ export const AddSongSearch = ({ playListId }) => {
           className="bx bx-search text-gray-200 text-4xl pl-4"
         />
       </form>
-
-      <>
-        <h1 className="text-white text-semibold text-lg pb-4">
-          Result of Songs:{' '}
-        </h1>
-        <section>
-          {isSearchingSong ? (
-            <Spinner />
-          ) : (
-            songs.length > 0 &&
-            songs.map((songId) => (
-              <div
-                key={songId}
-                className="flex w-full justify-between p-2 text-white"
-              >
-                <h2>{songsStore[songId]?.title}</h2>
-                <button
-                  type="button"
-                  onClick={() => handleSubmit(songId)}
-                  className="px-4 bx bx-plus"
-                />
-              </div>
-            ))
-          )}
-        </section>
-      </>
+      {isSearch && (
+        <>
+          <h1 className="text-white text-semibold text-lg pb-4">
+            Result of Songs:{' '}
+          </h1>
+          <section>
+            {isSearchingSong ? (
+              <Spinner />
+            ) : (
+              songs.length > 0 &&
+              songs.map((songId) => (
+                <div
+                  key={songId}
+                  className="flex w-full justify-between p-2 text-white"
+                >
+                  <h2>{songsStore[songId]?.title}</h2>
+                  <button
+                    type="button"
+                    onClick={() => handleSubmit(songId)}
+                    className="px-4 bx bx-plus"
+                  />
+                </div>
+              ))
+            )}
+          </section>
+        </>
+      )}
     </>
   );
 };

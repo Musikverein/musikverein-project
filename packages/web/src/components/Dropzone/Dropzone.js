@@ -6,8 +6,9 @@ import './Dropzone.scss';
 
 export const Dropzone = ({ onFileSelected }) => {
   const { getRootProps, getInputProps } = useDropzone({
-    accept: 'audio/*',
+    accept: 'audio/mp3, audio/wav, .mp3, .wav',
     maxFiles: 1,
+    maxSize: 26214400,
     onDropAccepted: onFileSelected,
   });
 

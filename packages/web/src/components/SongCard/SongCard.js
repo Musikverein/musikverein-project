@@ -102,20 +102,18 @@ export const SongCard = ({
 
         <div className="pr-8 info-container truncate flex flex-col">
           <Link to={`${ROUTES.SONG_WITHOUT_PARAM}${songId}`}>
-            <h2 className="text-m font-semibold text-light mb-0.5 truncate w-full">
-              {title}
-            </h2>
+            <h4 className="text-title-h4">{title}</h4>
           </Link>
           <div className="flex w-full mt-0.5 font-normal">
             <dt className="sr-only">Artist</dt>
-            <dd>{artist}</dd>
+            <dd className="text-dd">{artist}</dd>
 
             <div className="info-hidden w-full">
               <dt className="sr-only">Genre</dt>
-              <dd>{genres[genre].genre}</dd>
+              <dd className="text-dd">{genres[genre].genre}</dd>
 
               <dt className="sr-only">Likes</dt>
-              <dd>{likedBy?.length} Likes</dd>
+              <dd className="text-dd">{likedBy?.length} Likes</dd>
             </div>
           </div>
         </div>

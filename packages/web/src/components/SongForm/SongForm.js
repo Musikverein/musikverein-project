@@ -8,6 +8,7 @@ import { useForm } from '../../hooks/useForm';
 import { validationSchema } from '../../utils/validation/validationSchema';
 
 import { ImgEdit } from '../ImgEdit/ImgEdit';
+import './SongForm.scss';
 
 import Spinner from '../Spinner';
 import { genreSelector } from '../../redux/genre/genre-selectors';
@@ -51,7 +52,7 @@ export const SongForm = ({
   };
 
   return (
-    <div className="w-full h-3/4 flex flex-col items-center">
+    <div className="w-full h-auto flex flex-col items-center">
       <ImgEdit
         handleImage={handleImage}
         handleImageChange={handleImageChange}
@@ -66,7 +67,7 @@ export const SongForm = ({
       {isLoading ? (
         <Spinner />
       ) : (
-        <form onSubmit={handlePreSubmit} className="w-full px-4">
+        <form onSubmit={handlePreSubmit} className="w-full form__upload px-4">
           <input
             className="form__input"
             placeholder="Title:"

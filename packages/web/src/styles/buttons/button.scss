@@ -1,11 +1,11 @@
-@import '../utils.scss';
+@import '../utils/utils.scss';
 
 .button {
   padding: 10px 15px;
   border-radius: 4px;
 
   &-primary {
-    border: 1px solid $color-bg-secondary;
+    border: 1px solid $color-secondary;
     background-color: $color-main;
     &:hover,
     :focus,
@@ -14,14 +14,14 @@
     }
   }
   &-secondary {
-    border: 1px solid $color-bg-secondary;
-    background-color: $color-bg-main;
+    border: 1px solid $color-secondary;
+    background-color: $color-black;
     color: white;
 
     &:hover,
     :focus,
     :active {
-      border: 1px solid $color-bg-details;
+      border: 1px solid $color-details;
     }
   }
 }

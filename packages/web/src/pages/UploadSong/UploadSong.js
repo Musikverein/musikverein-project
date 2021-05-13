@@ -71,7 +71,7 @@ export const UploadSong = () => {
       <Header />
       <main className="main-container px-4">
         <div className="h-full w-full flex flex-col justify-center items-center">
-          <h4 className="text-xl py-4">Upload Audio File</h4>
+          <h1 className="text-title-h1 py-4">Upload Audio File</h1>
           {loadSong ? (
             <SongForm
               {...metaSong}
@@ -87,19 +87,18 @@ export const UploadSong = () => {
               }}
             />
           )}
+          <p className="text-text text-center px-4">
+            Uploading a song, you agree to Musikverein&apos;s&nbsp;
+            <br />
+            <Link
+              className="text-sm underline hover:text-gray-200"
+              to={ROUTES.TOS}
+              target="_blank"
+            >
+              Terms and Conditions of Use.
+            </Link>
+          </p>
         </div>
-
-        <p className="text-sm text-gray-400 text-center px-4">
-          Uploading a song, you agree to Musikverein&apos;s&nbsp;
-          <br />
-          <Link
-            className="text-sm underline hover:text-gray-200"
-            to={ROUTES.TOS}
-            target="_blank"
-          >
-            Terms and Conditions of Use.
-          </Link>
-        </p>
       </main>
     </>
   );
