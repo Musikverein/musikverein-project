@@ -158,18 +158,18 @@ export const User = () => {
           </div>
         </div>
         {isModalFollowedOpen && (
-          <section className="w-full h-3/4 flex flex-col items-center px-4">
-            <h2 className="text-title-h2">The followed:</h2>
-            <ModalLayout
-              isOpen={isModalFollowedOpen}
-              handleClose={handleFollowed}
-            >
+          <ModalLayout
+            isOpen={isModalFollowedOpen}
+            handleClose={handleFollowed}
+          >
+            <section className="w-full h-3/4 flex flex-col items-center px-4">
+              <h2 className="text-title-h2">The followed:</h2>
               <UserList
                 loading={isGettingUserViewFollowed}
                 users={followedBy}
               />
-            </ModalLayout>
-          </section>
+            </section>
+          </ModalLayout>
         )}
         {isModalFollowingOpen && (
           <ModalLayout
