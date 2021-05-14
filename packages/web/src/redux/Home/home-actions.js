@@ -5,6 +5,7 @@ import api from '../../api';
 import {
   normalizePlayLists,
   normalizeSongs,
+  normalizeUsers,
 } from '../../utils/normalizrSchema/schema';
 import { loadSongs } from '../song/song-actions';
 import { loadPlayList } from '../playList/playList-actions';
@@ -116,9 +117,7 @@ export const getTrendUsers = () => {
       if (errorMessage || response.error) {
         return dispatch(getTrendUsersError(errorMessage || response.error));
       }
-
-      const { result, entities } = normalizePlayLists(response.data);
-
+      const { result, entities } = normalizeUsers(response.data);
       dispatch(loadUsers(entities.users));
       return dispatch(getTrendUsersSuccess(result));
     } catch (error) {
