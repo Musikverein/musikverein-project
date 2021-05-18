@@ -24,7 +24,7 @@ const SongSchema = Schema(
     image: {
       type: String,
       default:
-        'https://res.cloudinary.com/musikverein/image/upload/v1618918093/song-photo_s0wytx.svg',
+        'https://res.cloudinary.com/musikverein-project/image/upload/v1621345047/song-photo_u3ufql.svg',
     },
     artist: {
       type: String,

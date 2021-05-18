@@ -21,7 +21,7 @@ const PlayListSchema = Schema(
     image: {
       type: String,
       default:
-        'https://res.cloudinary.com/musikverein/image/upload/v1620213731/playlist-photo_euxndm.svg',
+        'https://res.cloudinary.com/musikverein-project/image/upload/v1621345047/playlist-photo_vbpp4e.svg',
     },
     songs: {
       type: [
