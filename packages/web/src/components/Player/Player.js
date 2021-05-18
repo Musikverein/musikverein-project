@@ -139,7 +139,7 @@ export const Player = () => {
             <SongCard songId={playingNow} handlePlay={() => {}} playListId="" />
           </div>
           <div>
-            <h4 className="text-title-h4">Playlist:</h4>
+            <h4 className="text-title-h4">Queue:</h4>
             <div>
               <div className="playlist-songs">
                 <DragDropContext onDragEnd={handleOnDragEnd}>

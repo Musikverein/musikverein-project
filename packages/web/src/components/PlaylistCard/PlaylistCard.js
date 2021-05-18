@@ -136,7 +136,9 @@ export const PlayListCard = ({ playListId }) => {
               handleClose={handleMenuOption}
             />
           )}
-          <FollowButton followedBy={followedBy} playListId={_id} text />
+          {owner !== userId && (
+            <FollowButton followedBy={followedBy} playListId={_id} text />
+          )}
           <ModalMenuOptionsItem
             isButton
             icon="bx-list-plus"
