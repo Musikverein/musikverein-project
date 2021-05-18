@@ -148,7 +148,7 @@ export function sendPasswordResetEmail(email, recaptchaToken) {
       if (response.data) {
         const firebaseRespone = await auth.sendPasswordResetEmail(email);
 
-        if (firebaseRespone.error) {
+        if (firebaseRespone?.error) {
           dispatch(sendPasswordResetEmailError(firebaseRespone.error.message));
         } else {
           toast.success('👌 Email sent!');
