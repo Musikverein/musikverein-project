@@ -16,8 +16,10 @@ export const AddToPlayList = ({ image, title, songId }) => {
   );
   const dispatch = useDispatch();
   useEffect(() => {
-    getUserPlayLists(LibraryPlayListTypes.USER_PLAYLIST_PATH_OWN_PLAYLIST);
-  }, []);
+    dispatch(
+      getUserPlayLists(LibraryPlayListTypes.USER_PLAYLIST_PATH_OWN_PLAYLIST),
+    );
+  }, [dispatch]);
   const handlePlayListSelected = (playListId) => {
     dispatch(addSongToPlayList({ playListId, songId }));
   };
