@@ -181,7 +181,7 @@ const LibraryPlayListReducer = (state = userPlayListInitialState, action) => {
     }
     case LibraryPlayListTypes.USER_PLAYLIST_SYNC_FOLLOW: {
       const newUserPlayLists = toggleInArrayById(
-        state.userPlayList,
+        state.userPlayLists,
         action.payload,
       );
       return {
