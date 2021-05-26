@@ -79,7 +79,6 @@
     "msw": "^0.26.2",
     "node-sass": "^5.0.0",
     "normalizr": "^3.6.1",
-    "postcss": "^8.1",
     "postcss-focus-visible": "^5.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
@@ -125,6 +124,10 @@
     "eslint-plugin-react-hooks": "^4.2.0",
     "eslint-plugin-testing-library": "^3.10.1",
     "history": "^5.0.0",
-    "prettier": "^2.2.1"
+    "prettier": "^2.2.1",
+    "postcss": "^8.0.0"
+  },
+  "peerDependencies": {
+    "postcss": "^8.0.0"
   }
 }
