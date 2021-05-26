@@ -31,7 +31,6 @@ jobs:
         run: |
           yarn
           yarn workspace web run lint:js
-          yarn workspace web run lint:format:check
       - name: Add Heroku Remote Origin
         run:
           git remote add heroku https://heroku:${{ secrets.HEROKU_API_TOKEN
