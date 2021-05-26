@@ -1,0 +1,16 @@
+[build]
+  # Links
+  # https://docs.netlify.com/configure-builds/get-started/
+  # https://docs.netlify.com/configure-builds/file-based-configuration/#deploy-contexts
+  # https://answers.netlify.com/t/difficulty-with-new-monorepo-deployment-options/4381/7
+  # https://answers.netlify.com/t/improved-caching-for-yarn-workspaces/36066
+  #
+  # this is run inside the packages/web folder so we need to specify it
+  # and not git diff --quiet HEAD^ HEAD packages/web because the path
+  # doesn't exist when we are already in packages/web
+  ignore = "git diff --quiet HEAD^ HEAD ."
+
+[build.environment]
+  NETLIFY_USE_YARN = "true"
+  NETLIFY_YARN_WORKSPACES = "true"
+  YARN_VERSION = "1.22.10"

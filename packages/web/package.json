@@ -7,6 +7,8 @@
     "start": "craco start",
     "dev": "yarn run start",
     "build": "craco build",
+    "build:style": "tailwind build src/styles/tailwind.css -o src/styles/tailwind.css",
+    "netlify:build": "yarn run build:style && yarn run build",
     "test": "react-scripts test",
     "test:watch": "react-scripts test --watchAll",
     "test:ci:all": "cross-env CI=true react-scripts test --all --env=jsdom",
