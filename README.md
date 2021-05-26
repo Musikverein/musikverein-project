@@ -6,7 +6,7 @@
 
 <p align="center">
   <img src="https://res.cloudinary.com/musikverein-project/image/upload/v1621345047/logo-M2_a0ecfu.svg" alt="Logo" width="150" height="150">
-  <h1 align="center" >Musikverein</h1>
+  <h1 align="center" >[Musikverein](https://musikverein.netlify.app/)</h1>
 </p>
 
 This project proposes a music web platform based on Spotify/SoundCloud.
