@@ -63,7 +63,6 @@
   },
   "dependencies": {
     "@craco/craco": "^6.1.0",
-    "@fullhuman/postcss-purgecss": "^4.0.0",
     "@reach/menu-button": "^0.13.2",
     "@tailwindcss/forms": "^0.2.1",
     "@tailwindcss/postcss7-compat": "^2.1.2",
