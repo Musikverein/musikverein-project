@@ -34,7 +34,7 @@ export const ProfileButton = () => {
         className="relative"
       >
         <p className="flex items-center font-normal">
-          Hello&nbsp;
+          Hello,&nbsp;
           <span className="font-semibold">
             {userName || _id?.substring(0, 6)?.toUpperCase()}
           </span>
