@@ -1,0 +1,42 @@
+name: Prod CI Workflow
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  ci-prod-job:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install -g yarn
+      - name: api lint, format, test
+        run: |
+          yarn
+          yarn workspace api run lint:js
+          yarn workspace api run lint:format:check  yarn workspace api run test:ci:all
+      - name: web lint, format, test
+        run: |
+          yarn
+          yarn workspace web run lint:js
+          yarn workspace web run lint:format:check
+          yarn workspace web run test:ci:all
+      - name: Add Heroku Remote Origin
+        run:
+          git remote add heroku https://heroku:${{ secrets.HEROKU_API_TOKEN
+          }}@git.heroku.com/${{ secrets.HEROKU_BACKEND_APP_NAME }}.git
+      - name: Split the packages/api subtree
+        run: git subtree split --prefix packages/api -b split
+      - name: Deploy API to Heroku
+        run: git push -f heroku split:main

@@ -80,7 +80,7 @@
     "msw": "^0.26.2",
     "node-sass": "^5.0.0",
     "normalizr": "^3.6.1",
-    "postcss": "^7",
+    "postcss": "^8.1",
     "postcss-focus-visible": "^5.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
