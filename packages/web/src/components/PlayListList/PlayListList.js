@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import SpinnerList from '../placeholder/ListCardSpinner';
-import PlayListCard from '../PlayListCard';
+import PlayListCard from '../PlaylistCard';
 
 export const PlayListList = ({ loading, playlists, count }) => {
   return (
