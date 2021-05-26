@@ -6,6 +6,7 @@
   "main": "./src/index.js",
   "scripts": {
     "dev": "nodemon --inspect --trace-warnings ./src/index.js",
+    "start": "node ./src/index.js",
     "test": "jest --env=node",
     "test:ci:all": "jest --env=node",
     "test:watch": "jest --watch",
