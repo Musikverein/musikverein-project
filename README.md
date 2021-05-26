@@ -9,12 +9,13 @@
   <h1 align="center" >Musikverein</h1>
 </p>
 
-[link](https://musikverein.netlify.app/)
 
 This project proposes a music web platform based on Spotify/SoundCloud.
 Developing a client-server system, employing NodeJS, Express, MongoDB, Firebase
 and Cloudinary for the back-end implementation, and ReactJS + Redux for the
 front-end.
+
+> You can see deployed our application here [link](https://musikverein.netlify.app/)
 
 ## Start 🚀
 
