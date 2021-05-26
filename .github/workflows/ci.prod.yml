@@ -25,7 +25,8 @@ jobs:
         run: |
           yarn
           yarn workspace api run lint:js
-          yarn workspace api run lint:format:check  yarn workspace api run test:ci:all
+          yarn workspace api run lint:format:check
+          yarn workspace api run test:ci:all
       - name: web lint, format, test
         run: |
           yarn
